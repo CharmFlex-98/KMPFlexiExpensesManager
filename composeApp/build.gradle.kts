@@ -58,8 +58,15 @@ kotlin {
             implementation(libs.compose.dialog.calendar)
             implementation(libs.compose.dialog.state)
             implementation(libs.compose.dialog.clock)
+            implementation(libs.ktor.client.okhttp)
         }
         commonMain.dependencies {
+            // ktor
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.nego)
+            implementation(libs.ktor.client.serialization)
+            implementation(libs.ktor.client.logging)
+
             implementation(libs.aay.chart)
 
             implementation(libs.compose.calendar)

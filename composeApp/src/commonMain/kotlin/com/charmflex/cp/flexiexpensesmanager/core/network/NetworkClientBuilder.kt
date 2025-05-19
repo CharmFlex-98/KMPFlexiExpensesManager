@@ -1,8 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.core.network
+import kotlinx.coroutines.launch
 import kotlin.reflect.KClass
 
-interface Interceptor {}
-interface NetworkClient
 
 interface NetworkClientBuilder {
     fun addInterceptor(interceptor: Interceptor): NetworkClientBuilder

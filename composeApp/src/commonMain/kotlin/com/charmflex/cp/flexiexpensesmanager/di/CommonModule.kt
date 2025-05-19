@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.di
 
+import com.charmflex.cp.flexiexpensesmanager.core.di.networkModule
 import com.charmflex.cp.flexiexpensesmanager.features.account.di.modules.accountModule
 import com.charmflex.cp.flexiexpensesmanager.features.auth.di.modules.authModule
 import com.charmflex.cp.flexiexpensesmanager.features.currency.di.modules.currencyModule
@@ -17,6 +18,7 @@ fun commonModules(): List<Module> {
         budgetModule,
         currencyModule,
         schedulerModule,
-        transactionModule
+        transactionModule,
+        networkModule
     )
 }

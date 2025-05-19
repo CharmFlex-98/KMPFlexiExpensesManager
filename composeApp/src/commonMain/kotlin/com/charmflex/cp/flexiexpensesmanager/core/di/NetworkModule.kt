@@ -1,22 +1,16 @@
-package com.charmflex.flexiexpensesmanager.core.di
+package com.charmflex.cp.flexiexpensesmanager.core.di
 
-import android.content.Context
-import com.charmflex.cp.flexiexpensesmanager.core.network.DefaultNetworkClientBuilder
-import com.charmflex.cp.flexiexpensesmanager.core.network.NetworkClientBuilder
-import dagger.Module
-import dagger.Provides
-import javax.inject.Singleton
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuilder
+import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.KtorNetworkClientBuilder
+import org.koin.dsl.bind
+import org.koin.dsl.module
 
-@Module
-internal interface NetworkModule {
 
-    companion object {
-        @Provides
-        @Singleton
-        fun providesNetworkClientBuilder(appContext: Context): NetworkClientBuilder {
-            return DefaultNetworkClientBuilder(
-                appContext
-            )
-        }
-    }
+val networkModule = module {
+    single {
+        val networkClient = KtorNetworkClientBuilder()
+            .baseUrl("http://fem.charmflex.com")
+            .build()
+        networkClient
+    }.bind<NetworkClientBuilder.NetworkClient>()
 }

@@ -1,7 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.auth.di.modules
-import com.charmflex.flexiexpensesmanager.features.auth.data.AuthRepositoryImpl
-import com.charmflex.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
-import com.charmflex.flexiexpensesmanager.features.auth.data.remote.AuthApi
+import com.charmflex.cp.flexiexpensesmanager.features.auth.data.AuthRepositoryImpl
+import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
 import com.charmflex.flexiexpensesmanager.features.auth.storage.AuthStorage
 import com.charmflex.flexiexpensesmanager.features.auth.storage.AuthStorageImpl
 import org.koin.core.module.dsl.bind
