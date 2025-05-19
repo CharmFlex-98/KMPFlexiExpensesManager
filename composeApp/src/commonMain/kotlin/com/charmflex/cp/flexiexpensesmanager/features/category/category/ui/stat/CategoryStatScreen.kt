@@ -10,15 +10,14 @@ import androidx.compose.material3.Tab
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.DateFilterBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1

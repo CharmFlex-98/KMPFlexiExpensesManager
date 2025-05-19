@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -15,9 +15,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_25
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_75
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SGLabel(

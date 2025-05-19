@@ -11,7 +11,7 @@ import com.charmflex.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.flexiexpensesmanager.core.tracker.UserData
 import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
 import com.charmflex.flexiexpensesmanager.features.auth.event.AuthEventName
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService

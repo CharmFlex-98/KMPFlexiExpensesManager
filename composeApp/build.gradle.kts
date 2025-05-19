@@ -53,8 +53,24 @@ kotlin {
             implementation(libs.google.firebase.auth)
             implementation(libs.apache.poi)
             implementation(libs.apache.poi.ooxml)
+
+            // Calendar related
+            implementation(libs.compose.dialog.calendar)
+            implementation(libs.compose.dialog.state)
+            implementation(libs.compose.dialog.clock)
         }
         commonMain.dependencies {
+            implementation(libs.aay.chart)
+
+            implementation(libs.compose.calendar)
+//            implementation(libs.vico.core)
+//            implementation(libs.vico.compose.m3)
+            implementation(libs.vico.multiplatform)
+            implementation(libs.vico.multiplatform.m3)
+            implementation(libs.vico.core)
+
+
+            implementation(compose.material3)
             implementation(libs.kotlin.serialization)
             implementation(libs.room)
             implementation(libs.sqlite.bundled)

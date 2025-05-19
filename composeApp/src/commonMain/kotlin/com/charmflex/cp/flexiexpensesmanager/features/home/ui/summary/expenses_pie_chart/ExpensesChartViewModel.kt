@@ -1,10 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.aay.compose.donutChart.model.PieChartData
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
@@ -13,9 +12,6 @@ import com.charmflex.flexiexpensesmanager.features.category.category.domain.usec
 import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.patrykandpatrick.vico.core.component.shape.LineComponent
-import com.patrykandpatrick.vico.core.component.shape.Shapes
-import com.patrykandpatrick.vico.core.entry.ChartEntryModelProducer
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -24,10 +20,9 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 import kotlin.random.Random
 
-internal class ExpensesChartViewModel @Inject constructor(
+internal class ExpensesChartViewModel(
     private val getEachRootCategoryAmountUseCase: GetEachRootCategoryAmountUseCase,
     private val tagRepository: TagRepository,
     private val userCurrencyRepository: UserCurrencyRepository,
@@ -48,8 +43,6 @@ internal class ExpensesChartViewModel @Inject constructor(
 
     private val _dateFilter: MutableStateFlow<DateFilter> = MutableStateFlow(DateFilter.Monthly(0))
     val dateFilter = _dateFilter.asStateFlow()
-
-    val producer: ChartEntryModelProducer = ChartEntryModelProducer()
 
     init {
         loadTagOptions()
@@ -140,12 +133,12 @@ internal class ExpensesChartViewModel @Inject constructor(
         _tagFilter.value = tagFilter
     }
 
-    private fun generatePieChartData(data: Map<String, Long>): List<PieChartData> {
-        val res = mutableListOf<PieChartData>()
+    private fun generatePieChartData(data: Map<String, Long>): List<ExpensesPieChartData> {
+        val res = mutableListOf<ExpensesPieChartData>()
         for ((rootCategory, amount) in data.entries) {
             if (amount > 0) {
                 res.add(
-                    PieChartData(
+                    ExpensesPieChartData(
                         data = amount.toDouble(), // Use max to eliminate negative value.
                         color = generateRandomColor(),
                         partName = rootCategory
@@ -162,7 +155,7 @@ internal class ExpensesChartViewModel @Inject constructor(
         res.add(
             LineComponent(
                 color = generateRandomColor().toArgb(),
-                shape = Shapes.roundedCornerShape()
+                shape = LineComponent.Shape.RoundedCorner
             )
         )
 
@@ -187,8 +180,8 @@ internal data class TagFilterItem(
     val selected: Boolean = false,
 )
 
-internal data class ExpensesPieChartViewState(
-    val pieChartData: List<PieChartData> = listOf(),
+data class ExpensesPieChartViewState(
+    val pieChartData: List<ExpensesPieChartData> = listOf(),
     val barChartData: BarChartData = BarChartData(),
     val showTagFilterDialog: Boolean = false,
     val chartType: ChartType = ChartType.Pie(),
@@ -214,4 +207,19 @@ internal data class ExpensesPieChartViewState(
         val currencyCode: String = "",
         val categoryExpensesAmount: List<Pair<String, Long>> = listOf()
     )
+}
+
+data class ExpensesPieChartData(
+    val data:Double,
+    val color: Color,
+    val partName:String
+)
+
+internal data class LineComponent(
+    val color: Int,
+    val shape: Shape
+) {
+    sealed class Shape {
+        data object RoundedCorner : Shape()
+    }
 }

@@ -1,8 +1,7 @@
 package com.charmflex.flexiexpensesmanager.features.transactions.usecases
 
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import javax.inject.Inject

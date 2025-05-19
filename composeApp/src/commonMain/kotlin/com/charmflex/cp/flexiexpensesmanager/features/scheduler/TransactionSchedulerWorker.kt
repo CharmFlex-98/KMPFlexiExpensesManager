@@ -1,24 +1,5 @@
 package com.charmflex.flexiexpensesmanager.features.scheduler
 
-import android.content.Context
-import android.util.Log
-import androidx.work.CoroutineWorker
-import androidx.work.ListenableWorker
-import androidx.work.WorkerFactory
-import androidx.work.WorkerParameters
-import com.charmflex.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
-import com.charmflex.flexiexpensesmanager.core.utils.toLocalDate
-import com.charmflex.flexiexpensesmanager.core.utils.toStringWithPattern
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.usecases.SubmitTransactionUseCase
-import kotlinx.serialization.json.Json
-import java.time.LocalDate
-import java.time.LocalDateTime
-import java.time.LocalTime
-import javax.inject.Inject
 //
 //internal class TransactionSchedulerWorkerFactory @Inject constructor(
 //    private val getScheduleTransactionNextDateUseCase: GetScheduleTransactionNextDateUseCase,

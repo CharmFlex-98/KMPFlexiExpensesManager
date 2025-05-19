@@ -2,6 +2,8 @@ package com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_pie
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartScreen
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
 import com.charmflex.flexiexpensesmanager.features.home.ui.dashboard.DashboardPlugin
 import javax.inject.Inject
 

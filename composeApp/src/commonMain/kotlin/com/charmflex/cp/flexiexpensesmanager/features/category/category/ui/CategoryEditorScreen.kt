@@ -27,14 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGTextField
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2

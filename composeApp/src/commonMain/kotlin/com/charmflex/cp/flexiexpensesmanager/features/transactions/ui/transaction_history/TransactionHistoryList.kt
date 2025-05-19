@@ -55,7 +55,7 @@ import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.flexiexpensesmanager.ui_common.ListTable
-import com.charmflex.flexiexpensesmanager.ui_common.SGAnimatedTransition
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2

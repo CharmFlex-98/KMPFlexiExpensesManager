@@ -1,7 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.auth.ui.landing
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -10,7 +9,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -20,19 +18,16 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.ui_common.Loader
-import com.charmflex.flexiexpensesmanager.ui_common.LoadingAnimationSurface
-import com.charmflex.flexiexpensesmanager.ui_common.Money3DAnimation
-import com.charmflex.flexiexpensesmanager.ui_common.SGButtonGroupVertical
-import com.charmflex.flexiexpensesmanager.ui_common.SGDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.Loader
+import com.charmflex.cp.flexiexpensesmanager.ui_common.Money3DAnimation
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.flexiexpensesmanager.ui_common.SuccessStatusDialog
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x14
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x30
 import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately

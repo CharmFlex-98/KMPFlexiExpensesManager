@@ -6,7 +6,7 @@ import com.charmflex.flexiexpensesmanager.features.home.ui.dashboard.DashboardVi
 import com.charmflex.flexiexpensesmanager.features.home.ui.history.TransactionHomeViewModel
 import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingViewModel
 import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.ExpensesHeatMapViewModel
-import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
 
 internal interface HomeInjector {
     val homeViewModel: HomeViewModel

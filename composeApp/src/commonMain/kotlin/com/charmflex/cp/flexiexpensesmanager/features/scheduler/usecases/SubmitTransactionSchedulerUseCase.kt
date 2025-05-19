@@ -1,7 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.scheduler.usecases
 
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
 import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
 import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository

@@ -1,6 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.currency.usecases
 
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 import java.time.Duration
 import java.time.LocalDateTime

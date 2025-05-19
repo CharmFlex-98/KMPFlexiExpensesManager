@@ -20,14 +20,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
-import com.charmflex.flexiexpensesmanager.core.utils.toPercentageString
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetStatViewState
 import com.charmflex.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
-import com.charmflex.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.DateFilterConfig
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterConfig
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody3
@@ -38,6 +38,9 @@ import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x3
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x4
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun BudgetDetailScreen(
@@ -52,7 +55,7 @@ internal fun BudgetDetailScreen(
             .fillMaxSize()
             .padding(grid_x2),
         topBar = {
-            BasicTopBar(title = stringResource(id = R.string.budget_detail_app_bar_title))
+            BasicTopBar(title = stringResource(Res.string.budget_detail_app_bar_title))
         },
         screenName = "BudgetDetailScreen"
     ) {
@@ -97,13 +100,13 @@ internal fun BudgetDetailScreen(
                                 }
                             }
                             Spacer(modifier = Modifier.weight(1f))
-                            FEBody2(text = stringResource(id = R.string.generic_budget) + ": " + it.budget)
+                            FEBody2(text = stringResource(Res.string.generic_budget) + ": " + it.budget)
                         }
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
-                            FEMetaData1(text = stringResource(id = R.string.generic_spend))
+                            FEMetaData1(text = stringResource(Res.string.generic_spend))
                             LinearProgressIndicator(
                                 modifier = Modifier
                                     .padding(grid_x2)

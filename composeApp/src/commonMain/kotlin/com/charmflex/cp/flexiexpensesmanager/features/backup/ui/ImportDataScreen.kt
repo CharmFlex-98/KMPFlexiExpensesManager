@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.LinearProgressIndicator
-import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
@@ -27,11 +26,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentPicker
-import com.charmflex.cp.flexiexpensesmanager.core.utils.file.ImportedDocument
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.core.utils.toPercentageString
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
 import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportDataViewModel
 import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportDataViewState
 import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportedData
@@ -41,7 +38,7 @@ import com.charmflex.flexiexpensesmanager.ui_common.FECallout3
 import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.flexiexpensesmanager.ui_common.ListTable
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
@@ -51,7 +48,6 @@ import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
-import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 

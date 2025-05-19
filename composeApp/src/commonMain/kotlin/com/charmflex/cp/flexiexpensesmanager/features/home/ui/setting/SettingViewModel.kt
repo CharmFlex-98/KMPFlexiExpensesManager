@@ -16,7 +16,7 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType

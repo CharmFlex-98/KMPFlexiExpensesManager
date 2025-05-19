@@ -27,8 +27,8 @@ import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_heat
 import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartDashboardPlugin
 import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingScreen
 import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingViewModel
-import com.charmflex.flexiexpensesmanager.ui_common.SGBottomNavItem
-import com.charmflex.flexiexpensesmanager.ui_common.SGBottomNavigationBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavItem
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavigationBar
 import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.example.compose.FlexiExpensesManagerTheme

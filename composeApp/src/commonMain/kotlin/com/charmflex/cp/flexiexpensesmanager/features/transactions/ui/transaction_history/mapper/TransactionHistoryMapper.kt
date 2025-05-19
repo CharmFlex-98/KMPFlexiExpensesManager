@@ -2,11 +2,11 @@ package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_
 
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
-import com.charmflex.flexiexpensesmanager.core.utils.MONTH_YEAR_PATTERN
+import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
+import com.charmflex.cp.flexiexpensesmanager.core.utils.MONTH_YEAR_PATTERN
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
-import com.charmflex.flexiexpensesmanager.core.utils.toLocalDate
-import com.charmflex.flexiexpensesmanager.core.utils.toStringWithPattern
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryHeader

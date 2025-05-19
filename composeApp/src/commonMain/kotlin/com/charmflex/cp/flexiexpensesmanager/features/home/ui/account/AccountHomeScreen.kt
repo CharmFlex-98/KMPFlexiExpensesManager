@@ -21,7 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.ui_common.DateFilterBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.flexiexpensesmanager.ui_common.FECallout3

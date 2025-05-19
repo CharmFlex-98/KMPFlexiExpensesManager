@@ -2,30 +2,24 @@ package com.charmflex.flexiexpensesmanager.features.tag.ui
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
-import com.charmflex.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
-import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
 import com.charmflex.flexiexpensesmanager.ui_common.SGActionDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGAnimatedTransition
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.flexiexpensesmanager.ui_common.features.SettingEditorScreen
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable

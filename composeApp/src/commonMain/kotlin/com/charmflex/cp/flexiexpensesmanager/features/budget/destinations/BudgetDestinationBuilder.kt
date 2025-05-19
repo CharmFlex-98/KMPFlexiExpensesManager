@@ -9,7 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingScreen
 import com.charmflex.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingViewModel
 import com.charmflex.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailScreen
-import com.charmflex.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
 
 internal class BudgetDestinationBuilder : DestinationBuilder {
     private val appComponent = AppComponentProvider.instance.getAppComponent()

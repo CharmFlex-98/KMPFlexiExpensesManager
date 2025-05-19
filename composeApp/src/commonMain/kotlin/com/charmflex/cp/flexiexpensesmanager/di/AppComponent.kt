@@ -7,10 +7,10 @@ import com.charmflex.cp.flexiexpensesmanager.features.backup.di.BackupInjector
 import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportDataViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.budget.di.BudgetInjector
 import com.charmflex.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingViewModel
-import com.charmflex.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.di.CategoryInjector
 import com.charmflex.flexiexpensesmanager.features.category.category.ui.CategoryEditorViewModel
-import com.charmflex.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailViewModel
 import com.charmflex.flexiexpensesmanager.features.category.category.ui.stat.CategoryStatViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.currency.di.CurrencyInjector
 import com.charmflex.flexiexpensesmanager.features.currency.ui.CurrencySettingViewModel
@@ -22,7 +22,7 @@ import com.charmflex.flexiexpensesmanager.features.home.ui.dashboard.DashboardVi
 import com.charmflex.flexiexpensesmanager.features.home.ui.history.TransactionHomeViewModel
 import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingViewModel
 import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.ExpensesHeatMapViewModel
-import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.SchedulerInjector
 import com.charmflex.flexiexpensesmanager.features.scheduler.ui.schedulerList.SchedulerListViewModel
 import com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModel

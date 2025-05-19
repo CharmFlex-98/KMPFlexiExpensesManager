@@ -8,7 +8,7 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
 import com.charmflex.flexiexpensesmanager.features.backup.checker.ImportDataChecker

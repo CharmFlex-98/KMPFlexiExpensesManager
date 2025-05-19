@@ -7,7 +7,7 @@ import com.charmflex.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
-import com.charmflex.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState

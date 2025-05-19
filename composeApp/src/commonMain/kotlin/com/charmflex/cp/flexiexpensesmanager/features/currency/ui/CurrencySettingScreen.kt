@@ -13,7 +13,6 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -23,11 +22,11 @@ import com.charmflex.flexiexpensesmanager.ui_common.FEHeading2
 import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
 import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.SGTextField
-import com.charmflex.flexiexpensesmanager.ui_common.SearchBottomSheet
-import com.charmflex.flexiexpensesmanager.ui_common.SearchItem
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 

@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -28,16 +28,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.R
+import com.charmflex.flexiexpensesmanager.ui_common.ListTable
+import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.flexiexpensesmanager.ui_common.grid_x3
 import com.charmflex.flexiexpensesmanager.ui_common.theme.FlexiExpensesManagerTheme
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,10 +89,10 @@ fun GenericErrorBottomSheet(
 ) {
     SGAlertBottomSheet(
         sheetState = bottomSheetState,
-        title = stringResource(R.string.generic_error_bottomsheet_title),
-        subtitle = stringResource(id = R.string.generic_error_bottomsheet_subtitle),
+        title = stringResource(Res.string.generic_error_bottomsheet_title),
+        subtitle = stringResource(Res.string.generic_error_bottomsheet_subtitle),
         onDismiss = { }) {
-        SGLargePrimaryButton(text = stringResource(R.string.generic_ok)) {
+        SGLargePrimaryButton(text = stringResource(Res.string.generic_ok)) {
             onPrimaryButtonClick()
         }
     }

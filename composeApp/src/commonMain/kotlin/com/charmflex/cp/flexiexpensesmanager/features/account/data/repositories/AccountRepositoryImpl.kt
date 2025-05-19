@@ -2,7 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.account.data.repositories
 
 import AccountRepository
 import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
-import com.charmflex.flexiexpensesmanager.core.utils.unwrapResult
+import com.charmflex.cp.flexiexpensesmanager.core.utils.unwrapResult
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountTransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.AccountEntity

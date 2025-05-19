@@ -1,7 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.home.ui.setting
 
 import android.app.Activity
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -37,8 +36,7 @@ import androidx.compose.ui.unit.dp
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.flexiexpensesmanager.ui_common.SGDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGMediumPrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType

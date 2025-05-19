@@ -2,9 +2,7 @@ package com.charmflex.flexiexpensesmanager.ui_common.features
 
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -19,13 +17,13 @@ import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
-import com.charmflex.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGButtonGroupVertical
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
 import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
 import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.SGTextField
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 

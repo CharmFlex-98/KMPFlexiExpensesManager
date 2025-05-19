@@ -1,18 +1,18 @@
-package com.charmflex.flexiexpensesmanager.features.budget.ui.stats
+package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.flexiexpensesmanager.features.budget.domain.usecases.GetAdjustedCategoryBudgetInfoUseCase
+import com.charmflex.flexiexpensesmanager.features.budget.ui.stats.CategoryBudgetExpandableSectionMapper
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class BudgetDetailViewModel @Inject constructor(
+internal class BudgetDetailViewModel constructor(
     private val getAdjustedCategoryBudgetInfoUseCase: GetAdjustedCategoryBudgetInfoUseCase,
     private val mapper: CategoryBudgetExpandableSectionMapper
 ) : ViewModel() {
