@@ -1,6 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart
 
-import androidx.compose.animation.core.AnimationSpec
 import androidx.compose.animation.core.TweenSpec
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
@@ -32,23 +31,20 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.aay.compose.baseComponents.model.LegendPosition
 import com.aay.compose.donutChart.PieChart
 import com.aay.compose.donutChart.model.PieChartData
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.FECallout3
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGMediumPrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x47
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x6
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x47
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
@@ -56,7 +52,6 @@ import com.patrykandpatrick.vico.multiplatform.cartesian.data.CartesianChartMode
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.columnSeries
 import com.patrykandpatrick.vico.multiplatform.cartesian.layer.rememberColumnCartesianLayer
 import com.patrykandpatrick.vico.multiplatform.cartesian.rememberCartesianChart
-import com.patrykandpatrick.vico.multiplatform.common.component.ShapeComponent
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource

@@ -2,11 +2,15 @@ package com.charmflex.cp.flexiexpensesmanager.core.utils.datetime
 
 import kotlinx.datetime.Clock
 import kotlinx.datetime.DatePeriod
+import kotlinx.datetime.DateTimeUnit
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
+import kotlin.time.Duration
+import kotlin.time.DurationUnit
 
 internal fun localDateNow(): LocalDate {
     return getLocalDateTime().date
@@ -25,5 +29,21 @@ internal fun LocalDate.isAfter(localDate: LocalDate): Boolean {
 }
 
 internal fun LocalDate.minusMonths(months: Int): LocalDate {
-    return this.minus(DatePeriod(months = months))
+    return this.minus(months, DateTimeUnit.MONTH)
+}
+
+internal fun LocalDate.minusYears(years: Int): LocalDate {
+    return this.minus(years, DateTimeUnit.YEAR)
+}
+
+
+/**
+ * Minus this by from
+ */
+internal fun LocalDateTime.getHourDifference(from: LocalDateTime): Long {
+    val fromInstant = from.toInstant(TimeZone.currentSystemDefault())
+    val toInstant = this.toInstant(TimeZone.currentSystemDefault())
+
+    val duration: Duration = toInstant - fromInstant
+    return duration.toLong(DurationUnit.HOURS)
 }

@@ -34,15 +34,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
-import com.charmflex.flexiexpensesmanager.ui_common.SGDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinx.coroutines.flow.collectLatest
 
 @Composable

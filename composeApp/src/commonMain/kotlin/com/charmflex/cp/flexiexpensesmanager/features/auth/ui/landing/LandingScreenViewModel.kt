@@ -16,7 +16,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.Aut
 import com.charmflex.flexiexpensesmanager.features.auth.event.AuthEventName
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService
 import com.charmflex.flexiexpensesmanager.features.auth.service.sign_in.SignInState
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update

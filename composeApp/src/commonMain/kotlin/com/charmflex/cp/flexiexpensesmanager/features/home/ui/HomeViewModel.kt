@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.UpdateCurrencyRateUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.UpdateCurrencyRateUseCase
 import com.charmflex.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
 import kotlinx.coroutines.launch
 import javax.inject.Inject

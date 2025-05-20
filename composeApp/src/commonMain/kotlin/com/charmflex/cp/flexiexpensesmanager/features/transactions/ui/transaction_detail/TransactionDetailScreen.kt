@@ -12,12 +12,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
-import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
-import com.charmflex.flexiexpensesmanager.ui_common.SGActionDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable
 internal fun TransactionDetailScreen(

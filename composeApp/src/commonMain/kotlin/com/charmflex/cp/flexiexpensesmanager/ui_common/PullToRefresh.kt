@@ -1,8 +1,8 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.PullToRefreshState
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
@@ -17,10 +17,10 @@ fun PullToRefresh(
     content: @Composable () -> Unit,
 ) {
     Box(
-        modifier = modifier.nestedScroll(state.nestedScrollConnection)
+//        modifier = modifier.nestedScroll(state.nestedScrollConnection)
     ) {
         content()
-        PullToRefreshContainer(state = state)
+//        PullToRefreshBox(state = state)
     }
 
 }

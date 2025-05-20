@@ -12,7 +12,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -20,8 +19,8 @@ import androidx.compose.ui.unit.sp
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis

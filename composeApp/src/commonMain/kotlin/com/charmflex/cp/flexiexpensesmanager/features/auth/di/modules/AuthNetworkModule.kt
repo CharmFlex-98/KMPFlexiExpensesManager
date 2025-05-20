@@ -1,7 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.auth.di.modules
 
 import com.charmflex.cp.flexiexpensesmanager.core.network.NetworkClientBuilder
-import com.charmflex.flexiexpensesmanager.features.auth.data.remote.AuthApi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

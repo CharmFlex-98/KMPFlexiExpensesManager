@@ -13,7 +13,10 @@ import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.
 import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorBaseViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.UpdateAccountType
 import com.charmflex.flexiexpensesmanager.features.transactions.usecases.SubmitTransactionUseCase
 import kotlinx.coroutines.flow.firstOrNull
 import java.time.LocalDate

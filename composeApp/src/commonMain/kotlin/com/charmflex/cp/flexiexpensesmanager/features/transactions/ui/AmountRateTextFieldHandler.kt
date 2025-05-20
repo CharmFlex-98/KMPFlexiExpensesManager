@@ -1,8 +1,8 @@
 package com.charmflex.flexiexpensesmanager.features.transactions.ui
 
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewState
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewState
 
 internal interface AmountRateTextFieldHandler {
     suspend fun handleOnChangedEvent(

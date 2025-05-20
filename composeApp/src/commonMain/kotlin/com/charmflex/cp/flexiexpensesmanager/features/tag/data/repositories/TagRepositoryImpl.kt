@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.tag.data.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.tag.data.repositories
 
 import com.charmflex.flexiexpensesmanager.features.tag.data.daos.TagDao
 import com.charmflex.cp.flexiexpensesmanager.features.tag.data.entities.TagEntity
@@ -6,9 +6,8 @@ import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-internal class TagRepositoryImpl @Inject constructor(
+internal class TagRepositoryImpl(
     private val tagDao: TagDao
 ) : TagRepository {
     override suspend fun addTag(tagName: String) {

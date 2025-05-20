@@ -1,7 +1,7 @@
 package com.charmflex.flexiexpensesmanager.features.transactions.data.repositories
 
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
 import com.charmflex.flexiexpensesmanager.features.transactions.data.mapper.TransactionMapper
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction

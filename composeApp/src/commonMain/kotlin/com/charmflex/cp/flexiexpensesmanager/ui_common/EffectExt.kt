@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.animation.core.animateFloat
 import androidx.compose.animation.core.infiniteRepeatable

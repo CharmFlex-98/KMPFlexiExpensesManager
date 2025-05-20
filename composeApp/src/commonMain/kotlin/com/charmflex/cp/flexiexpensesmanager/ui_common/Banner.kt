@@ -21,8 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
 
 // TODO: Evaluate before using this
 @Composable

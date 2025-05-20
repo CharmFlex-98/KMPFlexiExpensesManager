@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.charmflex.cp.flexiexpensesmanager.ui_common.CircularProgressIndicatorFullScreen
 import com.posthog.PostHog
 
 @Composable

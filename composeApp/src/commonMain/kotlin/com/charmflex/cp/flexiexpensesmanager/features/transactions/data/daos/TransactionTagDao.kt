@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.data.daos
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

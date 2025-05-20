@@ -8,8 +8,8 @@ import com.charmflex.flexiexpensesmanager.features.currency.data.daos.CurrencyDa
 import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionDao
 import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
 import com.charmflex.flexiexpensesmanager.features.tag.data.daos.TagDao
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
 
 
 internal interface DatabaseBuilder {

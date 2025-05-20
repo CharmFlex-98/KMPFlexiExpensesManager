@@ -14,7 +14,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.Accou
 import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
 import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
 import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

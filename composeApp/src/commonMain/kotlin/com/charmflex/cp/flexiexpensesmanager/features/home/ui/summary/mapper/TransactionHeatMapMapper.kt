@@ -3,7 +3,7 @@ package com.charmflex.flexiexpensesmanager.features.home.ui.summary.mapper
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
-import com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.Level
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.Level
 import com.charmflex.flexiexpensesmanager.features.home.usecases.DailyTransaction
 import java.time.LocalDate
 import javax.inject.Inject

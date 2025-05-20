@@ -5,14 +5,12 @@ import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuil
 import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.put
 import com.charmflex.flexiexpensesmanager.features.auth.data.model.UpdateUserInfoRequest
 import com.charmflex.flexiexpensesmanager.features.auth.data.model.toDeviceInfo
-import com.charmflex.flexiexpensesmanager.features.auth.data.remote.AuthApi
 import com.charmflex.flexiexpensesmanager.features.auth.domain.model.UserInfo
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
 import com.charmflex.flexiexpensesmanager.features.auth.data.model.UpdateUserInfoResponse
 import com.charmflex.flexiexpensesmanager.features.auth.service.device.DeviceInfoService
 
 internal class AuthRepositoryImpl(
-    private val authApi: AuthApi,
     private val deviceInfoService: DeviceInfoService,
     private val networkClient: NetworkClientBuilder.NetworkClient
 ) : AuthRepository {

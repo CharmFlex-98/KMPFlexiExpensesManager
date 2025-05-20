@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -38,49 +38,51 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_AMOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_FROM_ACCOUNT
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody3
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading2
-import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
-import com.charmflex.flexiexpensesmanager.ui_common.SGActionDialog
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_AMOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_FROM_ACCOUNT
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGDatePicker
-import com.charmflex.flexiexpensesmanager.ui_common.SGDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGModalBottomSheet
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSmallPrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingText
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingTextType
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x20
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x4
-import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately
-import com.maxkeppeker.sheets.core.models.base.UseCaseState
+import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import com.kizitonwose.calendar.compose.rememberCalendarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
 @Composable
@@ -90,11 +92,11 @@ internal fun TransactionEditorScreen(
     val viewState by viewModel.viewState.collectAsState()
     val currencyExchangeViewState by viewModel.combinedCurrencyExchangeViewState.collectAsState()
     val currentTransactionType by viewModel.currentTransactionType.collectAsState()
-    val datePickerState = UseCaseState()
+    val datePickerState = rememberCalendarState()
     val showCalendar = viewState.calendarState != null
     val snackbarHostState = remember { SnackbarHostState() }
     val snackBarState by viewModel.snackBarState
-    val genericErrorMessage = stringResource(id = R.string.generic_error)
+    val genericErrorMessage = stringResource(Res.string.generic_error)
     val bottomSheetState = rememberModalBottomSheetState()
     val currencyVisualTransformation = remember(viewState.currencyCode) {
         viewModel.currencyVisualTransformationBuilder().create(viewState.currencyCode)
@@ -102,23 +104,23 @@ internal fun TransactionEditorScreen(
     val outputCurrencyFormatter = remember { CurrencyTextFieldOutputFormatter() }
     val type = viewModel.getType()
     val title = when (type) {
-        TransactionRecordableType.NEW_TRANSACTION -> stringResource(id = R.string.new_transaction_app_bar_title)
-        TransactionRecordableType.EDIT_TRANSACTION -> stringResource(id = R.string.edit_transaction_app_bar_title)
-        TransactionRecordableType.NEW_SCHEDULER -> stringResource(id = R.string.new_scheduler_app_bar_title)
-        TransactionRecordableType.EDIT_SCHEDULER -> stringResource(id = R.string.edit_scheduler_app_bar_title)
+        TransactionRecordableType.NEW_TRANSACTION -> stringResource(Res.string.new_transaction_app_bar_title)
+        TransactionRecordableType.EDIT_TRANSACTION -> stringResource(Res.string.edit_transaction_app_bar_title)
+        TransactionRecordableType.NEW_SCHEDULER -> stringResource(Res.string.new_scheduler_app_bar_title)
+        TransactionRecordableType.EDIT_SCHEDULER -> stringResource(Res.string.edit_scheduler_app_bar_title)
     }
     val actionTitle = when (type) {
         TransactionRecordableType.NEW_TRANSACTION, TransactionRecordableType.NEW_SCHEDULER -> stringResource(
-            id = R.string.general_congratz
+            Res.string.general_congratz
         )
 
-        else -> stringResource(id = R.string.generic_success)
+        else -> stringResource(Res.string.generic_success)
     }
     val actionSubtitle = when (type) {
-        TransactionRecordableType.NEW_TRANSACTION -> stringResource(id = R.string.create_new_transaction_success_dialog_subtitle)
-        TransactionRecordableType.EDIT_TRANSACTION -> stringResource(id = R.string.edit_new_transaction_success_dialog_subtitle)
-        TransactionRecordableType.NEW_SCHEDULER -> stringResource(id = R.string.create_new_scheduler_success_dialog_subtitle)
-        TransactionRecordableType.EDIT_SCHEDULER -> stringResource(id = R.string.edit_new_scheduler_success_dialog_subtitle)
+        TransactionRecordableType.NEW_TRANSACTION -> stringResource(Res.string.create_new_transaction_success_dialog_subtitle)
+        TransactionRecordableType.EDIT_TRANSACTION -> stringResource(Res.string.edit_new_transaction_success_dialog_subtitle)
+        TransactionRecordableType.NEW_SCHEDULER -> stringResource(Res.string.create_new_scheduler_success_dialog_subtitle)
+        TransactionRecordableType.EDIT_SCHEDULER -> stringResource(Res.string.edit_new_scheduler_success_dialog_subtitle)
     }
     var initLoader by remember { mutableStateOf(true) }
     val showDialogCurrencyState = currencyExchangeViewState.showDialogState
@@ -236,7 +238,7 @@ internal fun TransactionEditorScreen(
                                 modifier = Modifier
                                     .padding(vertical = grid_x1)
                                     .fillMaxWidth(),
-                                label = stringResource(id = feField.labelId),
+                                label = stringResource(feField.labelId),
                                 value = feField.valueItem.value,
                                 readOnly = true,
                                 onValueChange = {},
@@ -268,7 +270,7 @@ internal fun TransactionEditorScreen(
                                 modifier = Modifier
                                     .padding(vertical = grid_x1)
                                     .fillMaxWidth(),
-                                label = stringResource(id = feField.labelId),
+                                label = stringResource(feField.labelId),
                                 value = feField.valueItem.value,
                                 hint = stringResource(feField.hintId),
                                 enable = feField.isEnable,
@@ -301,14 +303,14 @@ internal fun TransactionEditorScreen(
             SGButtonGroupVertical {
                 SGLargePrimaryButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.new_expenses_confirm_button),
+                    text = stringResource(Res.string.new_expenses_confirm_button),
                     enabled = viewModel.allowProceed()
                 ) {
                     viewModel.onConfirmed()
                 }
                 SGLargeSecondaryButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.new_expenses_cancel_button)
+                    text = stringResource(Res.string.new_expenses_cancel_button)
                 ) {
                     viewModel.onBack()
                 }
@@ -317,7 +319,7 @@ internal fun TransactionEditorScreen(
     }
 
     SGDatePicker(
-        useCaseState = datePickerState,
+        calendarState = datePickerState,
         onDismiss = { viewModel.onToggleCalendar(null) },
         onConfirm = {
             viewModel.onFieldValueChanged(
@@ -338,7 +340,7 @@ internal fun TransactionEditorScreen(
             title = actionTitle,
             text = actionSubtitle,
             onDismissRequest = { },
-            primaryButtonText = stringResource(id = R.string.generic_back_to_home)
+            primaryButtonText = stringResource(Res.string.generic_back_to_home)
         ) {
             viewModel.onBack()
         }
@@ -424,7 +426,7 @@ internal fun TransactionEditorScreen(
 
                     is TransactionEditorViewState.CurrencySelectionBottomSheetState -> {
                         GeneralSelectionBottomSheet(
-                            title = stringResource(id = R.string.currency_selection_bottomsheet_title),
+                            title = stringResource(Res.string.currency_selection_bottomsheet_title),
                             items = viewState.currencyList,
                             name = { it }) {
                             viewModel.onCurrencySelected(it, bs.feField)
@@ -434,7 +436,7 @@ internal fun TransactionEditorScreen(
 
                     is TransactionEditorViewState.TagSelectionBottomSheetState -> {
                         GeneralSelectionBottomSheet(
-                            title = stringResource(id = R.string.tag_selection_bottomsheet_title),
+                            title = stringResource(Res.string.tag_selection_bottomsheet_title),
                             items = viewState.tagList,
                             name = { "#${it.name}" }) {
                             viewModel.onTagSelected(it, bs.feField)
@@ -444,7 +446,7 @@ internal fun TransactionEditorScreen(
 
                     is TransactionEditorViewState.PeriodSelectionBottomSheetState -> {
                         GeneralSelectionBottomSheet(
-                            title = stringResource(id = R.string.scheduler_period_selection_bottomsheet_title),
+                            title = stringResource(Res.string.scheduler_period_selection_bottomsheet_title),
                             items = viewModel.scheduledPeriodType,
                             name = { it.name }) { res ->
                             viewModel.onPeriodSelected(res, bs.feField)
@@ -454,7 +456,7 @@ internal fun TransactionEditorScreen(
 
                     is TransactionEditorViewState.UpdateTypeSelectionBottomSheetState -> {
                         GeneralSelectionBottomSheet(
-                            title = stringResource(id = R.string.update_account_type_selection_bottomsheet_title),
+                            title = stringResource(Res.string.update_account_type_selection_bottomsheet_title),
                             items = viewModel.updateAccountType,
                             name = { it.name }) { selected ->
                             viewModel.onFieldValueChanged(bs.feField, selected.name)

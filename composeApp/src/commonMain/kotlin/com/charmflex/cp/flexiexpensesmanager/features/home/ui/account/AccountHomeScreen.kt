@@ -22,16 +22,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody1
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody3
-import com.charmflex.flexiexpensesmanager.ui_common.FECallout3
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading3
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading5
-import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading5
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable
 internal fun AccountHomeScreen(viewModel: AccountHomeViewModel) {

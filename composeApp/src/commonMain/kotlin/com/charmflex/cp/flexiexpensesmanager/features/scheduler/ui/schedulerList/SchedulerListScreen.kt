@@ -13,11 +13,11 @@ import androidx.compose.ui.Modifier
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.ExpensesHistoryItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x6
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x6
 
 
 @Composable

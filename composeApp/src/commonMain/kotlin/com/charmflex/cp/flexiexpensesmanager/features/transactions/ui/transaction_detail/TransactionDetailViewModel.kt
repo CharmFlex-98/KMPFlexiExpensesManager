@@ -14,7 +14,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.Accou
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch

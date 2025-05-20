@@ -17,9 +17,6 @@ import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_25
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_75
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable

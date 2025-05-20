@@ -1,6 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
 
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
@@ -17,10 +17,10 @@ import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.
 import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
 import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorBaseViewModel
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorBaseViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
 import kotlinx.coroutines.flow.MutableStateFlow
 import java.time.LocalDate

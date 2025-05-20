@@ -1,6 +1,5 @@
 package com.charmflex.flexiexpensesmanager.features.currency.usecases
 
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
 import javax.inject.Inject

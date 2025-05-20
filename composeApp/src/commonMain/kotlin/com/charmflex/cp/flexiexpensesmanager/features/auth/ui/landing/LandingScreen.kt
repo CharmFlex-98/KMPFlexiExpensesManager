@@ -23,14 +23,14 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.Money3DAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargeSecondaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
-import com.charmflex.flexiexpensesmanager.ui_common.SuccessStatusDialog
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x30
-import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SuccessStatusDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x30
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 
 @Composable
 internal fun LandingScreen(

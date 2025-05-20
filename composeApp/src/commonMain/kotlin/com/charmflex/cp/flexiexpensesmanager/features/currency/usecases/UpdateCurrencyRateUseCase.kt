@@ -1,13 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.currency.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.currency.usecases
 
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.getHourDifference
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
-import java.time.Duration
-import java.time.LocalDateTime
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 
 // This is for updating the currency rate (as source of truth for real time currency rate)
-internal class UpdateCurrencyRateUseCase @Inject constructor(
+internal class UpdateCurrencyRateUseCase(
     private val currencyRepository: CurrencyRepository,
 ) {
 
@@ -17,9 +16,8 @@ internal class UpdateCurrencyRateUseCase @Inject constructor(
             if (lastUpdate == null) {
                 currencyRepository.fetchLatestCurrencyRates()
             } else {
-                val duration = Duration.between(lastUpdate, LocalDateTime.now())
                 // Only update after 24 hours
-                if (duration.toHours() > 24) {
+                if (localDateTimeNow().getHourDifference(lastUpdate) > 24) {
                     currencyRepository.fetchLatestCurrencyRates()
                 }
             }

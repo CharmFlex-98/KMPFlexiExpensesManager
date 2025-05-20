@@ -20,7 +20,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.destination.HomeDesti
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.destinations.SchedulerDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.tag.destination.TagDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.destination.TransactionDestinationBuilder
-import com.example.compose.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable

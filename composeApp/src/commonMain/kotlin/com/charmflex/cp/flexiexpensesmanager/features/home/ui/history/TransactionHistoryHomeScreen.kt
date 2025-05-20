@@ -10,7 +10,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryList
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable
 internal fun TransactionHistoryHomeScreen(

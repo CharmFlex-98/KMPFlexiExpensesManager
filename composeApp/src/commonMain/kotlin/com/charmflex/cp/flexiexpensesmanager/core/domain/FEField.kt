@@ -1,11 +1,11 @@
-package com.charmflex.flexiexpensesmanager.core.domain
-
-import androidx.annotation.DrawableRes
+package com.charmflex.cp.flexiexpensesmanager.core.domain
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.StringResource
 
 internal data class FEField(
     val id: String = "",
-    val labelId: Int,
-    val hintId: Int,
+    val labelId: StringResource,
+    val hintId: StringResource,
     val valueItem: Value = Value(),
     val type: FieldType,
     val allowClear: Boolean = false,
@@ -36,9 +36,7 @@ internal data class FEField(
                 val id: String
                 val title: String
                 val subtitle: String?
-
-                @get:DrawableRes
-                val icon: Int?
+                val icon: DrawableResource?
             }
         }
     }

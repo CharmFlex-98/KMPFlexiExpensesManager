@@ -5,6 +5,7 @@ import androidx.compose.animation.EnterTransition
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
@@ -26,18 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.airbnb.lottie.LottieComposition
-import com.airbnb.lottie.compose.LottieAnimation
-import com.airbnb.lottie.compose.LottieClipSpec
-import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
-import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x10
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x14
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x16
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x30
+import io.github.alexzhirkevich.compottie.Compottie
+import io.github.alexzhirkevich.compottie.LottieClipSpec
+import io.github.alexzhirkevich.compottie.LottieComposition
+import io.github.alexzhirkevich.compottie.LottieCompositionResult
+import io.github.alexzhirkevich.compottie.LottieCompositionSpec
+import io.github.alexzhirkevich.compottie.LottieConstants
+import io.github.alexzhirkevich.compottie.animateLottieCompositionAsState
+import io.github.alexzhirkevich.compottie.rememberLottieComposition
+import io.github.alexzhirkevich.compottie.rememberLottiePainter
+import kotlinproject.composeapp.generated.resources.Res
 
 @Composable
 internal fun SGLottieAnimation(
@@ -59,17 +58,22 @@ internal fun SGLottieAnimation(
         speed,
         iterations,
     )
-    LottieAnimation(
+
+    Image(
         modifier = modifier,
-        composition = composition,
-        progress = { progress })
+        painter = rememberLottiePainter(
+            composition = composition,
+            progress = { progress },
+        ),
+        contentDescription = "Lottie animation"
+    )
 }
 
 @Composable
 fun NoResultAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.no_result))
+    val composition by getComposition("no_result.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x14),
         composition = composition,
@@ -104,11 +108,11 @@ fun LoadingAnimationSurface(
     modifier: Modifier = Modifier,
 ) {
     Surface(color = Color.Black.copy(alpha = 0.7f), modifier = Modifier.fillMaxSize()) {
-        val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim))
+        val composition by getComposition("loading_anim.json")
         SGLottieAnimation(
             modifier = modifier,
             composition = composition,
-            iterations = LottieConstants.IterateForever
+            iterations = Compottie.IterateForever
         )
     }
 }
@@ -117,7 +121,7 @@ fun LoadingAnimationSurface(
 fun SuccessGreenTickAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.success_tick_anim))
+    val composition by getComposition("success_tick.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x16),
         composition = composition,
@@ -129,7 +133,7 @@ fun SuccessGreenTickAnimation(
 fun WarningAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.warning_anim))
+    val composition by getComposition("warning_anim.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x30),
         composition = composition,
@@ -141,7 +145,7 @@ fun WarningAnimation(
 fun SetupAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.setup_anim))
+    val composition by getComposition("setup_anim.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x30),
         composition = composition,
@@ -154,7 +158,7 @@ fun SetupAnimation(
 fun Loader(
     modifier: Modifier = Modifier,
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_dots_anim))
+    val composition by getComposition("loading_dot_anim.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x10),
         composition = composition,
@@ -166,7 +170,7 @@ fun Loader(
 fun Welcome(
     modifier: Modifier = Modifier,
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.welcome_anim))
+    val composition by getComposition("welcome_anim.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x30),
         composition = composition,
@@ -196,7 +200,11 @@ fun SGAnimatedTransition(
 @Composable
 fun BoxScope.CircularProgressIndicatorFullScreen() {
     val interactionSource = remember { MutableInteractionSource() }
-    Box(modifier = Modifier.fillMaxSize().clickable(interactionSource = interactionSource, indication = null, onClick = {}), contentAlignment = Alignment.Center) {
+    Box(
+        modifier = Modifier.fillMaxSize()
+            .clickable(interactionSource = interactionSource, indication = null, onClick = {}),
+        contentAlignment = Alignment.Center
+    ) {
         CircularProgressIndicator()
     }
 }
@@ -205,7 +213,7 @@ fun BoxScope.CircularProgressIndicatorFullScreen() {
 fun MoneyOutInAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.money_out_in))
+    val composition by getComposition("money_out_in.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x10),
         composition = composition,
@@ -217,10 +225,19 @@ fun MoneyOutInAnimation(
 fun Money3DAnimation(
     modifier: Modifier = Modifier
 ) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.money_3d))
+    val composition by getComposition("money_3d.json")
     SGLottieAnimation(
         modifier = modifier.size(grid_x10),
         composition = composition,
         iterations = LottieConstants.IterateForever
     )
+}
+
+@Composable
+private fun getComposition(filename: String): LottieCompositionResult {
+    return rememberLottieComposition {
+        LottieCompositionSpec.JsonString(
+            Res.readBytes("files/lotties/$filename").decodeToString()
+        )
+    }
 }

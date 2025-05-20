@@ -18,15 +18,15 @@ import androidx.compose.ui.text.style.TextOverflow
 import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading4
-import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
-import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
-import com.charmflex.flexiexpensesmanager.ui_common.ListTable
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_5
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
+import com.charmflex.cp.flexiexpensesmanager.ui_common.ListTable
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

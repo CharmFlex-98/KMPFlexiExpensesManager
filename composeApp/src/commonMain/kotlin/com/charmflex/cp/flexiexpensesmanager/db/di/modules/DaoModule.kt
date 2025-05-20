@@ -9,8 +9,8 @@ import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.Scheduled
 import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
 import com.charmflex.flexiexpensesmanager.features.tag.data.daos.TagDao
 import com.charmflex.flexiexpensesmanager.features.category.category.data.daos.TransactionCategoryDao
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionTagDao
 import dagger.Module
 import dagger.Provides
 

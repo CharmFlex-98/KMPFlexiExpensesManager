@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import android.net.Uri
 import androidx.annotation.DrawableRes
@@ -48,7 +48,9 @@ fun SGRoundCornerImage(
     fallbackIconId: Int = R.drawable.icon_people,
     source: Any?,
 ) {
-    SGImage(modifier = modifier, source = source, placeHolderIconId = placeHolderIconId, errorIconId = errorIconId, fallbackIconId = fallbackIconId, shape = RoundedCornerShape(grid_x2))
+    SGImage(modifier = modifier, source = source, placeHolderIconId = placeHolderIconId, errorIconId = errorIconId, fallbackIconId = fallbackIconId, shape = RoundedCornerShape(
+        grid_x2
+    ))
 }
 
 @Composable

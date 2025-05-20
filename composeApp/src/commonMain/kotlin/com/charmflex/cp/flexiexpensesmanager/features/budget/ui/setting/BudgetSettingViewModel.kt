@@ -3,7 +3,7 @@ package com.charmflex.flexiexpensesmanager.features.budget.ui.setting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
@@ -13,8 +13,8 @@ import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
-import com.charmflex.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
-import com.charmflex.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY
+import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
+import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

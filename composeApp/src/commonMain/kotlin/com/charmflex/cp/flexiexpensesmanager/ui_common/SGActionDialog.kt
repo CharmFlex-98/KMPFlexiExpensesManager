@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,10 +22,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupHorizontal
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SGMediumPrimaryButton
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SGMediumSecondaryButton
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SuccessGreenTickAnimation
 
 @Composable
 fun SGActionDialog(

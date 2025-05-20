@@ -69,6 +69,10 @@ kotlin {
 
             implementation(libs.aay.chart)
 
+            implementation(libs.fluid.currency)
+            implementation(libs.compottie)
+            implementation(libs.compottie.dot)
+
             implementation(libs.compose.calendar)
 //            implementation(libs.vico.core)
 //            implementation(libs.vico.compose.m3)

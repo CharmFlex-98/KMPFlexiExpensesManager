@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.core.di
+package com.charmflex.cp.flexiexpensesmanager.core.di
 
 import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
 

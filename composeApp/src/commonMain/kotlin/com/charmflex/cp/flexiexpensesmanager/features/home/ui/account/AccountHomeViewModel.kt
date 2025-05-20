@@ -3,7 +3,7 @@ package com.charmflex.flexiexpensesmanager.features.home.ui.account
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.AccountRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate

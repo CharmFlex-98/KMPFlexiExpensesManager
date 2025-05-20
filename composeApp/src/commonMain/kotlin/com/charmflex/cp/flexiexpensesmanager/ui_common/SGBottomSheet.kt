@@ -30,12 +30,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.ui_common.ListTable
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x3
-import com.charmflex.flexiexpensesmanager.ui_common.theme.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.ui_common.theme.FlexiExpensesManagerTheme
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.FlowPreview

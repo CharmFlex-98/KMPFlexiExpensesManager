@@ -1,7 +1,7 @@
-package com.charmflex.flexiexpensesmanager.features.currency.domain.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories
 
 import com.charmflex.flexiexpensesmanager.features.currency.domain.models.CurrencyData
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 internal interface CurrencyRepository {
 

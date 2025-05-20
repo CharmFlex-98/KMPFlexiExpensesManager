@@ -18,6 +18,10 @@ koin-bom = "4.0.3"
 kotlin-datetime_version = "0.6.2"
 compose-navigation-ver = "2.9.0-beta01"
 ksp_version = "2.1.20-2.0.1"
+compottie = "2.0.0-rc03"
+
+#currency
+fluid_currency_version = "0.13.0"
 
 # kotlin
 kotlin_kapt_version = '1.8.10'
@@ -62,7 +66,7 @@ aay_chart_version = "Beta-0.0.5"
 ktor_version = "3.1.3"
 
 # calendar
-compose_calendar_version = "2.5.0"
+compose_calendar_version = "2.7.0"
 
 ballon_version = "1.6.4"
 
@@ -137,6 +141,9 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android"}
 
+#fluid currency
+fluid-currency = { module = "io.fluidsonic.currency:fluid-currency", version.ref = "fluid_currency_version" }
+
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -176,6 +183,10 @@ room = { module = 'androidx.room:room-runtime', version.ref = 'room_version'}
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = 'sqlite_version'}
 #room-ktx = { module = 'androidx.room:room-ktx', version.ref = "room_version"}
 
+compottie = { module = "io.github.alexzhirkevich:compottie", version.ref = "compottie" }
+compottie-dot = { module = "io.github.alexzhirkevich:compottie-dot", version.ref = "compottie" }
+compottie-network = { module = "io.github.alexzhirkevich:compottie-network", version.ref = "compottie" }
+compottie-resources = { module = "io.github.alexzhirkevich:compottie-resources", version.ref = "compottie" }
 
 # vico
 # For `compose`. Creates a `ChartStyle` based on an M3 Material Theme.
@@ -204,7 +215,7 @@ lifecycle-viewModel-compose = { module = 'androidx.lifecycle:lifecycle-viewmodel
 aay-chart = { module = 'io.github.thechance101:chart', version.ref = 'aay_chart_version'}
 
 # calendar
-compose-calendar = { module = 'com.kizitonwose.calendar:compose', version.ref = 'compose_calendar_version'}
+compose-calendar = { module = 'com.kizitonwose.calendar:compose-multiplatform', version.ref = 'compose_calendar_version'}
 # activity
 activity-ktx = { module = 'androidx.activity:activity-ktx', version.ref = 'activity_version'}
 

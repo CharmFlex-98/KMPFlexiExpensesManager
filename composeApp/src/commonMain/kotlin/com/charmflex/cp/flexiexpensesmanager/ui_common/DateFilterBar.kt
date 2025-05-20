@@ -5,6 +5,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -13,6 +14,10 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -21,21 +26,18 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.SHORT_MONTH_YEAR_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusMonths
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.FilterMenuDropDownItem
-import com.charmflex.flexiexpensesmanager.ui_common.FECallout3
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_25
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x12
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x3
+import com.kizitonwose.calendar.compose.rememberCalendarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource
 import kotlin.reflect.KClass
 
 @Composable
-expect fun DateFilterBar(
+internal fun DateFilterBar(
     modifier: Modifier = Modifier,
     currentDateFilter: DateFilter,
     onDateFilterChanged: (DateFilter) -> Unit,
@@ -49,7 +51,79 @@ expect fun DateFilterBar(
         it.toStringWithPattern(DATE_ONLY_DEFAULT_PATTERN)
     },
     dateFilterConfig: DateFilterConfig = DateFilterConfig()
-)
+) {
+    var dropDownExpanded by remember { mutableStateOf(false) }
+    var customDateSelection by remember { mutableStateOf<CustomDateSelection?>(null) }
+    val selectedMenu = when (currentDateFilter) {
+        is DateFilter.Monthly -> stringResource(FilterMenuDropDownItem.Monthly.titleResId)
+        is DateFilter.Custom -> stringResource(FilterMenuDropDownItem.Custom.titleResId)
+        is DateFilter.All -> stringResource(FilterMenuDropDownItem.All.titleResId)
+    }
+
+    Row(
+        modifier = modifier,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        when (currentDateFilter) {
+            is DateFilter.Monthly -> MonthlyDateSelection(
+                type = currentDateFilter,
+                onShowMonthFilter = onShowMonthFilter,
+                onDateFilterChanged = onDateFilterChanged
+            )
+
+            is DateFilter.Custom -> CustomDateSelection(
+                type = currentDateFilter,
+                onShowCustomStartFilter = onShowCustomStartFilter,
+                onShowCustomEndFilter = onShowCustomEndFilter,
+                onStartDateBoxClicked = {
+                    customDateSelection =
+                        CustomDateSelection(dateFilter = currentDateFilter, isStartSelected = true)
+                },
+                onEndDateBoxClicked = {
+                    customDateSelection =
+                        CustomDateSelection(dateFilter = currentDateFilter, isStartSelected = false)
+                }
+            )
+
+            else -> FECallout3(modifier = Modifier
+                .padding(grid_x1), text = stringResource(Res.string._date_filter_show_all_description)
+            )
+        }
+
+        Spacer(modifier = Modifier.weight(1f))
+
+        DateFilterMenuSelection(
+            dateFilterConfig,
+            menuName = selectedMenu,
+            onMenuTap = { dropDownExpanded = true },
+            onDismiss = { dropDownExpanded = false },
+            dropDownExpanded = dropDownExpanded
+        ) {
+            onDateFilterChanged(it)
+        }
+    }
+
+    SGDatePicker(
+        calendarState = rememberCalendarState(),
+        onDismiss = { customDateSelection = null },
+        onConfirm = { localDate ->
+            val updatedFilter = customDateSelection?.let {
+                if (it.isStartSelected) it.dateFilter.copy(from = localDate)
+                else it.dateFilter.copy(to = localDate)
+            }
+            updatedFilter?.let {
+                onDateFilterChanged(it)
+            }
+            customDateSelection = null
+        },
+        date = customDateSelection?.let {
+            if (it.isStartSelected) it.dateFilter.from
+            else it.dateFilter.to
+        },
+        isVisible = customDateSelection != null,
+        boundary = localDateNow().minusYears(10)..localDateNow()
+    )
+}
 
 @Composable
 fun DateFilterMenuSelection(

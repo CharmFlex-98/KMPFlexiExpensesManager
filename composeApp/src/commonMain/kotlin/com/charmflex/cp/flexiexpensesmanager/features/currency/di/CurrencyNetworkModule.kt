@@ -1,7 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.currency.di
 
 import com.charmflex.cp.flexiexpensesmanager.core.network.NetworkClientBuilder
-import com.charmflex.flexiexpensesmanager.features.currency.data.remote.CurrencyApi
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

@@ -10,8 +10,8 @@ import androidx.compose.ui.Modifier
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable
 internal fun AccountDetailScreen(

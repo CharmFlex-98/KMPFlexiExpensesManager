@@ -8,7 +8,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest

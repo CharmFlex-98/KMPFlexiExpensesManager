@@ -14,17 +14,17 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.CategorySelectionBottomSheet
-import com.charmflex.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.CategorySelectionBottomSheet
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGModalBottomSheet
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.features.SettingEditorScreen
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

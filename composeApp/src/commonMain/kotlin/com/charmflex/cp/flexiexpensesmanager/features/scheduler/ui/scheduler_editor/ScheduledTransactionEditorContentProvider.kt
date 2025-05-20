@@ -1,10 +1,10 @@
 package com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
 
 import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
 import javax.inject.Inject
 
 internal class ScheduledTransactionEditorContentProvider @Inject constructor() : TransactionEditorContentProvider() {

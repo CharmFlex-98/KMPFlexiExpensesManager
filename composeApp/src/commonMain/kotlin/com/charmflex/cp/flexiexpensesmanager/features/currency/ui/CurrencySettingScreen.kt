@@ -18,17 +18,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import com.charmflex.flexiexpensesmanager.ui_common.FEHeading2
-import com.charmflex.flexiexpensesmanager.ui_common.FEMetaData1
-import com.charmflex.flexiexpensesmanager.ui_common.FeColumnContainer
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable

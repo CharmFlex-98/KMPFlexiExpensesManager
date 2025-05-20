@@ -1,4 +1,4 @@
-package com.example.ui.theme
+package com.charmflex.cp.flexiexpensesmanager.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.font.FontFamily

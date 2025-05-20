@@ -11,7 +11,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEVerticalSlideUp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getInt
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.AccountRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.AccountEditorScreen
@@ -63,7 +63,8 @@ internal class AccountDestinationBuilder(
         ) {
             val accountId = it.arguments?.getInt(AccountRoutes.Args.ACCOUNT_ID) ?: -1
             val filterFromPreviousScreen = remember {
-                navController.previousBackStackEntry?.savedStateHandle?.remove<DateFilter>(AccountRoutes.Args.ACCOUNT_DETAIL_DATE_FILTER)
+                navController.previousBackStackEntry?.savedStateHandle?.remove<DateFilter>(
+                    AccountRoutes.Args.ACCOUNT_DETAIL_DATE_FILTER)
             }
             val accountDetailViewModel = getViewModel {
                 appComponent.accountDetailViewModelFactory.create(accountId = accountId, filterFromPreviousScreen)

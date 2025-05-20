@@ -42,21 +42,21 @@ import com.charmflex.flexiexpensesmanager.features.account.ui.AccountEditorViewS
 import com.charmflex.flexiexpensesmanager.features.account.ui.BottomSheetState
 import com.charmflex.flexiexpensesmanager.features.account.ui.TapFieldType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.flexiexpensesmanager.ui_common.FEBody1
-import com.charmflex.flexiexpensesmanager.ui_common.SGActionDialog
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarType
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x0_25
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x1
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_25
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 
 
 @OptIn(ExperimentalMaterial3Api::class)

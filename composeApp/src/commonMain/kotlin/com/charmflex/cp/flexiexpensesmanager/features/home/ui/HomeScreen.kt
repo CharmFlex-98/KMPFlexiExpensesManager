@@ -29,9 +29,9 @@ import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingScreen
 import com.charmflex.flexiexpensesmanager.features.home.ui.setting.SettingViewModel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavigationBar
-import com.charmflex.flexiexpensesmanager.ui_common.SGIcons
-import com.charmflex.flexiexpensesmanager.ui_common.SGScaffold
-import com.example.compose.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
 
 @Composable
 internal fun HomeScreen(

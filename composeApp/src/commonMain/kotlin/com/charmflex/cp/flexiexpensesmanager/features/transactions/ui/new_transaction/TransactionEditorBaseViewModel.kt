@@ -1,20 +1,21 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
+import AccountRepository
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.core.domain.FEField
+import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.AccountRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
 import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
 import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
@@ -24,21 +25,22 @@ import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Tra
 import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.PRIMARY_CURRENCY_RATE
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.PRIMARY_TRANSACTION_AMOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_AMOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_CATEGORY
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_CURRENCY
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_DATE
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_FROM_ACCOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_NAME
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_TAG
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_TO_ACCOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT
-import com.charmflex.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT_TYPE
-import com.charmflex.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.PRIMARY_CURRENCY_RATE
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.PRIMARY_TRANSACTION_AMOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_AMOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_CATEGORY
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_CURRENCY
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_DATE
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_FROM_ACCOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_NAME
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_TAG
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_TO_ACCOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT_TYPE
+import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordable
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -56,7 +58,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import java.time.LocalDate
+import kotlinx.datetime.LocalDate
 
 internal abstract class TransactionEditorBaseViewModel(
     private val contentProvider: TransactionEditorContentProvider,
@@ -1034,7 +1036,7 @@ internal abstract class TransactionEditorBaseViewModel(
             dataId,
             accountId.toInt(),
             updateType == UpdateAccountType.INCREMENT,
-            transactionDate = LocalDate.now().toStringWithPattern(DATE_ONLY_DEFAULT_PATTERN),
+            transactionDate = localDateNow().toStringWithPattern(DATE_ONLY_DEFAULT_PATTERN),
             amount = amount.toLong()
         ).fold(
             onSuccess = {

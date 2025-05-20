@@ -2,6 +2,7 @@ package com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_hea
 
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.runtime.Composable
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.ExpensesHeatMapScreen
 import com.charmflex.flexiexpensesmanager.features.home.ui.dashboard.DashboardPlugin
 
 internal class ExpensesHeatMapPlugin(

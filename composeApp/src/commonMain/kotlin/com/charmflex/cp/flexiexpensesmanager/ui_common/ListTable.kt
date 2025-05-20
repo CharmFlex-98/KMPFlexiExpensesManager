@@ -1,6 +1,5 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
-import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -93,7 +92,6 @@ fun <T> ListTable(
                 }
 
                 LaunchedEffect(reachBottom) {
-                    Log.d("HTTP::", "need load more = $needLoadMore")
                     if (needLoadMore) onLoadMore()
                 }
             }

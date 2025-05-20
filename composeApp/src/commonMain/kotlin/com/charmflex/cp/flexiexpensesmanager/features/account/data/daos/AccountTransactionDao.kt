@@ -3,7 +3,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.account.data.daos
 import androidx.room.Dao
 import androidx.room.Transaction
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.AccountEntity
-import com.charmflex.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
 
 @Dao

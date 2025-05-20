@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common.theme
+package com.charmflex.cp.flexiexpensesmanager.ui_common.theme
 
 import androidx.compose.ui.graphics.Color
 

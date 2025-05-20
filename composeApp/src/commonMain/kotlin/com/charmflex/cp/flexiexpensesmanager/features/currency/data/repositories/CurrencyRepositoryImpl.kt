@@ -1,24 +1,26 @@
-package com.charmflex.flexiexpensesmanager.features.currency.data.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.currency.data.repositories
 
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuilder
+import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.get
 import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorage
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.local.CurrencyKeyStorage
-import com.charmflex.flexiexpensesmanager.features.currency.data.remote.CurrencyApi
 import com.charmflex.flexiexpensesmanager.features.currency.domain.models.CurrencyData
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
-import kotlinx.serialization.encodeToString
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
+import com.charmflex.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
+import io.fluidsonic.currency.Currency
+import io.ktor.utils.io.core.toByteArray
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.json.Json
-import java.time.LocalDateTime
-import java.util.Currency
-import javax.inject.Inject
 
-internal class CurrencyRepositoryImpl @Inject constructor(
-    private val currencyApi: CurrencyApi,
+internal class CurrencyRepositoryImpl constructor(
     private val fileStorage: FileStorage,
-    private val currencyKeyStorage: CurrencyKeyStorage
+    private val currencyKeyStorage: CurrencyKeyStorage,
+    private val networkClient: NetworkClientBuilder.NetworkClient
 ) : CurrencyRepository {
 
     override suspend fun fetchLatestCurrencyRates(): CurrencyData {
-        val res = currencyApi.getCurrencyRate()
+        val res: CurrencyRateResponse = networkClient.get("https://api.fxratesapi.com/latest")
         val item = CurrencyData(
             timestamp = res.timestamp,
             date = res.date,
@@ -26,7 +28,7 @@ internal class CurrencyRepositoryImpl @Inject constructor(
             currencyRates = res.rates
                 .filter { it.key.length == 3 }
                 .mapValues {
-                    val currency = Currency.getInstance(it.key)
+                    val currency = Currency.forCode(it.key)
                     CurrencyData.Currency(
                         it.key,
                         currency.defaultFractionDigits,
@@ -41,7 +43,7 @@ internal class CurrencyRepositoryImpl @Inject constructor(
     private suspend fun setLatestCurrencyRates(currencyData: CurrencyData) {
         val json = Json.encodeToString(currencyData)
         fileStorage.write(CURRENCY_FILE_NAME, json.toByteArray())
-        currencyKeyStorage.setLastCurrencyRateUpdateTimestamp(LocalDateTime.now())
+        currencyKeyStorage.setLastCurrencyRateUpdateTimestamp(localDateTimeNow())
     }
 
     override suspend fun getCacheCurrencyRates(): CurrencyData? {

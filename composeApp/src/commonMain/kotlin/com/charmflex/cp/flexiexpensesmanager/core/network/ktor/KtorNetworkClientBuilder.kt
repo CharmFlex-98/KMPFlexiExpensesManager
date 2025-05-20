@@ -1,9 +1,9 @@
 package com.charmflex.cp.flexiexpensesmanager.core.network.ktor
-
-import com.charmflex.cp.flexiexpensesmanager.core.network.NetworkClient
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkInterceptor
+import com.charmflex.cp.flexiexpensesmanager.core.network.exception.ApiException
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.DEFAULT
 import io.ktor.client.plugins.logging.LogLevel
@@ -13,7 +13,6 @@ import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.accept
 import io.ktor.client.request.delete
 import io.ktor.client.request.get
-import io.ktor.client.request.header
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.put
@@ -21,7 +20,9 @@ import io.ktor.client.request.url
 import io.ktor.client.statement.HttpResponse
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
+import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
@@ -130,6 +131,9 @@ internal class KtorNetworkClientBuilder(
             response: HttpResponse,
             responseClass: KClass<T>
         ): T {
+            if (response.status.isSuccess().not()) {
+                throw ApiException(response.status.value, response.bodyAsText())
+            }
             val text = response.bodyAsText()
             return Json.decodeFromString(responseClass.serializer(), text)
         }
@@ -157,6 +161,10 @@ internal suspend inline fun <T, reified U : Any> NetworkClientBuilder.NetworkCli
     endPoint: String,
     body: T
 ) = this.put(endPoint, body, U::class)
+
+private fun getHttpException(httpStatusCode: Int) {
+
+}
 
 
 

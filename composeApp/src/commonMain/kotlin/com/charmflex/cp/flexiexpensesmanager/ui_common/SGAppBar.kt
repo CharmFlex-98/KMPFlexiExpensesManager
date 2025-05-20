@@ -6,7 +6,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
-import com.charmflex.flexiexpensesmanager.ui_common.theme.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.ui_common.theme.FlexiExpensesManagerTheme
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)

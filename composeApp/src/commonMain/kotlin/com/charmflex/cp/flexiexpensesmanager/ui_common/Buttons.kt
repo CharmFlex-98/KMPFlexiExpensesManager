@@ -18,10 +18,6 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x4
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x5
-import com.charmflex.flexiexpensesmanager.ui_common.grid_x7
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 enum class ButtonSize {

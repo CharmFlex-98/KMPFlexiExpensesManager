@@ -29,7 +29,7 @@ import com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
 import com.charmflex.flexiexpensesmanager.features.session.SessionManager
 import com.charmflex.cp.flexiexpensesmanager.features.session.di.SessionInjector
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.di.TransactionInjector
-import com.charmflex.flexiexpensesmanager.core.di.MainInjector
+import com.charmflex.cp.flexiexpensesmanager.core.di.MainInjector
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector

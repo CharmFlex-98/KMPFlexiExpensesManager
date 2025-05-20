@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.ui_common
+package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.ui.unit.dp
 
