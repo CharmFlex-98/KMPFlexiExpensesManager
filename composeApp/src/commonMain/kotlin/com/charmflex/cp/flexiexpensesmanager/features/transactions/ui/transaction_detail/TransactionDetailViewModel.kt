@@ -1,27 +1,27 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_detail
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 internal class TransactionDetailViewModel(
     private val transactionId: Long,
@@ -40,7 +40,7 @@ internal class TransactionDetailViewModel(
         loadDetail()
     }
 
-    class Factory @Inject constructor(
+    class Factory  constructor(
         private val routeNavigator: RouteNavigator,
         private val transactionRepository: TransactionRepository,
         private val resourcesProvider: ResourcesProvider,
@@ -108,15 +108,15 @@ internal class TransactionDetailViewModel(
                     _viewState.update {
                         it.copy(
                             dialogState = TransactionDetailViewState.SuccessDialog(
-                                title = resourcesProvider.getString(R.string.generic_success),
-                                subtitle = resourcesProvider.getString(R.string.delete_transaction_success_subtitle)
+                                title = resourcesProvider.getString(Res.string.generic_success),
+                                subtitle = resourcesProvider.getString(Res.string.delete_transaction_success_subtitle)
                             )
                         )
                     }
                 },
                 onFailure = {
                     snackBarState.value = SnackBarState.Error(
-                        message = resourcesProvider.getString(R.string.generic_something_went_wron)
+                        message = resourcesProvider.getString(Res.string.generic_something_went_wron)
                     )
                 }
             )

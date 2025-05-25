@@ -1,9 +1,8 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
-import javax.inject.Inject
 
-internal class GetCategoryOptionsUseCase @Inject constructor(
+internal class GetCategoryOptionsUseCase constructor(
     private val transactionCategoryRepository: TransactionCategoryRepository
 ) {
 //    suspend operator fun invoke(transactionTypeCode: String): List<CategorySelectionItem> {

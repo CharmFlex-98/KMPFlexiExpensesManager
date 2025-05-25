@@ -1,28 +1,29 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
-import com.charmflex.flexiexpensesmanager.R
+import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
-import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
-import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorBaseViewModel
-import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
-import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.UpdateAccountType
-import com.charmflex.flexiexpensesmanager.features.transactions.usecases.SubmitTransactionUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.usecases.SubmitTransactionUseCase
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
-import java.time.LocalDate
-import javax.inject.Inject
+import kotlinx.datetime.LocalDate
+import org.koin.core.Koin
+import org.koin.core.qualifier.named
 
-internal class TransactionEditorViewModel @Inject constructor(
+internal class TransactionEditorViewModel  constructor(
     private val transactionId: Long?,
     private val transactionRepository: TransactionRepository,
     private val submitTransactionUseCase: SubmitTransactionUseCase,
@@ -50,9 +51,8 @@ internal class TransactionEditorViewModel @Inject constructor(
     userCurrencyRepository,
     transactionId,
 ) {
-    class Factory @Inject constructor(
-        @TransactionEditorProvider(TransactionEditorProvider.Type.DEFAULT)
-        private val contentProvider: TransactionEditorContentProvider,
+    class Factory constructor(
+        private val resolver: Koin,
         private val accountRepository: AccountRepository,
         private val transactionRepository: TransactionRepository,
         private val routeNavigator: RouteNavigator,
@@ -67,6 +67,7 @@ internal class TransactionEditorViewModel @Inject constructor(
         private val rateExchangeManager: RateExchangeManager
     ) {
         fun create(transactionId: Long?): TransactionEditorViewModel {
+            val contentProvider = resolver.get<TransactionEditorContentProvider>(named(TransactionEditorProvider.DEFAULT))
             return TransactionEditorViewModel(
                 transactionId,
                 transactionRepository,
@@ -91,7 +92,7 @@ internal class TransactionEditorViewModel @Inject constructor(
     }
 
     override fun calendarSelectionRange(): ClosedRange<LocalDate> {
-        return LocalDate.now().minusYears(10)..LocalDate.now()
+        return localDateNow().minusYears(10)..localDateNow()
     }
 
     override suspend fun loadTransaction(id: Long): TransactionEditorDataUI? {
@@ -192,7 +193,7 @@ internal class TransactionEditorViewModel @Inject constructor(
     ): Result<Unit> {
         val hint =
             if (isIncrement) UpdateAccountType.INCREMENT.name else UpdateAccountType.DEDUCTION.name
-        val name = resourcesProvider.getString(R.string.generic_update_account)
+        val name = resourcesProvider.getString(Res.string.generic_update_account)
         return submitTransactionUseCase.submitUpdateAccount(
             id, "$name ($hint)", accountId, isIncrement, amount, transactionDate
         )

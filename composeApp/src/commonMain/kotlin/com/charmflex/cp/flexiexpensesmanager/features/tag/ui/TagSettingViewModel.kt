@@ -1,25 +1,26 @@
-package com.charmflex.flexiexpensesmanager.features.tag.ui
+package com.charmflex.cp.flexiexpensesmanager.features.tag.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
-import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_TAG
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.jetbrains.compose.resources.StringResource
 
-internal class TagSettingViewModel @Inject constructor(
+internal class TagSettingViewModel constructor(
     private val tagRepository: TagRepository,
     private val routeNavigator: RouteNavigator,
     private val resourcesProvider: ResourcesProvider
@@ -40,7 +41,8 @@ internal class TagSettingViewModel @Inject constructor(
     }
 
     fun initFlow(fixImportTagName: String?) {
-        if (fixImportTagName != null) flowType = TagSettingFlow.ImportFix(fixImportTagName) else TagSettingFlow.Default
+        if (fixImportTagName != null) flowType =
+            TagSettingFlow.ImportFix(fixImportTagName) else TagSettingFlow.Default
         when (val ft = flowType) {
             is TagSettingFlow.ImportFix -> {
                 onToggleEditor(null)
@@ -182,9 +184,9 @@ internal data class TagSettingViewState(
 }
 
 private sealed class TagErrorState(
-    val errorId: Int
+    val errorId: StringResource
 ) {
-    data object BlankTag: TagErrorState(R.string.generic_blank_input_invalid)
+    data object BlankTag: TagErrorState(Res.string.generic_blank_input_invalid)
 }
 
 internal sealed interface TagSettingFlow {
@@ -198,8 +200,8 @@ private fun tagFieldsProvider(): List<FEField> {
     return listOf(
         FEField(
             id = SETTING_EDITOR_TAG,
-            labelId = R.string.tag_setting_tag_name,
-            hintId = R.string.tag_setting_tag_name_hint,
+            labelId = Res.string.tag_setting_tag_name,
+            hintId = Res.string.tag_setting_tag_name_hint,
             type = FEField.FieldType.Text,
         )
     )

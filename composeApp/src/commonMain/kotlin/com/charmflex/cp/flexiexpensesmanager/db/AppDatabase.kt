@@ -21,11 +21,11 @@ import com.charmflex.cp.flexiexpensesmanager.features.budget.data.entities.Categ
 import com.charmflex.cp.flexiexpensesmanager.features.budget.data.entities.MonthlyCategoryBudgetEntity
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.daos.CurrencyDao
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateEntity
-import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionDao
-import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionDao
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.entities.ScheduledTransactionEntity
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.entities.ScheduledTransactionTagEntity
-import com.charmflex.flexiexpensesmanager.features.tag.data.daos.TagDao
+import com.charmflex.cp.flexiexpensesmanager.features.tag.data.daos.TagDao
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.daos.TransactionCategoryDao
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.daos.TransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.tag.data.entities.TagEntity

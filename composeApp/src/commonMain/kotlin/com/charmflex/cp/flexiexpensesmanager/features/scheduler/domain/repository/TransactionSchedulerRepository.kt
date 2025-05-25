@@ -1,8 +1,8 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository
 
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 
 internal interface TransactionSchedulerRepository {

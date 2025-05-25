@@ -1,6 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction
-
-import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
 internal interface TransactionRecordable {
     suspend fun loadTransaction(id: Long): TransactionEditorDataUI?

@@ -7,6 +7,7 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.minus
+import kotlinx.datetime.plus
 import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 import kotlin.time.Duration
@@ -35,6 +36,13 @@ internal fun LocalDate.minusMonths(months: Int): LocalDate {
 internal fun LocalDate.minusYears(years: Int): LocalDate {
     return this.minus(years, DateTimeUnit.YEAR)
 }
+
+internal fun LocalDate.plusMonths(value: Int): LocalDate = plus(value, DateTimeUnit.MONTH)
+
+fun LocalDate.plusDays(value: Int): LocalDate = plus(value, DateTimeUnit.DAY)
+
+fun LocalDate.plusYears(value: Int): LocalDate = plus(value, DateTimeUnit.YEAR)
+
 
 
 /**

@@ -1,7 +1,7 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.domain.model
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model
 
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import kotlinx.serialization.Serializable
 
 internal data class Transaction(

@@ -6,7 +6,7 @@ import androidx.room.Query
 import androidx.room.Update
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionTypeEntity
-import com.charmflex.flexiexpensesmanager.features.transactions.data.responses.TransactionResponse
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.responses.TransactionResponse
 import kotlinx.coroutines.flow.Flow
 
 @Dao

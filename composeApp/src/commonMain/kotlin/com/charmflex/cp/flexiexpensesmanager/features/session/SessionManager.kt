@@ -1,14 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.session
+package com.charmflex.cp.flexiexpensesmanager.features.session
 
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
-import javax.inject.Singleton
 
-@Singleton
-internal class SessionManager @Inject constructor(
+internal class SessionManager constructor(
 
 ) {
     private val _sessionState = MutableStateFlow<SessionState>(SessionState.None)

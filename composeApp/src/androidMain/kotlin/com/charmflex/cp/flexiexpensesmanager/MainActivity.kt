@@ -4,7 +4,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.flexiexpensesmanager.core.tracker.EventData
-import com.charmflex.flexiexpensesmanager.features.session.SessionState
+import com.charmflex.cp.flexiexpensesmanager.features.session.SessionState
 
 
 class MainActivity : ComponentActivity() {

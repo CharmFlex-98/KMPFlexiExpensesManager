@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.domain.model
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model
 
 // TODO: Need to handle locale
 internal enum class TransactionType {

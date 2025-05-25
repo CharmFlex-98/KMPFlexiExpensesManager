@@ -8,7 +8,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.SupervisorJob

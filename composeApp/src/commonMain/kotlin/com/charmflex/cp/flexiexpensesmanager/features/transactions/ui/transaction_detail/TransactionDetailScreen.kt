@@ -1,6 +1,5 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_detail
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.IconButton
@@ -8,9 +7,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.charmflex.flexiexpensesmanager.R
+import androidx.compose.ui.backhandler.BackHandler
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
@@ -18,7 +17,11 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun TransactionDetailScreen(
     viewModel: TransactionDetailViewModel
@@ -56,19 +59,19 @@ internal fun TransactionDetailScreen(
 
         val title = when (it) {
             is TransactionDetailViewState.SuccessDialog -> it.title
-            is TransactionDetailViewState.DeleteDialogState -> stringResource(id = R.string.generic_warning)
+            is TransactionDetailViewState.DeleteDialogState -> stringResource(Res.string.generic_warning)
         }
         val subtitle = when (it) {
             is TransactionDetailViewState.SuccessDialog -> it.subtitle
-            is TransactionDetailViewState.DeleteDialogState -> stringResource(id = R.string.generic_delete_warning_subtitle)
+            is TransactionDetailViewState.DeleteDialogState -> stringResource(Res.string.generic_delete_warning_subtitle)
         }
         val positiveButtonText = when (it) {
-            is TransactionDetailViewState.SuccessDialog -> stringResource(id = R.string.generic_back_to_home)
-            is TransactionDetailViewState.DeleteDialogState -> stringResource(id = R.string.generic_yes)
+            is TransactionDetailViewState.SuccessDialog -> stringResource(Res.string.generic_back_to_home)
+            is TransactionDetailViewState.DeleteDialogState -> stringResource(Res.string.generic_yes)
         }
         val negativeButtonText = when (it) {
             is TransactionDetailViewState.SuccessDialog -> null
-            is TransactionDetailViewState.DeleteDialogState -> stringResource(id = R.string.generic_cancel)
+            is TransactionDetailViewState.DeleteDialogState -> stringResource(Res.string.generic_cancel)
         }
         SGActionDialog(
             title = title,
@@ -113,7 +116,7 @@ private fun TransactionDetailTopBar(
     allowEdit: Boolean
 ) {
     BasicTopBar(
-        stringResource(id = R.string.transaction_detail_screen_title),
+        stringResource(Res.string.transaction_detail_screen_title),
         actions = {
             Row {
                 if (allowEdit) IconButton(onClick = onEdit) {

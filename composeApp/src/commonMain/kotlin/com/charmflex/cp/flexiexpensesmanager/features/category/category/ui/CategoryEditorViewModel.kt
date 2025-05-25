@@ -6,7 +6,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinx.coroutines.flow.MutableStateFlow

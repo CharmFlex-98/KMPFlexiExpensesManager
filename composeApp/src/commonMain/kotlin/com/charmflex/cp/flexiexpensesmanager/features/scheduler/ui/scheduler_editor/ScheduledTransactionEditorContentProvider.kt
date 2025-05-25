@@ -1,20 +1,20 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
 
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
-import javax.inject.Inject
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 
-internal class ScheduledTransactionEditorContentProvider @Inject constructor() : TransactionEditorContentProvider() {
+internal class ScheduledTransactionEditorContentProvider constructor() : TransactionEditorContentProvider() {
 
     override fun getContent(transactionType: TransactionType): List<FEField> {
         val list = mutableListOf(
             FEField(
                 id = TRANSACTION_SCHEDULER_PERIOD,
-                labelId = R.string.transaction_scheduler_period,
-                hintId = R.string.transaction_scheduler_period_hint,
+                labelId = Res.string.transaction_scheduler_period,
+                hintId = Res.string.transaction_scheduler_period_hint,
                 type = FEField.FieldType.Callback
             )
         )

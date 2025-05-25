@@ -9,7 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
-import com.charmflex.flexiexpensesmanager.features.tag.ui.TagSettingScreen
+import com.charmflex.cp.flexiexpensesmanager.features.tag.ui.TagSettingScreen
 
 internal class TagDestinationBuilder : DestinationBuilder {
     private val appComponent by lazy { AppComponentProvider.instance.getAppComponent() }

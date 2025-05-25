@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.ui.schedulerList
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.schedulerList
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,14 +10,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.ExpensesHistoryItem
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.ExpensesHistoryItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x6
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.error_image
+import org.jetbrains.compose.resources.DrawableResource
 
 
 @Composable
@@ -59,7 +61,7 @@ private fun ScheduledTransactionItem(
     amount: String,
     category: String,
     type: String,
-    iconResId: Int?,
+    iconResId: DrawableResource?,
     onDelete: (Long) -> Unit,
     onClick: (Long) -> Unit
 ) {
@@ -75,7 +77,7 @@ private fun ScheduledTransactionItem(
             amount,
             category,
             type,
-            iconResId ?: R.drawable.error_image,
+            iconResId ?: Res.drawable.error_image,
             onClick
         )
         Box(

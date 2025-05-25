@@ -1,7 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases
 
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import kotlinx.coroutines.flow.firstOrNull
 

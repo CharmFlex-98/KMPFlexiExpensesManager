@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history
 
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.shrinkVertically
@@ -43,13 +43,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
@@ -64,6 +63,8 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x7
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x8
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -221,7 +222,7 @@ internal fun ExpensesHistoryItem(
     amount: String,
     category: String,
     type: String,
-    iconResId: Int,
+    iconResId: DrawableResource,
     onClick: (Long) -> Unit
 ) {
     val signedAmount = when (type) {
@@ -252,7 +253,7 @@ internal fun ExpensesHistoryItem(
         ) {
             Icon(
                 modifier = Modifier.size(grid_x4),
-                painter = painterResource(id = iconResId),
+                painter = painterResource(iconResId),
                 contentDescription = null
             )
         }

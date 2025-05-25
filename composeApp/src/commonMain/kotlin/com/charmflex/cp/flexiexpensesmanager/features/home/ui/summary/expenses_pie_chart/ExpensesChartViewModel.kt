@@ -10,8 +10,8 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

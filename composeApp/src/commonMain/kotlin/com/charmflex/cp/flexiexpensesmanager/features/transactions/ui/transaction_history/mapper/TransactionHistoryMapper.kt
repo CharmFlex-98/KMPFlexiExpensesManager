@@ -1,20 +1,22 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.mapper
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.mapper
 
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.MONTH_YEAR_PATTERN
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryHeader
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryItem
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistorySection
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryHeader
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryItem
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistorySection
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.ic_spend
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.DrawableResource
 
-internal class TransactionHistoryMapper @Inject constructor(
+internal class TransactionHistoryMapper constructor(
     private val currencyFormatter: CurrencyFormatter
 ) : Mapper<List<Transaction>, List<TransactionHistoryItem>> {
     override fun map(from: List<Transaction>): List<TransactionHistoryItem> {
@@ -59,11 +61,11 @@ internal class TransactionHistoryMapper @Inject constructor(
     }
 }
 
-private fun String.getTransactionIconResId(): Int {
+private fun String.getTransactionIconResId(): DrawableResource {
     return when (this) {
-        TransactionType.TRANSFER.name -> R.drawable.ic_transfer_icon
-        TransactionType.INCOME.name -> R.drawable.ic_income
-        else -> R.drawable.ic_spend
+        TransactionType.TRANSFER.name -> Res.drawable.ic_transfer_icon
+        TransactionType.INCOME.name -> Res.drawable.ic_income
+        else -> Res.drawable.ic_spend
     }
 }
 

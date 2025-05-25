@@ -8,7 +8,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.currency.di.modules.curren
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.schedulerModule
 import com.charmflex.cp.flexiexpensesmanager.features.backup.di.backupModule
 import com.charmflex.cp.flexiexpensesmanager.features.budget.di.modules.budgetModule
-import com.charmflex.flexiexpensesmanager.features.transactions.di.modules.transactionModule
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.di.modules.transactionModule
 import org.koin.core.module.Module
 
 fun commonModules(): List<Module> {

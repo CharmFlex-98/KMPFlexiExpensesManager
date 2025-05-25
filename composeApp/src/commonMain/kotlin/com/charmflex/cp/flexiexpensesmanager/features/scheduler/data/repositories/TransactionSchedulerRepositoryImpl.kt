@@ -1,19 +1,18 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.data.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.repositories
 
-import com.charmflex.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.daos.ScheduledTransactionTagDao
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.entities.ScheduledTransactionEntity
-import com.charmflex.flexiexpensesmanager.features.scheduler.data.mappers.ScheduledTransactionMapper
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.mappers.ScheduledTransactionMapper
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
 private const val TransactionSchedulerFile = "transaction_scheduler_file.txt"
 
-internal class TransactionSchedulerRepositoryImpl @Inject constructor(
+internal class TransactionSchedulerRepositoryImpl constructor(
     private val scheduledTransactionTagDao: ScheduledTransactionTagDao,
     private val mapper: ScheduledTransactionMapper
 ) : TransactionSchedulerRepository {

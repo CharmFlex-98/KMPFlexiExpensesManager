@@ -1,14 +1,13 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 
 // This UseCase contains insert and update
-internal class SubmitTransactionSchedulerUseCase @Inject constructor(
+internal class SubmitTransactionSchedulerUseCase constructor(
     private val transactionSchedulerRepository: TransactionSchedulerRepository,
     private val scheduledTransactionHandler: ScheduledTransactionHandler,
 ) {

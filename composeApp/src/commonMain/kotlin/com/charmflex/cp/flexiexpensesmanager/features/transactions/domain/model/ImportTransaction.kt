@@ -1,6 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.domain.model
-
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model
 
 internal data class ImportTransaction(
     val transactionName: String,

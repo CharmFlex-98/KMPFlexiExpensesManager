@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.tag.ui
+package com.charmflex.cp.flexiexpensesmanager.features.tag.ui
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -9,9 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.charmflex.flexiexpensesmanager.R
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
@@ -21,6 +19,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun TagSettingScreen(
@@ -38,7 +39,7 @@ internal fun TagSettingScreen(
     ) {
         SettingEditorScreen(
             fields = viewState.tagEditorState?.fields ?: emptyList(),
-            appBarTitle = stringResource(id = R.string.tag_setting_editor_app_bar_title_add_new),
+            appBarTitle = stringResource(Res.string.tag_setting_editor_app_bar_title_add_new),
             screenName = "TagSettingScreen",
             onTextFieldChanged = { newValue, field ->
                 viewModel.onUpdateFields(
@@ -65,7 +66,7 @@ private fun TagListScreen(
             .fillMaxWidth()
             .padding(grid_x2),
         topBar = {
-            BasicTopBar(title = stringResource(id = R.string.tag_setting_app_bar_title),
+            BasicTopBar(title = stringResource(Res.string.tag_setting_app_bar_title),
                 actions = {
                     IconButton(onClick =  { viewModel.onToggleEditor(null) }) {
                         SGIcons.Add()
@@ -91,10 +92,10 @@ private fun TagListScreen(
         when (it) {
             is TagSettingViewState.TagSettingDialogState.DeleteWarning -> {
                 SGActionDialog(
-                    title = stringResource(id = R.string.generic_warning),
-                    text = stringResource(id = R.string.generic_delete_tag_warning_subtitle, it.tag.name),
+                    title = stringResource(Res.string.generic_warning),
+                    text = stringResource(Res.string.generic_delete_tag_warning_subtitle, it.tag.name),
                     onDismissRequest = { viewModel.onCloseDialog() },
-                    primaryButtonText = stringResource(id = R.string.generic_delete)
+                    primaryButtonText = stringResource(Res.string.generic_delete)
                 ) {
                     viewModel.onConfirmDelete(tag = it.tag)
                 }

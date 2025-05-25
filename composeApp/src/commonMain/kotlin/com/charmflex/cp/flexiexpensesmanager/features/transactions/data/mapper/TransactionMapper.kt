@@ -1,13 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.data.mapper
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.data.mapper
 
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
-import com.charmflex.flexiexpensesmanager.features.transactions.data.responses.TransactionResponse
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.responses.TransactionResponse
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
 
-internal class TransactionMapper @Inject constructor() : Mapper<TransactionResponse, Transaction> {
+internal class TransactionMapper constructor() : Mapper<TransactionResponse, Transaction> {
     override fun map(from: TransactionResponse): Transaction {
         return Transaction(
             transactionId = from.transactionId,

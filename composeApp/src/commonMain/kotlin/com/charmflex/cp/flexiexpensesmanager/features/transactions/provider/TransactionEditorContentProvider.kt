@@ -1,7 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.features.transactions.provider
 
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 

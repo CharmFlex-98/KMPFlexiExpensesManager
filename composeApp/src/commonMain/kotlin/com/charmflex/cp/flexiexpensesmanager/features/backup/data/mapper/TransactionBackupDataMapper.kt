@@ -6,10 +6,10 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.flexiexpensesmanager.core.utils.SuspendableMapper
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupData
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 
 internal class TransactionBackupDataMapper(
     private val currencyFormatter: CurrencyFormatter,

@@ -1,10 +1,10 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models
 
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinx.serialization.Serializable
 
 @Serializable

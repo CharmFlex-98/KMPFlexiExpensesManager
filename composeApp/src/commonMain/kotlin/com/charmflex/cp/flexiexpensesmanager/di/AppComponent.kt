@@ -24,9 +24,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting.SettingVie
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.ExpensesHeatMapViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.SchedulerInjector
-import com.charmflex.flexiexpensesmanager.features.scheduler.ui.schedulerList.SchedulerListViewModel
-import com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModel
-import com.charmflex.flexiexpensesmanager.features.session.SessionManager
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.schedulerList.SchedulerListViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.session.SessionManager
 import com.charmflex.cp.flexiexpensesmanager.features.session.di.SessionInjector
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.di.TransactionInjector
 import com.charmflex.cp.flexiexpensesmanager.core.di.MainInjector
@@ -35,9 +35,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector
 import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
-import com.charmflex.flexiexpensesmanager.features.tag.ui.TagSettingViewModel
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewModel
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.tag.ui.TagSettingViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailViewModel
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.inject
 

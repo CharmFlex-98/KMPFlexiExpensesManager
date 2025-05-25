@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.tag.domain.model
+package com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model
 
 import kotlinx.serialization.Serializable
 

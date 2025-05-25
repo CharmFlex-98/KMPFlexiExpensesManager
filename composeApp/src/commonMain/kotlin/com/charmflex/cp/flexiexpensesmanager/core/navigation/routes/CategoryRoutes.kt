@@ -1,6 +1,6 @@
 package com.charmflex.flexiexpensesmanager.core.navigation.routes
 
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 
 internal object CategoryRoutes {
     private const val ROOT = "category"

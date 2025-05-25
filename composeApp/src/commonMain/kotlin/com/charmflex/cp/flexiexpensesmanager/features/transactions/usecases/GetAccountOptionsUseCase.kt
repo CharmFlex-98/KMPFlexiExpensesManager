@@ -1,9 +1,8 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.usecases
 
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import javax.inject.Inject
+import AccountRepository
 
-internal class GetAccountOptionsUseCase @Inject constructor(
+internal class GetAccountOptionsUseCase constructor(
     private val accountRepository: AccountRepository,
 ) {
 

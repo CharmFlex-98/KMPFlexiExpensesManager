@@ -1,30 +1,32 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor
 
+import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusMonths
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.scheduler.usecases.SubmitTransactionSchedulerUseCase
-import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.usecases.SubmitTransactionSchedulerUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
-import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_SCHEDULER_PERIOD
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorBaseViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorDataUI
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
 import kotlinx.coroutines.flow.MutableStateFlow
-import java.time.LocalDate
-import javax.inject.Inject
+import kotlinx.datetime.LocalDate
+import org.koin.core.Koin
+import org.koin.core.qualifier.named
 
 internal class SchedulerEditorViewModel(
     private val schedulerId: Long?,
@@ -54,17 +56,14 @@ internal class SchedulerEditorViewModel(
     schedulerId
 ) {
 
-    class Factory @Inject constructor(
-        @TransactionEditorProvider(TransactionEditorProvider.Type.SCHEDULER)
-        private val contentProvider: TransactionEditorContentProvider,
+    class Factory constructor(
+        private val resolver: Koin,
         private val accountRepository: AccountRepository,
         private val transactionSchedulerRepository: TransactionSchedulerRepository,
         private val submitTransactionSchedulerUseCase: SubmitTransactionSchedulerUseCase,
         private val routeNavigator: RouteNavigator,
         private val transactionCategoryRepository: TransactionCategoryRepository,
         private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
-        private val getCurrencyUseCase: GetCurrencyUseCase,
-        private val getCurrencyRateUseCase: GetCurrencyRateUseCase,
         private val currencyService: CurrencyService,
         private val currencyFormatter: CurrencyFormatter,
         private val rateExchangeManager: RateExchangeManager,
@@ -72,6 +71,7 @@ internal class SchedulerEditorViewModel(
         private val tagRepository: TagRepository,
     ) {
         fun create(schedulerId: Long?): SchedulerEditorViewModel {
+            val contentProvider = resolver.get<TransactionEditorContentProvider>(named(TransactionEditorProvider.SCHEDULER))
             return SchedulerEditorViewModel(
                 schedulerId,
                 transactionSchedulerRepository,
@@ -213,7 +213,7 @@ internal class SchedulerEditorViewModel(
     }
 
     override fun calendarSelectionRange(): ClosedRange<LocalDate> {
-        return LocalDate.now().minusYears(10)..LocalDate.now().plusMonths(3)
+        return localDateNow().minusYears(10)..localDateNow().plusMonths(3)
     }
 
     override fun allowProceed(): Boolean {

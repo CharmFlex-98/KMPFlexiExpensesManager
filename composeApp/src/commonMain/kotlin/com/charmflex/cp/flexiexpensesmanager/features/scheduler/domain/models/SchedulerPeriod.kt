@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models
 
 internal enum class SchedulerPeriod {
     DAILY, MONTHLY, YEARLY, UNKNOWN;

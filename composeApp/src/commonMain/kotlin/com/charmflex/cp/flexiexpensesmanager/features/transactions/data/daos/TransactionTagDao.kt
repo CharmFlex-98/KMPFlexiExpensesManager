@@ -4,7 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
-import com.charmflex.flexiexpensesmanager.features.tag.data.daos.TagDao
+import com.charmflex.cp.flexiexpensesmanager.features.tag.data.daos.TagDao
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionTagEntity
 

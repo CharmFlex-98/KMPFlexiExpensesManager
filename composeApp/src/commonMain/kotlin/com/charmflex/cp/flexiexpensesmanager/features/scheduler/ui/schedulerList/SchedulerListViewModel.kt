@@ -1,24 +1,24 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.ui.schedulerList
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.schedulerList
 
-import androidx.annotation.RawRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.jetbrains.compose.resources.DrawableResource
 
-internal class SchedulerListViewModel @Inject constructor(
+internal class SchedulerListViewModel  constructor(
     private val schedulerRepository: TransactionSchedulerRepository,
     private val routeNavigator: RouteNavigator,
     private val currencyFormatter: CurrencyFormatter,
@@ -42,7 +42,7 @@ internal class SchedulerListViewModel @Inject constructor(
                                 name = it.transactionName,
                                 amount = currencyFormatter.format(it.minorUnitAmount, it.currency),
                                 category = it.category?.name ?: kotlin.run {
-                                    val value = if (it.transactionType == TransactionType.TRANSFER) R.string.generic_transfer_capital else R.string.generic_unknown_capital
+                                    val value = if (it.transactionType == TransactionType.TRANSFER) Res.string.generic_transfer_capital else Res.string.generic_unknown_capital
                                     resourcesProvider.getString(value)
                                 },
                                 type = it.transactionType
@@ -109,13 +109,12 @@ internal data class ScheduledTransactionUIItem(
     val category: String,
     val type: TransactionType,
 ) {
-    @get:RawRes
-    val iconResId: Int?
+    val iconResId: DrawableResource?
         get() {
             return when (type) {
-                TransactionType.EXPENSES -> R.drawable.ic_spend
-                TransactionType.TRANSFER -> R.drawable.ic_transfer_icon
-                TransactionType.INCOME -> R.drawable.ic_income
+                TransactionType.EXPENSES -> Res.drawable.ic_spend
+                TransactionType.TRANSFER -> Res.drawable.ic_transfer_icon
+                TransactionType.INCOME -> Res.drawable.ic_income
                 else -> null
             }
         }

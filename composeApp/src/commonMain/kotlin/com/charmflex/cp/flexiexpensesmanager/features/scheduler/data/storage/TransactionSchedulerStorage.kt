@@ -1,7 +1,6 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.data.storage
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.storage
 
 import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
-import javax.inject.Inject
 
 private const val TRANSACTION_SCHEDULER_LATEST_ID = "TRANSACTION_SCHEDULER_LATEST_ID"
 internal interface TransactionSchedulerStorage {
@@ -12,7 +11,7 @@ internal interface TransactionSchedulerStorage {
 
 }
 
-internal class TransactionSchedulerStorageImpl @Inject constructor(
+internal class TransactionSchedulerStorageImpl constructor(
     private val sharedPrefs: SharedPrefs
 ) : TransactionSchedulerStorage {
     override fun setLatestId(id: Int) {

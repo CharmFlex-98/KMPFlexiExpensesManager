@@ -1,6 +1,5 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history
 
-import androidx.annotation.DrawableRes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
@@ -10,9 +9,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.MONTH_ONLY_DEFAULT_PATTE
 import com.charmflex.cp.flexiexpensesmanager.core.utils.YEAR_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.mapper.TransactionHistoryMapper
-import com.patrykandpatrick.vico.core.marker.Marker
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.mapper.TransactionHistoryMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.delay
@@ -26,6 +24,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.DrawableResource
 
 internal abstract class TransactionHistoryViewModel(
     private val mapper: TransactionHistoryMapper,
@@ -82,9 +81,9 @@ internal abstract class TransactionHistoryViewModel(
         }
     }
 
-    fun onChartItemSelected(markerEntryModel: Marker.EntryModel?) {
-//        markerEntryModel?.index?.let { _scrollToIndexEvent.tryEmit(it) }
-    }
+//    fun onChartItemSelected(markerEntryModel: LottieClipSpec.Marker.EntryModel?) {
+////        markerEntryModel?.index?.let { _scrollToIndexEvent.tryEmit(it) }
+//    }
 
     // This must be called in the init block of children classes.
     open fun refresh() {
@@ -247,7 +246,6 @@ internal data class TransactionHistorySection(
         val amount: String,
         val category: String,
         val type: String,
-        @DrawableRes
-        val iconResId: Int
+        val iconResId: DrawableResource
     )
 }

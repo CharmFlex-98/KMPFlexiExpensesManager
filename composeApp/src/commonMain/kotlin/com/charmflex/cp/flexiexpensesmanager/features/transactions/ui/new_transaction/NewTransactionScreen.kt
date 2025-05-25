@@ -72,7 +72,6 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingText
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingTextType
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20

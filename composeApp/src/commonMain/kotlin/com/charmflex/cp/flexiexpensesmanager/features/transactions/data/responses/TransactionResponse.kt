@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.data.responses
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.data.responses
 
 import androidx.room.ColumnInfo
 

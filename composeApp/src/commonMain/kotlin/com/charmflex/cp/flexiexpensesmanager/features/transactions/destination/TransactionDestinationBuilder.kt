@@ -13,7 +13,7 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRout
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorScreen
-import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailScreen
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailScreen
 
 internal class TransactionDestinationBuilder : DestinationBuilder {
     private val appComponent by lazy { AppComponentProvider.instance.getAppComponent() }

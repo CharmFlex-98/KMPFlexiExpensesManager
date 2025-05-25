@@ -40,6 +40,7 @@ kotlin {
     
     sourceSets {
         androidMain.dependencies {
+            implementation(libs.androidx.ui.text.google.fonts)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(project.dependencies.platform(libs.koin.bom))
@@ -131,6 +132,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.ui.android)
     debugImplementation(compose.uiTooling)
     add("kspAndroid", libs.room.compiler)
     add("kspIosX64", libs.room.compiler)

@@ -1,12 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.usecases
 
+import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 
-internal class SubmitTransactionUseCase @Inject constructor(
+internal class SubmitTransactionUseCase constructor(
     private val transactionRepository: TransactionRepository,
     private val accountRepository: AccountRepository
 ) {

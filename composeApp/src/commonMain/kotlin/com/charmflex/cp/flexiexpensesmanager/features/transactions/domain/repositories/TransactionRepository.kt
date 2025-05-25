@@ -1,8 +1,8 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories
 
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinx.coroutines.flow.Flow
 
 // TODO: Consider to migrate to TransactionInput

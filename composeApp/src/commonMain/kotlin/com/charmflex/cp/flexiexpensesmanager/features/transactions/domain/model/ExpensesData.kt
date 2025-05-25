@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.transactions.domain.model
+package com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model
 
 internal data class ExpensesData(
     val name: String,

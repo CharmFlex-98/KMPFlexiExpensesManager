@@ -4,7 +4,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.dao
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.entities.TransactionCategoryEntity
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.CategoryNode
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.buildCategoryTree
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository

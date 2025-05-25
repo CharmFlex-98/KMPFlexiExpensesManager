@@ -1,16 +1,19 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusDays
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusMonths
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import kotlinx.coroutines.flow.firstOrNull
-import java.time.LocalDate
-import javax.inject.Inject
+import kotlinx.datetime.LocalDate
 
 internal const val MAX_SCHEDULED_TRANSACTION_INSERTION_BATCH = 50
 
@@ -19,7 +22,7 @@ internal interface ScheduledTransactionHandler {
     suspend fun update()
 }
 
-internal class ScheduledTransactionHandlerImpl @Inject constructor(
+internal class ScheduledTransactionHandlerImpl constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionSchedulerRepository: TransactionSchedulerRepository
 ) : ScheduledTransactionHandler {
@@ -73,7 +76,7 @@ internal class ScheduledTransactionHandlerImpl @Inject constructor(
         val toInsert = mutableListOf<TransactionDomainInput>()
         val startDate = scheduledTransaction.nextUpdateDate.toLocalDate(DATE_ONLY_DEFAULT_PATTERN)!!
         var nextDate = startDate
-        while (nextDate <= LocalDate.now()) {
+        while (nextDate <= localDateNow()) {
             toInsert.add(
                 scheduledTransaction.toTransactionDomainInput(
                     nextDate.toStringWithPattern(

@@ -16,7 +16,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*

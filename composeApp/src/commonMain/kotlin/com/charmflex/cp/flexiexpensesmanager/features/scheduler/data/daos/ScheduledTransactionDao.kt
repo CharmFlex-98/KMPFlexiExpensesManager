@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.data.daos
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert

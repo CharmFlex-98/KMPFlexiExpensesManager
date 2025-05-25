@@ -10,7 +10,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY

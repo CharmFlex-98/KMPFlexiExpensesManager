@@ -1,13 +1,13 @@
-package com.charmflex.flexiexpensesmanager.features.scheduler.data.mappers
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.mappers
 
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.entities.ScheduledTransactionResponse
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
-import com.charmflex.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
-import com.charmflex.flexiexpensesmanager.features.tag.domain.model.Tag
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 
 internal class ScheduledTransactionMapper :
     Mapper<ScheduledTransactionResponse, ScheduledTransaction> {
