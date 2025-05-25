@@ -1,12 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.summary.mapper
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.lerp
 import com.charmflex.flexiexpensesmanager.core.utils.Mapper
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.Level
-import com.charmflex.flexiexpensesmanager.features.home.usecases.DailyTransaction
-import java.time.LocalDate
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.home.usecases.DailyTransaction
+import kotlinx.datetime.LocalDate
 import kotlin.math.max
 import kotlin.math.min
 
@@ -15,7 +14,7 @@ internal class TransactionHeatMapMapper(
     private val higherBoundThreshold: Float
 ) : Mapper<List<DailyTransaction>, Map<LocalDate, Color>> {
 
-    class Factory @Inject constructor() {
+    class Factory constructor() {
         fun create(
             lowerBoundThreshold: Float,
             higherBoundThreshold: Float

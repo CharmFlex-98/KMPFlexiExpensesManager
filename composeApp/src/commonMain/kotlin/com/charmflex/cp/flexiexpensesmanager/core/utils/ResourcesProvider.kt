@@ -1,17 +1,13 @@
-package com.charmflex.flexiexpensesmanager.core.utils
+package com.charmflex.cp.flexiexpensesmanager.core.utils
 
-import android.content.Context
-import android.graphics.drawable.Drawable
-import javax.inject.Inject
-
-internal class ResourcesProvider @Inject constructor(
-    val appContext: Context
+import kotlinx.coroutines.runBlocking
+import org.jetbrains.compose.resources.StringResource
+`
+internal class ResourcesProvider(
 ) {
-    fun getString(resId: Int): String {
-        return appContext.resources.getString(resId)
-    }
-
-    fun getDrawable(drawableId: Int): Drawable {
-        return appContext.resources.getDrawable(drawableId)
+    fun getString(resId: StringResource): String {
+        return runBlocking {
+            org.jetbrains.compose.resources.getString(resId)
+        }
     }
 }

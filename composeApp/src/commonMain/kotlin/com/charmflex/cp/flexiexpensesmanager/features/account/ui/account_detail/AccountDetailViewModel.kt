@@ -1,11 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.account.ui.account_detail
+package com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail
 
+import AccountRepository
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryViewModel
@@ -17,9 +17,8 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class AccountDetailViewModel @Inject constructor(
+internal class AccountDetailViewModel (
     private val accountRepository: AccountRepository,
     routeNavigator: RouteNavigator,
     private val accountId: Int,
@@ -27,7 +26,7 @@ internal class AccountDetailViewModel @Inject constructor(
     private val transactionRepository: TransactionRepository,
     dateFilter: DateFilter?
 ) : TransactionHistoryViewModel(mapper, routeNavigator) {
-    class Factory @Inject constructor(
+    class Factory(
         private val accountRepository: AccountRepository,
         private val routeNavigator: RouteNavigator,
         private val transactionRepository: TransactionRepository,
@@ -41,7 +40,9 @@ internal class AccountDetailViewModel @Inject constructor(
     private val _dateFilter: MutableStateFlow<DateFilter> = MutableStateFlow(dateFilter ?: DateFilter.Monthly(0))
     val dateFilter = _dateFilter.asStateFlow()
 
-    private val _accountDetailViewState: MutableStateFlow<AccountDetailViewState> = MutableStateFlow(AccountDetailViewState())
+    private val _accountDetailViewState: MutableStateFlow<AccountDetailViewState> = MutableStateFlow(
+        AccountDetailViewState()
+    )
     val accountDetailViewState = _accountDetailViewState.asStateFlow()
 
     init {

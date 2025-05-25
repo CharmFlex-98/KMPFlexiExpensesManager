@@ -1,13 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.budget.ui.stats
+package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetStatViewState
 import com.charmflex.flexiexpensesmanager.core.utils.SuspendableMapper
-import com.charmflex.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 
-internal class CategoryBudgetExpandableSectionMapper @Inject constructor(
+internal class CategoryBudgetExpandableSectionMapper(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository
 ) :

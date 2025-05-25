@@ -18,6 +18,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.Loader
 import com.charmflex.cp.flexiexpensesmanager.ui_common.Money3DAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
@@ -38,11 +39,10 @@ internal fun LandingScreen(
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
     val snackBarState by landingScreenViewModel.snackBarState.collectAsState()
-    val localContext = LocalContext.current
     val viewState by landingScreenViewModel.landingViewState.collectAsState()
 
     LaunchedEffect(key1 = Unit) {
-        landingScreenViewModel.onTrySignIn(localContext)
+        landingScreenViewModel.onTrySignIn()
     }
 
     LaunchedEffect(key1 = snackBarState) {
@@ -98,7 +98,7 @@ internal fun LandingScreen(
                 modifier = Modifier.fillMaxWidth(),
                 text = "Login with Google"
             ) {
-                landingScreenViewModel.onGoogleLogin(localContext)
+                landingScreenViewModel.onGoogleLogin()
             }
             SGLargeSecondaryButton(
                 modifier = Modifier.fillMaxWidth(),

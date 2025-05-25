@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.account
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.account
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,8 +19,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
@@ -32,6 +30,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun AccountHomeScreen(viewModel: AccountHomeViewModel) {
@@ -56,7 +57,7 @@ internal fun AccountHomeScreen(viewModel: AccountHomeViewModel) {
             horizontalArrangement = Arrangement.Start,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Text(text = "${stringResource(id = R.string.generix_total_asset)}: $totalAsset")
+            Text(text = "${stringResource(Res.string.generix_total_asset)}: $totalAsset")
             IconButton(
                 modifier = Modifier.padding(horizontal = grid_x1),
                 onClick = { viewModel.toggleHideInfo() }) {

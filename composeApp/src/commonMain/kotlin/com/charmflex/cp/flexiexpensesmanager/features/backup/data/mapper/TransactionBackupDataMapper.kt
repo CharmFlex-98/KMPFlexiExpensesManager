@@ -1,18 +1,17 @@
-package com.charmflex.flexiexpensesmanager.features.backup.data.mapper
+package com.charmflex.cp.flexiexpensesmanager.features.backup.data.mapper
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.flexiexpensesmanager.core.utils.SuspendableMapper
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
-import com.charmflex.flexiexpensesmanager.features.backup.TransactionBackupData
+import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupData
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import java.time.LocalDate
-import javax.inject.Inject
 
-internal class TransactionBackupDataMapper @Inject constructor(
+internal class TransactionBackupDataMapper(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository
 ) : SuspendableMapper<Pair<List<Transaction>, Map<Int, TransactionCategory>>, List<TransactionBackupData>> {
@@ -43,7 +42,7 @@ internal class TransactionBackupDataMapper @Inject constructor(
                 accountAmount = currencyFormatter.formatWithoutSymbol(it.accountMinorUnitAmount, accountCurrency).toDouble(),
                 primaryAmount = currencyFormatter.formatWithoutSymbol(it.primaryMinorUnitAmount, primaryCurrency).toDouble(),
                 amount = currencyFormatter.formatWithoutSymbol(it.minorUnitAmount, it.currency).toDouble(), // TODO: Need to use default fraction
-                date = it.transactionDate.toLocalDate(DATE_ONLY_DEFAULT_PATTERN) ?: LocalDate.now(),
+                date = it.transactionDate.toLocalDate(DATE_ONLY_DEFAULT_PATTERN) ?: localDateNow(),
                 categoryColumns = generateCategoryColumns(currentCategory?.let { res -> mutableListOf(res.name) } ?: mutableListOf(),  transactionCategoryMap, currentCategory).reversed(),
                 tags = it.tags.map { it.name }
             )

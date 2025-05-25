@@ -59,6 +59,7 @@ kotlin {
             implementation(libs.compose.dialog.state)
             implementation(libs.compose.dialog.clock)
             implementation(libs.ktor.client.okhttp)
+            implementation(libs.posthog)
         }
         commonMain.dependencies {
             // ktor
@@ -79,7 +80,7 @@ kotlin {
             implementation(libs.vico.multiplatform)
             implementation(libs.vico.multiplatform.m3)
             implementation(libs.vico.core)
-
+            implementation(libs.coil)
 
             implementation(compose.material3)
             implementation(libs.kotlin.serialization)

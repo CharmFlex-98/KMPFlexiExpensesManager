@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.currency.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models
 
 internal data class UserCurrency(
     val name: String,

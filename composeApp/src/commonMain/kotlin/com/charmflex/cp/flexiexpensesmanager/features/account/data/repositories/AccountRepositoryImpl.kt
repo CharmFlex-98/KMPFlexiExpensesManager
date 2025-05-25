@@ -10,9 +10,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.Acco
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.responses.AccountResponse
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroupSummary
-import com.charmflex.flexiexpensesmanager.features.currency.constants.CurrencyDefaults
-import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.constants.CurrencyDefaults
+import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map

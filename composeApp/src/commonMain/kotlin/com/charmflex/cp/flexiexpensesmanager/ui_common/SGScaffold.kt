@@ -38,7 +38,7 @@ fun SGScaffold(
     content: @Composable ColumnScope.() -> Unit
 ) {
     LaunchedEffect(Unit) {
-        PostHog.screen(screenName)
+        uiEventTrack(screenName)
     }
     Box {
         Scaffold(

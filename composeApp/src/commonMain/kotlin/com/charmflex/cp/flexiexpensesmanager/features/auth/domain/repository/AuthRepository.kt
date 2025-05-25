@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository
 
-import com.charmflex.flexiexpensesmanager.features.auth.domain.model.UserInfo
+import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.model.UserInfo
 
 internal interface AuthRepository {
     suspend fun upsertUser(

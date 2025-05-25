@@ -1,10 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.currency.service
+package com.charmflex.cp.flexiexpensesmanager.features.currency.service
 
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.CurrencyRate
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.CurrencyRate
 
-internal class CurrencyService @Inject constructor(
+internal class CurrencyService(
     private val currencyRepository: CurrencyRepository
 ) {
     suspend fun getAllCurrencies(): List<String> {

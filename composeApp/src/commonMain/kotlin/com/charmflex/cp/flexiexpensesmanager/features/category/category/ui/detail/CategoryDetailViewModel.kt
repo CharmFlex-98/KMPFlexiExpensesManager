@@ -9,8 +9,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.usecases.GetTransactionListByCategoryUseCase
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetTransactionListByCategoryUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository

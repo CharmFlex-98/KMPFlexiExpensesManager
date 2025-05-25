@@ -1,15 +1,14 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.history
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.history
 
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.mapper.TransactionHistoryMapper
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryViewModel
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-internal class TransactionHomeViewModel @Inject constructor(
+internal class TransactionHomeViewModel constructor(
     private val transactionRepository: TransactionRepository,
     mapper: TransactionHistoryMapper,
     routeNavigator: RouteNavigator,

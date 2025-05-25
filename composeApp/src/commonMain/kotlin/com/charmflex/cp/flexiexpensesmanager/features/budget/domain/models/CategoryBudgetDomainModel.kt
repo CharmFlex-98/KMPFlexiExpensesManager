@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.budget.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.budget.domain.models
 
 internal data class CategoryBudgetDomainModel(
     val id: Int,

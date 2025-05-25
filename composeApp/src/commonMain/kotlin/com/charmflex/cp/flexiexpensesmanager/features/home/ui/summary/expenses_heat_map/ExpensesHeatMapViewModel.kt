@@ -1,19 +1,16 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.features.home.ui.summary.mapper.TransactionHeatMapMapper
-import com.charmflex.flexiexpensesmanager.features.home.usecases.GetExpensesDailyMedianRatioUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper.TransactionHeatMapMapper
+import com.charmflex.cp.flexiexpensesmanager.features.home.usecases.GetExpensesDailyMedianRatioUseCase
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import java.time.LocalDate
-import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
+import kotlinx.datetime.LocalDate
 
-internal class ExpensesHeatMapViewModel @Inject constructor(
+internal class ExpensesHeatMapViewModel  constructor(
     private val getExpensesDailyMedianRatioUseCase: GetExpensesDailyMedianRatioUseCase,
     private val mapperFactory: TransactionHeatMapMapper.Factory
 ) : ViewModel() {

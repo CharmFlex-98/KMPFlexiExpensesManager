@@ -1,13 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.currency.data.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.currency.data.repositories
 
-import com.charmflex.flexiexpensesmanager.features.currency.data.daos.CurrencyDao
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.daos.CurrencyDao
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.local.CurrencyKeyStorage
-import com.charmflex.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateEntity
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateEntity
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 
 private const val DEFAULT_PRIMARY_CURRENCY_CODE = "USD"
-internal class UserCurrencyRepositoryImpl @Inject constructor(
+internal class UserCurrencyRepositoryImpl constructor(
     private val currencyKeyStorage: CurrencyKeyStorage,
     private val currencyDao: CurrencyDao
 ) : UserCurrencyRepository {

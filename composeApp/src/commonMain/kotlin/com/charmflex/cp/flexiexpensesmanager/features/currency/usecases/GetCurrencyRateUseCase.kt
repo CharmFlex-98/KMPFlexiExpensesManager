@@ -1,13 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.currency.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.currency.usecases
 
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
 
 // Use case to get currency rate
 // 1. Check user custom-set currency rate, if not found
 // 2. Use real time currency rate saved earlier
-internal class GetCurrencyRateUseCase @Inject constructor(
+internal class GetCurrencyRateUseCase  constructor(
     private val userCurrencyRepository: UserCurrencyRepository,
     private val currencyService: CurrencyService
 ) {

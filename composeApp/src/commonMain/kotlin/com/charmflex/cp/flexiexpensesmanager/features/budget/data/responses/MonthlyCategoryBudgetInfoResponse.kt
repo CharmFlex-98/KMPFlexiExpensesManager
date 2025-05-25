@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.budget.data.responses
+package com.charmflex.cp.flexiexpensesmanager.features.budget.data.responses
 
 import androidx.room.ColumnInfo
 import androidx.room.Embedded

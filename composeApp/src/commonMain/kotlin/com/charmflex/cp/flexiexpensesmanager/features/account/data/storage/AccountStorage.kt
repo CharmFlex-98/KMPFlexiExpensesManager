@@ -1,9 +1,8 @@
 package com.charmflex.cp.flexiexpensesmanager.features.account.data.storage
 
 import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
-import javax.inject.Inject
 
-private val ACCOUNT_INFO_HIDE_KEY = "ACCOUNT_INFO_HIDE_KEY"
+private const val ACCOUNT_INFO_HIDE_KEY = "ACCOUNT_INFO_HIDE_KEY"
 
 internal interface AccountStorage {
     suspend fun hideAccountInfo()
@@ -13,7 +12,7 @@ internal interface AccountStorage {
     suspend fun getAccountInfoHidden(): Boolean
 }
 
-internal class AccountStorageImpl @Inject constructor(
+internal class AccountStorageImpl  constructor(
     private val sharedPrefs: SharedPrefs
 ) : AccountStorage {
     override suspend fun hideAccountInfo() {

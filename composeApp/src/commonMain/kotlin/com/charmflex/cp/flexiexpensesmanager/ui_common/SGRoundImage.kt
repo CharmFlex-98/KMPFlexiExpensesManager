@@ -1,15 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
-import android.net.Uri
-import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
@@ -17,21 +12,21 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import coil.compose.AsyncImage
-import coil.request.ImageRequest
-import com.charmflex.flexiexpensesmanager.R
+import coil3.compose.AsyncImage
+import coil3.compose.LocalPlatformContext
+import coil3.request.ImageRequest
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.icon_people
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun SGRoundImage(
     modifier: Modifier = Modifier,
-    @DrawableRes
-    placeHolderIconId: Int? = null,
-    @DrawableRes
-    errorIconId: Int? = null,
-    @DrawableRes
-    fallbackIconId: Int = R.drawable.icon_people,
+    placeHolderIconId: DrawableResource? = null,
+    errorIconId: DrawableResource? = null,
+    fallbackIconId: DrawableResource = Res.drawable.icon_people,
     source: Any?,
 ) {
     SGImage(modifier = modifier, placeHolderIconId = placeHolderIconId, errorIconId = errorIconId, fallbackIconId = fallbackIconId, source = source, shape = CircleShape)
@@ -40,12 +35,9 @@ fun SGRoundImage(
 @Composable
 fun SGRoundCornerImage(
     modifier: Modifier = Modifier,
-    @DrawableRes
-    placeHolderIconId: Int? = null,
-    @DrawableRes
-    errorIconId: Int? = null,
-    @DrawableRes
-    fallbackIconId: Int = R.drawable.icon_people,
+    placeHolderIconId: DrawableResource? = null,
+    errorIconId: DrawableResource? = null,
+    fallbackIconId: DrawableResource = Res.drawable.icon_people,
     source: Any?,
 ) {
     SGImage(modifier = modifier, source = source, placeHolderIconId = placeHolderIconId, errorIconId = errorIconId, fallbackIconId = fallbackIconId, shape = RoundedCornerShape(
@@ -57,23 +49,19 @@ fun SGRoundCornerImage(
 fun SGImage(
     modifier: Modifier = Modifier,
     source: Any?,
-    @DrawableRes
-    placeHolderIconId: Int? = null,
-    @DrawableRes
-    errorIconId: Int? = null,
-    @DrawableRes
-    fallbackIconId: Int = R.drawable.icon_people, // change later
+    placeHolderIconId: DrawableResource? = null,
+    errorIconId: DrawableResource? = null,
+    fallbackIconId: DrawableResource = Res.drawable.icon_people, // change later
     shape: Shape? = null
 ) {
+    val context = LocalPlatformContext.current
     AsyncImage(
-        model = ImageRequest.Builder(LocalContext.current)
+        model = ImageRequest.Builder(context)
             .data(source)
-            .apply {
-                if (placeHolderIconId != null) placeholder(placeHolderIconId)
-                if (errorIconId != null) error(errorIconId)
-            }
-            .fallback(fallbackIconId)
             .build(),
+        placeholder = placeHolderIconId?.let { painterResource(placeHolderIconId) },
+        fallback = painterResource(fallbackIconId),
+        error = errorIconId?.let { painterResource(errorIconId) },
         contentScale = ContentScale.Crop,
         modifier = modifier
             .run {
@@ -124,13 +112,3 @@ fun InvalidOverlay(
 private fun RoundImagePreview() {
     SGRoundImage(source = "source/sdk/ui-common/src/main/assets/sample.jpeg")
 }
-
-
-@Composable
-fun rememberImageLoaderState(): State<ImageLoaderState> {
-    return remember { mutableStateOf<ImageLoaderState>(ImageLoaderState()) }
-}
-
-data class ImageLoaderState(
-    val uri: Uri? = null
-)

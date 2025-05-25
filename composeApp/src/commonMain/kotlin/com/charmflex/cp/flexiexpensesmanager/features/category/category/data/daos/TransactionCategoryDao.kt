@@ -1,10 +1,10 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.data.daos
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.entities.TransactionCategoryEntity
-import com.charmflex.flexiexpensesmanager.features.category.category.data.responses.CategoryTransactionAmountResponse
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.responses.CategoryTransactionAmountResponse
 import kotlinx.coroutines.flow.Flow
 
 @Dao

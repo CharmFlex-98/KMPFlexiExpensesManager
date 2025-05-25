@@ -1,13 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.dashboard
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.dashboard
 
 import androidx.lifecycle.ViewModel
-import com.charmflex.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import javax.inject.Inject
 
-internal class DashboardViewModel @Inject constructor() : ViewModel(), HomeItemRefreshable {
+internal class DashboardViewModel constructor() : ViewModel(), HomeItemRefreshable {
     private val _plugins = MutableStateFlow<List<DashboardPlugin>>(emptyList())
     val plugins = _plugins.asStateFlow()
 

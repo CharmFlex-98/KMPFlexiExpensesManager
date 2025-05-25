@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.currency.domain.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories
 
 
 internal interface UserCurrencyRepository {

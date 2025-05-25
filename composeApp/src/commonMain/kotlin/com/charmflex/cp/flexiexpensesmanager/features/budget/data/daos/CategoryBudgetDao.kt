@@ -1,12 +1,12 @@
-package com.charmflex.flexiexpensesmanager.features.budget.data.daos
+package com.charmflex.cp.flexiexpensesmanager.features.budget.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.charmflex.cp.flexiexpensesmanager.features.budget.data.entities.CategoryBudgetEntity
-import com.charmflex.flexiexpensesmanager.features.budget.data.responses.CategoryBudgetResponse
-import com.charmflex.flexiexpensesmanager.features.budget.data.responses.MonthlyCategoryBudgetInfoResponse
+import com.charmflex.cp.flexiexpensesmanager.features.budget.data.responses.CategoryBudgetResponse
+import com.charmflex.cp.flexiexpensesmanager.features.budget.data.responses.MonthlyCategoryBudgetInfoResponse
 import kotlinx.coroutines.flow.Flow
 
 @Dao

@@ -7,7 +7,7 @@ import androidx.credentials.GetCredentialRequest
 import androidx.credentials.GetCredentialResponse
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService
 import com.charmflex.flexiexpensesmanager.features.auth.service.sign_in.SignInState
-import com.charmflex.flexiexpensesmanager.features.auth.storage.AuthStorage
+import com.charmflex.cp.flexiexpensesmanager.features.auth.storage.AuthStorage
 import com.google.android.libraries.identity.googleid.GetGoogleIdOption
 import com.google.android.libraries.identity.googleid.GoogleIdTokenCredential
 import com.google.android.libraries.identity.googleid.GoogleIdTokenParsingException

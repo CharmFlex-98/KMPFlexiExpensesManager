@@ -1,6 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.features.backup.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -10,7 +9,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
@@ -24,14 +22,12 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.graphics.Color
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentPicker
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
-import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportDataViewModel
-import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportDataViewState
-import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportedData
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
@@ -51,6 +47,7 @@ import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
 
@@ -98,7 +95,7 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
         TransparentBackground(0.4f) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    LinearProgressIndicator(
+                    androidx.compose.material3.LinearProgressIndicator(
                         progress = { viewState.progress },
                     )
                     if (viewState.progress == 0f) FEBody3(
@@ -251,7 +248,7 @@ private fun ColumnScope.LoadedScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = grid_x1),
-                text = stringResource(id = R.string.backup_save_data_button),
+                text = stringResource(Res.string.backup_save_data_button),
                 enabled = viewState.missingData.isEmpty()
             ) {
                 onSave()
@@ -265,8 +262,8 @@ private fun ColumnScope.LoadedScreen(
                     .padding(grid_x2),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                FECallout3(text = stringResource(id = R.string.error_fix_progress_bar_label))
-                LinearProgressIndicator(
+                FECallout3(text = stringResource(Res.string.error_fix_progress_bar_label))
+                androidx.compose.material3.LinearProgressIndicator(
                     modifier = Modifier
                         .weight(1f)
                         .padding(horizontal = grid_x1),
@@ -287,8 +284,8 @@ private fun ColumnScope.LoadedScreen(
                     when (item.dataType) {
                         ImportedData.MissingData.DataType.ACCOUNT_FROM, ImportedData.MissingData.DataType.ACCOUNT_TO -> {
                             val note = when (item.dataType) {
-                                ImportedData.MissingData.DataType.ACCOUNT_FROM -> stringResource(id = R.string.import_account_error_text_note_account_from)
-                                ImportedData.MissingData.DataType.ACCOUNT_TO -> stringResource(id = R.string.import_account_error_text_note_account_to)
+                                ImportedData.MissingData.DataType.ACCOUNT_FROM -> stringResource(Res.string.import_account_error_text_note_account_from)
+                                ImportedData.MissingData.DataType.ACCOUNT_TO -> stringResource(Res.string.import_account_error_text_note_account_to)
                                 else -> ""
                             }
                             FEBody2(text = "Create account: ${item.name} $note")

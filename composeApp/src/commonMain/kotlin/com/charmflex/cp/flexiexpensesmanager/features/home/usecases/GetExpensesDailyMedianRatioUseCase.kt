@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.home.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.home.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
@@ -6,10 +6,9 @@ import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Tra
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import java.time.LocalDate
-import javax.inject.Inject
+import kotlinx.datetime.LocalDate
 
-internal class GetExpensesDailyMedianRatioUseCase @Inject constructor(
+internal class GetExpensesDailyMedianRatioUseCase constructor(
     private val transactionRepository: TransactionRepository
 ) {
     operator fun invoke(): Flow<List<DailyTransaction>> {

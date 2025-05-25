@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.account.ui.account_detail
+package com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth

@@ -1,7 +1,8 @@
 package com.charmflex.cp.flexiexpensesmanager.core.di
 
-import com.charmflex.cp.flexiexpensesmanager.core.network.NetworkClientBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorageImpl
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.DeviceIdGenerator
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
@@ -63,7 +64,8 @@ annotation class Dispatcher(val dispatcherType: Type) {
     }
 }
 
-fun mainModule() = module {
+val mainModule = module {
+    singleOf(::ResourcesProvider)
 //    singleOf(::FileStorageImpl) {  }
 //    singleOf(::DefaultNetworkClientBuilder) { bind<NetworkClientBuilder>() }
 //    singleOf(::TransactionBackupManagerImpl) { }

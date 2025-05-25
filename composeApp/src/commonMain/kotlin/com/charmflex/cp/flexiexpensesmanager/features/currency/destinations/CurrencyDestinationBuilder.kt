@@ -10,8 +10,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
-import com.charmflex.flexiexpensesmanager.features.currency.ui.CurrencySettingScreen
-import com.charmflex.flexiexpensesmanager.features.currency.ui.UserCurrencyScreen
+import com.charmflex.cp.flexiexpensesmanager.features.currency.ui.CurrencySettingScreen
+import com.charmflex.cp.flexiexpensesmanager.features.currency.ui.UserCurrencyScreen
 
 internal class CurrencyDestinationBuilder : DestinationBuilder {
     private val appComponent = AppComponentProvider.instance.getAppComponent()

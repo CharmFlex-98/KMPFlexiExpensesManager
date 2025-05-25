@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.dashboard
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.dashboard
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

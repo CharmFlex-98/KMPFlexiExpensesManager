@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.ui.stat
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -13,9 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
@@ -27,6 +25,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +40,7 @@ internal fun CategoryStatScreen(viewModel: CategoryStatViewModel) {
         isLoading = viewState.isLoading,
         topBar = {
             BasicTopBar(
-                title = stringResource(id = R.string.category_stat_detail_topbar_title)
+                title = stringResource(Res.string.category_stat_detail_topbar_title)
             )
         },
         screenName = "CategoryStatScreen"
@@ -57,7 +58,7 @@ internal fun CategoryStatScreen(viewModel: CategoryStatViewModel) {
                     modifier = Modifier.padding(vertical = grid_x0_5),
                     selected = viewState.selectedTab == tabItem,
                     onClick = { viewModel.onTabChanged(tabItem) }) {
-                    FEHeading4(text = stringResource(id = tabItem.nameId))
+                    FEHeading4(text = stringResource(tabItem.nameId))
                     FEMetaData1(
                         text = if (tabItem == CategoryStatTabItem.INCOME) viewState.incomeCategoryStats.amount else viewState.expensesCategoryStats.amount,
                         color = Color.Gray

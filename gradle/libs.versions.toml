@@ -20,6 +20,9 @@ compose-navigation-ver = "2.9.0-beta01"
 ksp_version = "2.1.20-2.0.1"
 compottie = "2.0.0-rc03"
 
+# posthog version
+posthog_version = "3.+"
+
 #currency
 fluid_currency_version = "0.13.0"
 
@@ -113,7 +116,7 @@ material = "1.10.0"
 compose_dialog_version = "1.2.0"
 
 # Coil
-coil_version = "2.5.0"
+coil_version = "3.2.0"
 
 # kotlin-serialization version
 kotlin_serialization_version = "1.6.3"
@@ -125,8 +128,6 @@ androidx_credential_version = "1.3.0"
 credentials-play-services-auth_version = "1.3.0"
 identity_google_id_version = "1.1.1"
 
-# posthog version
-posthog_version = "3.+"
 
 [libraries]
 # ktor
@@ -230,7 +231,7 @@ moshi-kotlin-codegen = { module = 'com.squareup.moshi:moshi-kotlin-codegen', ver
 androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 
 # coil
-coil = { module = "io.coil-kt:coil-compose", version.ref = 'coil_version'}
+coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = 'coil_version'}
 androidx-ui-text-google-fonts = { group = "androidx.compose.ui", name = "ui-text-google-fonts", version.ref = "uiTextGoogleFonts" }
 
 [plugins]

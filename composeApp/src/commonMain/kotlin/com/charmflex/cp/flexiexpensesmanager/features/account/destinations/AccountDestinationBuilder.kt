@@ -15,7 +15,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.AccountEditorScreen
-import com.charmflex.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailScreen
+import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailScreen
 
 internal class AccountDestinationBuilder(
     private val navController: NavController

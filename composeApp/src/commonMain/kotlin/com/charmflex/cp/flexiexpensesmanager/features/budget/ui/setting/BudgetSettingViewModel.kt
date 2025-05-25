@@ -1,28 +1,28 @@
-package com.charmflex.flexiexpensesmanager.features.budget.ui.setting
+package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
+import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class BudgetSettingViewModel @Inject constructor(
+internal class BudgetSettingViewModel (
     private val budgetRepository: CategoryBudgetRepository,
     private val transactionCategoryRepository: TransactionCategoryRepository,
     private val routeNavigator: RouteNavigator,
@@ -59,7 +59,10 @@ internal class BudgetSettingViewModel @Inject constructor(
                             BudgetSettingViewState.BudgetListItem(
                                 it.id,
                                 it.categoryName,
-                                currencyFormatter.format(it.defaultBudgetInCent, userCurrencyRepository.getPrimaryCurrency())
+                                currencyFormatter.format(
+                                    it.defaultBudgetInCent,
+                                    userCurrencyRepository.getPrimaryCurrency()
+                                )
                             )
                         }
                     )
@@ -112,7 +115,11 @@ internal class BudgetSettingViewModel @Inject constructor(
     fun onCallBackAction(feField: FEField) {
         when (feField.id) {
             SETTING_EDITOR_BUDGET_CATEGORY -> {
-                toggleBottomSheet(BudgetSettingViewState.BudgetSettingBottomSheetState.CategoryOption(feField))
+                toggleBottomSheet(
+                    BudgetSettingViewState.BudgetSettingBottomSheetState.CategoryOption(
+                        feField
+                    )
+                )
             }
         }
     }
@@ -165,14 +172,14 @@ internal data class BudgetSettingViewState(
     val fields: List<FEField> = listOf(
         FEField(
             id = SETTING_EDITOR_BUDGET_CATEGORY,
-            labelId = R.string.setting_editor_budget_category_label,
-            hintId = R.string.setting_editor_budget_category_hint,
+            labelId = Res.string.setting_editor_budget_category_label,
+            hintId = Res.string.setting_editor_budget_category_hint,
             type = FEField.FieldType.Callback,
         ),
         FEField(
             id = SETTING_EDITOR_BUDGET_AMOUNT,
-            labelId = R.string.setting_editor_budget_amount_label,
-            hintId = R.string.setting_editor_budget_amount_hint,
+            labelId = Res.string.setting_editor_budget_amount_label,
+            hintId = Res.string.setting_editor_budget_amount_hint,
             type = FEField.FieldType.Currency,
         )
     ),

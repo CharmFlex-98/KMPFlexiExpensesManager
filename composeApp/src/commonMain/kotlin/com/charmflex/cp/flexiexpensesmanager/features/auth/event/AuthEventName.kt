@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.auth.event
+package com.charmflex.cp.flexiexpensesmanager.features.auth.event
 
 internal object AuthEventName {
     const val USER_ON_GUEST_LOGIN = "USER_ON_GUEST_LOGIN"

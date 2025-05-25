@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.history
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.history
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize

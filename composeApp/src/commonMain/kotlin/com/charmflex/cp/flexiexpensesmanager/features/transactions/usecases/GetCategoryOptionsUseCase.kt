@@ -1,6 +1,6 @@
 package com.charmflex.flexiexpensesmanager.features.transactions.usecases
 
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import javax.inject.Inject
 
 internal class GetCategoryOptionsUseCase @Inject constructor(

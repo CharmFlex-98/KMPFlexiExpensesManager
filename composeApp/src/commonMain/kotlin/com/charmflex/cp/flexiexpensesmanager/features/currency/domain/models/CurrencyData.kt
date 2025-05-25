@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.currency.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models
 
 import kotlinx.serialization.Serializable
 

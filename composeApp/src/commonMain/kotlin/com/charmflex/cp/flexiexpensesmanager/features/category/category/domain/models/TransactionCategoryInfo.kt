@@ -1,6 +1,6 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models
 
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.CategoryNode
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.CategoryNode
 
 internal class TransactionCategories(
     val items: List<BasicCategoryNode>

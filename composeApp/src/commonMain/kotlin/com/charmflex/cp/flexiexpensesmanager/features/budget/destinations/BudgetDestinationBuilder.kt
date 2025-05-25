@@ -6,9 +6,9 @@ import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
-import com.charmflex.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingScreen
-import com.charmflex.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingViewModel
-import com.charmflex.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailScreen
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingScreen
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailScreen
 import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
 
 internal class BudgetDestinationBuilder : DestinationBuilder {

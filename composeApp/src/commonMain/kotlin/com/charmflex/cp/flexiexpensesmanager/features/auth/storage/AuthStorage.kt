@@ -1,8 +1,6 @@
-package com.charmflex.flexiexpensesmanager.features.auth.storage
+package com.charmflex.cp.flexiexpensesmanager.features.auth.storage
 
 import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
-import javax.inject.Inject
-import kotlin.math.log
 
 internal interface AuthStorage {
     companion object {
@@ -15,7 +13,7 @@ internal interface AuthStorage {
     fun getLoginID(): String
 }
 
-internal class AuthStorageImpl @Inject constructor(
+internal class AuthStorageImpl(
     private val sharedPrefs: SharedPrefs
 ) : AuthStorage {
     override fun saveDeviceID(deviceID: String) {

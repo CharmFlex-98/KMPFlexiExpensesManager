@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain
 
 internal interface CategoryNode<NodeClass : CategoryNode<NodeClass>> {
     val categoryId: Int

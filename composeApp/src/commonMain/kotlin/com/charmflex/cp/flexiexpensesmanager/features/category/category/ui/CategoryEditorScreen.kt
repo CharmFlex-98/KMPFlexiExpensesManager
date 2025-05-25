@@ -1,6 +1,5 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.ui
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui
 
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -23,10 +22,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
@@ -39,8 +38,12 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.ic_arrow_next
+import org.jetbrains.compose.resources.painterResource
 
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
     val viewState by viewModel.viewState.collectAsState()
@@ -137,7 +140,7 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                                         SGIcons.Delete()
                                     }
                                     if (it.allowSubCategory) Icon(
-                                        painter = painterResource(id = R.drawable.ic_arrow_next),
+                                        painter = painterResource(Res.drawable.ic_arrow_next),
                                         contentDescription = ""
                                     )
                                 }

@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.budget.ui.setting
+package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
@@ -12,8 +12,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.CategorySelectionBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
@@ -25,6 +23,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,7 +48,7 @@ internal fun BudgetSettingScreen(
     ) {
         SettingEditorScreen(
             fields = viewState.fields,
-            appBarTitle = stringResource(id = R.string.budget_setting_add_new_budget_app_title),
+            appBarTitle = stringResource(Res.string.budget_setting_add_new_budget_app_title),
             onTextFieldChanged = { newValue, field ->
                 budgetSettingViewModel.onFieldValueChanged(field, newValue)
             },
@@ -95,7 +96,7 @@ private fun BudgetListScreen(
             .padding(grid_x2),
         topBar = {
             BasicTopBar(
-                title = stringResource(id = R.string.budget_setting_app_bar_title),
+                title = stringResource(Res.string.budget_setting_app_bar_title),
                 actions = {
                     IconButton(onClick = { viewModel.toggleEditor(true) }) {
                         SGIcons.Add()

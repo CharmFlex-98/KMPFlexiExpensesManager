@@ -1,18 +1,17 @@
-package com.charmflex.flexiexpensesmanager.features.currency.ui
+package com.charmflex.cp.flexiexpensesmanager.features.currency.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.CurrencyRate
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.CurrencyRate
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class UserCurrencyViewModel @Inject constructor(
+internal class UserCurrencyViewModel constructor(
     private val getCurrencyUseCase: GetCurrencyUseCase,
     private val routeNavigator: RouteNavigator
 ) : ViewModel() {

@@ -1,8 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.auth.domain.model
+package com.charmflex.cp.flexiexpensesmanager.features.auth.domain.model
 
-import java.time.Instant
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
-internal data class UserInfo (
+internal data class UserInfo @OptIn(ExperimentalTime::class) constructor(
     val uid: String,
     val username: String? = null,
     val email: String? = null,

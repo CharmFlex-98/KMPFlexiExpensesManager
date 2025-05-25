@@ -6,7 +6,7 @@ import androidx.navigation.navigation
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
-import com.charmflex.flexiexpensesmanager.features.home.ui.HomeScreen
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.HomeScreen
 
 internal class HomeDestinationBuilder : DestinationBuilder {
     private val appComponent by lazy { AppComponentProvider.instance.getAppComponent() }

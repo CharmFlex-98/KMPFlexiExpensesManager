@@ -5,9 +5,9 @@ import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.get
 import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorage
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.local.CurrencyKeyStorage
-import com.charmflex.flexiexpensesmanager.features.currency.domain.models.CurrencyData
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models.CurrencyData
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
 import io.fluidsonic.currency.Currency
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.datetime.LocalDateTime

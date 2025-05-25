@@ -1,6 +1,4 @@
 package com.charmflex.cp.flexiexpensesmanager.features.account.ui
-
-import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,18 +27,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
-import com.charmflex.flexiexpensesmanager.features.account.ui.AccountEditorViewModel
-import com.charmflex.flexiexpensesmanager.features.account.ui.AccountEditorViewState
-import com.charmflex.flexiexpensesmanager.features.account.ui.BottomSheetState
-import com.charmflex.flexiexpensesmanager.features.account.ui.TapFieldType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
@@ -57,9 +51,12 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_25
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
+import org.jetbrains.compose.resources.stringResource
 
 
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 internal fun AccountEditorScreen(
     viewModel: AccountEditorViewModel
@@ -289,7 +286,7 @@ private fun ColumnScope.EditorScreen(
     if (viewState.editorState is AccountEditorViewState.AccountEditorState) {
         SGTextField(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(id = R.string.account_editor_currency_label),
+            label = stringResource(Res.string.account_editor_currency_label),
             value = viewState.editorState.currency,
             readOnly = true,
             onClicked = { onFieldTap(TapFieldType.CurrencyField) }
@@ -298,7 +295,7 @@ private fun ColumnScope.EditorScreen(
         }
         SGTextField(
             modifier = Modifier.fillMaxWidth(),
-            label = stringResource(id = R.string.account_editor_amount_label),
+            label = stringResource(Res.string.account_editor_amount_label),
             value = viewState.editorState.amount,
             keyboardType = KeyboardType.Number,
             visualTransformation = visualTransformation,

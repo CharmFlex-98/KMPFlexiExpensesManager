@@ -1,6 +1,5 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.setting
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -29,11 +28,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
@@ -43,7 +39,10 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.collectLatest
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun SettingScreen(
@@ -51,7 +50,6 @@ internal fun SettingScreen(
     onRefresh: () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
-    val localContext = LocalContext.current
     val snackbarState by viewModel.snackBarState
     val snackbarHostState = remember { SnackbarHostState() }
     val snackbarType = remember(snackbarState) {
@@ -66,7 +64,7 @@ internal fun SettingScreen(
         viewModel.onDataClearedEvent.collectLatest {
             when (it) {
                 OnDataCleared.Refresh -> onRefresh()
-                OnDataCleared.Finish -> (localContext as? Activity)?.finish()
+                OnDataCleared.Finish -> {} // (localContext as? Activity)?.finish()
             }
         }
     }
@@ -113,8 +111,8 @@ internal fun SettingScreen(
 
     viewState.dialogState?.let {
         SGDialog(
-            title = stringResource(id = it.title),
-            subtitle = stringResource(id = it.subtitle),
+            title = stringResource(it.title),
+            subtitle = stringResource(it.subtitle),
             onDismissRequest = viewModel::closeDialog
         ) {
             when (it) {
@@ -168,7 +166,7 @@ private fun ResetDataDialogContentSelection(
         Spacer(modifier = Modifier.height(grid_x1))
         SGLargePrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = stringResource(id = R.string.generic_confirm)
+            text = stringResource(Res.string.generic_confirm)
         ) {
             onFactoryResetConfirmed()
         }

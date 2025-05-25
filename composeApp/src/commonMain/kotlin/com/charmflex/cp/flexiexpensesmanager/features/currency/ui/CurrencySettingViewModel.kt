@@ -1,20 +1,19 @@
-package com.charmflex.flexiexpensesmanager.features.currency.ui
+package com.charmflex.cp.flexiexpensesmanager.features.currency.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.popWithHomeRefresh
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetAllCurrencyNamesUseCase
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetAllCurrencyNamesUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class CurrencySettingViewModel @Inject constructor(
+internal class CurrencySettingViewModel constructor(
     private val getCurrencyRateUseCase: GetCurrencyRateUseCase,
     private val getAllCurrencyNamesUseCase: GetAllCurrencyNamesUseCase,
     private val userCurrencyRepository: UserCurrencyRepository,

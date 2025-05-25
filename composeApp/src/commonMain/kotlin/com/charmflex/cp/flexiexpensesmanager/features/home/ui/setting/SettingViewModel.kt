@@ -1,11 +1,8 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.setting
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting
 
-import android.util.Log
-import androidx.annotation.StringRes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
@@ -15,22 +12,25 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
-import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.jetbrains.compose.resources.StringResource
 
-internal class SettingViewModel @Inject constructor(
+internal class SettingViewModel  constructor(
     private val routeNavigator: RouteNavigator,
     private val transactionBackupManager: TransactionBackupManager,
     private val appDataService: AppDataService,
@@ -95,13 +95,11 @@ internal class SettingViewModel @Inject constructor(
                         transactionBackupManager.write("test_export.xlsx")
                     }.fold(
                         onSuccess = {
-                            Log.d("test", "done exporting")
                             toggleLoader(false)
                             snackBarState.value = SnackBarState.Success("Done exporting")
                             onCreatedCompleted("test_export.xlsx")
                         },
                         onFailure = {
-                            Log.d("test", "fail exporting")
                             toggleLoader(false)
                             snackBarState.value =
                                 SnackBarState.Error("Error exporting: ${it.message}")
@@ -246,11 +244,11 @@ internal class SettingViewModel @Inject constructor(
                 action = SettingAction.RESET_DATA
             ),
             SettingActionable(
-                title = resourcesProvider.getString(R.string.setting_scheduler_title),
+                title = resourcesProvider.getString(Res.string.setting_scheduler_title),
                 action = SettingAction.SCHEDULER
             ),
             SettingActionable(
-                title = resourcesProvider.getString(R.string.setting_budget_title),
+                title = resourcesProvider.getString(Res.string.setting_budget_title),
                 action = SettingAction.BUDGET
             )
         )
@@ -264,15 +262,13 @@ internal data class SettingViewState(
 )
 
 internal sealed interface SettingDialogState {
-    @get:StringRes
-    val title: Int
+    val title: StringResource
 
-    @get:StringRes
-    val subtitle: Int
+    val subtitle: StringResource
 
     data class ResetDataDialogState(
-        override val title: Int = R.string.setting_factory_reset_title,
-        override val subtitle: Int = R.string.setting_factory_reset_dialog_subtitle,
+        override val title: StringResource = Res.string.setting_factory_reset_title,
+        override val subtitle: StringResource = Res.string.setting_factory_reset_dialog_subtitle,
         val selection: ResetType?
     ) : SettingDialogState {
         enum class ResetType {

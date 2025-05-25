@@ -1,10 +1,7 @@
-package com.charmflex.flexiexpensesmanager.features.currency.data.utils
+package com.charmflex.cp.flexiexpensesmanager.features.currency.data.utils
 
-import kotlinx.serialization.json.JsonElement
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
-import kotlinx.serialization.json.jsonArray
-import javax.inject.Inject
 
 internal class SQLQueryBuilder {
     fun build(jsonObject: JsonObject): String {

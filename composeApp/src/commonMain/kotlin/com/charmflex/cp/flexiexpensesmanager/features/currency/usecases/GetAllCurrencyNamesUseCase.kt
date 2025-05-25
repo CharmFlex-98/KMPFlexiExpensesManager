@@ -1,10 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.currency.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.currency.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
-import javax.inject.Inject
 
-internal class GetAllCurrencyNamesUseCase@Inject constructor(
+internal class GetAllCurrencyNamesUseCase constructor(
     private val currencyRepository: CurrencyRepository
 ) {
 

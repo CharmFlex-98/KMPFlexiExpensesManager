@@ -1,25 +1,26 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.ui.stat
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
+import org.jetbrains.compose.resources.StringResource
 import kotlin.math.round
 
-internal class CategoryStatViewModel @Inject constructor(
+internal class CategoryStatViewModel constructor(
     private val getEachRootCategoryAmountUseCase: GetEachRootCategoryAmountUseCase,
     private val currencyFormatter: CurrencyFormatter,
     private val routeNavigator: RouteNavigator,
@@ -204,9 +205,9 @@ internal data class CategoryStatViewState(
         }
 }
 
-internal enum class CategoryStatTabItem(val index: Int, val nameId: Int) {
-    INCOME(index = 0, nameId = R.string.category_stat_tab_income), EXPENSES(
+internal enum class CategoryStatTabItem(val index: Int, val nameId: StringResource) {
+    INCOME(index = 0, nameId = Res.string.category_stat_tab_income), EXPENSES(
         index = 1,
-        nameId = R.string.category_stat_tab_expenses
+        nameId = Res.string.category_stat_tab_expenses
     )
 }

@@ -1,18 +1,16 @@
-package com.charmflex.flexiexpensesmanager.features.auth.data.model
+package com.charmflex.cp.flexiexpensesmanager.features.auth.data.model
 
-import com.charmflex.flexiexpensesmanager.features.auth.data.model.UpdateUserInfoRequest.DeviceInfo
-import com.charmflex.flexiexpensesmanager.features.auth.domain.model.Device
-import com.squareup.moshi.JsonClass
-import java.time.Instant
+import com.charmflex.cp.flexiexpensesmanager.features.auth.data.model.UpdateUserInfoRequest.DeviceInfo
+import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.model.Device
+import kotlin.time.ExperimentalTime
+import kotlin.time.Instant
 
-@JsonClass(generateAdapter = true)
 internal data class UpdateUserInfoRequest(
     val uid: String,
     val username: String?,
     val email: String?,
     val deviceInfo: DeviceInfo?
 ) {
-    @JsonClass(generateAdapter = true)
     data class DeviceInfo(
         val deviceId: String,
         val brand: String,
@@ -22,8 +20,7 @@ internal data class UpdateUserInfoRequest(
     )
 }
 
-@JsonClass(generateAdapter = true)
-internal data class UpdateUserInfoResponse(
+internal data class UpdateUserInfoResponse @OptIn(ExperimentalTime::class) constructor(
     val createdAt: Instant,
     val newUser: Boolean
 )
@@ -34,6 +31,6 @@ internal fun Device.toDeviceInfo(): DeviceInfo {
         this.brand,
         this.model,
         this.sdkVersion,
-        this.androidVersion
+        this.platformVersion
     )
 }

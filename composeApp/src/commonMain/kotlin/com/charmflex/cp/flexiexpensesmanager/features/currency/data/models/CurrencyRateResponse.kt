@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.currency.data.models
+package com.charmflex.cp.flexiexpensesmanager.features.currency.data.models
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

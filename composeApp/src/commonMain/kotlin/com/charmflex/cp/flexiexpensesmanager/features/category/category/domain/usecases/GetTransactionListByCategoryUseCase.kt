@@ -1,12 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases
 
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import kotlinx.coroutines.flow.firstOrNull
-import javax.inject.Inject
 
-internal class GetTransactionListByCategoryUseCase @Inject constructor(
+internal class GetTransactionListByCategoryUseCase constructor(
     private val categoryRepository: TransactionCategoryRepository,
 ) {
     suspend operator fun invoke(

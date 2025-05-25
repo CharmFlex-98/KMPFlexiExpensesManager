@@ -1,5 +1,6 @@
-package com.charmflex.flexiexpensesmanager.features.backup.ui
+package com.charmflex.cp.flexiexpensesmanager.features.backup.ui
 
+import AccountRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
@@ -7,12 +8,12 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoute
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
-import com.charmflex.flexiexpensesmanager.features.backup.checker.ImportDataChecker
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.backup.checker.ImportDataChecker
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
@@ -21,10 +22,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDateTime
-import javax.inject.Inject
 
-internal class ImportDataViewModel @Inject constructor(
+internal class ImportDataViewModel constructor(
     private val backupManager: TransactionBackupManager,
     private val fileProvider: DocumentManager,
     private val importDataChecker: ImportDataChecker,
@@ -84,7 +83,7 @@ internal class ImportDataViewModel @Inject constructor(
         }
         viewModelScope.launch {
             toggleLoader(true)
-            val currentTime = LocalDateTime.now()
+            val currentTime = localDateTimeNow()
             val fileName = "cache_import_file_${currentTime}"
             fileProvider.writeCacheFile(importedDocument, fileName)
             resultOf {
@@ -232,9 +231,7 @@ internal data class ImportedData(
     val tags: List<RequiredDataState>
 ) {
     val isValid: Boolean
-        get() = accountFrom !is RequiredDataState.Missing || accountTo !is RequiredDataState.Missing || categoryColumns !is RequiredDataState.Missing || tags.filterIsInstance(
-            RequiredDataState.Missing::class.java
-        ).isEmpty()
+        get() = accountFrom !is RequiredDataState.Missing || accountTo !is RequiredDataState.Missing || categoryColumns !is RequiredDataState.Missing || tags.filterIsInstance<RequiredDataState.Missing>().isEmpty()
 
     sealed interface RequiredDataState {
         val name: String

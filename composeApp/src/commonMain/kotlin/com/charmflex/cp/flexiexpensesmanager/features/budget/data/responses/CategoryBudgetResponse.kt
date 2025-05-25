@@ -1,7 +1,6 @@
-package com.charmflex.flexiexpensesmanager.features.budget.data.responses
+package com.charmflex.cp.flexiexpensesmanager.features.budget.data.responses
 
 import androidx.room.ColumnInfo
-import org.checkerframework.checker.units.qual.C
 
 internal data class CategoryBudgetResponse(
     @ColumnInfo("id")

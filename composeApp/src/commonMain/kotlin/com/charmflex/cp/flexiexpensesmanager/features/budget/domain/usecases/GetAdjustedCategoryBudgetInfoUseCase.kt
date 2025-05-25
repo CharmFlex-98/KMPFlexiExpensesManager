@@ -1,14 +1,13 @@
-package com.charmflex.flexiexpensesmanager.features.budget.domain.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.budget.domain.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
-import com.charmflex.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
-import com.charmflex.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
+import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
+import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-internal class GetAdjustedCategoryBudgetInfoUseCase @Inject constructor(
+internal class GetAdjustedCategoryBudgetInfoUseCase constructor(
     private val categoryBudgetRepository: CategoryBudgetRepository
 ) {
 

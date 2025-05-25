@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.auth.data.model
+package com.charmflex.cp.flexiexpensesmanager.features.auth.data.model
 
 data class RegisterUserRequest(
     val uid: String,

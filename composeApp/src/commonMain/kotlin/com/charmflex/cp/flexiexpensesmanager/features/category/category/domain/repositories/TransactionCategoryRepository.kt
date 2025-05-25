@@ -1,9 +1,9 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories
 
-import com.charmflex.flexiexpensesmanager.features.category.category.data.repositories.CategoryAmountNode
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.repositories.CategoryAmountNode
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.Transaction
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
 import kotlinx.coroutines.flow.Flow
 
 internal interface TransactionCategoryRepository {

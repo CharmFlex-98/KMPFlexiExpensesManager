@@ -1,29 +1,28 @@
-package com.charmflex.flexiexpensesmanager.features.auth.ui.landing
+package com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing
 
-import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.AuthRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
 import com.charmflex.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.flexiexpensesmanager.core.tracker.UserData
-import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
-import com.charmflex.flexiexpensesmanager.features.auth.event.AuthEventName
+import com.charmflex.cp.flexiexpensesmanager.features.auth.event.AuthEventName
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService
 import com.charmflex.flexiexpensesmanager.features.auth.service.sign_in.SignInState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class LandingScreenViewModel @Inject constructor(
+internal class LandingScreenViewModel(
     private val routeNavigator: RouteNavigator,
     private val signInService: SignInService,
     private val authRepository: AuthRepository,
@@ -54,10 +53,10 @@ internal class LandingScreenViewModel @Inject constructor(
         }
     }
 
-    fun onTrySignIn(context: Context) {
+    fun onTrySignIn() {
         showLoading(true)
         viewModelScope.launch {
-            val state = signInService.trySignIn(context)
+            val state = signInService.trySignIn()
             when (state) {
                 is SignInState.Success -> {
                     eventTracker.track(EventData.simpleEvent(AuthEventName.USER_TRY_SIGN_IN_SUCCEEDED))
@@ -71,10 +70,10 @@ internal class LandingScreenViewModel @Inject constructor(
         }
     }
 
-    fun onGoogleLogin(context: Context) {
+    fun onGoogleLogin() {
         showLoading(true)
         viewModelScope.launch {
-            when (val signInState = signInService.signIn(context)) {
+            when (val signInState = signInService.signIn()) {
                 is SignInState.Success -> {
                     eventTracker.track(EventData.simpleEvent(AuthEventName.USER_SIGN_IN_SUCCEEDED))
                     handleGoogleSignInSuccess(signInState, false)
@@ -117,8 +116,8 @@ internal class LandingScreenViewModel @Inject constructor(
             it.copy(
                 isLoading = false,
                 loginSuccessViewState = LandingViewState.LoginSuccessViewState(
-                    title = resourcesProvider.getString(if (autoLogin) R.string.login_identity_verified_success else R.string.login_success),
-                    message = resourcesProvider.getString(R.string.login_redirect_subtitle)
+                    title = resourcesProvider.getString(if (autoLogin) Res.string.login_identity_verified_success else Res.string.login_success),
+                    message = resourcesProvider.getString(Res.string.login_redirect_subtitle)
                 )
             )
         }

@@ -1,5 +1,7 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.account
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.account
 
+import AccountHiderService
+import AccountRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
@@ -8,12 +10,10 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
-import com.charmflex.flexiexpensesmanager.features.account.AccountHiderService
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
-import com.charmflex.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
-import com.charmflex.flexiexpensesmanager.features.home.ui.summary.mapper.AccountHomeUIMapper
+import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyRateUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.HomeItemRefreshable
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper.AccountHomeUIMapper
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -22,10 +22,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
 // TODO: Maybe can remove the mapper?
-internal class AccountHomeViewModel @Inject constructor(
+internal class AccountHomeViewModel constructor(
     private val accountRepository: AccountRepository,
     private val accountHomeUIMapper: AccountHomeUIMapper,
     private val currencyFormatter: CurrencyFormatter,

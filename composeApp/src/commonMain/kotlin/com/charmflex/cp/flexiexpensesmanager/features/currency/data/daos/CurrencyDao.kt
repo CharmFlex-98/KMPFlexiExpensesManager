@@ -1,11 +1,11 @@
-package com.charmflex.flexiexpensesmanager.features.currency.data.daos
+package com.charmflex.cp.flexiexpensesmanager.features.currency.data.daos
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.charmflex.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateEntity
-import com.charmflex.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateResponse
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateEntity
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.UserCurrencyRateResponse
 
 @Dao
 internal interface CurrencyDao {

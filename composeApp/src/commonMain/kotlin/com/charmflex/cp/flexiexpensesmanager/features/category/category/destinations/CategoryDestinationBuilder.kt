@@ -18,9 +18,9 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
-import com.charmflex.flexiexpensesmanager.features.category.category.ui.CategoryEditorScreen
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.CategoryEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailScreen
-import com.charmflex.flexiexpensesmanager.features.category.category.ui.stat.CategoryStatScreen
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat.CategoryStatScreen
 
 internal class CategoryDestinationBuilder(
     private val navController: NavController

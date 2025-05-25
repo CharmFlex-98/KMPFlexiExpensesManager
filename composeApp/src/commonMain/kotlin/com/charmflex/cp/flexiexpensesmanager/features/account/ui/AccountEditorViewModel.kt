@@ -1,28 +1,27 @@
-package com.charmflex.flexiexpensesmanager.features.account.ui
+package com.charmflex.cp.flexiexpensesmanager.features.account.ui
 
-import android.util.Log
+import AccountRepository
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.charmflex.flexiexpensesmanager.R
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
-import com.charmflex.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.core.utils.unwrapResult
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.flexiexpensesmanager.features.currency.service.CurrencyService
-import com.charmflex.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
+import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class AccountEditorViewModel @Inject constructor(
+internal class AccountEditorViewModel(
     private val accountRepository: AccountRepository,
     private val routeNavigator: RouteNavigator,
     private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
@@ -281,7 +280,7 @@ internal class AccountEditorViewModel @Inject constructor(
                     _snackBarState.emit(
                         SnackBarState.Success(
                             resourcesProvider.getString(
-                                R.string.add_account_success_snackbar
+                                Res.string.add_account_success_snackbar
                             )
                         )
                     )
@@ -294,8 +293,7 @@ internal class AccountEditorViewModel @Inject constructor(
                     }
                 },
                 onFailure = {
-                    Log.d("test", it.toString())
-                    _snackBarState.emit(SnackBarState.Error(resourcesProvider.getString(R.string.add_account_failure_snackbar)))
+                    _snackBarState.emit(SnackBarState.Error(resourcesProvider.getString(Res.string.add_account_failure_snackbar)))
                 }
             )
         }

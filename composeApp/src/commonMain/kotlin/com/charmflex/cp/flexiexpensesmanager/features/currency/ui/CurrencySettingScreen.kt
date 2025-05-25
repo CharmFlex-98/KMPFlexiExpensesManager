@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.currency.ui
+package com.charmflex.cp.flexiexpensesmanager.features.currency.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

@@ -1,17 +1,16 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain.usecases
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getEndDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
-import javax.inject.Inject
 
-internal class GetEachRootCategoryAmountUseCase @Inject constructor(
+internal class GetEachRootCategoryAmountUseCase constructor(
     private val categoryRepository: TransactionCategoryRepository,
 ) {
     @OptIn(ExperimentalCoroutinesApi::class)

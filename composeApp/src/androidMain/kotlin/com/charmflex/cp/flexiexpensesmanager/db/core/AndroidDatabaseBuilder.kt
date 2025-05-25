@@ -5,7 +5,7 @@ import androidx.room.Room
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.db.AppDatabase
 import com.charmflex.cp.flexiexpensesmanager.db.addConfig
-import com.charmflex.flexiexpensesmanager.features.currency.data.utils.SQLQueryBuilder
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.utils.SQLQueryBuilder
 
 internal class AndroidDatabaseBuilder(
     private val appContext: Context,

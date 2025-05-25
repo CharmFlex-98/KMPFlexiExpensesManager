@@ -1,11 +1,10 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui.summary.mapper
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroupSummary
-import com.charmflex.flexiexpensesmanager.features.home.ui.account.AccountHomeViewState
-import javax.inject.Inject
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.account.AccountHomeViewState
 
-internal class AccountHomeUIMapper @Inject constructor(
+internal class AccountHomeUIMapper  constructor(
     private val currencyFormatter: CurrencyFormatter,
 ) {
     fun map(from: Pair<List<AccountGroupSummary>, String>): List<AccountHomeViewState.AccountGroupSummaryUI> {

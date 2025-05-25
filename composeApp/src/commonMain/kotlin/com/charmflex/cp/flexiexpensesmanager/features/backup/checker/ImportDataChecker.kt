@@ -1,21 +1,20 @@
-package com.charmflex.flexiexpensesmanager.features.backup.checker
+package com.charmflex.cp.flexiexpensesmanager.features.backup.checker
 
+import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.di.Dispatcher
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
-import com.charmflex.flexiexpensesmanager.features.account.domain.repositories.AccountRepository
-import com.charmflex.flexiexpensesmanager.features.backup.TransactionBackupData
-import com.charmflex.flexiexpensesmanager.features.backup.ui.ImportedData
+import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupData
+import com.charmflex.cp.flexiexpensesmanager.features.backup.ui.ImportedData
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.flexiexpensesmanager.features.transactions.domain.model.TransactionType
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import javax.inject.Inject
 
-internal class ImportDataChecker @Inject constructor(
+internal class ImportDataChecker (
     private val tagRepository: TagRepository,
     private val categoryRepository: TransactionCategoryRepository,
     private val accountRepository: AccountRepository,
@@ -97,16 +96,14 @@ internal class ImportDataChecker @Inject constructor(
                             val toUpdate = updatedImportedData[transactionIndex]
                             updatedImportedData[transactionIndex] = toUpdate
                                 .copy(
-                                    tags = toUpdate.tags.toMutableList().apply {
-                                        replaceAll {
-                                            if (it.name == tag.name) {
-                                                ImportedData.RequiredDataState.Acquired(
-                                                    id = tag.id,
-                                                    name = tag.name
-                                                )
-                                            } else {
-                                                it
-                                            }
+                                    tags = toUpdate.tags.toMutableList().map {
+                                        if (it.name == tag.name) {
+                                            ImportedData.RequiredDataState.Acquired(
+                                                id = tag.id,
+                                                name = tag.name
+                                            )
+                                        } else {
+                                            it
                                         }
                                     }
                                 )

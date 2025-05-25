@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.home.ui
+package com.charmflex.cp.flexiexpensesmanager.features.home.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -7,9 +7,8 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRout
 import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.UpdateCurrencyRateUseCase
 import com.charmflex.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-internal class HomeViewModel @Inject constructor(
+internal class HomeViewModel constructor(
     private val routeNavigator: RouteNavigator,
     private val updateCurrencyRateUseCase: UpdateCurrencyRateUseCase,
     private val scheduledTransactionHandler: ScheduledTransactionHandler

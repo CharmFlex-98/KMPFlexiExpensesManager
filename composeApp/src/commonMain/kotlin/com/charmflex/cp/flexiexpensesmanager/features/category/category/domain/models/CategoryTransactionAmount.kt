@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.category.category.domain.models
+package com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models
 
 import androidx.room.ColumnInfo
 

@@ -1,8 +1,8 @@
 package com.charmflex.flexiexpensesmanager.features.transactions.di.modules
 
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
-import com.charmflex.flexiexpensesmanager.features.category.category.data.repositories.TransactionCategoryRepositoryImpl
-import com.charmflex.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.data.repositories.TransactionCategoryRepositoryImpl
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.tag.data.repositories.TagRepositoryImpl
 import com.charmflex.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.flexiexpensesmanager.features.transactions.data.repositories.TransactionRepositoryImpl
