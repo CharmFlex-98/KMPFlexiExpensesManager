@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.auth.storage
 
-import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 
 internal interface AuthStorage {
     companion object {

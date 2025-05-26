@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.backup
 
-import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.db.AppDatabase
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 

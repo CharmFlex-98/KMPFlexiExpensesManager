@@ -1,4 +1,6 @@
-package com.charmflex.flexiexpensesmanager.core.tracker
+package com.charmflex.cp.flexiexpensesmanager.core.tracker
+
+import org.koin.core.annotation.Factory
 
 internal interface EventTracker {
     fun track(eventData: EventData)

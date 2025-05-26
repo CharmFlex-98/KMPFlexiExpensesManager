@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.scheduler.data.storage
 
-import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 
 private const val TRANSACTION_SCHEDULER_LATEST_ID = "TRANSACTION_SCHEDULER_LATEST_ID"
 internal interface TransactionSchedulerStorage {

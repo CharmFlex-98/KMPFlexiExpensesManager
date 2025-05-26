@@ -10,6 +10,7 @@ import com.charmflex.flexiexpensesmanager.core.utils.popWithArgs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
+import org.koin.core.annotation.Factory
 
 interface RouteNavigator {
 

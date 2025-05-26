@@ -1,5 +1,5 @@
 [versions]
-agp = "8.5.2"
+agp = "8.6.0"
 android-compileSdk = "35"
 android-minSdk = "26"
 android-targetSdk = "35"
@@ -15,10 +15,11 @@ compose-multiplatform = "1.8.0"
 junit = "4.13.2"
 kotlin = "2.1.20"
 koin-bom = "4.0.3"
+koin-annotation = "2.0.1-RC1"
 kotlin-datetime_version = "0.6.2"
 compose-navigation-ver = "2.9.0-beta01"
-ksp_version = "2.1.20-2.0.1"
-compottie = "2.0.0-rc03"
+ksp_version = "2.1.20-1.0.32"
+compottie = "2.0.0-rc04"
 
 # posthog version
 posthog_version = "3.+"
@@ -142,9 +143,13 @@ kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android"}
+koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
+koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation"}
 
 #fluid currency
 fluid-currency = { module = "io.fluidsonic.currency:fluid-currency", version.ref = "fluid_currency_version" }
+
+androidx-security-crypto = { module = 'androidx.security:security-crypto', version.ref = 'androidx_security_crypto_version'}
 
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }

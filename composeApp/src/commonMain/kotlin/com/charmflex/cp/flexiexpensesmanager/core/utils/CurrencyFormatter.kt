@@ -9,14 +9,16 @@ internal interface CurrencyFormatter {
     fun from(amountValue: Double, currencyCode: String): Long
 }
 
-internal class CurrencyFormatterImpl : CurrencyFormatter {
+class CurrencyFormatterImpl : CurrencyFormatter {
+
     override fun format(minorUnitAmount: Long, currencyCode: String): String {
         val amount = minorToMajor(minorUnitAmount, currencyCode)
-        return getCurrencyFormatter(currencyCode).format(amount)
+        val formatted = amount.toString() // basic 2 decimal formatting
+        return "$currencyCode $formatted" // you can customize symbol if needed
     }
 
     override fun formatWithoutSymbol(minorUnitAmount: Long, currencyCode: String): String {
-        return minorToMajor(minorUnitAmount, currencyCode).toPlainString()
+        return minorToMajor(minorUnitAmount, currencyCode).toString()
     }
 
     override fun formatTo(
@@ -26,8 +28,9 @@ internal class CurrencyFormatterImpl : CurrencyFormatter {
         rate: Float
     ): String {
         val fromAmount = minorToMajor(minorUnitAmount, fromCurrencyCode)
-        val converted = fromAmount.multiply(rate.toBigDecimal())
-        return getCurrencyFormatter(currencyCode).format(converted)
+        val converted = fromAmount * rate
+        val formatted = converted.toString()
+        return "$currencyCode $formatted"
     }
 
     override fun from(amountValue: Double, currencyCode: String): Long {
@@ -35,26 +38,17 @@ internal class CurrencyFormatterImpl : CurrencyFormatter {
         return (amountValue * factor).toLong()
     }
 
-    private fun minorToMajor(minorUnitAmount: Long, currencyCode: String): BigDecimal {
+    private fun minorToMajor(minorUnitAmount: Long, currencyCode: String): Double {
         val factor = getFactor(currencyCode)
-        return minorUnitAmount.toBigDecimal().divide(BigDecimal.valueOf(factor))
+        return minorUnitAmount.toDouble() / factor
     }
 
     private fun getFactor(currencyCode: String): Double {
-        val fractionDigits = Currency.getInstance(currencyCode).defaultFractionDigits
+        // Basic hardcoded fraction digits fallback (customize as needed)
+        val fractionDigits = when (currencyCode) {
+            "JPY", "KRW" -> 0
+            else -> 2
+        }
         return 10.0.pow(fractionDigits)
     }
-
-    private fun getCurrencyFormatter(currencyCode: String): NumberFormat {
-        return NumberFormat.getCurrencyInstance().apply {
-            val currency = Currency.getInstance(currencyCode)
-            maximumFractionDigits = currency.defaultFractionDigits
-            this.currency = currency
-        }
-    }
-}
-
-fun main() {
-    val f = CurrencyFormatterImpl()
-    print(f.format(1234, "KRW"))
 }

@@ -29,7 +29,9 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class SettingViewModel  constructor(
     private val routeNavigator: RouteNavigator,
     private val transactionBackupManager: TransactionBackupManager,

@@ -22,8 +22,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
-// TODO: Maybe can remove the mapper?
+@Factory
 internal class AccountHomeViewModel constructor(
     private val accountRepository: AccountRepository,
     private val accountHomeUIMapper: AccountHomeUIMapper,

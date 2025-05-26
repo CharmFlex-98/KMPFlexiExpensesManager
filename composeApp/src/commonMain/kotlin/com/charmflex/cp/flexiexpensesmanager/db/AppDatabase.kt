@@ -10,8 +10,6 @@ import androidx.sqlite.execSQL
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.db.core.DatabaseBuilder
 import com.charmflex.flexiexpensesmanager.db.AccountGroupName
-import com.charmflex.flexiexpensesmanager.db.migration.Migration_2_3
-import com.charmflex.flexiexpensesmanager.db.migration.Migration_5_6
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountTransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.AccountEntity
@@ -96,9 +94,9 @@ internal fun<T : RoomDatabase> RoomDatabase.Builder<T>.addConfig(
 private fun migrationList(): List<Migration> {
     return listOf(
 //        Migration_1_2,
-        Migration_2_3,
+//        Migration_2_3,
 //        Migration_3_4
-        Migration_5_6
+//        Migration_5_6
     )
 }
 

@@ -33,7 +33,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.di.MainInjector
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector
-import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.tag.ui.TagSettingViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewModel
@@ -68,6 +68,5 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override val userCurrencyViewModel: UserCurrencyViewModel by inject()
     override val sessionManager: SessionManager by inject()
     override val routeNavigator: RouteNavigator by inject()
-    override val eventTracker: EventTracker by inject()
     override val tagSettingViewModel: TagSettingViewModel by inject()
 }

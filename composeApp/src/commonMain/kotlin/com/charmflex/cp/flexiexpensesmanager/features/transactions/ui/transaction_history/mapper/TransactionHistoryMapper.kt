@@ -15,7 +15,9 @@ import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.ic_spend
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.DrawableResource
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class TransactionHistoryMapper constructor(
     private val currencyFormatter: CurrencyFormatter
 ) : Mapper<List<Transaction>, List<TransactionHistoryItem>> {

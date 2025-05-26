@@ -10,5 +10,5 @@ import org.koin.dsl.module
 internal val androidDbModule = module {
     factory { SQLQueryBuilder() }
     singleOf(::AndroidDatabaseBuilder) { bind<DatabaseBuilder>() }
-    single { get<DatabaseBuilder>().build() }
+    single<DatabaseBuilder.IDatabase> { get<DatabaseBuilder>().build() }
 }

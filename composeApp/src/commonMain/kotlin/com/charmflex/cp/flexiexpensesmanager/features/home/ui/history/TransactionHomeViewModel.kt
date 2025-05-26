@@ -7,7 +7,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transactio
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryViewModel
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class TransactionHomeViewModel constructor(
     private val transactionRepository: TransactionRepository,
     mapper: TransactionHistoryMapper,

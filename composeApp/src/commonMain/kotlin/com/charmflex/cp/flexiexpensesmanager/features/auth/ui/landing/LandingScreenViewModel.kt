@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.AuthRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
-import com.charmflex.flexiexpensesmanager.core.tracker.EventData
-import com.charmflex.flexiexpensesmanager.core.tracker.EventTracker
-import com.charmflex.flexiexpensesmanager.core.tracker.UserData
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.UserData
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
@@ -21,7 +21,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.android.annotation.KoinViewModel
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class LandingScreenViewModel(
     private val routeNavigator: RouteNavigator,
     private val signInService: SignInService,

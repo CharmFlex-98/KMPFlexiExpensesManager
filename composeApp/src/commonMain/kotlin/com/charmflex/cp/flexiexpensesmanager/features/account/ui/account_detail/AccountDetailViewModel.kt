@@ -18,6 +18,7 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+
 internal class AccountDetailViewModel (
     private val accountRepository: AccountRepository,
     routeNavigator: RouteNavigator,
@@ -26,6 +27,7 @@ internal class AccountDetailViewModel (
     private val transactionRepository: TransactionRepository,
     dateFilter: DateFilter?
 ) : TransactionHistoryViewModel(mapper, routeNavigator) {
+    @org.koin.core.annotation.Factory
     class Factory(
         private val accountRepository: AccountRepository,
         private val routeNavigator: RouteNavigator,

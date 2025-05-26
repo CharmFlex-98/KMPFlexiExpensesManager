@@ -1,5 +1,6 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompilationTask
 
 plugins {
     alias(libs.plugins.kotlinMultiplatform)
@@ -26,7 +27,7 @@ kotlin {
             freeCompilerArgs.add("-Xexpect-actual-classes")
         }
     }
-    
+
     listOf(
         iosX64(),
         iosArm64(),
@@ -37,14 +38,13 @@ kotlin {
             isStatic = true
         }
     }
-    
+
     sourceSets {
         androidMain.dependencies {
             implementation(libs.androidx.ui.text.google.fonts)
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(project.dependencies.platform(libs.koin.bom))
-            implementation(libs.koin.core)
             implementation(libs.koin.android)
             implementation(project.dependencies.platform(libs.google.firebase.bom))
             implementation(libs.google.firebase.crashlytics)
@@ -61,6 +61,8 @@ kotlin {
             implementation(libs.compose.dialog.clock)
             implementation(libs.ktor.client.okhttp)
             implementation(libs.posthog)
+
+            implementation(libs.androidx.security.crypto)
         }
         commonMain.dependencies {
             // ktor
@@ -74,6 +76,13 @@ kotlin {
             implementation(libs.fluid.currency)
             implementation(libs.compottie)
             implementation(libs.compottie.dot)
+            implementation(libs.compottie.network)
+
+            implementation(project.dependencies.platform(libs.koin.bom))
+            implementation(libs.koin.core)
+            api(libs.koin.annotation)
+
+
 
             implementation(libs.compose.calendar)
 //            implementation(libs.vico.core)
@@ -101,6 +110,18 @@ kotlin {
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
         }
+    }
+
+    // KSP Common sourceSet
+    sourceSets.named("commonMain").configure {
+        kotlin.srcDir("build/generated/ksp/metadata/commonMain/kotlin")
+    }
+}
+
+// Trigger Common Metadata Generation from Native tasks
+project.tasks.withType(KotlinCompilationTask::class.java).configureEach {
+    if (name != "kspCommonMainKotlinMetadata") {
+        dependsOn("kspCommonMainKotlinMetadata")
     }
 }
 
@@ -138,5 +159,8 @@ dependencies {
     add("kspIosX64", libs.room.compiler)
     add("kspIosSimulatorArm64", libs.room.compiler)
     add("kspIosArm64", libs.room.compiler)
+//
+    add("kspCommonMainMetadata", libs.koin.ksp.compiler)
+    add("kspAndroid", libs.koin.ksp.compiler)
 }
 

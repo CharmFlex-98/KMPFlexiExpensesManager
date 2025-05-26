@@ -20,6 +20,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.toJavaLocalDate
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.time.LocalDate
 
@@ -139,7 +140,7 @@ internal class TransactionBackupManagerImpl(
                                 amount = it.amount,
                                 accountAmount = it.accountAmount,
                                 primaryAmount = it.primaryAmount,
-                                date = it.date,
+                                date = it.date.toJavaLocalDate(),
                                 categoryColumns = it.categoryColumns,
                                 tags = it.tags
                             )

@@ -9,7 +9,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.usecases.GetExpensesD
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class ExpensesHeatMapViewModel  constructor(
     private val getExpensesDailyMedianRatioUseCase: GetExpensesDailyMedianRatioUseCase,
     private val mapperFactory: TransactionHeatMapMapper.Factory

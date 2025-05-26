@@ -10,7 +10,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class BudgetDetailViewModel constructor(
     private val getAdjustedCategoryBudgetInfoUseCase: GetAdjustedCategoryBudgetInfoUseCase,
     private val mapper: CategoryBudgetExpandableSectionMapper

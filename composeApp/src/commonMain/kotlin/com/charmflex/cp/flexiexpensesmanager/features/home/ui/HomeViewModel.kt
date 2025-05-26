@@ -7,7 +7,9 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRout
 import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.UpdateCurrencyRateUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class HomeViewModel constructor(
     private val routeNavigator: RouteNavigator,
     private val updateCurrencyRateUseCase: UpdateCurrencyRateUseCase,

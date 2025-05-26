@@ -2,7 +2,9 @@ package com.charmflex.cp.flexiexpensesmanager.features.session
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class SessionManager constructor(
 
 ) {

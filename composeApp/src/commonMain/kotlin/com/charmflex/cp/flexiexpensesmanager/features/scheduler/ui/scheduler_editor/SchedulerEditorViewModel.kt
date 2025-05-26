@@ -26,6 +26,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 import org.koin.core.Koin
+import org.koin.core.annotation.Factory
 import org.koin.core.qualifier.named
 
 internal class SchedulerEditorViewModel(
@@ -56,6 +57,7 @@ internal class SchedulerEditorViewModel(
     schedulerId
 ) {
 
+    @org.koin.core.annotation.Factory
     class Factory constructor(
         private val resolver: Koin,
         private val accountRepository: AccountRepository,

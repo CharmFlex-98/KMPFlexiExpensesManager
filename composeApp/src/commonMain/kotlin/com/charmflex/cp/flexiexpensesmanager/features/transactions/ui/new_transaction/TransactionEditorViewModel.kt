@@ -21,7 +21,9 @@ import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
 import org.koin.core.Koin
+import org.koin.core.annotation.Factory
 import org.koin.core.qualifier.named
+
 
 internal class TransactionEditorViewModel  constructor(
     private val transactionId: Long?,
@@ -51,6 +53,7 @@ internal class TransactionEditorViewModel  constructor(
     userCurrencyRepository,
     transactionId,
 ) {
+    @org.koin.core.annotation.Factory
     class Factory constructor(
         private val resolver: Koin,
         private val accountRepository: AccountRepository,

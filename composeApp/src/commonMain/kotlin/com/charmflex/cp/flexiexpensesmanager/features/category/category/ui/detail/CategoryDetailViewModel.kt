@@ -26,6 +26,7 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.plus
+import org.koin.core.annotation.Factory
 
 internal class CategoryDetailViewModel(
     private val transactionRepository: TransactionRepository,
@@ -48,6 +49,7 @@ internal class CategoryDetailViewModel(
     val categoryDetailViewState = _categoryDetailViewState.asStateFlow()
 
 
+    @org.koin.core.annotation.Factory
     class Factory(
         private val transactionRepository: TransactionRepository,
         private val mapper: TransactionHistoryMapper,

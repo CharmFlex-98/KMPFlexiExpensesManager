@@ -5,7 +5,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.ui.HomeItemRefreshabl
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class DashboardViewModel constructor() : ViewModel(), HomeItemRefreshable {
     private val _plugins = MutableStateFlow<List<DashboardPlugin>>(emptyList())
     val plugins = _plugins.asStateFlow()

@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.currency.data.local
 
-import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DEFAULT_DATE_TIME_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDateTime
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern

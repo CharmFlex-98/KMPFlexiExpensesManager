@@ -1,6 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.account.data.storage
 
-import com.charmflex.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 
 private const val ACCOUNT_INFO_HIDE_KEY = "ACCOUNT_INFO_HIDE_KEY"
 

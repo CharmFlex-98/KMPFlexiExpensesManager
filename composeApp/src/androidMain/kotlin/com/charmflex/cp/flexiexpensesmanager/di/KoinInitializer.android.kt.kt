@@ -6,6 +6,7 @@ import com.charmflex.cp.flexiexpensesmanager.db.di.androidDbModule
 import com.charmflex.cp.flexiexpensesmanager.feature.auth.di.module.authModuleAndroid
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
+import org.koin.ksp.generated.module
 
 actual class KoinInitializer(
     private val appContext: Context

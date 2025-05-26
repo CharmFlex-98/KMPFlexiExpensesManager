@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
 internal class TransactionDetailViewModel(
     private val transactionId: Long,
@@ -40,6 +41,7 @@ internal class TransactionDetailViewModel(
         loadDetail()
     }
 
+    @org.koin.core.annotation.Factory
     class Factory  constructor(
         private val routeNavigator: RouteNavigator,
         private val transactionRepository: TransactionRepository,

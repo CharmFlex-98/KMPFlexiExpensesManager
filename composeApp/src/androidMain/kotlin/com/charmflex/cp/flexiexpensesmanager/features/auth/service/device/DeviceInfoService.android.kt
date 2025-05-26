@@ -8,7 +8,7 @@ internal actual class DeviceInfoService  constructor(
     private val deviceIdGenerator: DeviceIdGenerator,
     private val authStorage: AuthStorage
 ) {
-    fun getDevice(): Device {
+    actual fun getDevice(): Device {
         return Device(
             deviceId = getDeviceId(),
             brand = Build.BRAND,

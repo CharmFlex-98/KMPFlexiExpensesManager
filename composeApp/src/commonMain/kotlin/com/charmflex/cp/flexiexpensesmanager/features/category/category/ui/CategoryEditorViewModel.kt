@@ -15,7 +15,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 
+
+@Factory
 internal class CategoryEditorViewModel  constructor(
     private val categoryRepository: TransactionCategoryRepository,
     private val routeNavigator: RouteNavigator

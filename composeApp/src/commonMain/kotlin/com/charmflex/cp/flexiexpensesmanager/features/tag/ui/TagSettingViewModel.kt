@@ -19,7 +19,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class TagSettingViewModel constructor(
     private val tagRepository: TagRepository,
     private val routeNavigator: RouteNavigator,

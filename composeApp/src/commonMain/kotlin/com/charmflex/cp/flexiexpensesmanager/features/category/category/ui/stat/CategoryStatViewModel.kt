@@ -18,8 +18,10 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.koin.core.annotation.Factory
 import kotlin.math.round
 
+@Factory
 internal class CategoryStatViewModel constructor(
     private val getEachRootCategoryAmountUseCase: GetEachRootCategoryAmountUseCase,
     private val currencyFormatter: CurrencyFormatter,

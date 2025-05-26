@@ -17,7 +17,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class SchedulerListViewModel  constructor(
     private val schedulerRepository: TransactionSchedulerRepository,
     private val routeNavigator: RouteNavigator,

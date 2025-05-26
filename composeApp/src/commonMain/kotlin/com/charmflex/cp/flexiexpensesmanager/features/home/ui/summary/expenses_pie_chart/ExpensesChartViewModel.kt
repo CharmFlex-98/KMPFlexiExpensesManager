@@ -20,8 +20,10 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.koin.core.annotation.Factory
 import kotlin.random.Random
 
+@Factory
 internal class ExpensesChartViewModel(
     private val getEachRootCategoryAmountUseCase: GetEachRootCategoryAmountUseCase,
     private val tagRepository: TagRepository,
