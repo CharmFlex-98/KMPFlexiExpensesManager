@@ -1,21 +1,22 @@
-package com.charmflex.flexiexpensesmanager.core.utils
+package com.charmflex.cp.flexiexpensesmanager.core.utils
 
 import androidx.navigation.NavController
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.NavigationRoute
 
-fun NavController.navigateTo(route: String, args: Map<String, Any>?) {
-    args?.let {
-        this.currentBackStackEntry?.savedStateHandle?.let { savedStateHandler ->
-            for (arg in args) {
-                savedStateHandler[arg.key] = arg.value
-            }
-        }
-    }
-    navigate(route) {
+internal fun NavController.navigateTo(navigationRoute: NavigationRoute) {
+//    args?.let {
+//        this.currentBackStackEntry?.savedStateHandle?.let { savedStateHandler ->
+//            for (arg in args) {
+//                savedStateHandler[arg.key] = arg.value
+//            }
+//        }
+//    }
+    navigate(navigationRoute) {
         launchSingleTop = true
     }
 }
 
-fun NavController.navigateAndPopUpTo(route: String, popUpToRouteInclusive: String? = null) {
+internal fun NavController.navigateAndPopUpTo(route: NavigationRoute, popUpToRouteInclusive: NavigationRoute? = null) {
     navigate(route) {
         launchSingleTop = true
 

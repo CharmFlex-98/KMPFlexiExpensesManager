@@ -6,22 +6,26 @@ import com.charmflex.flexiexpensesmanager.core.utils.Mapper
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_heat_map.Level
 import com.charmflex.cp.flexiexpensesmanager.features.home.usecases.DailyTransaction
 import kotlinx.datetime.LocalDate
+import org.koin.core.annotation.Factory
 import kotlin.math.max
 import kotlin.math.min
+
+@Factory
+internal class TransactionHeatMapMapperFactory constructor() {
+    fun create(
+        lowerBoundThreshold: Float,
+        higherBoundThreshold: Float
+    ): TransactionHeatMapMapper {
+        return TransactionHeatMapMapper(lowerBoundThreshold, higherBoundThreshold)
+    }
+}
 
 internal class TransactionHeatMapMapper(
     private val lowerBoundThreshold: Float,
     private val higherBoundThreshold: Float
 ) : Mapper<List<DailyTransaction>, Map<LocalDate, Color>> {
 
-    class Factory constructor() {
-        fun create(
-            lowerBoundThreshold: Float,
-            higherBoundThreshold: Float
-        ): TransactionHeatMapMapper {
-            return TransactionHeatMapMapper(lowerBoundThreshold, higherBoundThreshold)
-        }
-    }
+
     override fun map(from: List<DailyTransaction>): Map<LocalDate, Color> {
         val res = mutableMapOf<LocalDate, Color>()
         val dailyTransactions = from.sortedBy { it.primaryMinorUnitAmount }

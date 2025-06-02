@@ -5,6 +5,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper.TransactionHeatMapMapper
+import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper.TransactionHeatMapMapperFactory
 import com.charmflex.cp.flexiexpensesmanager.features.home.usecases.GetExpensesDailyMedianRatioUseCase
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -14,7 +15,7 @@ import org.koin.core.annotation.Factory
 @Factory
 internal class ExpensesHeatMapViewModel  constructor(
     private val getExpensesDailyMedianRatioUseCase: GetExpensesDailyMedianRatioUseCase,
-    private val mapperFactory: TransactionHeatMapMapper.Factory
+    private val mapperFactory: TransactionHeatMapMapperFactory
 ) : ViewModel() {
     private val lowerBoundary: Float = 0.5f
     private val higherBoundary: Float = 2f

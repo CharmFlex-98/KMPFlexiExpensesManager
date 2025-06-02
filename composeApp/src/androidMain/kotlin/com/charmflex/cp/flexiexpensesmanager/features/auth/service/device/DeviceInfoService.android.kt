@@ -3,8 +3,10 @@ package com.charmflex.cp.flexiexpensesmanager.features.auth.service.device
 import android.os.Build
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.model.Device
 import com.charmflex.cp.flexiexpensesmanager.features.auth.storage.AuthStorage
+import org.koin.core.annotation.Factory
 
-internal actual class DeviceInfoService  constructor(
+@Factory
+internal actual class DeviceInfoService constructor(
     private val deviceIdGenerator: DeviceIdGenerator,
     private val authStorage: AuthStorage
 ) {

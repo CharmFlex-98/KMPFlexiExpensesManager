@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.auth.ui.landing
+package com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,11 +14,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.Loader
 import com.charmflex.cp.flexiexpensesmanager.ui_common.Money3DAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical

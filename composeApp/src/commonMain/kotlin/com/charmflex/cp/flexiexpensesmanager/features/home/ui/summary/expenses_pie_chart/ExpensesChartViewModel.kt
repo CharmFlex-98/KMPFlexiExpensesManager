@@ -5,8 +5,8 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
@@ -73,8 +73,7 @@ internal class ExpensesChartViewModel(
     }
 
     fun onNavigateExpensesDetailPage() {
-        val args = mapOf(CategoryRoutes.Args.CATEGORY_DATE_FILTER to _dateFilter.value)
-        routeNavigator.navigateTo(CategoryRoutes.STAT, args)
+        routeNavigator.navigateTo(CategoryRoutes.Stat(_dateFilter.value))
     }
 
     private fun observeTagFilterChanged() {
@@ -106,7 +105,7 @@ internal class ExpensesChartViewModel(
     }
 
     fun onNavigateBudgetDetail() {
-        routeNavigator.navigateTo(BudgetRoutes.budgetDetailRoute)
+        routeNavigator.navigateTo(BudgetRoutes.BudgetDetail)
     }
 
     fun toggleChartType(chartType: ExpensesPieChartViewState.ChartType) {

@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigatorListener
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.AuthRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AuthRoutes
 import com.charmflex.cp.flexiexpensesmanager.features.account.destinations.AccountDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.auth.destination.AuthDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.backup.destination.BackupDestinationBuilder
@@ -24,7 +24,7 @@ import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
-fun App(
+internal fun App(
     routeNavigator: RouteNavigator,
     onQuit: () -> Unit
 ) {
@@ -39,7 +39,7 @@ fun App(
     RouteNavigatorListener(routeNavigator = routeNavigator, navController = navController)
 
     FlexiExpensesManagerTheme {
-        NavHost(navController = navController, startDestination = AuthRoutes.ROOT) {
+        NavHost(navController = navController, startDestination = AuthRoutes.Root) {
             createDestinations(navController).forEach {
                 with(it) { buildGraph() }
             }

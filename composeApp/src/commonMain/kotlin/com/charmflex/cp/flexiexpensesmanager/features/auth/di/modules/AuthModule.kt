@@ -13,5 +13,4 @@ import org.koin.dsl.module
 val authModule = module {
     singleOf(::AuthRepositoryImpl) { bind<AuthRepository>() }
     singleOf(::AuthStorageImpl) { bind<AuthStorage>() }
-    factoryOf(::LandingScreenViewModel)
 }

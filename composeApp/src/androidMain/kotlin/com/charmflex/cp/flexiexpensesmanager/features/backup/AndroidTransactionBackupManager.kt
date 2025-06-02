@@ -1,42 +1,43 @@
-package com.charmflex.cp.flexiexpensesmanager.feature.backup
+package com.charmflex.cp.flexiexpensesmanager.features.backup
 
 import android.content.Context
 import android.content.Intent
-import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AndroidDocumentManager
-import com.charmflex.cp.flexiexpensesmanager.core.di.Dispatcher
+import com.charmflex.cp.flexiexpensesmanager.core.di.DispatcherType
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
-import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupData
-import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.features.backup.data.mapper.TransactionBackupDataMapper
-import com.charmflex.flexiexpensesmanager.features.backup.elements.Sheet
-import com.charmflex.cp.flexiexpensesmanager.feature.backup.elements.workbook
+import com.charmflex.cp.flexiexpensesmanager.features.backup.elements.workbook
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.toJavaLocalDate
+import kotlinx.datetime.toKotlinLocalDate
+import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.Row
+import org.apache.poi.ss.usermodel.Sheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
+import org.koin.core.qualifier.named
+import org.koin.mp.KoinPlatformTools
 import java.time.LocalDate
+import javax.inject.Inject
 
-internal class TransactionBackupManagerImpl(
+internal class AndroidTransactionBackupManager @Inject constructor(
     private val transactionRepository: TransactionRepository,
     private val transactionCategoryRepository: TransactionCategoryRepository,
     private val transactionBackupDataMapper: TransactionBackupDataMapper,
+    private val fileProvider: DocumentManager,
     private val appContext: Context,
-    private val currencyFormatter: CurrencyFormatter,
-    @Dispatcher(Dispatcher.Type.IO)
-    private val dispatcher: CoroutineDispatcher,
-    fileProvider: DocumentManager,
 ) : TransactionBackupManager {
+    private val dispatcher: CoroutineDispatcher = KoinPlatformTools.defaultContext().get().get(named(DispatcherType.IO))
     private val xssfWorkbook
         get() = XSSFWorkbook()
-    private val fileProvider = fileProvider as AndroidDocumentManager
 
     private val _progress = MutableSharedFlow<Float>(extraBufferCapacity = 1)
     override val progress: Flow<Float>
@@ -45,44 +46,33 @@ internal class TransactionBackupManagerImpl(
     override suspend fun read(fileName: String): List<TransactionBackupData> {
         return withContext(dispatcher) {
             val file = fileProvider.getCacheFile(fileName)
+            val uri = file.uri
             val data = mutableListOf<TransactionBackupData>()
-            appContext.contentResolver.openInputStream(file.uri).use {
+            appContext.contentResolver.openInputStream(uri).use {
                 val workbook = XSSFWorkbook(it)
                 val sheet = workbook.getSheet("record")
                 val totalRowNum = sheet.lastRowNum
                 for (row in sheet.rowIterator()) {
                     if (row.rowNum == 0) continue
-                    _progress.tryEmit(row.rowNum.toFloat() / totalRowNum)
+                    _progress.tryEmit(row.rowNum.toFloat()/totalRowNum)
                     val columnsItemsMap = getColumns()
-                    val transactionName =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.TRANSACTION_NAME]!!.index).stringCellValue
-                    val accountFrom =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_FROM]!!.index).stringCellValue
-                    val accountTo =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_TO]!!.index).stringCellValue
-                    val transactionType =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.TRANSACTION_TYPE]!!.index).stringCellValue
-                    val currency =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.CURRENCY]!!.index).stringCellValue
-                    val amount =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.AMOUNT]!!.index).numericCellValue
-                    val accountMinorUnitAmount =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_AMOUNT]!!.index).numericCellValue
-                    val primaryMinorUnitAmount =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.PRIMARY_AMOUNT]!!.index).numericCellValue
-                    val date =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.DATE]!!.index).dateCellValue?.toLocalDate()
+                    val transactionName = row.safeGetCell(columnsItemsMap[ExcelColumns.TRANSACTION_NAME]!!.index).stringCellValue
+                    val accountFrom = row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_FROM]!!.index).stringCellValue
+                    val accountTo = row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_TO]!!.index).stringCellValue
+                    val transactionType = row.safeGetCell(columnsItemsMap[ExcelColumns.TRANSACTION_TYPE]!!.index).stringCellValue
+                    val currency = row.safeGetCell(columnsItemsMap[ExcelColumns.CURRENCY]!!.index).stringCellValue
+                    val amount = row.safeGetCell(columnsItemsMap[ExcelColumns.AMOUNT]!!.index).numericCellValue
+                    val accountMinorUnitAmount = row.safeGetCell(columnsItemsMap[ExcelColumns.ACCOUNT_AMOUNT]!!.index).numericCellValue
+                    val primaryMinorUnitAmount = row.safeGetCell(columnsItemsMap[ExcelColumns.PRIMARY_AMOUNT]!!.index).numericCellValue
+                    val date = row.safeGetCell(columnsItemsMap[ExcelColumns.DATE]!!.index).dateCellValue?.toLocalDate()
                     val categoryColumns = listOf(
                         row.safeGetCell(columnsItemsMap[ExcelColumns.CATEGORY1]!!.index).stringCellValue,
                         row.safeGetCell(columnsItemsMap[ExcelColumns.CATEGORY2]!!.index).stringCellValue,
                         row.safeGetCell(columnsItemsMap[ExcelColumns.CATEGORY3]!!.index).stringCellValue
                     )
-                    val tags =
-                        row.safeGetCell(columnsItemsMap[ExcelColumns.TAGS]!!.index).stringCellValue.split(
-                            "#"
-                        ).map {
-                            it.trim()
-                        }
+                    val tags = row.safeGetCell(columnsItemsMap[ExcelColumns.TAGS]!!.index).stringCellValue.split("#").map {
+                        it.trim()
+                    }
 
 
                     // Break if there is no value anymore.
@@ -98,7 +88,7 @@ internal class TransactionBackupManagerImpl(
                             accountAmount = accountMinorUnitAmount,
                             primaryAmount = primaryMinorUnitAmount,
                             amount = amount,
-                            date = date,
+                            date = date.toKotlinLocalDate(),
                             categoryColumns = categoryColumns.filter { it.isNotBlank() },
                             tags = tags.filter { it.isNotBlank() }
                         )
@@ -110,15 +100,14 @@ internal class TransactionBackupManagerImpl(
     }
 
     override suspend fun write(fileName: String) {
-        val file = fileProvider.getCacheFile(fileName = fileName).file
+        val file = fileProvider.getCacheFile(fileName = fileName)
         withContext(dispatcher) {
-            val categoriesMap =
-                transactionCategoryRepository.getAllCategoriesIncludedDeleted().groupBy {
-                    it.id
-                }.mapValues {
-                    // only 1 s=unique id per category
-                    it.value[0]
-                }
+            val categoriesMap = transactionCategoryRepository.getAllCategoriesIncludedDeleted().groupBy {
+                it.id
+            }.mapValues {
+                // only 1 s=unique id per category
+                it.value[0]
+            }
             transactionRepository.getTransactions().firstOrNull()?.let { transactions ->
                 val excelData = transactionBackupDataMapper.map(transactions to categoriesMap)
                 workbook(xssfWorkbook) {
@@ -146,16 +135,17 @@ internal class TransactionBackupManagerImpl(
                             )
                         }
                     }
-                }.write(file)
+                }.write(file.file)
             }
         }
     }
 
     override suspend fun share(fileName: String) {
         val file = fileProvider.getCacheFile(fileName)
+        val fileUri = file.uri
         val shareIntent = Intent().apply {
             action = Intent.ACTION_SEND
-            putExtra(Intent.EXTRA_STREAM, file.uri)
+            putExtra(Intent.EXTRA_STREAM, fileUri)
             type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -165,7 +155,7 @@ internal class TransactionBackupManagerImpl(
         })
     }
 
-    private fun Sheet.buildRow(
+    private fun com.charmflex.cp.flexiexpensesmanager.features.backup.elements.Sheet.buildRow(
         transactionName: String,
         accountFrom: String?,
         accountTo: String?,
@@ -229,18 +219,10 @@ internal class TransactionBackupManagerImpl(
     }
 }
 
-
-private data class ExcelColumn(
-    val index: Int,
-    val columnName: String
-)
-
-private fun org.apache.poi.ss.usermodel.Row.safeGetCell(index: Int): org.apache.poi.ss.usermodel.Cell {
-    return this.getCell(
-        index,
-        org.apache.poi.ss.usermodel.Row.MissingCellPolicy.CREATE_NULL_AS_BLANK
-    )
+private fun Row.safeGetCell(index: Int): Cell {
+    return this.getCell(index, Row.MissingCellPolicy.CREATE_NULL_AS_BLANK)
 }
+
 
 private object ExcelColumns {
     const val TRANSACTION_NAME = "Transaction Name"
@@ -260,3 +242,7 @@ private object ExcelColumns {
     const val TAGS = "Tags"
 }
 
+private data class ExcelColumn(
+    val index: Int,
+    val columnName: String
+)

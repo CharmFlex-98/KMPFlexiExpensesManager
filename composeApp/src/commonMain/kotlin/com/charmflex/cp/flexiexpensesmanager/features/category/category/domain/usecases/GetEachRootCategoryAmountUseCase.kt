@@ -9,7 +9,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.r
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.transformLatest
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class GetEachRootCategoryAmountUseCase constructor(
     private val categoryRepository: TransactionCategoryRepository,
 ) {

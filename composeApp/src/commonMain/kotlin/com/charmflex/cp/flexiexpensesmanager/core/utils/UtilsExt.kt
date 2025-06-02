@@ -36,7 +36,7 @@ const val MONTH_ONLY_DEFAULT_PATTERN = "MMMM"
 const val YEAR_ONLY_DEFAULT_PATTERN = "yyyy"
 const val MONTH_YEAR_PATTERN = "MMMM yyyy"
 const val MONTH_YEAR_DB_PATTERN = "MMMM/yyyy"
-const val SHORT_MONTH_YEAR_PATTERN = "MMM yyyy"
+const val SHORT_MONTH_YEAR_PATTERN = "MM-yyyy"
 const val TIME_ONLY_DEFAULT_PATTERN = "hh:mm a"
 
 

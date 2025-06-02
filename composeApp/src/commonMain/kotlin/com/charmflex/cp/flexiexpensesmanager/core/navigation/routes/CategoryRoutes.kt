@@ -1,6 +1,8 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
 
+import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import kotlinx.serialization.Serializable
 
 internal object CategoryRoutes {
     private const val ROOT = "category"
@@ -13,32 +15,44 @@ internal object CategoryRoutes {
         const val CATEGORY_DATE_FILTER = "CATEGORY_DATE_FILTER"
         const val CATEGORY_DATE_FILTER_2 = "CATEGORY_DATE_FILTER_2"
     }
+    @Serializable
+    data class CategoryEditorDefault(
+        val transactionType: TransactionType,
+    ) : NavigationRoute
+    @Serializable
+    data class ImportCategory(
+        val transactionType: TransactionType,
+        val newCategoryName: String? = null
+    ) : NavigationRoute
 
-    val EDITOR = buildRoute("$ROOT/editor") {
-        addArg(Args.TRANSACTION_TYPE)
-        addArg(Args.IMPORT_FIX_CATEGORY_NAME)
-    }
+    @Serializable
+    data class CategoryTransactionDetail(
+        val categoryId: Int,
+        val categoryName: String,
+        val transactionType: TransactionType
+    ) : NavigationRoute
 
-    val STAT = buildRoute("$ROOT/stat") {}
+    @Serializable
+    data class Stat(
+        val dateFilter: DateFilter
+    ) : NavigationRoute
 
-    val CATEGORY_TRANSACTION_DETAIL = buildRoute("$ROOT/category_transaction_detail") {
-        addArg(Args.CATEGORY_ID)
-        addArg(Args.TRANSACTION_TYPE)
-        addArg(Args.CATEGORY_NAME)
-    }
-
-    fun editorDestination(transactionType: TransactionType, newCategoryName: String? = null): String {
-        return buildDestination(EDITOR) {
-            withArg(Args.TRANSACTION_TYPE, transactionType.name)
-            newCategoryName?.let { withArg(Args.IMPORT_FIX_CATEGORY_NAME, it) }
+    fun editorDestination(transactionType: TransactionType, newCategoryName: String? = null): NavigationRoute {
+        if (newCategoryName == null) {
+            return CategoryEditorDefault(
+                transactionType,
+            )
+        } else {
+            return ImportCategory(
+                transactionType,
+                newCategoryName
+            )
         }
     }
 
-    fun categoryTransactionDetail(categoryId: Int, categoryName: String, transactionType: TransactionType): String {
-        return buildDestination(CATEGORY_TRANSACTION_DETAIL) {
-            withArg(Args.CATEGORY_ID, categoryId.toString())
-            withArg(Args.TRANSACTION_TYPE, transactionType.name)
-            withArg(Args.CATEGORY_NAME, categoryName)
-        }
+    fun categoryTransactionDetail(categoryId: Int, categoryName: String, transactionType: TransactionType): NavigationRoute {
+        return CategoryTransactionDetail(
+            categoryId, categoryName, transactionType
+        )
     }
 }

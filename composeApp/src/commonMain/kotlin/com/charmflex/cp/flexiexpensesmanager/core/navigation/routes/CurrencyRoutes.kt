@@ -1,11 +1,11 @@
 package com.charmflex.flexiexpensesmanager.core.navigation.routes
 
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.NavigationRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.buildDestination
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.buildRoute
+import kotlinx.serialization.Serializable
+
 object CurrencyRoutes {
-
-    const val ROOT = "CURRENCY"
-    const val USER_SECONDARY_CURRENCY = "USER_SECONDARY_CURRENCY"
-    const val CURRENCY_SETTING = "$ROOT/CURRENCY_SETTING"
-
     object Args {
         const val CURRENCY_TYPE = "CURRENCY_TYPE"
         const val CURRENCY_TYPE_MAIN = "CURRENCY_TYPE_MAIN"
@@ -13,11 +13,15 @@ object CurrencyRoutes {
         const val CURRENCY_TYPE_SECONDARY_EDIT = "CURRENCY_TYPE_SECONDARY_EDIT"
     }
 
-    val currencySettingRoute = buildRoute(CURRENCY_SETTING) {
-        addArg(Args.CURRENCY_TYPE)
-    }
+    @Serializable
+    data class CurrencySetting(
+        val flowType: String
+    ) : NavigationRoute
 
-    fun currencySettingDestination(flowType: String) = buildDestination(currencySettingRoute) {
-        withArg(Args.CURRENCY_TYPE, flowType)
+    @Serializable
+    object UserSecondaryCurrency : NavigationRoute
+
+    internal fun currencySettingDestination(flowType: String): NavigationRoute {
+        return CurrencySetting(flowType)
     }
 }

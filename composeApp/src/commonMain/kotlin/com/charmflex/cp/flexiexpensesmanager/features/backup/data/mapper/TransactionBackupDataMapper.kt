@@ -10,7 +10,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategory
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class TransactionBackupDataMapper(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository

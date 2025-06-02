@@ -21,8 +21,7 @@ internal class CurrencyDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.userSetCurrencyList() {
-        composable(
-            CurrencyRoutes.USER_SECONDARY_CURRENCY,
+        composable<CurrencyRoutes.UserSecondaryCurrency>(
             enterTransition = FEHorizontalEnterFromEnd
         ) {
             val viewModel = getViewModel {
@@ -34,16 +33,7 @@ internal class CurrencyDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.currencySetting() {
-        composable(
-            CurrencyRoutes.currencySettingRoute,
-            arguments = listOf(
-                navArgument(
-                    CurrencyRoutes.Args.CURRENCY_TYPE
-                ) {
-                    nullable = false
-                    type = NavType.StringType
-                }
-            ),
+        composable<CurrencyRoutes.CurrencySetting>(
             enterTransition = FEHorizontalEnterFromEnd
         ) {
             val type = it.arguments?.getString(CurrencyRoutes.Args.CURRENCY_TYPE) ?: ""

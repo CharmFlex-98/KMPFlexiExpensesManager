@@ -4,10 +4,12 @@ import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
-import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
+import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
+import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
@@ -20,9 +22,44 @@ import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
-import org.koin.core.Koin
 import org.koin.core.annotation.Factory
 import org.koin.core.qualifier.named
+
+@Factory
+internal class TransactionEditorViewModelFactory constructor(
+    private val accountRepository: AccountRepository,
+    private val transactionRepository: TransactionRepository,
+    private val routeNavigator: RouteNavigator,
+    private val transactionCategoryRepository: TransactionCategoryRepository,
+    private val submitTransactionUseCase: SubmitTransactionUseCase,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val tagRepository: TagRepository,
+    private val resourcesProvider: ResourcesProvider,
+    private val currencyService: CurrencyService,
+    private val currencyFormatter: CurrencyFormatter,
+    private val userCurrencyRepository: UserCurrencyRepository,
+    private val rateExchangeManager: RateExchangeManager
+) {
+    fun create(transactionId: Long?): TransactionEditorViewModel {
+        val contentProvider: TransactionEditorContentProvider = getDep(named(TransactionEditorProvider.DEFAULT))
+        return TransactionEditorViewModel(
+            transactionId,
+            transactionRepository,
+            submitTransactionUseCase,
+            contentProvider,
+            accountRepository,
+            routeNavigator,
+            transactionCategoryRepository,
+            currencyVisualTransformationBuilder,
+            tagRepository,
+            currencyService,
+            currencyFormatter,
+            userCurrencyRepository,
+            rateExchangeManager,
+            resourcesProvider,
+        )
+    }
+}
 
 
 internal class TransactionEditorViewModel  constructor(
@@ -53,43 +90,6 @@ internal class TransactionEditorViewModel  constructor(
     userCurrencyRepository,
     transactionId,
 ) {
-    @org.koin.core.annotation.Factory
-    class Factory constructor(
-        private val resolver: Koin,
-        private val accountRepository: AccountRepository,
-        private val transactionRepository: TransactionRepository,
-        private val routeNavigator: RouteNavigator,
-        private val transactionCategoryRepository: TransactionCategoryRepository,
-        private val submitTransactionUseCase: SubmitTransactionUseCase,
-        private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
-        private val tagRepository: TagRepository,
-        private val resourcesProvider: ResourcesProvider,
-        private val currencyService: CurrencyService,
-        private val currencyFormatter: CurrencyFormatter,
-        private val userCurrencyRepository: UserCurrencyRepository,
-        private val rateExchangeManager: RateExchangeManager
-    ) {
-        fun create(transactionId: Long?): TransactionEditorViewModel {
-            val contentProvider = resolver.get<TransactionEditorContentProvider>(named(TransactionEditorProvider.DEFAULT))
-            return TransactionEditorViewModel(
-                transactionId,
-                transactionRepository,
-                submitTransactionUseCase,
-                contentProvider,
-                accountRepository,
-                routeNavigator,
-                transactionCategoryRepository,
-                currencyVisualTransformationBuilder,
-                tagRepository,
-                currencyService,
-                currencyFormatter,
-                userCurrencyRepository,
-                rateExchangeManager,
-                resourcesProvider,
-            )
-        }
-    }
-
     init {
         initialise()
     }

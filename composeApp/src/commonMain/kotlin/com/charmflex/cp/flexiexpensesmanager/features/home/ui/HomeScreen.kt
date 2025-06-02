@@ -7,12 +7,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavDestination.Companion.hasRoute
+import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
+import androidx.navigation.toRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.HomeRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponent
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.account.AccountHomeScreen
@@ -113,26 +116,18 @@ private fun HomeBody(
     ) {
         NavHost(
             navController = bottomNavController,
-            startDestination = HomeRoutes.SUMMARY
+            startDestination = HomeRoutes.SummaryHomeRoute
         ) {
-            composable(
-                route = HomeRoutes.SUMMARY,
-            ) {
+            composable<HomeRoutes.SummaryHomeRoute> {
                 DashboardScreen(dashboardViewModel)
             }
-            composable(
-                route = HomeRoutes.DETAIL,
-            ) {
+            composable<HomeRoutes.DetailHomeRoute> {
                 TransactionHistoryHomeScreen(transactionHomeViewModel = transactionHomeViewModel)
             }
-            composable(
-                route = HomeRoutes.ACCOUNTS,
-            ) {
+            composable<HomeRoutes.AccountsHomeRoute> {
                 AccountHomeScreen(viewModel = accountHomeViewModel)
             }
-            composable(
-                route = HomeRoutes.SETTING,
-            ) {
+            composable<HomeRoutes.SettingHomeRoute> {
                 SettingScreen(viewModel = settingViewModel) {
                     homeViewModel.notifyRefresh()
                 }
@@ -156,8 +151,8 @@ fun HomeScreenBottomNavigationBar(bottomBarNavController: NavController) {
     SGBottomNavigationBar(
         tonalElevation = 0.dp,
         items = item,
-        isSelected = {
-            currentBackStackEntry?.destination?.route == it
+        isSelected = { selected ->
+            currentBackStackEntry?.destination?.hierarchy?.any { it.hasRoute(selected::class) } == true
         }
     ) {
         bottomBarNavController.navigate(it.route) {
@@ -180,25 +175,25 @@ internal fun bottomBarItem(): List<SGBottomNavItem> {
             index = 0,
             titleId = Res.string.home_bar_item_summary,
             iconId = Res.drawable.ic_pie_chart,
-            route = HomeRoutes.SUMMARY,
+            route = HomeRoutes.SummaryHomeRoute,
         ),
         SGBottomNavItem(
             index = 1,
             titleId = Res.string.home_bar_item_details,
             iconId = Res.drawable.ic_wallet,
-            route = HomeRoutes.DETAIL
+            route = HomeRoutes.DetailHomeRoute
         ),
         SGBottomNavItem(
             index = 2,
             titleId = Res.string.home_bar_item_accounts,
             iconId = Res.drawable.ic_wallet,
-            route = HomeRoutes.ACCOUNTS
+            route = HomeRoutes.AccountsHomeRoute
         ),
         SGBottomNavItem(
             index = 3,
             titleId = Res.string.home_bar_item_setting,
             iconId = Res.drawable.icon_people,
-            route = HomeRoutes.SETTING
+            route = HomeRoutes.SettingHomeRoute
         )
     )
 }

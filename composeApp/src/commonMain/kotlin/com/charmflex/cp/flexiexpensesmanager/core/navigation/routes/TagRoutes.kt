@@ -1,21 +1,25 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
 
-object TagRoutes {
-    const val ROOT = "Tag"
-    const val SETTING = "$ROOT/TagSetting"
+import kotlinx.serialization.Serializable
 
+internal object TagRoutes {
     object Args {
-        const val IMPORT_FIX = "is_import_fix"
         const val IMPORT_FIX_TAG_NAME = "import_fix_tag_name"
     }
 
-    val ADD_NEW_TAG_ROUTE = buildRoute(SETTING){
-        addArg(Args.IMPORT_FIX)
-        addArg(Args.IMPORT_FIX_TAG_NAME)
-    }
+    @Serializable
+    object TagEditorDefault : NavigationRoute
+    @Serializable
+    data class ImportTagEditor(
+        val tagName: String
+    ) : NavigationRoute
 
-    fun addNewTagDestination(isImportFix: Boolean = false, newTagValue: String? = null) = buildDestination(ADD_NEW_TAG_ROUTE) {
-        withArg(Args.IMPORT_FIX, isImportFix.toString())
-        newTagValue?.let { withArg(Args.IMPORT_FIX_TAG_NAME, it) }
+
+    fun addNewTagDestination(isImportFix: Boolean = false, newTagValue: String? = null): NavigationRoute {
+        return if (isImportFix && newTagValue != null) {
+            ImportTagEditor(newTagValue)
+        } else {
+            TagEditorDefault
+        }
     }
 }

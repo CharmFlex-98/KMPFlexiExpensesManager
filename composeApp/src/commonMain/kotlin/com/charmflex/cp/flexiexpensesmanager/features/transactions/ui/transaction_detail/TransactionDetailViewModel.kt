@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
@@ -22,8 +22,24 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.core.annotation.Factory
 
+@org.koin.core.annotation.Factory
+internal class TransactionDetailViewModelFactory  constructor(
+    private val routeNavigator: RouteNavigator,
+    private val transactionRepository: TransactionRepository,
+    private val resourcesProvider: ResourcesProvider,
+    private val currencyFormatter: CurrencyFormatter
+) {
+    fun create(transactionId: Long): TransactionDetailViewModel {
+        return TransactionDetailViewModel(
+            transactionId = transactionId,
+            routeNavigator = routeNavigator,
+            transactionRepository = transactionRepository,
+            resourcesProvider = resourcesProvider,
+            currencyFormatter = currencyFormatter
+        )
+    }
+}
 internal class TransactionDetailViewModel(
     private val transactionId: Long,
     private val routeNavigator: RouteNavigator,
@@ -39,24 +55,6 @@ internal class TransactionDetailViewModel(
 
     init {
         loadDetail()
-    }
-
-    @org.koin.core.annotation.Factory
-    class Factory  constructor(
-        private val routeNavigator: RouteNavigator,
-        private val transactionRepository: TransactionRepository,
-        private val resourcesProvider: ResourcesProvider,
-        private val currencyFormatter: CurrencyFormatter
-    ) {
-        fun create(transactionId: Long): TransactionDetailViewModel {
-            return TransactionDetailViewModel(
-                transactionId = transactionId,
-                routeNavigator = routeNavigator,
-                transactionRepository = transactionRepository,
-                resourcesProvider = resourcesProvider,
-                currencyFormatter = currencyFormatter
-            )
-        }
     }
 
     private fun loadDetail() {

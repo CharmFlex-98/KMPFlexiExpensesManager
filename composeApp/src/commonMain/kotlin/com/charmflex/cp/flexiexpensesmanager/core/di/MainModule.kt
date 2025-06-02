@@ -3,8 +3,14 @@ package com.charmflex.cp.flexiexpensesmanager.core.di
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigatorImpl
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
+import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReaderImpl
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 //import com.charmflex.cp.flexiexpensesmanager.core.network.DefaultNetworkClientBuilder
@@ -58,16 +64,15 @@ import org.koin.dsl.module
 //    }
 //}
 
-@Retention(AnnotationRetention.RUNTIME)
-annotation class Dispatcher(val dispatcherType: Type) {
-    enum class Type {
-        IO, DEFAULT
-    }
+enum class DispatcherType {
+    IO, DEFAULT
 }
 
 val mainModule = module {
     singleOf(::ResourcesProvider)
     singleOf(::RouteNavigatorImpl) { bind<RouteNavigator>() }
+    singleOf(::AssetReaderImpl) { bind<AssetReader>() }
+    factory<CoroutineDispatcher>(named(DispatcherType.IO)) { Dispatchers.IO }
 //    singleOf(::FileStorageImpl) {  }
 //    singleOf(::DefaultNetworkClientBuilder) { bind<NetworkClientBuilder>() }
 //    singleOf(::TransactionBackupManagerImpl) { }

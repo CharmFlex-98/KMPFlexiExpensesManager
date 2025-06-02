@@ -1,6 +1,8 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
+
+import kotlinx.serialization.Serializable
 
 object SchedulerRoutes {
-    const val ROOT = "schedulerRoute"
-    const val SCHEDULER_LIST = "scheduler_list"
+    @Serializable
+    object SchedulerList : NavigationRoute
 }

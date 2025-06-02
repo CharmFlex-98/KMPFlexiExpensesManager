@@ -3,7 +3,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
@@ -60,9 +60,7 @@ internal class CategoryStatViewModel constructor(
                 categoryId,
                 categoryName,
                 type
-            ),
-            arg = args
-        )
+            ))
     }
 
     private fun observeDateFilter() {

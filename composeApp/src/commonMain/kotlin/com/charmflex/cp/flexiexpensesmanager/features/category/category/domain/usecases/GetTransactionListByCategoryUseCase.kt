@@ -4,7 +4,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import kotlinx.coroutines.flow.firstOrNull
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class GetTransactionListByCategoryUseCase constructor(
     private val categoryRepository: TransactionCategoryRepository,
 ) {

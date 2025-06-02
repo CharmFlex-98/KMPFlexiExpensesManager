@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.backup
 
 import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.db.AppDatabase
+import com.charmflex.cp.flexiexpensesmanager.db.core.DatabaseBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 
 internal interface AppDataService {
@@ -16,7 +17,7 @@ internal class AppDataServiceImpl(
     private val transactionRepository: TransactionRepository,
     private val sharedPrefs: SharedPrefs,
 //    private val appContext: Context,
-    private val database: AppDatabase
+    private val database: DatabaseBuilder.IDatabase
 ) : AppDataService {
     override suspend fun clearAppData(appDataClearServiceType: AppDataClearServiceType) {
         when (appDataClearServiceType) {

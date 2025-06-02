@@ -1,6 +1,12 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
+import kotlinx.serialization.Serializable
 
-object AuthRoutes {
-    const val ROOT = "AUTH"
-    const val LANDING = "${ROOT}/landing"
+
+@Serializable
+internal object AuthRoutes {
+    @Serializable
+    object Root : NavigationRoute
+
+    @Serializable
+    object Landing : NavigationRoute
 }

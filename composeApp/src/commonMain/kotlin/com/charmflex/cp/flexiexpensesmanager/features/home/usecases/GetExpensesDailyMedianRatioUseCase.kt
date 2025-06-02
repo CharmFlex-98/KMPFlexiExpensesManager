@@ -7,7 +7,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.reposi
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.LocalDate
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class GetExpensesDailyMedianRatioUseCase constructor(
     private val transactionRepository: TransactionRepository
 ) {

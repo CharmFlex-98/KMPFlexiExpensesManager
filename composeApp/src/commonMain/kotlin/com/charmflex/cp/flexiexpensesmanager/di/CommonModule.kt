@@ -27,5 +27,6 @@ fun commonModules(): List<Module> {
         networkModule,
         daoModule,
         sessionModule,
+        AppModule().module
     )
 }

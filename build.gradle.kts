@@ -8,4 +8,5 @@ plugins {
     alias(libs.plugins.kotlinMultiplatform) apply false
     alias(libs.plugins.room.gradle.plugin) apply false
     alias(libs.plugins.ksp.plugin) apply false
+    alias(libs.plugins.kotlin.serialization.plugin) apply false
 }

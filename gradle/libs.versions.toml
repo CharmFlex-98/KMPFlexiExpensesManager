@@ -20,6 +20,7 @@ kotlin-datetime_version = "0.6.2"
 compose-navigation-ver = "2.9.0-beta01"
 ksp_version = "2.1.20-1.0.32"
 compottie = "2.0.0-rc04"
+saved_state_version = "1.3.0"
 
 # posthog version
 posthog_version = "3.+"
@@ -145,7 +146,7 @@ koin-core = { module = "io.insert-koin:koin-core" }
 koin-android = { module = "io.insert-koin:koin-android"}
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation"}
-
+androidx-savedState = { module = "androidx.savedstate:savedstate-ktx", version.ref = "saved_state_version"}
 #fluid currency
 fluid-currency = { module = "io.fluidsonic.currency:fluid-currency", version.ref = "fluid_currency_version" }
 

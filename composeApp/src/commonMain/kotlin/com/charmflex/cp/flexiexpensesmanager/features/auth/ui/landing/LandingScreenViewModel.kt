@@ -3,8 +3,8 @@ package com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.AuthRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AuthRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.HomeRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.UserData
@@ -21,7 +21,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import org.koin.android.annotation.KoinViewModel
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -45,7 +44,7 @@ internal class LandingScreenViewModel(
 
     private fun proceedToHome() {
         eventTracker.track(EventData.simpleEvent(AuthEventName.USER_NAVIGATE_HOME))
-        routeNavigator.navigateAndPopUpTo(HomeRoutes.ROOT, AuthRoutes.LANDING)
+        routeNavigator.navigateAndPopUpTo(HomeRoutes.ROOT, AuthRoutes.Landing)
     }
 
     private fun showLoading(loading: Boolean) {

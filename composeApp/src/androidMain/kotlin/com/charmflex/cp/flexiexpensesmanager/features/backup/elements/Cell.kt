@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.features.backup.elements
+package com.charmflex.cp.flexiexpensesmanager.features.backup.elements
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import org.apache.poi.xssf.usermodel.XSSFRow
@@ -28,8 +28,7 @@ internal class Cell(
                         val cellStyle = xssfWorkbook.createCellStyle()
                         val creationHelper = xssfWorkbook.creationHelper
                         cellStyle.setDataFormat(creationHelper.createDataFormat().getFormat(
-                            DATE_ONLY_DEFAULT_PATTERN
-                        ))
+                            DATE_ONLY_DEFAULT_PATTERN))
                         setCellStyle(cellStyle)
                     }
                 }

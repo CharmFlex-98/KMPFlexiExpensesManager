@@ -4,8 +4,10 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.getHourDifferen
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
+import org.koin.core.annotation.Factory
 
 // This is for updating the currency rate (as source of truth for real time currency rate)
+@Factory
 internal class UpdateCurrencyRateUseCase(
     private val currencyRepository: CurrencyRepository,
 ) {

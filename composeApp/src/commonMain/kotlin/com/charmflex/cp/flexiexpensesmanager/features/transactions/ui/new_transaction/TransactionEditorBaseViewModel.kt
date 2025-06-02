@@ -7,13 +7,13 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
-import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod

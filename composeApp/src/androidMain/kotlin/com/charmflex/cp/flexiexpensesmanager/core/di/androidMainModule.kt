@@ -11,16 +11,22 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AndroidDocumentMana
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.AndroidDeviceIdGenerator
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.DeviceIdGenerator
+import org.koin.core.annotation.ComponentScan
+import org.koin.core.annotation.Module
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
+import org.koin.ksp.generated.module
 
+@Module
+@ComponentScan("com.charmflex.cp.flexiexpensesmanager")
+class AndroidModule
 
 val androidMainModule = module {
     singleOf(::PostHogEventTracker) { bind<EventTracker>() }
     singleOf(::AndroidSharedPrefs) { bind<SharedPrefs>() }
     singleOf(::AndroidFileStorage) { bind<FileStorage>() }
-    singleOf(::AndroidAssetReader) { bind<AssetReader>() }
     singleOf(::AndroidDocumentManager) { bind<DocumentManager>() }
     singleOf(::AndroidDeviceIdGenerator) { bind<DeviceIdGenerator>() }
+    AndroidModule().module
 }

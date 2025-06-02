@@ -3,21 +3,20 @@ package com.charmflex.cp.flexiexpensesmanager.core.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavController
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.HomeRoutes
-import com.charmflex.flexiexpensesmanager.core.utils.navigateAndPopUpTo
-import com.charmflex.flexiexpensesmanager.core.utils.navigateTo
-import com.charmflex.flexiexpensesmanager.core.utils.popWithArgs
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.NavigationRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.HomeRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.utils.navigateAndPopUpTo
+import com.charmflex.cp.flexiexpensesmanager.core.utils.navigateTo
+import com.charmflex.cp.flexiexpensesmanager.core.utils.popWithArgs
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.asSharedFlow
-import org.koin.core.annotation.Factory
 
-interface RouteNavigator {
+internal interface RouteNavigator {
 
     val navigationEvent: Flow<NavigationEvent>
-
-    fun navigateTo(route: String, arg: Map<String, Any>? = null)
-    fun navigateAndPopUpTo(route: String, popUpToRouteInclusive: String)
+    fun navigateTo(navigationRoute: NavigationRoute)
+    fun navigateAndPopUpTo(route: NavigationRoute, popUpToRouteInclusive: NavigationRoute)
     fun pop()
     fun popWithArguments(data: Map<String, Any>)
 
@@ -26,16 +25,16 @@ interface RouteNavigator {
     }
 }
 
-class RouteNavigatorImpl : RouteNavigator {
+internal class RouteNavigatorImpl : RouteNavigator {
     private val _navigationEvent = MutableSharedFlow<NavigationEvent>(extraBufferCapacity = 1)
     override val navigationEvent: Flow<NavigationEvent>
         get() = _navigationEvent.asSharedFlow()
 
-    override fun navigateTo(route: String, arg: Map<String, Any>?) {
-        _navigationEvent.tryEmit(NavigateTo(route, arg))
+    override fun navigateTo(navigationRoute: NavigationRoute) {
+        _navigationEvent.tryEmit(NavigateTo(navigationRoute))
     }
 
-    override fun navigateAndPopUpTo(route: String, popUpToRouteInclusive: String) {
+    override fun navigateAndPopUpTo(route: NavigationRoute, popUpToRouteInclusive: NavigationRoute) {
         _navigationEvent.tryEmit(NavigateAndPopUpTo(route = route, popToRouteInclusive = popUpToRouteInclusive))
     }
 
@@ -50,25 +49,24 @@ class RouteNavigatorImpl : RouteNavigator {
 
 sealed interface NavigationEvent
 
-data class NavigateTo(
-    val route: String,
-    val args: Map<String, Any>?
+internal data class NavigateTo(
+    val navigationRoute: NavigationRoute
 ) : NavigationEvent
-data class NavigateAndPopUpTo(val route: String, val popToRouteInclusive: String): NavigationEvent
+internal data class NavigateAndPopUpTo(val route: NavigationRoute, val popToRouteInclusive: NavigationRoute): NavigationEvent
 object Pop : NavigationEvent
 data class PopWithArguments(
     val data: Map<String, Any>
 ) : NavigationEvent
 
 @Composable
-fun RouteNavigatorListener(
+internal fun RouteNavigatorListener(
     routeNavigator: RouteNavigator,
     navController: NavController,
 ) {
     LaunchedEffect(Unit) {
         routeNavigator.navigationEvent.collect {
             when (it) {
-                is NavigateTo -> navController.navigateTo(it.route, it.args)
+                is NavigateTo -> navController.navigateTo(it.navigationRoute)
                 is NavigateAndPopUpTo -> navController.navigateAndPopUpTo(it.route, it.popToRouteInclusive)
                 is Pop -> navController.popBackStack()
                 is PopWithArguments -> navController.popWithArgs(it.data)

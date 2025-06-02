@@ -1,4 +1,6 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
+
+import kotlinx.serialization.Serializable
 
 object TransactionRoute {
     const val ROOT = "TRANSACTION"
@@ -13,6 +15,28 @@ object TransactionRoute {
         const val TRANSACTION_ID = "TRANSACTION_ID"
         const val SCHEDULE_TRANSACTION_ID = "SCHEDULE_TRANSFER_ID"
     }
+
+    @Serializable
+    data class Detail(
+        val id: Long
+    ) : NavigationRoute
+
+    @Serializable
+    object NewTransaction : NavigationRoute
+
+    @Serializable
+    object ScheduledTransaction : NavigationRoute
+
+    @Serializable
+    data class TransactionEditor(
+        val transactionId: Long
+    ) : NavigationRoute
+
+    @Serializable
+    data class ScheduledTransactionEditor(
+        val scheduledTransactionId: Int
+    ) : NavigationRoute
+
 
     val transactionDetail = buildRoute(TRANSACTION_DETAIL) {
         addArg(Args.TRANSACTION_ID)
@@ -29,18 +53,15 @@ object TransactionRoute {
         addArg(Args.SCHEDULE_TRANSACTION_ID)
     }
 
-    fun newTransactionDestination(): String = buildDestination(NEW_TRANSACTION) {}
+    internal fun newTransactionDestination(): NavigationRoute = NewTransaction
 
-    fun newScheduleTransactionDestination(): String = buildDestination(newScheduledTransaction) {}
-    fun editTransactionDestination(transactionId: Long): String = buildDestination(transactionEditor) {
-        withArg(Args.TRANSACTION_ID, transactionId.toString())
+    internal fun newScheduleTransactionDestination(): NavigationRoute = ScheduledTransaction
+
+    internal fun editTransactionDestination(transactionId: Long): NavigationRoute {
+        return TransactionEditor(transactionId)
     }
 
-    fun editScheduleTransactionDestination(scheduledTransactionId: Int): String = buildDestination(scheduledTransactionEditor) {
-        withArg(Args.SCHEDULE_TRANSACTION_ID, scheduledTransactionId.toString())
-    }
-
-    fun transactionDetailDestination(transactionId: Long): String = buildDestination(transactionDetail) {
-        withArg(Args.TRANSACTION_ID, transactionId.toString())
+    internal fun transactionDetailDestination(transactionId: Long): NavigationRoute {
+        return Detail(transactionId)
     }
 }

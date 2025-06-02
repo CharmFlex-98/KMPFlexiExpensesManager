@@ -11,19 +11,20 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.NavigationRoute
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-fun SGBottomNavigationBar(
+internal fun SGBottomNavigationBar(
     modifier: Modifier = Modifier,
     containerColor: Color = NavigationBarDefaults.containerColor,
     contentColor: Color = MaterialTheme.colorScheme.contentColorFor(containerColor),
     tonalElevation: Dp = NavigationBarDefaults.Elevation,
     items: List<SGBottomNavItem>,
-    isSelected: (String) -> Boolean,
+    isSelected: (NavigationRoute) -> Boolean,
     onClick: (SGBottomNavItem) -> Unit
 ) {
     NavigationBar(
@@ -47,10 +48,10 @@ fun SGBottomNavigationBar(
     }
 }
 
-data class SGBottomNavItem(
+internal data class SGBottomNavItem(
     val index: Int,
     val titleId: StringResource,
     val iconId: DrawableResource,
-    val route: String
+    val route: NavigationRoute
 )
 

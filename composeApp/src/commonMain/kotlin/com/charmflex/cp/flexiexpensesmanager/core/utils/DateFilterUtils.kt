@@ -1,10 +1,38 @@
 package com.charmflex.cp.flexiexpensesmanager.core.utils
+import androidx.navigation.NavType
+import androidx.savedstate.SavedState
+import androidx.savedstate.read
+import androidx.savedstate.serialization.decodeFromSavedState
+import androidx.savedstate.serialization.encodeToSavedState
+import androidx.savedstate.write
+import coil3.Uri
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.minus
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 
+val DateFilterNavType = object : NavType<DateFilter>(isNullableAllowed = true) {
+    override fun get(bundle: SavedState, key: String): DateFilter? {
+        return bundle.read { decodeFromSavedState(getSavedState(key)) as? DateFilter }
+    }
+
+    override fun serializeAsValue(value: DateFilter): String {
+        return Json.encodeToString(value)
+    }
+
+    override fun parseValue(value: String): DateFilter {
+        return Json.decodeFromString<DateFilter>(value)
+    }
+
+    override fun put(bundle: SavedState, key: String, value: DateFilter) {
+        bundle.write { putSavedState(key, encodeToSavedState(value)) }
+    }
+
+}
 @Serializable
 sealed interface DateFilter {
 
@@ -14,6 +42,7 @@ sealed interface DateFilter {
     @Serializable
     data class Monthly(
         // If monthBefore = 0, means this month; if = 1, means last month and so on
+        @Serializable
         val monthBefore: Int
     ) : DateFilter
 

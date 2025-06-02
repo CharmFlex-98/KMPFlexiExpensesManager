@@ -3,7 +3,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.schedulerLis
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf

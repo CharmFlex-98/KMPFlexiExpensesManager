@@ -1,12 +1,12 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
+
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.NavigationRoute
+import kotlinx.serialization.Serializable
 
 internal object BudgetRoutes {
+    @Serializable
+    object BudgetSetting : NavigationRoute
 
-    private const val ROOT = "Budget"
-    private const val SETTING = "$ROOT/SETTING"
-    private const val BUDGET_DETAIL = "$ROOT/DETAIL"
-
-    val budgetSettingRoute = buildRoute(SETTING) {}
-
-    val budgetDetailRoute = buildRoute(BUDGET_DETAIL) {}
+    @Serializable
+    object BudgetDetail : NavigationRoute
 }

@@ -8,7 +8,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusMonths
 import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
-import com.charmflex.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
@@ -26,8 +27,42 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 import org.koin.core.Koin
-import org.koin.core.annotation.Factory
 import org.koin.core.qualifier.named
+
+@org.koin.core.annotation.Factory
+internal class SchedulerEditorViewModelFactory constructor(
+    private val accountRepository: AccountRepository,
+    private val transactionSchedulerRepository: TransactionSchedulerRepository,
+    private val submitTransactionSchedulerUseCase: SubmitTransactionSchedulerUseCase,
+    private val routeNavigator: RouteNavigator,
+    private val transactionCategoryRepository: TransactionCategoryRepository,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyService: CurrencyService,
+    private val currencyFormatter: CurrencyFormatter,
+    private val rateExchangeManager: RateExchangeManager,
+    private val userCurrencyRepository: UserCurrencyRepository,
+    private val tagRepository: TagRepository,
+) {
+    fun create(schedulerId: Long?): SchedulerEditorViewModel {
+        val contentProvider = getDep<TransactionEditorContentProvider>(named(TransactionEditorProvider.SCHEDULER))
+        return SchedulerEditorViewModel(
+            schedulerId,
+            transactionSchedulerRepository,
+            submitTransactionSchedulerUseCase,
+            contentProvider,
+            accountRepository,
+            routeNavigator,
+            transactionCategoryRepository,
+            currencyVisualTransformationBuilder,
+            currencyService,
+            currencyFormatter,
+            rateExchangeManager,
+            userCurrencyRepository,
+            tagRepository,
+        )
+    }
+}
+
 
 internal class SchedulerEditorViewModel(
     private val schedulerId: Long?,
@@ -56,41 +91,6 @@ internal class SchedulerEditorViewModel(
     userCurrencyRepository,
     schedulerId
 ) {
-
-    @org.koin.core.annotation.Factory
-    class Factory constructor(
-        private val resolver: Koin,
-        private val accountRepository: AccountRepository,
-        private val transactionSchedulerRepository: TransactionSchedulerRepository,
-        private val submitTransactionSchedulerUseCase: SubmitTransactionSchedulerUseCase,
-        private val routeNavigator: RouteNavigator,
-        private val transactionCategoryRepository: TransactionCategoryRepository,
-        private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
-        private val currencyService: CurrencyService,
-        private val currencyFormatter: CurrencyFormatter,
-        private val rateExchangeManager: RateExchangeManager,
-        private val userCurrencyRepository: UserCurrencyRepository,
-        private val tagRepository: TagRepository,
-    ) {
-        fun create(schedulerId: Long?): SchedulerEditorViewModel {
-            val contentProvider = resolver.get<TransactionEditorContentProvider>(named(TransactionEditorProvider.SCHEDULER))
-            return SchedulerEditorViewModel(
-                schedulerId,
-                transactionSchedulerRepository,
-                submitTransactionSchedulerUseCase,
-                contentProvider,
-                accountRepository,
-                routeNavigator,
-                transactionCategoryRepository,
-                currencyVisualTransformationBuilder,
-                currencyService,
-                currencyFormatter,
-                rateExchangeManager,
-                userCurrencyRepository,
-                tagRepository,
-            )
-        }
-    }
 
     override val transactionType: List<TransactionType>
         get() = super.transactionType.filter { it != TransactionType.UPDATE_ACCOUNT }

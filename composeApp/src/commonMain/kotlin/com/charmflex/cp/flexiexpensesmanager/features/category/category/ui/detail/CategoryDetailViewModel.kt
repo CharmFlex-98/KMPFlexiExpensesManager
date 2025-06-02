@@ -2,7 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.deta
 
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
@@ -26,7 +26,36 @@ import kotlinx.datetime.DatePeriod
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.atStartOfDayIn
 import kotlinx.datetime.plus
-import org.koin.core.annotation.Factory
+
+@org.koin.core.annotation.Factory
+internal class CategoryDetailViewModelFactory(
+    private val transactionRepository: TransactionRepository,
+    private val mapper: TransactionHistoryMapper,
+    private val routeNavigator: RouteNavigator,
+    private val getTransactionListByCategoryUseCase: GetTransactionListByCategoryUseCase,
+    private val currencyFormatter: CurrencyFormatter,
+    private val userCurrencyRepository: UserCurrencyRepository
+) {
+    fun create(
+        categoryId: Int,
+        categoryName: String,
+        transactionType: String,
+        dateFilter: DateFilter?
+    ): CategoryDetailViewModel {
+        return CategoryDetailViewModel(
+            transactionRepository,
+            mapper,
+            routeNavigator,
+            getTransactionListByCategoryUseCase,
+            categoryId,
+            categoryName,
+            TransactionType.fromString(transactionType),
+            dateFilter,
+            currencyFormatter,
+            userCurrencyRepository
+        )
+    }
+}
 
 internal class CategoryDetailViewModel(
     private val transactionRepository: TransactionRepository,
@@ -48,36 +77,6 @@ internal class CategoryDetailViewModel(
         MutableStateFlow(CategoryDetailViewState(categoryName = categoryName, totalAmount = ""))
     val categoryDetailViewState = _categoryDetailViewState.asStateFlow()
 
-
-    @org.koin.core.annotation.Factory
-    class Factory(
-        private val transactionRepository: TransactionRepository,
-        private val mapper: TransactionHistoryMapper,
-        private val routeNavigator: RouteNavigator,
-        private val getTransactionListByCategoryUseCase: GetTransactionListByCategoryUseCase,
-        private val currencyFormatter: CurrencyFormatter,
-        private val userCurrencyRepository: UserCurrencyRepository
-    ) {
-        fun create(
-            categoryId: Int,
-            categoryName: String,
-            transactionType: String,
-            dateFilter: DateFilter?
-        ): CategoryDetailViewModel {
-            return CategoryDetailViewModel(
-                transactionRepository,
-                mapper,
-                routeNavigator,
-                getTransactionListByCategoryUseCase,
-                categoryId,
-                categoryName,
-                TransactionType.fromString(transactionType),
-                dateFilter,
-                currencyFormatter,
-                userCurrencyRepository
-            )
-        }
-    }
 
 
     init {

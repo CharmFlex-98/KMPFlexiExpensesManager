@@ -3,7 +3,9 @@ package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.mapper
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroupSummary
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.account.AccountHomeViewState
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class AccountHomeUIMapper  constructor(
     private val currencyFormatter: CurrencyFormatter,
 ) {

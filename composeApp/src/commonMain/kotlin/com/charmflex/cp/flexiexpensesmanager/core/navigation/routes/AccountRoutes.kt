@@ -1,11 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
 
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.buildDestination
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.buildRoute
+import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
+import kotlinx.serialization.Serializable
+
 
 object AccountRoutes {
-
-    private const val ROOT = "account"
 
     object Args {
         const val IMPORT_FIX_ACCOUNT_NAME = "import_fix_account_name"
@@ -13,20 +12,26 @@ object AccountRoutes {
         const val ACCOUNT_DETAIL_DATE_FILTER = "account_detail_date_filter"
     }
 
-    val EDITOR = buildRoute("$ROOT/editor") {
-        addArg(Args.IMPORT_FIX_ACCOUNT_NAME)
-    }
+    @Serializable
+    internal object EditorAccountRouteDefault: NavigationRoute
 
-    val DETAIL = buildRoute("$ROOT/detail") {
-        addArg(Args.ACCOUNT_ID)
-    }
+    @Serializable
+    internal data class ImportEditorAccountRoute(
+        val fixAccountName: String
+    ) : NavigationRoute
 
-    fun editorDestination(importFixAccountName: String? = null): String = buildDestination(EDITOR) {
-        importFixAccountName?.let { withArg(Args.IMPORT_FIX_ACCOUNT_NAME, it) }
-    }
+    @Serializable
+    internal data class DetailAccountRoute(
+        private val accountID: Int,
+        private val dateFilter: DateFilter?
+    ) : NavigationRoute
 
-    fun accountDetailDestination(accountId: Int): String = buildDestination(DETAIL) {
-        withArg(Args.ACCOUNT_ID, accountId.toString())
+    internal fun editorDestination(importFixAccountName: String? = null): NavigationRoute {
+        return importFixAccountName?.let {
+            ImportEditorAccountRoute(it)
+        } ?: EditorAccountRouteDefault
     }
-
+    internal fun accountDetailDestination(accountId: Int, dateFilter: DateFilter? = null): NavigationRoute {
+        return DetailAccountRoute(accountId, dateFilter)
+    }
 }

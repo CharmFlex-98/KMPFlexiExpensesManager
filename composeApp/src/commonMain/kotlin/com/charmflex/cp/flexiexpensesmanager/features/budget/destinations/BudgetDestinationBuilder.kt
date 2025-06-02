@@ -4,7 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingScreen
 import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting.BudgetSettingViewModel
@@ -20,7 +20,7 @@ internal class BudgetDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.budgetSetting() {
-        composable(BudgetRoutes.budgetSettingRoute) {
+        composable<BudgetRoutes.BudgetSetting> {
             val viewModel: BudgetSettingViewModel = getViewModel {
                 appComponent.budgetSettingViewModel
             }
@@ -29,7 +29,7 @@ internal class BudgetDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.budgetDetail() {
-        composable(BudgetRoutes.budgetDetailRoute) {
+        composable<BudgetRoutes.BudgetDetail> {
             val viewModel: BudgetDetailViewModel = getViewModel {
                 appComponent.budgetDetailViewModel
             }

@@ -1,4 +1,4 @@
-package com.charmflex.cp.flexiexpensesmanager.feature.auth.service.sign_in
+package com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in
 
 import android.content.Context
 import androidx.credentials.CredentialManager

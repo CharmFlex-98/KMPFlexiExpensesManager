@@ -2,8 +2,10 @@ package com.charmflex.cp.flexiexpensesmanager.features.currency.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import org.koin.core.annotation.Factory
 
 // Get user set primary and secondary currency and it's rate
+@Factory
 internal class GetCurrencyUseCase  constructor(
     private val userCurrencyRepository: UserCurrencyRepository,
     private val getCurrencyUseCase: GetCurrencyRateUseCase,

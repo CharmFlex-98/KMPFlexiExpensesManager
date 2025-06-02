@@ -2,7 +2,9 @@ package com.charmflex.cp.flexiexpensesmanager.features.currency.service
 
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.CurrencyRate
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class CurrencyService(
     private val currencyRepository: CurrencyRepository
 ) {

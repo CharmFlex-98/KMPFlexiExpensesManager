@@ -18,6 +18,17 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+@org.koin.core.annotation.Factory
+internal class AccountDetailViewModelFactory(
+    private val accountRepository: AccountRepository,
+    private val routeNavigator: RouteNavigator,
+    private val transactionRepository: TransactionRepository,
+    private val mapper: TransactionHistoryMapper
+) {
+    fun create(accountId: Int, dateFilter: DateFilter?): AccountDetailViewModel {
+        return AccountDetailViewModel(accountRepository, routeNavigator, accountId, mapper, transactionRepository, dateFilter)
+    }
+}
 
 internal class AccountDetailViewModel (
     private val accountRepository: AccountRepository,
@@ -27,17 +38,7 @@ internal class AccountDetailViewModel (
     private val transactionRepository: TransactionRepository,
     dateFilter: DateFilter?
 ) : TransactionHistoryViewModel(mapper, routeNavigator) {
-    @org.koin.core.annotation.Factory
-    class Factory(
-        private val accountRepository: AccountRepository,
-        private val routeNavigator: RouteNavigator,
-        private val transactionRepository: TransactionRepository,
-        private val mapper: TransactionHistoryMapper
-    ) {
-        fun create(accountId: Int, dateFilter: DateFilter?): AccountDetailViewModel {
-            return AccountDetailViewModel(accountRepository, routeNavigator, accountId, mapper, transactionRepository, dateFilter)
-        }
-    }
+
 
     private val _dateFilter: MutableStateFlow<DateFilter> = MutableStateFlow(dateFilter ?: DateFilter.Monthly(0))
     val dateFilter = _dateFilter.asStateFlow()

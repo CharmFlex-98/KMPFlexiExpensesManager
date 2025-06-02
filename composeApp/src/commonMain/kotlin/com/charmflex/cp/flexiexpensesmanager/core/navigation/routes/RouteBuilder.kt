@@ -1,4 +1,4 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
 
 interface RouteBuilder {
     fun addArg(arg: String)

@@ -1,15 +1,23 @@
-package com.charmflex.flexiexpensesmanager.core.navigation.routes
+package com.charmflex.cp.flexiexpensesmanager.core.navigation.routes
+
+import kotlinx.serialization.Serializable
+
 
 object HomeRoutes {
-    const val ROOT = "ROOT"
-    const val HOME = "HOME"
-    const val SUMMARY = "$ROOT/SUMMARY"
-    const val DETAIL = "$ROOT/DETAIL"
-    const val ACCOUNTS = "$ROOT/ACCOUNTS"
-    const val SETTING = "$ROOT/SETTING"
-
+    @Serializable
+    internal object ROOT: NavigationRoute
+    @Serializable
+    internal object MainHomeRoute : NavigationRoute
+    @Serializable
+    internal object SummaryHomeRoute: NavigationRoute
+    @Serializable
+    internal object DetailHomeRoute : NavigationRoute
+    @Serializable
+    internal object AccountsHomeRoute: NavigationRoute
+    @Serializable
+    internal object SettingHomeRoute : NavigationRoute
 
     object Args {
-        const val HOME_REFRESH = "$HOME/refresh"
+        const val HOME_REFRESH = "HOME/refresh"
     }
 }

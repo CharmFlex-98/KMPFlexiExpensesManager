@@ -9,7 +9,7 @@ import androidx.navigation.navArgument
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEHorizontalEnterFromEnd
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getLong
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TransactionRoute
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorScreen

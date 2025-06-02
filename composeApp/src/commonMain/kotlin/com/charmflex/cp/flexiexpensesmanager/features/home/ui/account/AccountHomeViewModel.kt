@@ -90,8 +90,7 @@ internal class AccountHomeViewModel constructor(
     }
 
     fun onAccountClick(accountSummaryUI: AccountHomeViewState.AccountGroupSummaryUI.AccountSummaryUI) {
-        val args = mapOf(AccountRoutes.Args.ACCOUNT_DETAIL_DATE_FILTER to _dateFilter.value)
-        routeNavigator.navigateTo(AccountRoutes.accountDetailDestination(accountSummaryUI.accountId), args)
+        routeNavigator.navigateTo(AccountRoutes.accountDetailDestination(accountSummaryUI.accountId, _dateFilter.value))
     }
 
     fun toggleHideInfo() {

@@ -3,10 +3,10 @@ package com.charmflex.cp.flexiexpensesmanager.di
 import android.content.Context
 import com.charmflex.cp.flexiexpensesmanager.core.di.androidMainModule
 import com.charmflex.cp.flexiexpensesmanager.db.di.androidDbModule
-import com.charmflex.cp.flexiexpensesmanager.feature.auth.di.module.authModuleAndroid
+import com.charmflex.cp.flexiexpensesmanager.features.auth.di.module.authModuleAndroid
+import com.charmflex.cp.flexiexpensesmanager.features.backup.di.modules.androidBackupModules
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
-import org.koin.ksp.generated.module
 
 actual class KoinInitializer(
     private val appContext: Context
@@ -15,7 +15,7 @@ actual class KoinInitializer(
         startKoin {
             androidContext(appContext)
             // Android-specific
-            modules(androidDbModule, authModuleAndroid, androidMainModule)
+            modules(androidDbModule, authModuleAndroid, androidBackupModules, androidMainModule)
 
             // Common
             modules(commonModules())

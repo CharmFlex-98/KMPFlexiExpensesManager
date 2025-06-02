@@ -5,7 +5,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.Accou
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.responses.TransactionResponse
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class TransactionMapper constructor() : Mapper<TransactionResponse, Transaction> {
     override fun map(from: TransactionResponse): Transaction {
         return Transaction(

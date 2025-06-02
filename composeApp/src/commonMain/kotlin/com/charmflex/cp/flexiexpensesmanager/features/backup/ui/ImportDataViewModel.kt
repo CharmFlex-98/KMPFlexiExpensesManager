@@ -5,8 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
@@ -118,18 +118,18 @@ internal class ImportDataViewModel constructor(
 
             ImportedData.MissingData.DataType.INCOME_CATEGORY -> {
                 routeNavigator.navigateTo(
-                    CategoryRoutes.editorDestination(
-                        TransactionType.INCOME,
-                        missingData.name
+                    CategoryRoutes.ImportCategory(
+                        transactionType = TransactionType.INCOME,
+                        newCategoryName = missingData.name
                     )
                 )
             }
 
             ImportedData.MissingData.DataType.EXPENSES_CATEGORY -> {
                 routeNavigator.navigateTo(
-                    CategoryRoutes.editorDestination(
-                        TransactionType.EXPENSES,
-                        missingData.name
+                    CategoryRoutes.ImportCategory(
+                        transactionType = TransactionType.EXPENSES,
+                        newCategoryName = missingData.name
                     )
                 )
             }

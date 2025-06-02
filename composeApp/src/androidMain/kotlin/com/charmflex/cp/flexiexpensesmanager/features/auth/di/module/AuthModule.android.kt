@@ -1,6 +1,7 @@
-package com.charmflex.cp.flexiexpensesmanager.feature.auth.di.module
+package com.charmflex.cp.flexiexpensesmanager.features.auth.di.module
 
-import com.charmflex.cp.flexiexpensesmanager.feature.auth.service.sign_in.GoogleSignInService
+import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.DeviceInfoService
+import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.GoogleSignInService
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
@@ -13,6 +14,8 @@ import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val authModuleAndroid = module {
+    // TODO: use binding..
+    singleOf(::DeviceInfoService)
     singleOf(::GoogleSignInService) { bind<SignInService>() }
     single { Firebase.auth }.bind<FirebaseAuth>()
 }

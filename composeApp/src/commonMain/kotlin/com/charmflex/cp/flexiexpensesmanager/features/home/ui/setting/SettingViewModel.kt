@@ -6,12 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.BackupRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BackupRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
-import com.charmflex.flexiexpensesmanager.core.navigation.routes.TagRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
@@ -83,7 +83,7 @@ internal class SettingViewModel  constructor(
             }
 
             SettingAction.SECONDARY_CURRENCY -> {
-                routeNavigator.navigateTo(CurrencyRoutes.USER_SECONDARY_CURRENCY)
+                routeNavigator.navigateTo(CurrencyRoutes.UserSecondaryCurrency)
             }
 
             SettingAction.Tag -> {
@@ -111,7 +111,7 @@ internal class SettingViewModel  constructor(
             }
 
             SettingAction.Import -> {
-                routeNavigator.navigateTo(BackupRoutes.IMPORT_SETTING)
+                routeNavigator.navigateTo(BackupRoutes.ImportSetting)
             }
 
             SettingAction.RESET_DATA -> {
@@ -125,11 +125,11 @@ internal class SettingViewModel  constructor(
             }
 
             SettingAction.SCHEDULER -> {
-                routeNavigator.navigateTo(SchedulerRoutes.SCHEDULER_LIST)
+                routeNavigator.navigateTo(SchedulerRoutes.SchedulerList)
             }
 
             SettingAction.BUDGET -> {
-                routeNavigator.navigateTo(BudgetRoutes.budgetSettingRoute)
+                routeNavigator.navigateTo(BudgetRoutes.BudgetSetting)
             }
         }
     }
