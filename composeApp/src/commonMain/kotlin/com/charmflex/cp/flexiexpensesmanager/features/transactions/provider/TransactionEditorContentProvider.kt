@@ -4,6 +4,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
+import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Named
 
 
 internal const val TRANSACTION_AMOUNT = "TRANSACTION_AMOUNT"
@@ -20,7 +22,6 @@ internal const val TRANSACTION_TAG = "TRANSACTION_TAG"
 internal const val TRANSACTION_SCHEDULER_PERIOD = "SCHEDULER_PERIOD"
 internal const val TRANSACTION_UPDATE_ACCOUNT = "TRANSACTION_UPDATE_ACCOUNT"
 internal const val TRANSACTION_UPDATE_ACCOUNT_TYPE = "TRANSACTION_UPDATE_ACCOUNT_TYPE"
-
 
 internal class DefaultTransactionEditorContentProvider  constructor() :
     TransactionEditorContentProvider()

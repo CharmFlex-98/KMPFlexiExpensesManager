@@ -25,7 +25,6 @@ import kotlinx.datetime.LocalDate
 import org.koin.core.annotation.Factory
 import org.koin.core.qualifier.named
 
-@Factory
 internal class TransactionEditorViewModelFactory constructor(
     private val accountRepository: AccountRepository,
     private val transactionRepository: TransactionRepository,
@@ -38,11 +37,11 @@ internal class TransactionEditorViewModelFactory constructor(
     private val currencyService: CurrencyService,
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository,
-    private val rateExchangeManager: RateExchangeManager
+    private val rateExchangeManager: RateExchangeManager,
+    private val contentProvider: TransactionEditorContentProvider
 ) {
 
     fun create(transactionId: Long?): TransactionEditorViewModel {
-        val contentProvider: TransactionEditorContentProvider = getDep(named(TransactionEditorProvider.DEFAULT))
         return TransactionEditorViewModel(
             transactionId,
             transactionRepository,

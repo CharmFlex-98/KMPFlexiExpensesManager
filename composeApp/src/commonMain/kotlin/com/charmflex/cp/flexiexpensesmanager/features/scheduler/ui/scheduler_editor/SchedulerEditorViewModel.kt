@@ -29,7 +29,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
 import org.koin.core.qualifier.named
 
-@org.koin.core.annotation.Factory
 internal class SchedulerEditorViewModelFactory constructor(
     private val accountRepository: AccountRepository,
     private val transactionSchedulerRepository: TransactionSchedulerRepository,
@@ -42,9 +41,10 @@ internal class SchedulerEditorViewModelFactory constructor(
     private val rateExchangeManager: RateExchangeManager,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val tagRepository: TagRepository,
+    private val contentProvider: TransactionEditorContentProvider
 ) {
     fun create(schedulerId: Long?): SchedulerEditorViewModel {
-        val contentProvider = getDep<TransactionEditorContentProvider>(named(TransactionEditorProvider.SCHEDULER))
+        println("the provider is " + contentProvider::class.simpleName)
         return SchedulerEditorViewModel(
             schedulerId,
             transactionSchedulerRepository,

@@ -9,14 +9,34 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.reposito
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.DefaultTransactionEditorContentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewModelFactory
 import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.factoryOf
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 val transactionModule = module {
-    factory<TransactionEditorContentProvider>(named(TransactionEditorProvider.DEFAULT)) { DefaultTransactionEditorContentProvider() }
+    factory(named(TransactionEditorProvider.DEFAULT)) {
+        DefaultTransactionEditorContentProvider()
+    }.bind(TransactionEditorContentProvider::class)
     singleOf(::TagRepositoryImpl) { bind<TagRepository>() }
     singleOf(::TransactionRepositoryImpl) { bind<TransactionRepository>() }
     singleOf(::TransactionCategoryRepositoryImpl) { bind<TransactionCategoryRepository>() }
+    factory { TransactionEditorViewModelFactory(
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(),
+        get(named(TransactionEditorProvider.DEFAULT)),
+    ) }
 }

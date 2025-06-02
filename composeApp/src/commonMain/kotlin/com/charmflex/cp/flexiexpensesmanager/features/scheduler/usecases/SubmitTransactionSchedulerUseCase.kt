@@ -5,8 +5,10 @@ import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ScheduledTransac
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import org.koin.core.annotation.Factory
 
 // This UseCase contains insert and update
+@Factory
 internal class SubmitTransactionSchedulerUseCase constructor(
     private val transactionSchedulerRepository: TransactionSchedulerRepository,
     private val scheduledTransactionHandler: ScheduledTransactionHandler,

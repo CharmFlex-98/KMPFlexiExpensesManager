@@ -14,15 +14,14 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.r
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import org.koin.core.Koin
 import org.koin.core.qualifier.named
 
 internal class ImportDataChecker (
     private val tagRepository: TagRepository,
     private val categoryRepository: TransactionCategoryRepository,
     private val accountRepository: AccountRepository,
+    private val dispatcher: CoroutineDispatcher
 ) {
-    private val dispatcher = getDep<CoroutineDispatcher>(named(DispatcherType.IO))
     suspend fun updateRequiredData(
         missingData: Set<ImportedData.MissingData>,
         importedData: List<ImportedData>
