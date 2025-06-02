@@ -10,7 +10,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
@@ -64,7 +65,7 @@ internal abstract class TransactionEditorBaseViewModel(
     private val accountRepository: AccountRepository,
     private val routeNavigator: RouteNavigator,
     private val transactionCategoryRepository: TransactionCategoryRepository,
-    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val tagRepository: TagRepository,
     private val currencyService: CurrencyService,
     private val currencyFormatter: CurrencyFormatter,
@@ -767,7 +768,7 @@ internal abstract class TransactionEditorBaseViewModel(
         }
     }
 
-    fun currencyVisualTransformationBuilder(): CurrencyVisualTransformation.Builder {
+    fun currencyVisualTransformationBuilder(): CurrencyVisualTransformationBuilder {
         return currencyVisualTransformationBuilder
     }
 

@@ -33,8 +33,8 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.input.KeyboardType
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog

@@ -5,7 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
@@ -28,7 +29,7 @@ internal class BudgetSettingViewModel (
     private val budgetRepository: CategoryBudgetRepository,
     private val transactionCategoryRepository: TransactionCategoryRepository,
     private val routeNavigator: RouteNavigator,
-    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val categoryBudgetRepository: CategoryBudgetRepository,
     private val currencyFormatter: CurrencyFormatter
@@ -110,7 +111,7 @@ internal class BudgetSettingViewModel (
         }
     }
 
-    fun currencyVisualTransformationBuilder(): CurrencyVisualTransformation.Builder {
+    fun currencyVisualTransformationBuilder(): CurrencyVisualTransformationBuilder {
         return currencyVisualTransformationBuilder
     }
 

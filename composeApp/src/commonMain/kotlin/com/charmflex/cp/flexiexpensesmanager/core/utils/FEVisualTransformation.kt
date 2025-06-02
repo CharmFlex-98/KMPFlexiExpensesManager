@@ -1,12 +1,25 @@
-package com.charmflex.flexiexpensesmanager.core.utils
+package com.charmflex.cp.flexiexpensesmanager.core.utils
 
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.input.OffsetMapping
 import androidx.compose.ui.text.input.TransformedText
 import androidx.compose.ui.text.input.VisualTransformation
-import androidx.core.text.isDigitsOnly
-import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import javax.inject.Inject
+import org.koin.core.annotation.Factory
+
+@Factory
+internal class CurrencyVisualTransformationBuilder constructor(
+    private val currencyFormatter: CurrencyFormatter,
+    private val outputFormatter: CurrencyTextFieldOutputFormatter,
+) {
+
+    fun create(currencyCode: String): CurrencyVisualTransformation {
+        return CurrencyVisualTransformation(
+            currencyFormatter,
+            outputFormatter,
+            currencyCode
+        )
+    }
+}
 
 internal class CurrencyVisualTransformation(
     private val currencyFormatter: CurrencyFormatter,
@@ -17,19 +30,6 @@ internal class CurrencyVisualTransformation(
     private var originalText = ""
     private var formattedText = ""
 
-    class Builder @Inject constructor(
-        private val currencyFormatter: CurrencyFormatter,
-        private val outputFormatter: CurrencyTextFieldOutputFormatter,
-    ) {
-
-        fun create(currencyCode: String): CurrencyVisualTransformation {
-            return CurrencyVisualTransformation(
-                currencyFormatter,
-                outputFormatter,
-                currencyCode
-            )
-        }
-    }
 
     override fun filter(text: AnnotatedString): TransformedText {
         originalText = text.text
@@ -58,14 +58,16 @@ internal class CurrencyVisualTransformation(
     }
 }
 
-internal class CurrencyTextFieldOutputFormatter @Inject constructor() {
+
+@Factory
+internal class CurrencyTextFieldOutputFormatter  constructor() {
     fun format(value: String): String {
         var trimmedText = value.trim()
 
         if (trimmedText.isEmpty()) return trimmedText
         val isNegative = trimmedText.count { it == '-' } % 2 != 0
         trimmedText = trimmedText.replace("-", "");
-        if (trimmedText.isDigitsOnly().not()) {
+        if (trimmedText.isDigitOnly().not()) {
             trimmedText = trimmedText.split(',', '.', '-', '_').first()
         }
 
@@ -73,4 +75,8 @@ internal class CurrencyTextFieldOutputFormatter @Inject constructor() {
         if (isNegative) return "-$trimmedText"
         return trimmedText
     }
+}
+
+fun String.isDigitOnly(): Boolean {
+    return this.matches(Regex("\\d+"))
 }

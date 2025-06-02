@@ -26,8 +26,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.newTransactionScreen() {
-        composable(
-            route = TransactionRoute.newTransaction,
+        composable<TransactionRoute.NewTransaction>(
             enterTransition = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Companion.Up,
@@ -49,8 +48,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.newScheduledTransactionScreen() {
-        composable(
-            route = TransactionRoute.newScheduledTransaction,
+        composable<TransactionRoute.ScheduledTransaction>(
             enterTransition = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Companion.Up,
@@ -72,13 +70,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.transactionEditorScreen() {
-        composable(
-            route = TransactionRoute.transactionEditor,
-            arguments = listOf(
-                navArgument(TransactionRoute.Args.TRANSACTION_ID) {
-                    type = NavType.LongType
-                }
-            ),
+        composable<TransactionRoute.TransactionEditor>(
             enterTransition = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Companion.Up,
@@ -101,13 +93,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.scheduledTransactionEditorScreen() {
-        composable(
-            route = TransactionRoute.scheduledTransactionEditor,
-            arguments = listOf(
-                navArgument(TransactionRoute.Args.SCHEDULE_TRANSACTION_ID) {
-                    type = NavType.LongType
-                }
-            ),
+        composable<TransactionRoute.ScheduledTransactionEditor>(
             enterTransition = {
                 slideIntoContainer(
                     towards = AnimatedContentTransitionScope.SlideDirection.Companion.Up,
@@ -130,16 +116,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
     }
 
     private fun NavGraphBuilder.transactionDetailScreen() {
-        composable(
-            route = TransactionRoute.transactionDetail,
-            arguments = listOf(
-                navArgument(
-                    name = TransactionRoute.Args.TRANSACTION_ID,
-                ) {
-                    nullable = false
-                    type = NavType.LongType
-                }
-            ),
+        composable<TransactionRoute.Detail>(
             enterTransition = FEHorizontalEnterFromEnd,
         ) {
             val transactionId = it.arguments?.getLong(TransactionRoute.Args.TRANSACTION_ID) ?: -1

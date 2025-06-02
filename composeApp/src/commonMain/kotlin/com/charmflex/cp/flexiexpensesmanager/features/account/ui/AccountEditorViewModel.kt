@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BackupRoutes
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.core.utils.unwrapResult
@@ -26,7 +27,7 @@ import org.koin.core.annotation.Factory
 internal class AccountEditorViewModel(
     private val accountRepository: AccountRepository,
     private val routeNavigator: RouteNavigator,
-    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val currencyUseCase: GetCurrencyUseCase,
     private val resourcesProvider: ResourcesProvider,
     private val currencyService: CurrencyService

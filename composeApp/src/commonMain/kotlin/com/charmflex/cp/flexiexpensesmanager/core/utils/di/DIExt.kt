@@ -8,5 +8,5 @@ internal inline fun <reified T: Any> getDep(
     qualifier: Qualifier? = null,
     noinline parameters: ParametersDefinition? = null,
 ): T {
-    return AppComponentProvider.instance.getAppComponent().getDep<T>()
+    return AppComponentProvider.instance.getAppComponent().getDep()
 }

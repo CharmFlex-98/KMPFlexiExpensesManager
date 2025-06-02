@@ -14,8 +14,8 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons

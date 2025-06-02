@@ -3,13 +3,13 @@ package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_trans
 import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
-import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
@@ -32,7 +32,7 @@ internal class TransactionEditorViewModelFactory constructor(
     private val routeNavigator: RouteNavigator,
     private val transactionCategoryRepository: TransactionCategoryRepository,
     private val submitTransactionUseCase: SubmitTransactionUseCase,
-    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val tagRepository: TagRepository,
     private val resourcesProvider: ResourcesProvider,
     private val currencyService: CurrencyService,
@@ -40,6 +40,7 @@ internal class TransactionEditorViewModelFactory constructor(
     private val userCurrencyRepository: UserCurrencyRepository,
     private val rateExchangeManager: RateExchangeManager
 ) {
+
     fun create(transactionId: Long?): TransactionEditorViewModel {
         val contentProvider: TransactionEditorContentProvider = getDep(named(TransactionEditorProvider.DEFAULT))
         return TransactionEditorViewModel(
@@ -70,7 +71,7 @@ internal class TransactionEditorViewModel  constructor(
     accountRepository: AccountRepository,
     routeNavigator: RouteNavigator,
     transactionCategoryRepository: TransactionCategoryRepository,
-    currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     tagRepository: TagRepository,
     currencyService: CurrencyService,
     currencyFormatter: CurrencyFormatter,

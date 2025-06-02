@@ -7,7 +7,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusMonths
-import com.charmflex.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
@@ -26,7 +27,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
-import org.koin.core.Koin
 import org.koin.core.qualifier.named
 
 @org.koin.core.annotation.Factory
@@ -36,7 +36,7 @@ internal class SchedulerEditorViewModelFactory constructor(
     private val submitTransactionSchedulerUseCase: SubmitTransactionSchedulerUseCase,
     private val routeNavigator: RouteNavigator,
     private val transactionCategoryRepository: TransactionCategoryRepository,
-    private val currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val currencyService: CurrencyService,
     private val currencyFormatter: CurrencyFormatter,
     private val rateExchangeManager: RateExchangeManager,
@@ -72,7 +72,7 @@ internal class SchedulerEditorViewModel(
     accountRepository: AccountRepository,
     routeNavigator: RouteNavigator,
     transactionCategoryRepository: TransactionCategoryRepository,
-    currencyVisualTransformationBuilder: CurrencyVisualTransformation.Builder,
+    currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     currencyService: CurrencyService,
     currencyFormatter: CurrencyFormatter,
     rateExchangeManager: RateExchangeManager,

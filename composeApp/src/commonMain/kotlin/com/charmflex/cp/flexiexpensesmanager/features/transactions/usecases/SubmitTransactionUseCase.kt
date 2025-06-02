@@ -4,7 +4,9 @@ import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class SubmitTransactionUseCase constructor(
     private val transactionRepository: TransactionRepository,
     private val accountRepository: AccountRepository
