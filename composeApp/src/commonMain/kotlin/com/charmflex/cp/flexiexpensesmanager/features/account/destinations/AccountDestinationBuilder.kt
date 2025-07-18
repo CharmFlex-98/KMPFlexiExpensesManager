@@ -1,11 +1,14 @@
 package com.charmflex.cp.flexiexpensesmanager.features.account.destinations
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEVerticalSlideUp
@@ -31,26 +34,33 @@ internal class AccountDestinationBuilder(
 
     private fun NavGraphBuilder.accountEditor() {
         composable<AccountRoutes.EditorAccountRouteDefault>{
-            val importFixAccountName = it.arguments?.getString(AccountRoutes.Args.IMPORT_FIX_ACCOUNT_NAME)
-            val viewModel = getViewModel {
-                appComponent.accountEditorViewModel.apply {
-                    initFlow(importFixAccountName)
-                }
-            }
-            AccountEditorScreen(viewModel = viewModel)
+            val route = it.toRoute<AccountRoutes.EditorAccountRouteDefault>()
+            getAccountEditorScreen(route)
         }
     }
 
     private fun NavGraphBuilder.importAccountEditor() {
         composable<AccountRoutes.ImportEditorAccountRoute>{
-            val importFixAccountName = it.arguments?.getString(AccountRoutes.Args.IMPORT_FIX_ACCOUNT_NAME)
-            val viewModel = getViewModel {
-                appComponent.accountEditorViewModel.apply {
-                    initFlow(importFixAccountName)
-                }
-            }
-            AccountEditorScreen(viewModel = viewModel)
+            val route = it.toRoute<AccountRoutes.ImportEditorAccountRoute>()
+            getAccountEditorScreen(route)
         }
+    }
+
+    @Composable
+    private fun getAccountEditorScreen(route: AccountRoutes.EditorAccountRoute) {
+        var importFixAccountName: String? = null
+        when (route) {
+            is AccountRoutes.ImportEditorAccountRoute -> {
+                importFixAccountName = route.fixAccountName
+            }
+            else -> {}
+        }
+        val viewModel = getViewModel {
+            appComponent.accountEditorViewModel().apply {
+                initFlow(importFixAccountName)
+            }
+        }
+        AccountEditorScreen(viewModel = viewModel)
     }
 
 
@@ -67,7 +77,7 @@ internal class AccountDestinationBuilder(
                     AccountRoutes.Args.ACCOUNT_DETAIL_DATE_FILTER)
             }
             val accountDetailViewModel = getViewModel {
-                appComponent.accountDetailViewModelFactory.create(accountId = accountId, filterFromPreviousScreen)
+                appComponent.accountDetailViewModelFactory().create(accountId = accountId, filterFromPreviousScreen)
             }
             AccountDetailScreen(accountDetailViewModel)
         }

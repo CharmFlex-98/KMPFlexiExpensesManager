@@ -12,8 +12,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val appComponent = (application as AppComponentProvider).getAppComponent()
 
-        val routeNavigator = appComponent.routeNavigator
-        val sessionManager = appComponent.sessionManager
+        val routeNavigator = appComponent.routeNavigator()
+        val sessionManager = appComponent.sessionManager()
 
         sessionManager.updateSessionState(SessionState.Start)
 

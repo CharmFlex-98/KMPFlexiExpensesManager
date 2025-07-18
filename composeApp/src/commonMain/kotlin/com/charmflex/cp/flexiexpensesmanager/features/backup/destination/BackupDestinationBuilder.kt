@@ -20,7 +20,7 @@ internal class BackupDestinationBuilder : DestinationBuilder {
         composable<BackupRoutes.ImportSetting> {
             val updateImportedData = it.savedStateHandle.remove<Boolean>(BackupRoutes.Args.UPDATE_IMPORT_DATA) ?: false
             val viewModel = getViewModel {
-                appComponent.importDataViewModel
+                appComponent.importDataViewModel()
             }
             LaunchedEffect(key1 = updateImportedData) {
                 if (updateImportedData) viewModel.updateImportedData()

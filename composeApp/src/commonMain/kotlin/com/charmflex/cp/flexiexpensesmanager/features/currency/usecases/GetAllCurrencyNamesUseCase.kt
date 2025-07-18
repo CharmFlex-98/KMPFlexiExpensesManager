@@ -2,7 +2,9 @@ package com.charmflex.cp.flexiexpensesmanager.features.currency.usecases
 
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class GetAllCurrencyNamesUseCase constructor(
     private val currencyRepository: CurrencyRepository
 ) {

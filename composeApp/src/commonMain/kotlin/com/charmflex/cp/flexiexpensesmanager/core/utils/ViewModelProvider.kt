@@ -9,6 +9,7 @@ import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.CreationExtras
 import androidx.lifecycle.viewmodel.compose.LocalViewModelStoreOwner
 import androidx.lifecycle.viewmodel.compose.viewModel
+import kotlin.reflect.KClass
 
 @Composable
 inline fun <reified T: ViewModel> getViewModel(
@@ -18,10 +19,11 @@ inline fun <reified T: ViewModel> getViewModel(
         },
     crossinline viewModelProvider: (SavedStateHandle) -> T
 ): T {
+
     val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
         @Suppress("UNCHECKED_CAST")
         override fun <T : ViewModel> create(
-            modelClass: Class<T>,
+            modelClass: KClass<T>,
             extras: CreationExtras
         ): T {
             // Create a SavedStateHandle for this ViewModel from extras

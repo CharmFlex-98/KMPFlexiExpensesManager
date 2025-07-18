@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEHorizontalEnterFromEnd
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
@@ -25,7 +26,7 @@ internal class CurrencyDestinationBuilder : DestinationBuilder {
             enterTransition = FEHorizontalEnterFromEnd
         ) {
             val viewModel = getViewModel {
-                appComponent.userCurrencyViewModel
+                appComponent.userCurrencyViewModel()
             }
 
             UserCurrencyScreen(viewModel = viewModel)
@@ -36,9 +37,9 @@ internal class CurrencyDestinationBuilder : DestinationBuilder {
         composable<CurrencyRoutes.CurrencySetting>(
             enterTransition = FEHorizontalEnterFromEnd
         ) {
-            val type = it.arguments?.getString(CurrencyRoutes.Args.CURRENCY_TYPE) ?: ""
+            val type = it.toRoute<CurrencyRoutes.CurrencySetting>().flowType
             val viewModel = getViewModel {
-                appComponent.currencySettingViewModel.apply {
+                appComponent.currencySettingViewModel().apply {
                     this.initialise(type)
                 }
             }

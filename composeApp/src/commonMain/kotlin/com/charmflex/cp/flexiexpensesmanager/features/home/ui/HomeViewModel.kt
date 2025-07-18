@@ -18,6 +18,7 @@ internal class HomeViewModel constructor(
     private val _homeItemsRefreshable: MutableList<HomeItemRefreshable> = mutableListOf()
 
     init {
+        println("Success homeviewmodel")
         viewModelScope.launch {
             updateCurrencyRateUseCase().fold(
                 onSuccess = {

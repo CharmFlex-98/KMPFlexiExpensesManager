@@ -7,12 +7,14 @@ internal object TagRoutes {
         const val IMPORT_FIX_TAG_NAME = "import_fix_tag_name"
     }
 
+    internal sealed interface TagEditorRoute
+
     @Serializable
-    object TagEditorDefault : NavigationRoute
+    object TagEditorDefault : NavigationRoute, TagEditorRoute
     @Serializable
     data class ImportTagEditor(
         val tagName: String
-    ) : NavigationRoute
+    ) : NavigationRoute, TagEditorRoute
 
 
     fun addNewTagDestination(isImportFix: Boolean = false, newTagValue: String? = null): NavigationRoute {

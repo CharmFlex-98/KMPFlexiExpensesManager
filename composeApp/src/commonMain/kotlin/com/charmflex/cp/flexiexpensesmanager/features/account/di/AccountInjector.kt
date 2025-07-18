@@ -5,6 +5,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailViewModelFactory
 
 internal interface AccountInjector {
-    val accountEditorViewModel: AccountEditorViewModel
-    val accountDetailViewModelFactory: AccountDetailViewModelFactory
+    fun accountEditorViewModel(): AccountEditorViewModel
+    fun accountDetailViewModelFactory(): AccountDetailViewModelFactory
 }

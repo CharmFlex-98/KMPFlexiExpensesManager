@@ -22,7 +22,7 @@ internal class BudgetDestinationBuilder : DestinationBuilder {
     private fun NavGraphBuilder.budgetSetting() {
         composable<BudgetRoutes.BudgetSetting> {
             val viewModel: BudgetSettingViewModel = getViewModel {
-                appComponent.budgetSettingViewModel
+                appComponent.budgetSettingViewModel()
             }
             BudgetSettingScreen(budgetSettingViewModel = viewModel)
         }
@@ -31,7 +31,7 @@ internal class BudgetDestinationBuilder : DestinationBuilder {
     private fun NavGraphBuilder.budgetDetail() {
         composable<BudgetRoutes.BudgetDetail> {
             val viewModel: BudgetDetailViewModel = getViewModel {
-                appComponent.budgetDetailViewModel
+                appComponent.budgetDetailViewModel()
             }
             BudgetDetailScreen(viewModel = viewModel)
         }

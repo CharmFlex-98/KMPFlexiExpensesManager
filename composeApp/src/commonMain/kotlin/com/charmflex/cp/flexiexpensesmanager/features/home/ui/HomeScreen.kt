@@ -42,10 +42,10 @@ internal fun HomeScreen(
     refreshOnHomeShown: Boolean
 ) {
     val expensesPieChartViewModel = getViewModel {
-        appComponent.expensesPieChartViewModel
+        appComponent.expensesPieChartViewModel()
     }
     val expensesHeatMapViewModel = getViewModel {
-        appComponent.expensesHeatMapViewModel
+        appComponent.expensesHeatMapViewModel()
     }
     val dashboardPlugins = listOf(
         ExpensesChartDashboardPlugin(expensesPieChartViewModel),
@@ -54,7 +54,7 @@ internal fun HomeScreen(
 
     // Dashboard
     val dashboardViewModel = getViewModel {
-        appComponent.dashBoardViewModel.apply {
+        appComponent.dashBoardViewModel().apply {
             initPlugins(
                 dashboardPlugins
             )
@@ -63,21 +63,21 @@ internal fun HomeScreen(
 
     // Transaction History
     val transactionHomeViewModel = getViewModel {
-        appComponent.expensesHistoryViewModel
+        appComponent.expensesHistoryViewModel()
     }
 
     // Account Home
     val accountHomeViewModel = getViewModel {
-        appComponent.accountHomeViewModel
+        appComponent.accountHomeViewModel()
     }
 
     // Setting
     val settingViewModel = getViewModel {
-        appComponent.settingViewModel
+        appComponent.settingViewModel()
     }
 
     val homeViewModel: HomeViewModel = getViewModel {
-        appComponent.homeViewModel.apply {
+        appComponent.homeViewModel().apply {
             initHomeRefreshable(dashboardViewModel, transactionHomeViewModel, accountHomeViewModel)
         }
     }

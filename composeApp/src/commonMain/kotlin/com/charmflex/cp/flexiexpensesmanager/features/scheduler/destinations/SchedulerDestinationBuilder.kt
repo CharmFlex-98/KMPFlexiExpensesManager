@@ -17,7 +17,7 @@ internal class SchedulerDestinationBuilder : DestinationBuilder {
     private fun NavGraphBuilder.schedulerListScreen() {
         composable<SchedulerRoutes.SchedulerList> {
             val viewModel = getViewModel {
-                appComponent.schedulerListViewModel
+                appComponent.schedulerListViewModel()
             }
             SchedulerListScreen(transactionSchedulerListViewModel = viewModel)
         }

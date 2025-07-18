@@ -15,15 +15,16 @@ internal object CategoryRoutes {
         const val CATEGORY_DATE_FILTER = "CATEGORY_DATE_FILTER"
         const val CATEGORY_DATE_FILTER_2 = "CATEGORY_DATE_FILTER_2"
     }
+    internal sealed interface CategoryEditorRoute
     @Serializable
     data class CategoryEditorDefault(
         val transactionType: TransactionType,
-    ) : NavigationRoute
+    ) : NavigationRoute, CategoryEditorRoute
     @Serializable
     data class ImportCategory(
         val transactionType: TransactionType,
-        val newCategoryName: String? = null
-    ) : NavigationRoute
+        val newCategoryName: String
+    ) : NavigationRoute, CategoryEditorRoute
 
     @Serializable
     data class CategoryTransactionDetail(

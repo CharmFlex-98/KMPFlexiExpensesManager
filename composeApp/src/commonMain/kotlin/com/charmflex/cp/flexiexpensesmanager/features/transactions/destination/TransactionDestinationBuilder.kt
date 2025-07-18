@@ -41,7 +41,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
             }
         ) {
             val viewModel = getViewModel {
-                appComponent.transactionEditorViewModelFactory.create(null)
+                appComponent.transactionEditorViewModelFactory().create(null)
             }
             TransactionEditorScreen(viewModel = viewModel)
         }
@@ -63,7 +63,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
             }
         ) {
             val viewModel = getViewModel {
-                appComponent.schedulerEditorViewModelFactory.create(null)
+                appComponent.schedulerEditorViewModelFactory().create(null)
             }
             TransactionEditorScreen(viewModel = viewModel)
         }
@@ -86,7 +86,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
         ) {
             val transactionId = it.arguments?.getLong(TransactionRoute.Args.TRANSACTION_ID) ?: -1
             val viewModel = getViewModel {
-                appComponent.transactionEditorViewModelFactory.create(transactionId)
+                appComponent.transactionEditorViewModelFactory().create(transactionId)
             }
             TransactionEditorScreen(viewModel = viewModel)
         }
@@ -109,7 +109,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
         ) {
             val scheduledTransactionId = it.arguments?.getLong(TransactionRoute.Args.SCHEDULE_TRANSACTION_ID) ?: -1
             val viewModel = getViewModel {
-                appComponent.schedulerEditorViewModelFactory.create(scheduledTransactionId)
+                appComponent.schedulerEditorViewModelFactory().create(scheduledTransactionId)
             }
             TransactionEditorScreen(viewModel = viewModel)
         }
@@ -121,7 +121,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
         ) {
             val transactionId = it.arguments?.getLong(TransactionRoute.Args.TRANSACTION_ID) ?: -1
             val viewModel = getViewModel {
-                appComponent.transactionDetailViewModelFactory
+                appComponent.transactionDetailViewModelFactory()
                     .create(transactionId = transactionId)
             }
             TransactionDetailScreen(viewModel = viewModel)

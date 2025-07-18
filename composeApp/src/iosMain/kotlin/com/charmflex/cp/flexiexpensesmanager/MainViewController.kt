@@ -10,7 +10,7 @@ import platform.posix.exit
 fun MainViewController() = ComposeUIViewController {
     KoinInitializer().init()
     val appComponent = AppComponent()
-    App(appComponent.routeNavigator) {
+    App(appComponent.routeNavigator()) {
         exit(0)
     }
 }

@@ -1,6 +1,8 @@
 package com.charmflex.cp.flexiexpensesmanager.features.currency.data.models
 
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class CurrencyRateResponse(
     val success: Boolean,
     val terms: String,

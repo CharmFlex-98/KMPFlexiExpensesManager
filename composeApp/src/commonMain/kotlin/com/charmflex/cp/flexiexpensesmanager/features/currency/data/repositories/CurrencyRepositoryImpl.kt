@@ -9,6 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models.Cur
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
 import io.fluidsonic.currency.Currency
+import io.ktor.util.logging.Logger
 import io.ktor.utils.io.core.toByteArray
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.json.Json
@@ -25,16 +26,21 @@ internal class CurrencyRepositoryImpl constructor(
             timestamp = res.timestamp,
             date = res.date,
             base = res.base,
-            currencyRates = res.rates
-                .filter { it.key.length == 3 }
-                .mapValues {
-                    val currency = Currency.forCode(it.key)
-                    CurrencyData.Currency(
-                        it.key,
-                        currency.defaultFractionDigits,
-                        it.value.toFloat()
-                    )
+            currencyRates = res.rates.mapNotNull { (code, rate) ->
+                if (code.length != 3) return@mapNotNull null
+
+                val currency = try {
+                    Currency.forCode(code)
+                } catch (e: Exception) {
+                    return@mapNotNull null
                 }
+
+                code to CurrencyData.Currency(
+                    code,
+                    currency.defaultFractionDigits,
+                    rate.toFloat()
+                )
+            }.toMap()
         )
         setLatestCurrencyRates(item)
         return item

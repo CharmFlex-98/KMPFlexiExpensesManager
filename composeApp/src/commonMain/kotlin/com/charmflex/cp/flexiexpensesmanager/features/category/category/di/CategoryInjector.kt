@@ -6,8 +6,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detai
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat.CategoryStatViewModel
 
 internal interface CategoryInjector {
-    val categoryEditorViewModel: CategoryEditorViewModel
-    val categoryStatViewModel: CategoryStatViewModel
-    val categoryDetailViewModelFactory: CategoryDetailViewModelFactory
+    fun categoryEditorViewModel(): CategoryEditorViewModel
+    fun categoryStatViewModel(): CategoryStatViewModel
+    fun categoryDetailViewModelFactory(): CategoryDetailViewModelFactory
 
 }

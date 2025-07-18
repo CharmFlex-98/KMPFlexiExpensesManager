@@ -26,7 +26,7 @@ internal class AuthDestinationBuilder : DestinationBuilder {
 
     private fun NavGraphBuilder.landingDestination() {
         composable<AuthRoutes.Landing> {
-            val landingScreenViewModel: LandingScreenViewModel = getViewModel { appComponent.landingScreenViewModel }
+            val landingScreenViewModel: LandingScreenViewModel = getViewModel { appComponent.landingScreenViewModel() }
             LandingScreen(landingScreenViewModel = landingScreenViewModel)
         }
     }

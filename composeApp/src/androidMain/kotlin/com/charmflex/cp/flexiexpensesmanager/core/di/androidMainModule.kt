@@ -6,6 +6,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorage
 import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.PostHogEventTracker
+import com.charmflex.cp.flexiexpensesmanager.core.utils.AndroidCurrencyFormatterImpl
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AndroidAssetReader
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AndroidDocumentManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
@@ -28,5 +30,6 @@ val androidMainModule = module {
     singleOf(::AndroidFileStorage) { bind<FileStorage>() }
     singleOf(::AndroidDocumentManager) { bind<DocumentManager>() }
     singleOf(::AndroidDeviceIdGenerator) { bind<DeviceIdGenerator>() }
+    singleOf(::AndroidCurrencyFormatterImpl) { bind<CurrencyFormatter>() }
     AndroidModule().module
 }

@@ -4,6 +4,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting.BudgetSe
 import com.charmflex.cp.flexiexpensesmanager.features.budget.ui.stats.BudgetDetailViewModel
 
 internal interface BudgetInjector {
-    val budgetSettingViewModel: BudgetSettingViewModel
-    val budgetDetailViewModel: BudgetDetailViewModel
+    fun budgetSettingViewModel(): BudgetSettingViewModel
+    fun budgetDetailViewModel(): BudgetDetailViewModel
 }

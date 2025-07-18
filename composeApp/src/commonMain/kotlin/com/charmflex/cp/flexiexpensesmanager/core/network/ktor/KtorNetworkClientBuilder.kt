@@ -50,7 +50,13 @@ internal class KtorNetworkClientBuilder(
     private fun getClient(): HttpClient {
         return HttpClient {
             install(Logging) {
-                logger = Logger.DEFAULT
+                logger = object : Logger {
+                    override fun log(message: String) {
+                        println("==========")
+                        println("HTTP::$message")
+                        println("==========")
+                    }
+                }
                 level = LogLevel.ALL
             }
             install(ContentNegotiation) {
@@ -121,7 +127,11 @@ internal class KtorNetworkClientBuilder(
         }
 
         private fun HttpRequestBuilder.append(url: String) {
-            url("$baseUrl/${url.trimStart('/')}")
+            if (url.contains("https")) {
+                url(url.trimStart('/'))
+            } else {
+                url("$baseUrl/${url.trimStart('/')}")
+            }
             contentType(ContentType.Application.Json)
             accept(ContentType.Application.Json)
         }

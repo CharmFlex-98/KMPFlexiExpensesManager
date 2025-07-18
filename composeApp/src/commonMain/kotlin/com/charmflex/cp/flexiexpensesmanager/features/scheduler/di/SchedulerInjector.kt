@@ -5,7 +5,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_edi
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModelFactory
 
 internal interface SchedulerInjector {
-    val schedulerListViewModel: SchedulerListViewModel
-    val schedulerEditorViewModelFactory: SchedulerEditorViewModelFactory
+    fun schedulerListViewModel(): SchedulerListViewModel
+    fun schedulerEditorViewModelFactory(): SchedulerEditorViewModelFactory
 //    fun workerFactory(): WorkerFactory
 }

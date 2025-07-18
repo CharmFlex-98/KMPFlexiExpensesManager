@@ -23,6 +23,7 @@ import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
 import org.koin.core.annotation.Factory
+import org.koin.core.annotation.Named
 import org.koin.core.qualifier.named
 
 internal class TransactionEditorViewModelFactory constructor(

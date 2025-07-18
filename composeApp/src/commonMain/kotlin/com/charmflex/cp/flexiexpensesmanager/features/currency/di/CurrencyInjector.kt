@@ -4,6 +4,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.currency.ui.CurrencySettin
 import com.charmflex.cp.flexiexpensesmanager.features.currency.ui.UserCurrencyViewModel
 
 internal interface CurrencyInjector {
-    val currencySettingViewModel: CurrencySettingViewModel
-    val userCurrencyViewModel: UserCurrencyViewModel
+    fun currencySettingViewModel(): CurrencySettingViewModel
+    fun userCurrencyViewModel(): UserCurrencyViewModel
 }

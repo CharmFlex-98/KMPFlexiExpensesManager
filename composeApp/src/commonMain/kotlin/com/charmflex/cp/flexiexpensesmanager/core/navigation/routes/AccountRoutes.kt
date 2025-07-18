@@ -12,13 +12,14 @@ object AccountRoutes {
         const val ACCOUNT_DETAIL_DATE_FILTER = "account_detail_date_filter"
     }
 
+    internal sealed interface EditorAccountRoute
     @Serializable
-    internal object EditorAccountRouteDefault: NavigationRoute
+    internal object EditorAccountRouteDefault: NavigationRoute, EditorAccountRoute
 
     @Serializable
     internal data class ImportEditorAccountRoute(
         val fixAccountName: String
-    ) : NavigationRoute
+    ) : NavigationRoute, EditorAccountRoute
 
     @Serializable
     internal data class DetailAccountRoute(

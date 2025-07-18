@@ -9,11 +9,11 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_h
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartViewModel
 
 internal interface HomeInjector {
-    val homeViewModel: HomeViewModel
-    val dashBoardViewModel: DashboardViewModel
-    val expensesPieChartViewModel: ExpensesChartViewModel
-    val expensesHeatMapViewModel: ExpensesHeatMapViewModel
-    val expensesHistoryViewModel: TransactionHomeViewModel
-    val accountHomeViewModel: AccountHomeViewModel
-    val settingViewModel: SettingViewModel
+    fun homeViewModel(): HomeViewModel
+    fun dashBoardViewModel(): DashboardViewModel
+    fun expensesPieChartViewModel(): ExpensesChartViewModel
+    fun expensesHeatMapViewModel(): ExpensesHeatMapViewModel
+    fun expensesHistoryViewModel(): TransactionHomeViewModel
+    fun accountHomeViewModel(): AccountHomeViewModel
+    fun settingViewModel(): SettingViewModel
 }

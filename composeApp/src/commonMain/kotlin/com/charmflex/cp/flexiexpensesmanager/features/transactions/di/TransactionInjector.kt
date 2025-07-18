@@ -6,6 +6,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transactio
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailViewModelFactory
 
 internal interface TransactionInjector {
-    val transactionEditorViewModelFactory: TransactionEditorViewModelFactory
-    val transactionDetailViewModelFactory: TransactionDetailViewModelFactory
+    fun transactionEditorViewModelFactory(): TransactionEditorViewModelFactory
+    fun transactionDetailViewModelFactory(): TransactionDetailViewModelFactory
 }

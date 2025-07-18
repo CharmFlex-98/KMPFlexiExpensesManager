@@ -1,9 +1,12 @@
 package com.charmflex.cp.flexiexpensesmanager.features.category.category.destinations
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEHorizontalEnterFromEnd
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEHorizontalEnterFromStart
@@ -13,11 +16,13 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEVerticalSlideUp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getInt
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilterNavType
 import com.charmflex.cp.flexiexpensesmanager.core.utils.getViewModel
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.CategoryEditorScreen
+import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.CategoryEditorViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailScreen
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat.CategoryStatScreen
 import kotlin.reflect.typeOf
@@ -39,15 +44,8 @@ internal class CategoryDestinationBuilder(
             enterTransition = FEVerticalSlideUp,
             exitTransition = FEVerticalSlideDown
         ) {
-            val importFixCatName =
-                it.arguments?.getString(CategoryRoutes.Args.IMPORT_FIX_CATEGORY_NAME)
-            val type = it.arguments?.getString(CategoryRoutes.Args.TRANSACTION_TYPE).orEmpty()
-            val viewModel = getViewModel {
-                appComponent.categoryEditorViewModel
-                    .apply { setType(type = type, importFixCatName) }
-            }
-
-            CategoryEditorScreen(viewModel = viewModel)
+            val route = it.toRoute<CategoryRoutes.CategoryEditorDefault>()
+            getEditorScreen(route)
         }
     }
 
@@ -56,16 +54,29 @@ internal class CategoryDestinationBuilder(
             enterTransition = FEVerticalSlideUp,
             exitTransition = FEVerticalSlideDown
         ) {
-            val importFixCatName =
-                it.arguments?.getString(CategoryRoutes.Args.IMPORT_FIX_CATEGORY_NAME)
-            val type = it.arguments?.getString(CategoryRoutes.Args.TRANSACTION_TYPE).orEmpty()
-            val viewModel = getViewModel {
-                appComponent.categoryEditorViewModel
-                    .apply { setType(type = type, importFixCatName) }
+            val route = it.toRoute<CategoryRoutes.ImportCategory>()
+            getEditorScreen(route)
+        }
+    }
+
+    @Composable
+    private fun getEditorScreen(route: CategoryRoutes.CategoryEditorRoute) {
+        val viewModel = when (route) {
+            is CategoryRoutes.ImportCategory -> {
+                getViewModel {
+                    appComponent.categoryEditorViewModel()
+                        .apply { setType(type = route.transactionType.name, route.newCategoryName) }
+                }
             }
 
-            CategoryEditorScreen(viewModel = viewModel)
+            is CategoryRoutes.CategoryEditorDefault -> {
+                getViewModel {
+                    appComponent.categoryEditorViewModel()
+                        .apply { setType(type = route.transactionType.name, null) }
+                }
+            }
         }
+        CategoryEditorScreen(viewModel = viewModel)
     }
 
 
@@ -85,7 +96,7 @@ internal class CategoryDestinationBuilder(
             }
 
             val viewModel = getViewModel {
-                appComponent.categoryStatViewModel
+                appComponent.categoryStatViewModel()
                     .apply { dateFilter?.let { onDateFilterChanged(dateFilter) } }
             }
             CategoryStatScreen(viewModel = viewModel)
@@ -109,7 +120,7 @@ internal class CategoryDestinationBuilder(
             val transactionType =
                 it.arguments?.getString(CategoryRoutes.Args.TRANSACTION_TYPE) ?: ""
             val viewModel = getViewModel {
-                appComponent.categoryDetailViewModelFactory
+                appComponent.categoryDetailViewModelFactory()
                     .create(categoryId, categoryName, transactionType, dateFilter)
             }
             CategoryDetailScreen(viewModel = viewModel)

@@ -1,7 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.features.tag.destination
 
+import androidx.compose.runtime.Composable
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getString
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
@@ -20,26 +23,37 @@ internal class TagDestinationBuilder : DestinationBuilder {
     private fun NavGraphBuilder.importTagSetting() {
         composable<TagRoutes.TagEditorDefault>(
         ) {
-            val importFixTagName = it.arguments?.getString(TagRoutes.Args.IMPORT_FIX_TAG_NAME)
-            val viewModel = getViewModel {
-                appComponent.tagSettingViewModel.apply {
-                    initFlow(importFixTagName)
-                }
-            }
-            TagSettingScreen(viewModel = viewModel)
+            val route = it.toRoute<TagRoutes.TagEditorDefault>()
+            getTagScreen(route)
         }
     }
 
     private fun NavGraphBuilder.tagSetting() {
         composable<TagRoutes.ImportTagEditor>(
         ) {
-            val importFixTagName = it.arguments?.getString(TagRoutes.Args.IMPORT_FIX_TAG_NAME)
-            val viewModel = getViewModel {
-                appComponent.tagSettingViewModel.apply {
-                    initFlow(importFixTagName)
+            val route = it.toRoute<TagRoutes.ImportTagEditor>()
+            getTagScreen(route)
+        }
+    }
+
+    @Composable
+    private fun getTagScreen(route: TagRoutes.TagEditorRoute) {
+        val viewModel = when (route) {
+            is TagRoutes.ImportTagEditor -> {
+                getViewModel {
+                    appComponent.tagSettingViewModel().apply {
+                        initFlow(route.tagName)
+                    }
                 }
             }
-            TagSettingScreen(viewModel = viewModel)
+            else -> {
+               getViewModel {
+                    appComponent.tagSettingViewModel().apply {
+                        initFlow(null)
+                    }
+                }
+            }
         }
+        TagSettingScreen(viewModel = viewModel)
     }
 }
