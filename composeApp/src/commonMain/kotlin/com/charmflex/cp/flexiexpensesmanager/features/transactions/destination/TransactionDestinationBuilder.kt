@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import androidx.navigation.toRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.DestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.FEHorizontalEnterFromEnd
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ui.getLong
@@ -84,7 +85,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
                 )
             }
         ) {
-            val transactionId = it.arguments?.getLong(TransactionRoute.Args.TRANSACTION_ID) ?: -1
+            val transactionId = it.toRoute<TransactionRoute.TransactionEditor>().transactionId
             val viewModel = getViewModel {
                 appComponent.transactionEditorViewModelFactory().create(transactionId)
             }
@@ -107,7 +108,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
                 )
             }
         ) {
-            val scheduledTransactionId = it.arguments?.getLong(TransactionRoute.Args.SCHEDULE_TRANSACTION_ID) ?: -1
+            val scheduledTransactionId = it.toRoute<TransactionRoute.ScheduledTransactionEditor>().scheduledTransactionId.toLong()
             val viewModel = getViewModel {
                 appComponent.schedulerEditorViewModelFactory().create(scheduledTransactionId)
             }
@@ -119,7 +120,7 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
         composable<TransactionRoute.Detail>(
             enterTransition = FEHorizontalEnterFromEnd,
         ) {
-            val transactionId = it.arguments?.getLong(TransactionRoute.Args.TRANSACTION_ID) ?: -1
+            val transactionId = it.toRoute<TransactionRoute.Detail>().id
             val viewModel = getViewModel {
                 appComponent.transactionDetailViewModelFactory()
                     .create(transactionId = transactionId)

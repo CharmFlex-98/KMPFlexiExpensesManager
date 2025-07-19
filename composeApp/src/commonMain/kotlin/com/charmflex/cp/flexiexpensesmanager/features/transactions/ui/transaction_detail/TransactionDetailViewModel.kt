@@ -20,6 +20,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.onCompletion
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -58,31 +61,34 @@ internal class TransactionDetailViewModel(
     }
 
     private fun loadDetail() {
-        toggleLoader(false)
         viewModelScope.launch {
-            transactionRepository.getTransactionById(transactionId = transactionId)
+            val transaction = transactionRepository.getTransactionById(transactionId = transactionId)
+                .onStart { toggleLoader(true) }
+                .onCompletion { toggleLoader(false) }
                 .catch {
-                    toggleLoader(false)
+                    snackBarState.value = SnackBarState.Error(
+                        message = resourcesProvider.getString(Res.string.generic_something_went_wron)
+                    )
                 }
-                .collectLatest { transaction ->
-                    _viewState.update {
-                        it.copy(
-                            detail = TransactionDetailViewState.Detail(
-                                transactionId = transaction.transactionId,
-                                transactionName = transaction.transactionName,
-                                transactionAccountFrom = transaction.transactionAccountFrom,
-                                transactionAccountTo = transaction.transactionAccountTo,
-                                transactionTypeCode = transaction.transactionTypeCode,
-                                formattedAmount = currencyFormatter.format(
-                                    transaction.minorUnitAmount,
-                                    transaction.currency
-                                ),
-                                transactionDate = transaction.transactionDate,
-                                transactionCategory = transaction.transactionCategory
-                            )
-                        )
-                    }
-                    toggleLoader(false)
+                .firstOrNull()
+            if (transaction == null) return@launch
+            
+            _viewState.update {
+                it.copy(
+                    detail = TransactionDetailViewState.Detail(
+                        transactionId = transaction.transactionId,
+                        transactionName = transaction.transactionName,
+                        transactionAccountFrom = transaction.transactionAccountFrom,
+                        transactionAccountTo = transaction.transactionAccountTo,
+                        transactionTypeCode = transaction.transactionTypeCode,
+                        formattedAmount = currencyFormatter.format(
+                            transaction.minorUnitAmount,
+                            transaction.currency
+                        ),
+                        transactionDate = transaction.transactionDate,
+                        transactionCategory = transaction.transactionCategory
+                    )
+                )
             }
         }
     }

@@ -30,12 +30,12 @@ internal fun toPercentageString(ratio: Float): String {
     return percentValue.toString()
 }
 
-const val DEFAULT_DATE_TIME_PATTERN = "dd MMMM yyyy hh:mm a"
+const val DEFAULT_DATE_TIME_PATTERN = "dd MM yyyy hh:mm a"
 const val DATE_ONLY_DEFAULT_PATTERN = "yyyy-MM-dd"
-const val MONTH_ONLY_DEFAULT_PATTERN = "MMMM"
+const val MONTH_ONLY_DEFAULT_PATTERN = "MM"
 const val YEAR_ONLY_DEFAULT_PATTERN = "yyyy"
-const val MONTH_YEAR_PATTERN = "MMMM yyyy"
-const val MONTH_YEAR_DB_PATTERN = "MMMM/yyyy"
+const val MONTH_YEAR_PATTERN = "MM yyyy"
+const val MONTH_YEAR_DB_PATTERN = "MM/yyyy"
 const val SHORT_MONTH_YEAR_PATTERN = "MM-yyyy"
 const val TIME_ONLY_DEFAULT_PATTERN = "hh:mm a"
 

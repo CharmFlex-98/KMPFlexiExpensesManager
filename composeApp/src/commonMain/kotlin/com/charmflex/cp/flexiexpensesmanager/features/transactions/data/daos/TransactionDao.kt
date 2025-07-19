@@ -92,7 +92,7 @@ internal interface TransactionDao {
                 " LEFT JOIN AccountEntity ato ON t.account_to_id = ato.id" +
                 " LEFT JOIN TransactionTagEntity tt ON t.id = tt.transaction_id" +
                 " LEFT JOIN TagEntity tg ON tg.id = tt.tagId" +
-                " WHERE t.id = :id"
+                " WHERE t.id = :id GROUP BY t.id"
     )
     fun getTransactionById(id: Long): Flow<TransactionResponse>
 

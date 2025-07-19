@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.core.utils
 
+import io.fluidsonic.currency.CurrencyCode
 import java.math.BigDecimal
 import java.text.NumberFormat
 import javax.inject.Inject
@@ -37,13 +38,15 @@ internal class AndroidCurrencyFormatterImpl @Inject constructor() : CurrencyForm
     }
 
     private fun getFactor(currencyCode: String): Double {
-        val fractionDigits = java.util.Currency.getInstance(currencyCode).defaultFractionDigits
+        val cc = currencyCode.ifEmpty { "USD" }
+        val fractionDigits = java.util.Currency.getInstance(cc).defaultFractionDigits
         return 10.0.pow(fractionDigits)
     }
 
     private fun getCurrencyFormatter(currencyCode: String): NumberFormat {
         return NumberFormat.getCurrencyInstance().apply {
-            val currency = java.util.Currency.getInstance(currencyCode)
+            val cc = currencyCode.ifEmpty { "USD" }
+            val currency = java.util.Currency.getInstance(cc)
             maximumFractionDigits = currency.defaultFractionDigits
             this.currency = currency
         }
