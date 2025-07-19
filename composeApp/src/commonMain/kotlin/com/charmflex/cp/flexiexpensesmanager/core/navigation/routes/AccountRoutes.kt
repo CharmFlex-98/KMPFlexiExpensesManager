@@ -23,8 +23,8 @@ object AccountRoutes {
 
     @Serializable
     internal data class DetailAccountRoute(
-        private val accountID: Int,
-        private val dateFilter: DateFilter?
+        val accountID: Int,
+        val dateFilter: DateFilter?
     ) : NavigationRoute
 
     internal fun editorDestination(importFixAccountName: String? = null): NavigationRoute {

@@ -71,7 +71,7 @@ internal class AccountDestinationBuilder(
                 typeOf<DateFilter?>() to DateFilterNavType
             )
         ) {
-            val accountId = it.arguments?.getInt(AccountRoutes.Args.ACCOUNT_ID) ?: -1
+            val accountId = it.toRoute<AccountRoutes.DetailAccountRoute>().accountID
             val filterFromPreviousScreen = remember {
                 navController.previousBackStackEntry?.savedStateHandle?.remove<DateFilter>(
                     AccountRoutes.Args.ACCOUNT_DETAIL_DATE_FILTER)
