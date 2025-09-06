@@ -21,12 +21,14 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun FEHeading1(
     modifier: Modifier = Modifier,
-    text: String
+    text: String,
+    color: Color = Color.Unspecified,
 ) {
     Text(
         modifier = modifier,
         text = text,
         style = TextStyle(
+            color = color,
             fontWeight = FontWeight.Normal,
             fontSize = 40.sp,
             lineHeight = 44.sp

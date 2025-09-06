@@ -43,9 +43,9 @@ internal class CategoryStatViewModel constructor(
     private lateinit var _primaryCurrency: String
 
     init {
-        observeDateFilter()
         viewModelScope.launch {
             _primaryCurrency = userCurrencyRepository.getPrimaryCurrency()
+            observeDateFilter()
         }
     }
 

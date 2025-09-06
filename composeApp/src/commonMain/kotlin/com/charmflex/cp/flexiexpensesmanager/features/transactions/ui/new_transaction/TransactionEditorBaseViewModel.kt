@@ -41,6 +41,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRAN
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT_TYPE
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.kizitonwose.calendar.core.now
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -715,6 +716,11 @@ internal abstract class TransactionEditorBaseViewModel(
             if (it.id == TRANSACTION_CURRENCY) {
                 return@map it.copy(
                     valueItem = FEField.Value(it.valueItem.id, currency ?: "")
+                )
+            } else if (it.id == TRANSACTION_DATE) {
+                return@map it.copy(
+                    valueItem = FEField.Value(it.valueItem.id, localDateNow().toStringWithPattern(
+                        DATE_ONLY_DEFAULT_PATTERN))
                 )
             } else it
         }
