@@ -52,7 +52,7 @@ jobs:
       env:
         KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
         KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
-        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+        FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
       run: |
         cd composeApp
         bundle exec fastlane android distribute_paid_release
