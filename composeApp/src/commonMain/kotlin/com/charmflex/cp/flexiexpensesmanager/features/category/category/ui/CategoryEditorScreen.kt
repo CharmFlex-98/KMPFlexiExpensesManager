@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -37,6 +38,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
@@ -113,10 +115,8 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                         .padding(bottom = grid_x2)
                 ) {
                     Column(
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(grid_x2))
-                            .background(MaterialTheme.colorScheme.secondaryContainer)
-                            .verticalScroll(scrollState)
+                        modifier = Modifier.verticalScroll(scrollState),
+                        verticalArrangement = Arrangement.spacedBy(grid_x1)
                     ) {
                         items.forEach {
                             SelectionItem(
