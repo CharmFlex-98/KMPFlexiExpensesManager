@@ -37,9 +37,9 @@ jobs:
         FIREBASE_SERVICE_KEY: ${{ secrets.FASTLANE_FIREBASE_SERVICE_ENCODED }}
       run: |
         echo "decrypt keystore jks and save to file"
-        echo "$KEYSTORE_JKS_KEY" | base64 --decode > /home/runner/work/KMP_FlexiExpensesManager/KMP_FlexiExpensesManager/composeApp/upload-keystore.jks
+        echo "$KEYSTORE_JKS_KEY" | base64 --decode > /home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/upload-keystore.jks
         echo "decrypt firebase service key and save to file"
-        echo "$FIREBASE_SERVICE_KEY" | base64 --decode > /home/runner/work/KMP_FlexiExpensesManager/KMP_FlexiExpensesManager/composeApp/firebase_service_key.json
+        echo "$FIREBASE_SERVICE_KEY" | base64 --decode > /home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/firebase_service_key.json
 
     - name: Make gradlew executable
       run: |
