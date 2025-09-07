@@ -68,7 +68,6 @@ platform :android do
           puts "Error class: #{e.class}"
           raise e
         end
-        )
     end
 
 #     desc "Build app"
