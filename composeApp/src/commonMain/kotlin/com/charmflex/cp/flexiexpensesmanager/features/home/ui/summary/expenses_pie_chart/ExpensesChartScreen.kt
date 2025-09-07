@@ -34,6 +34,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.aay.compose.baseComponents.model.LegendPosition
 import com.aay.compose.donutChart.PieChart
@@ -48,10 +49,13 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x47
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
+import com.patrykandpatrick.vico.multiplatform.cartesian.axis.rememberAxisLabelComponent
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.columnSeries
 import com.patrykandpatrick.vico.multiplatform.cartesian.layer.rememberColumnCartesianLayer
 import com.patrykandpatrick.vico.multiplatform.cartesian.rememberCartesianChart
+import com.patrykandpatrick.vico.multiplatform.common.component.ShapeComponent
+import com.patrykandpatrick.vico.multiplatform.common.component.rememberTextComponent
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
@@ -201,12 +205,24 @@ private fun ComposeChart6(
     viewState: ExpensesPieChartViewState,
 ) {
     val modelProducer = remember { CartesianChartModelProducer() }
-    LaunchedEffect(Unit) {
+    
+    // Extract category names for x-axis labels
+    val categoryNames = remember(viewState.barChartData) {
+        viewState.barChartData.categoryExpensesAmount.mapIndexed { index, (categoryName, _) ->
+            index.toDouble() to categoryName
+        }.toMap()
+    }
+    
+    LaunchedEffect(viewState.barChartData) {
         modelProducer.runTransaction {
             // Learn more: https://patrykandpatrick.com/3aqy4o.
             columnSeries {
                 val yValues = viewState.barChartData.categoryExpensesAmount.map { it.second }
-                series(yValues)
+                // Use indices as x values since we'll format them to show category names
+                val xValues = viewState.barChartData.categoryExpensesAmount.mapIndexed { index, _ -> 
+                    index.toFloat() 
+                }
+                series(x = xValues, y = yValues)
             }
         }
     }
@@ -214,8 +230,21 @@ private fun ComposeChart6(
         chart =
         rememberCartesianChart(
             rememberColumnCartesianLayer(),
-            startAxis = VerticalAxis.rememberStart(),
-            bottomAxis = HorizontalAxis.rememberBottom(),
+            startAxis = VerticalAxis.rememberStart(
+                titleComponent = rememberTextComponent(
+                    style = TextStyle(fontSize = 9.sp),
+                ),
+                title = "${stringResource(Res.string.generic_expenses)} (${viewState.currency})",
+            ),
+            bottomAxis = HorizontalAxis.rememberBottom(
+                titleComponent = rememberTextComponent(
+                    style = TextStyle(fontSize = 9.sp)
+                ),
+                title = "Category",
+                valueFormatter = { _, value, _->
+                    categoryNames[value] ?: ""
+                }
+            ),
         ),
         modelProducer = modelProducer,
         modifier = Modifier,

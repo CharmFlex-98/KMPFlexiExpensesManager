@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "caa747f5c81479f3f7c30d058cc1259f",
+    "identityHash": "048f401d3640733838a9f6dabca462d5",
     "entities": [
       {
         "tableName": "AccountEntity",
@@ -747,7 +747,7 @@
       },
       {
         "tableName": "CategoryBudgetEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_id` INTEGER NOT NULL, `default_budget_in_cent` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `category_id` INTEGER NOT NULL, `default_minor_unit_budget` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -762,8 +762,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "defaultBudgetInCent",
-            "columnName": "default_budget_in_cent",
+            "fieldPath": "defaultMinorUnitBudget",
+            "columnName": "default_minor_unit_budget",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -788,7 +788,7 @@
       },
       {
         "tableName": "MonthlyCategoryBudgetEntity",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `budget_month_year` TEXT NOT NULL, `custom_budget_in_cent` INTEGER NOT NULL, `category_budget_id` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `budget_month_year` TEXT NOT NULL, `custom_minor_unit_budget` INTEGER NOT NULL, `category_budget_id` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -803,8 +803,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "customBudgetInCent",
-            "columnName": "custom_budget_in_cent",
+            "fieldPath": "customMinorUnitBudget",
+            "columnName": "custom_minor_unit_budget",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -866,7 +866,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'caa747f5c81479f3f7c30d058cc1259f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '048f401d3640733838a9f6dabca462d5')"
     ]
   }
 }

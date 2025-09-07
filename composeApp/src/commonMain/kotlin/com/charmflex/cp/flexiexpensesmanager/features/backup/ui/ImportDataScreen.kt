@@ -9,11 +9,13 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -28,12 +30,14 @@ import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.graphics.Color
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentPicker
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.ListTable
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
@@ -47,7 +51,7 @@ import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
 import kotlin.math.round
 
-@OptIn(ExperimentalComposeUiApi::class)
+@OptIn(ExperimentalComposeUiApi::class, ExperimentalMaterial3Api::class)
 @Composable
 internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
 
@@ -67,7 +71,10 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
 
     SGScaffold(
         modifier = Modifier.padding(grid_x2),
-        screenName = "ImportDataScreen"
+        screenName = "ImportDataScreen",
+        topBar = {
+            BasicTopBar(title = "Import")
+        }
     ) {
         if (viewState.importedData.isEmpty()) {
             PreLoadScreen(viewState = viewState) {
@@ -127,18 +134,11 @@ private fun ColumnScope.PreLoadScreen(
         onPicked
     )
 
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .weight(1f),
-        contentAlignment = Alignment.Center
-    ) {
-        FEBody2(text = "Click to load data")
-    }
+    NoResultContent(modifier = Modifier.weight(1f), "Nothing to import yet. Click to load data")
     SGLargePrimaryButton(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(grid_x2), text = "Import"
+            .padding(), text = "Import"
     ) {
         show = true
     }
@@ -160,7 +160,8 @@ private fun ColumnScope.LoadedScreen(
 
     TabRow(selectedTabIndex = tabIndex) {
         tabs.forEachIndexed { index, tabName ->
-            Tab(selected = index == tabIndex,
+            Tab(
+                selected = index == tabIndex,
                 onClick = { onUpdateTabIndex(index) }
             ) {
                 FEHeading4(modifier = Modifier.padding(grid_x2), text = tabName)

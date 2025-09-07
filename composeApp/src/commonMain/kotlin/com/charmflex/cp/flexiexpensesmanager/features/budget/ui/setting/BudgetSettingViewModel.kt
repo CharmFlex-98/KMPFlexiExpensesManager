@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
-import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
@@ -63,7 +62,7 @@ internal class BudgetSettingViewModel (
                                 it.id,
                                 it.categoryName,
                                 currencyFormatter.format(
-                                    it.defaultBudgetInCent,
+                                    it.defaultMinorUnitBudget,
                                     userCurrencyRepository.getPrimaryCurrency()
                                 )
                             )

@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
@@ -27,6 +28,7 @@ import kotlin.random.Random
 internal class ExpensesChartViewModel(
     private val getEachRootCategoryAmountUseCase: GetEachRootCategoryAmountUseCase,
     private val tagRepository: TagRepository,
+    private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val routeNavigator: RouteNavigator
 ) : ViewModel() {
@@ -160,9 +162,18 @@ internal class ExpensesChartViewModel(
             )
         )
 
+        val primaryCurrency = userCurrencyRepository.getPrimaryCurrency()
+
+        // Convert minor units to major currency amounts using CurrencyFormatter
+        val convertedAmounts = sorted.map { (category, minorAmount) ->
+            val majorAmountString = currencyFormatter.formatWithoutSymbol(minorAmount, primaryCurrency)
+            val majorAmount = majorAmountString.toDoubleOrNull() ?: 0.00
+            category to majorAmount
+        }
+
         return ExpensesPieChartViewState.BarChartData(
-            currencyCode = userCurrencyRepository.getPrimaryCurrency(),
-            categoryExpensesAmount = sorted,
+            currencyCode = primaryCurrency,
+            categoryExpensesAmount = convertedAmounts,
         )
     }
 
@@ -206,7 +217,7 @@ data class ExpensesPieChartViewState(
 
     data class BarChartData(
         val currencyCode: String = "",
-        val categoryExpensesAmount: List<Pair<String, Long>> = listOf()
+        val categoryExpensesAmount: List<Pair<String, Double>> = listOf() // Change Long to Double
     )
 }
 

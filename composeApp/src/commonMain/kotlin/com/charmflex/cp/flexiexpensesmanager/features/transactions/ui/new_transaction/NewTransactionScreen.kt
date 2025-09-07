@@ -78,6 +78,10 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import com.kizitonwose.calendar.compose.rememberCalendarState
+import com.kizitonwose.calendar.core.YearMonth
+import com.kizitonwose.calendar.core.minusMonths
+import com.kizitonwose.calendar.core.minusYears
+import com.kizitonwose.calendar.core.plusMonths
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
@@ -91,7 +95,6 @@ internal fun TransactionEditorScreen(
     val viewState by viewModel.viewState.collectAsState()
     val currencyExchangeViewState by viewModel.combinedCurrencyExchangeViewState.collectAsState()
     val currentTransactionType by viewModel.currentTransactionType.collectAsState()
-    val datePickerState = rememberCalendarState()
     val showCalendar = viewState.calendarState != null
     val snackbarHostState = remember { SnackbarHostState() }
     val snackBarState by viewModel.snackBarState
@@ -318,7 +321,6 @@ internal fun TransactionEditorScreen(
     }
 
     SGDatePicker(
-        calendarState = datePickerState,
         onDismiss = { viewModel.onToggleCalendar(null) },
         onConfirm = {
             viewModel.onFieldValueChanged(

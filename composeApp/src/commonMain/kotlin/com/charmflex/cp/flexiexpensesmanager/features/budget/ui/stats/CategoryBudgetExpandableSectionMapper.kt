@@ -4,7 +4,9 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.flexiexpensesmanager.core.utils.SuspendableMapper
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class CategoryBudgetExpandableSectionMapper(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository
@@ -37,7 +39,7 @@ internal class CategoryBudgetExpandableSectionMapper(
         if (node.adjustedBudgetInCent == 0L) return section
 
         val adjustedBudgetInCent = node.adjustedBudgetInCent
-        val adjustedExpensesInCent = node.adjustedExpensesInCent
+        val adjustedExpensesInCent = node.adjustedMinorUnitAmount
 
         val item = BudgetStatViewState.CategoryBudgetItem(
             categoryId = node.categoryId,

@@ -65,16 +65,16 @@ internal abstract class TransactionEditorContentProvider {
                 type = FEField.FieldType.Callback
             ),
             FEField(
-                id = TRANSACTION_AMOUNT,
-                labelId = Res.string.new_expenses_amount,
-                hintId = Res.string.new_expenses_name_amount_hint,
-                type = FEField.FieldType.Currency
-            ),
-            FEField(
                 id = TRANSACTION_FROM_ACCOUNT,
                 labelId = Res.string.new_transaction_account,
                 hintId = Res.string.new_expenses_account_hint,
                 type = FEField.FieldType.Callback
+            ),
+            FEField(
+                id = TRANSACTION_AMOUNT,
+                labelId = Res.string.new_expenses_amount,
+                hintId = Res.string.new_expenses_name_amount_hint,
+                type = FEField.FieldType.Currency
             ),
             FEField(
                 id = TRANSACTION_CATEGORY,
@@ -108,17 +108,17 @@ internal abstract class TransactionEditorContentProvider {
                 type = FEField.FieldType.Callback
             ),
             FEField(
+                id = TRANSACTION_AMOUNT,
+                labelId = Res.string.income_amount_label,
+                hintId = Res.string.income_amount_hint,
+                type = FEField.FieldType.Currency
+            ),
+            FEField(
                 id = TRANSACTION_CATEGORY,
                 labelId = Res.string.generic_category,
                 hintId = Res.string.generic_category_hint,
                 type = FEField.FieldType.Callback
             ),
-            FEField(
-                id = TRANSACTION_AMOUNT,
-                labelId = Res.string.income_amount_label,
-                hintId = Res.string.income_amount_hint,
-                type = FEField.FieldType.Currency
-            )
         )
     }
 

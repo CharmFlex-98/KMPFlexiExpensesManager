@@ -19,7 +19,7 @@ internal interface CategoryBudgetDao {
         "SELECT cb.id, " +
                 "tc.id as category_id, " +
                 "tc.name as category_name, " +
-                "cb.default_budget_in_cent FROM CategoryBudgetEntity cb " +
+                "cb.default_minor_unit_budget FROM CategoryBudgetEntity cb " +
                 "INNER JOIN TransactionCategoryEntity tc ON cb.category_id = tc.id"
     )
     fun getAllCategoryBudgets(): Flow<List<CategoryBudgetResponse>>
@@ -38,10 +38,10 @@ internal interface CategoryBudgetDao {
                 "subtable.category_parent_id, " +
                 "subtable.minor_unit_expenses_amount, " +
                 "subtable.category_budget_id," +
-                "subtable.default_budget_in_cent, " +
+                "subtable.default_minor_unit_budget, " +
                 "mcb.budget_month_year," +
-                "mcb.custom_budget_in_cent FROM " +
-                "(SELECT tc.id as category_id, tc.name as category_name, tc.parent_id as category_parent_id, COALESCE(SUM(t.primary_minor_unit_amount), 0) as minor_unit_expenses_amount, cb.id as category_budget_id, cb.default_budget_in_cent " +
+                "mcb.custom_minor_unit_budget FROM " +
+                "(SELECT tc.id as category_id, tc.name as category_name, tc.parent_id as category_parent_id, COALESCE(SUM(t.primary_minor_unit_amount), 0) as minor_unit_expenses_amount, cb.id as category_budget_id, cb.default_minor_unit_budget " +
                 "FROM TransactionCategoryEntity tc " +
                 "LEFT JOIN CategoryBudgetEntity cb ON cb.category_id = tc.id " +
                 "LEFT JOIN (SELECT * FROM TransactionEntity WHERE transaction_type_code = 'EXPENSES' " +

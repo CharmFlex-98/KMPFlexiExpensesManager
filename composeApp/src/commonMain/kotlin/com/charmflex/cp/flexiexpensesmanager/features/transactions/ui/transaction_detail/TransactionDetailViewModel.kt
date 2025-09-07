@@ -19,7 +19,6 @@ import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
@@ -74,6 +73,10 @@ internal class TransactionDetailViewModel(
             if (transaction == null) return@launch
             
             _viewState.update {
+                val transactionAccount = if (transaction.transactionTypeCode == TransactionType.EXPENSES.toString()) {
+                    transaction.transactionAccountFrom
+                } else transaction.transactionAccountTo
+
                 it.copy(
                     detail = TransactionDetailViewState.Detail(
                         transactionId = transaction.transactionId,
@@ -81,10 +84,14 @@ internal class TransactionDetailViewModel(
                         transactionAccountFrom = transaction.transactionAccountFrom,
                         transactionAccountTo = transaction.transactionAccountTo,
                         transactionTypeCode = transaction.transactionTypeCode,
-                        formattedAmount = currencyFormatter.format(
+                        formattedTransactionAmount = currencyFormatter.format(
                             transaction.minorUnitAmount,
                             transaction.currency
                         ),
+                        formattedAccountTransactionAmount = transactionAccount?.let { account -> currencyFormatter.format(
+                            transaction.accountMinorUnitAmount,
+                            account.currency
+                        ) } ?: "",
                         transactionDate = transaction.transactionDate,
                         transactionCategory = transaction.transactionCategory
                     )
@@ -161,7 +168,8 @@ internal data class TransactionDetailViewState(
         val transactionAccountFrom: AccountGroup.Account?,
         val transactionAccountTo: AccountGroup.Account?,
         val transactionTypeCode: String,
-        val formattedAmount: String,
+        val formattedTransactionAmount: String,
+        val formattedAccountTransactionAmount: String,
         val transactionDate: String,
         val transactionCategory: Transaction.TransactionCategory?,
     ) {

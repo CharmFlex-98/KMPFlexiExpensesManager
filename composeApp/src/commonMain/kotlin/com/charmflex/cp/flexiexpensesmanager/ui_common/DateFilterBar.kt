@@ -104,7 +104,6 @@ internal fun DateFilterBar(
     }
 
     SGDatePicker(
-        calendarState = rememberCalendarState(),
         onDismiss = { customDateSelection = null },
         onConfirm = { localDate ->
             val updatedFilter = customDateSelection?.let {

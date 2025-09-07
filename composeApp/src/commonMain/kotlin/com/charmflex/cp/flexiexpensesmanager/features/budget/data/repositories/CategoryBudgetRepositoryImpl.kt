@@ -16,7 +16,7 @@ internal class CategoryBudgetRepositoryImpl constructor(
     override suspend fun addCategoryBudget(categoryId: Int, amountInCent: Long): Long {
         val entity = CategoryBudgetEntity(
             categoryId = categoryId,
-            defaultBudgetInCent = amountInCent
+            defaultMinorUnitBudget = amountInCent
         )
         return categoryBudgetDao.addCategoryBudget(entity)
     }
@@ -44,8 +44,8 @@ internal class CategoryBudgetRepositoryImpl constructor(
                         categoryId = entity.categoryId,
                         categoryName = entity.categoryName,
                         parentCategoryId = entity.categoryParentId,
-                        defaultBudgetInCent = entity.budget?.defaultBudgetInCent ?: 0,
-                        expensesInCent = entity.minorUnitExpensesAmount
+                        defaultBudgetInCent = entity.budget?.defaultMinorUnitBudget ?: 0,
+                        minorUnitAmount = entity.minorUnitExpensesAmount
                     )
                 }
             }

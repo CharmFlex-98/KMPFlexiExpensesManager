@@ -102,7 +102,7 @@ private fun TotalAssetsCard(
     Card(
         modifier = Modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
         ),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
     ) {
@@ -116,7 +116,7 @@ private fun TotalAssetsCard(
             ) {
                 Column(modifier = Modifier.weight(1f)) {
                     FEMetaData1(
-                        text = stringResource(Res.string.generix_total_asset).uppercase(),
+                        text = stringResource(Res.string.generic_total_asset).uppercase(),
                         color = MaterialTheme.colorScheme.onPrimaryContainer.copy(alpha = 0.7f)
                     )
 
@@ -238,25 +238,8 @@ private fun AccountItem(
             .padding(vertical = grid_x1_5, horizontal = grid_x1),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        // Account Icon/Initial (placeholder for future enhancement)
+
         Box(
-            modifier = Modifier
-                .size(32.dp)
-                .background(
-                    color = MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                    shape = CircleShape
-                ),
-            contentAlignment = Alignment.Center
-        ) {
-            FECallout3(
-                text = account.accountName.firstOrNull()?.toString()?.uppercase() ?: "A",
-                color = MaterialTheme.colorScheme.primary
-            )
-        }
-
-        Spacer(modifier = Modifier.width(grid_x1_5))
-
-        Column(
             modifier = Modifier.weight(1f)
         ) {
             FEBody1(

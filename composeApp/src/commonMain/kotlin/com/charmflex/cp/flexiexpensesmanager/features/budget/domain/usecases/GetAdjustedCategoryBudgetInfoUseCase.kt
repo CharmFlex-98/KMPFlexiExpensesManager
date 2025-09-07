@@ -6,7 +6,9 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.getStartDate
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.models.AdjustedCategoryBudgetNode
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import kotlinx.coroutines.flow.Flow
+import org.koin.core.annotation.Factory
 
+@Factory
 internal class GetAdjustedCategoryBudgetInfoUseCase constructor(
     private val categoryBudgetRepository: CategoryBudgetRepository
 ) {

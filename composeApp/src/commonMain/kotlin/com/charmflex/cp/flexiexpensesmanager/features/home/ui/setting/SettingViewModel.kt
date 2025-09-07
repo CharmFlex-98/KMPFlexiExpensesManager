@@ -226,10 +226,6 @@ internal class SettingViewModel  constructor(
                 action = SettingAction.PRIMARY_CURRENCY
             ),
             SettingActionable(
-                "Set secondary currency",
-                action = SettingAction.SECONDARY_CURRENCY
-            ),
-            SettingActionable(
                 title = "Set tag",
                 action = SettingAction.Tag
             ),

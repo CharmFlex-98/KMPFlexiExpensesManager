@@ -83,10 +83,11 @@ fun NoResultAnimation(
 
 @Composable
 fun NoResultContent(
+    modifier: Modifier = Modifier,
     description: String,
     fontSize: TextUnit = 12.sp
 ) {
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally

@@ -46,7 +46,7 @@ internal fun TransactionDetailScreen(
                 backgroundColor = MaterialTheme.colorScheme.tertiary
             ) {
                 TransactionDetailItem(title = "Name", text = detail.transactionName)
-                TransactionDetailItem(title = "Amount", text = detail.formattedAmount)
+                TransactionDetailItem(title = "Amount", text = detail.formattedTransactionAmount)
                 TransactionDetailItem(title = "Type", text = detail.transactionTypeCode)
             }
         }

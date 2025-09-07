@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.shape.CircleShape
@@ -16,6 +17,8 @@ import coil3.compose.AsyncImage
 import coil3.compose.LocalPlatformContext
 import coil3.request.ImageRequest
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.empty_content
+import kotlinproject.composeapp.generated.resources.error_image
 import kotlinproject.composeapp.generated.resources.icon_people
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
@@ -111,4 +114,18 @@ fun InvalidOverlay(
 @Preview
 private fun RoundImagePreview() {
     SGRoundImage(source = "source/sdk/ui-common/src/main/assets/sample.jpeg")
+}
+
+@Composable
+fun EmptyState(
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier = modifier
+    ) {
+        Image(
+            painter = painterResource(Res.drawable.error_image),
+            contentDescription = ""
+        )
+    }
 }

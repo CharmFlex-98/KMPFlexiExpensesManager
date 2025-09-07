@@ -9,6 +9,6 @@ internal data class CategoryBudgetResponse(
     val categoryId: Int,
     @ColumnInfo("category_name")
     val categoryName: String,
-    @ColumnInfo("default_budget_in_cent")
-    val defaultBudgetInCent: Long
+    @ColumnInfo("default_minor_unit_budget")
+    val defaultMinorUnitBudget: Long
 )

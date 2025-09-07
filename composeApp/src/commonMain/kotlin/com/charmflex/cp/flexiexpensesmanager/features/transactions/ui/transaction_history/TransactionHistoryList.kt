@@ -201,7 +201,7 @@ private fun ExpensesHistorySectionView(
             ExpensesHistoryItem(
                 id = it.id,
                 name = it.name,
-                amount = it.amount,
+                amount = it.bankTransactionAmount,
                 category = it.category,
                 type = it.type,
                 iconResId = it.iconResId,

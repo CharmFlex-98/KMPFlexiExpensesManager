@@ -7,13 +7,13 @@ internal data class AdjustedCategoryBudgetNode(
     override val categoryId: Int,
     override val categoryName: String,
     override val parentCategoryId: Int,
-    private val expensesInCent: Long,
+    private val minorUnitAmount: Long,
     private val defaultBudgetInCent: Long
 ) : CategoryNode<AdjustedCategoryBudgetNode> {
-    val adjustedExpensesInCent: Long
+    val adjustedMinorUnitAmount: Long
         get() {
-            return expensesInCent + (children.map {
-                it.adjustedExpensesInCent
+            return minorUnitAmount + (children.map {
+                it.adjustedMinorUnitAmount
             }.reduceOrNull { acc, l -> acc + l } ?: 0)
         }
 

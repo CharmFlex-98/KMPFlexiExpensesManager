@@ -15,6 +15,6 @@ internal class CategoryBudgetEntity(
     val id: Int = 0,
     @ColumnInfo("category_id")
     val categoryId: Int,
-    @ColumnInfo("default_budget_in_cent")
-    val defaultBudgetInCent: Long
+    @ColumnInfo("default_minor_unit_budget")
+    val defaultMinorUnitBudget: Long
 )

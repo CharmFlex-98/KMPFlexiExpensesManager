@@ -42,14 +42,20 @@ internal class TransactionHistoryMapper constructor(
                 )
             )
 
+
             res.add(
                 TransactionHistorySection(
                     dateKey = date,
                     items = history.map {
+                        val bankTransactionAccount = if (it.transactionTypeCode == TransactionType.EXPENSES.toString()) {
+                            it.transactionAccountFrom
+                        } else it.transactionAccountTo
+
                         TransactionHistorySection.SectionItem(
                             id = it.transactionId,
                             name = it.transactionName,
-                            amount = currencyFormatter.format(it.minorUnitAmount, it.currency),
+                            transactionAmount = currencyFormatter.format(it.minorUnitAmount, it.currency),
+                            bankTransactionAmount = bankTransactionAccount?.let { b -> currencyFormatter.format(it.accountMinorUnitAmount, b.currency) } ?: "",
                             type = it.transactionTypeCode,
                             category = it.transactionCategory?.name ?: "",
                             iconResId = it.transactionTypeCode.getTransactionIconResId()

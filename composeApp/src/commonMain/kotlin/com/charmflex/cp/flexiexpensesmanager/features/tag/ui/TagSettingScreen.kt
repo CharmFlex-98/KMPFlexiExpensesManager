@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.tag.ui
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.IconButton
@@ -12,10 +13,14 @@ import androidx.compose.ui.Modifier
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.EmptyState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLottieAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
@@ -29,6 +34,7 @@ internal fun TagSettingScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsState()
+
 
     TagListScreen(viewModel, viewState.tags, viewState.dialogState)
 
@@ -75,6 +81,11 @@ private fun TagListScreen(
             )
         }
     ) {
+        if (tags.isEmpty()) {
+            NoResultContent(description = "We didn't find anything. Create one?")
+            return@SGScaffold
+        }
+
         BasicColumnContainerItemList(
             items = tags,
             itemContent = {

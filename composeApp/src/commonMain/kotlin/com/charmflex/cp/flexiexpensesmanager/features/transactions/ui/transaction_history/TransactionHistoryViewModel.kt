@@ -243,7 +243,10 @@ internal data class TransactionHistorySection(
     data class SectionItem(
         val id: Long,
         val name: String,
-        val amount: String,
+        // The real transaction amount in the expenses currency
+        val transactionAmount: String,
+        // The transaction amount in the view of bank.
+        val bankTransactionAmount: String,
         val category: String,
         val type: String,
         val iconResId: DrawableResource
