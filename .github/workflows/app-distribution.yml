@@ -24,12 +24,15 @@ jobs:
 
     - name: Install bundler & Fastlane
       run: |
+        cd composeApp
         gem install bundler
         bundle config path vendor/bundle
         bundle install --jobs 4 --retry 3
 
     - name: Install Firebase app distribution plugin
-      run: bundle exec fastlane add_plugin firebase_app_distribution
+      run: |
+        cd composeApp
+        bundle exec fastlane add_plugin firebase_app_distribution
 
     - name: Decrypt keystore jks file and firebase service key
       env:
