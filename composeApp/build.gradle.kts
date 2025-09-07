@@ -130,6 +130,27 @@ android {
     namespace = "com.charmflex.cp.flexiexpensesmanager"
     compileSdk = libs.versions.android.compileSdk.get().toInt()
 
+    flavorDimensions += "version"
+
+    productFlavors {
+        create("free") {
+            dimension = "version"
+            applicationIdSuffix = ".free"
+            versionNameSuffix = "-free"
+            // You can add custom build config fields
+            buildConfigField("boolean", "IS_PAID_VERSION", "false")
+            buildConfigField("String", "FLAVOR_NAME", "\"free\"")
+        }
+
+        create("paid") {
+            dimension = "version"
+            applicationIdSuffix = ".paid"
+            versionNameSuffix = "-paid"
+            buildConfigField("boolean", "IS_PAID_VERSION", "true")
+            buildConfigField("String", "FLAVOR_NAME", "\"paid\"")
+        }
+    }
+
     defaultConfig {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
@@ -142,7 +163,15 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+
+    buildFeatures {
+        buildConfig = true
+    }
+
     buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debug"  // This would add .debug to all debug builds
+        }
         getByName("release") {
             isMinifyEnabled = false
         }
