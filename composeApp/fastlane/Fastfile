@@ -44,6 +44,7 @@ platform :android do
             task: "assemble",
             flavor: "paid",
             build_type: "release",
+            project_dir: ".."
             print_command: false,
             properties: {
                 "android.injected.signing.store.file" => "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/upload-keystore.jks",
