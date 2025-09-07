@@ -1,0 +1,55 @@
+name: Release to Firebase App Distribution
+
+on:
+  workflow_dispatch
+
+jobs:
+  build-and-distribute-to-firebase:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+        
+    - name: Set up Java
+      uses: actions/setup-java@v2
+      with:
+        distribution: "temurin"
+        java-version: 17
+
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.3' # Not needed with a .ruby-version file
+        bundler-cache: true # runs 'bundle install' and caches installed gems automatically
+
+    - name: Install bundler & Fastlane
+      run: |
+        gem install bundler
+        bundle config path vendor/bundle
+        bundle install --jobs 4 --retry 3
+
+    - name: Install Firebase app distribution plugin
+      run: bundle exec fastlane add_plugin firebase_app_distribution
+
+    - name: Decrypt keystore jks file and firebase service key
+      env:
+        KEYSTORE_JKS_KEY: ${{ secrets.UPLOAD_KEYSTORE_JKS_ENCODED }}
+        FIREBASE_SERVICE_KEY: ${{ secrets.FASTLANE_FIREBASE_SERVICE_ENCODED }}
+      run: |
+        echo "decrypt keystore jks and save to file"
+        echo "$KEYSTORE_JKS_KEY" | base64 --decode > /home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/upload-keystore.jks
+        echo "decrypt firebase service key and save to file"
+        echo "$FIREBASE_SERVICE_KEY" | base64 --decode > /home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/firebase_service_key.json
+
+    - name: Make gradlew executable
+      run: |
+        chmod +x ./gradlew
+
+    - name: Build the app and distribute to firebase
+      env:
+        KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
+        KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
+        FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
+      run: |
+        cd composeApp
+        bundle exec fastlane android distribute_paid_release
