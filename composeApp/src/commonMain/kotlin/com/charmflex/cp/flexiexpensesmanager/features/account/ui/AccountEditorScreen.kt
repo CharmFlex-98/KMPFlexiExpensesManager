@@ -282,7 +282,7 @@ fun <T> SelectionItem(
     title: (T) -> String,
     subtitle: ((T) -> String)? = null,
     onClick: ((T) -> Unit)? = null,
-    suffixIcon: (@Composable () -> Unit)? = null,
+    suffixIcon: (@Composable (T) -> Unit)? = null,
     showDivider: Boolean = true,
 ) {
     Column {
@@ -325,7 +325,7 @@ fun <T> SelectionItem(
                 IconButton(
                     modifier = Modifier.size(grid_x3),
                     onClick = { onClick?.let { it(item) } },
-                    content = { suffixIcon?.let{ it() } }
+                    content = { suffixIcon?.let{ it(item) } }
                 )
             }
         }

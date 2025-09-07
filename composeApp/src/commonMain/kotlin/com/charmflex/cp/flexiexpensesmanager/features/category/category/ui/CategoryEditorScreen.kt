@@ -26,6 +26,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import androidx.compose.ui.draw.clip
+import com.charmflex.cp.flexiexpensesmanager.features.account.ui.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
@@ -118,33 +119,12 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                             .verticalScroll(scrollState)
                     ) {
                         items.forEach {
-                            Box(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .clickable {
-                                        viewModel.onClickItem(it)
-                                    }
-                                    .padding(grid_x2),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Row(
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    FEBody1(
-                                        modifier = Modifier.weight(1f),
-                                        text = it.categoryName
-                                    )
-                                    IconButton(onClick = {
-                                        viewModel.launchDeleteDialog(it.categoryId)
-                                    }) {
-                                        SGIcons.Delete()
-                                    }
-                                    if (it.allowSubCategory) Icon(
-                                        painter = painterResource(Res.drawable.ic_arrow_next),
-                                        contentDescription = ""
-                                    )
-                                }
-                            }
+                            SelectionItem(
+                                item = it,
+                                title = { it.categoryName },
+                                onClick = { viewModel.launchDeleteDialog(it.categoryId) },
+                                suffixIcon = { if (it.allowSubCategory) SGIcons.NextArrow() }
+                            )
                         }
                     }
                 }
