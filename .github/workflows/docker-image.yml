@@ -52,4 +52,4 @@ jobs:
         FIREBASE_APP_ID: ${{ secrets.FIREBASE_APP_ID }}
       run: |
         cd composeApp
-        bundle exec fastlane android distribute
+        bundle exec fastlane android distribute_paid_release
