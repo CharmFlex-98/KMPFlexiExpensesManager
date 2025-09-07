@@ -1,45 +1,102 @@
 {
   "project_info": {
-    "project_number": "932412594852",
-    "project_id": "flexiexpensesmanager-kmp",
-    "storage_bucket": "flexiexpensesmanager-kmp.firebasestorage.app"
+    "project_number": "925930527769",
+    "project_id": "flexiexpensesmanagerproject",
+    "storage_bucket": "flexiexpensesmanagerproject.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932412594852:android:e67af6d4f169908e3c2431",
+        "mobilesdk_app_id": "1:925930527769:android:0c6b56edb2d4cafb7a1e88",
         "android_client_info": {
           "package_name": "com.charmflex.cp.flexiexpensesmanager.paid"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAr2GRnU_Ea7ahE4hx5zg_p_3uTACpKQfw"
+          "current_key": "AIzaSyBpiv9Rs-N7Gt_qxYnXpYd9LTRCYoE_vU4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:932412594852:android:76e7ebb63dcd60c63c2431",
+        "mobilesdk_app_id": "1:925930527769:android:6220b70b16f96ef57a1e88",
         "android_client_info": {
-          "package_name": "com.charmflex.cp.flexiexpensesmanager.paid.debug"
+          "package_name": "com.charmflex.flexiexpensesmanager"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyAr2GRnU_Ea7ahE4hx5zg_p_3uTACpKQfw"
+          "current_key": "AIzaSyBpiv9Rs-N7Gt_qxYnXpYd9LTRCYoE_vU4"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:925930527769:android:1f66a038293b9e837a1e88",
+        "android_client_info": {
+          "package_name": "com.charmflex.flexiexpensesmanager.dev.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "925930527769-lfcps10rk6cuqj36o546g1jhj7i1j38j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.charmflex.flexiexpensesmanager.dev.debug",
+            "certificate_hash": "a754ffc03c6f97b45571a64a6bbd762e877637e3"
+          }
+        },
+        {
+          "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBpiv9Rs-N7Gt_qxYnXpYd9LTRCYoE_vU4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "925930527769-3m3ca0jbfubrbc3qlc0crgii2ipa8008.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
