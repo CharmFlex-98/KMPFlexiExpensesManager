@@ -64,8 +64,8 @@ platform :android do
         )
     end
 
-    desc "Deploy AAB to firebase"
-    lane :distribute_paid_release_aab do
+    desc "Build AAB and upload to GitHub artifacts"
+    lane :build_aab_for_artifacts do
         gradle(
             task: "bundle",
             flavor: "paid",
@@ -77,16 +77,15 @@ platform :android do
                 "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
                 "android.injected.signing.key.alias" => ENV['KEYSTORE_ALIAS'],
                 "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD'],
-                }
+            }
         )
-
-        release = firebase_app_distribution(
-            app: ENV['FIREBASE_APP_ID_PAID_RELEASE'],
-            android_artifact_type: "AAB",
-            android_artifact_path: lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH],
-            service_credentials_file: "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/firebase_service_key.json",
-            testers: "charmflex1111@gmail.com",
-            release_notes: "This app is for testing purposes (AAB)"
-        )
+        
+        # Print the AAB path for GitHub Actions to use
+        puts "AAB_PATH=#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
+        
+        # Copy AAB to a known location for easier GitHub Actions pickup
+        sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-paid-release.aab'"
+        
+        UI.success("AAB built successfully! Ready for GitHub artifact upload.")
     end
 end

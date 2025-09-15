@@ -56,4 +56,18 @@ jobs:
       run: |
         cd composeApp
         bundle exec fastlane android distribute_paid_release
-        bundle exec fastlane android distribute_paid_release_aab
+
+    - name: Build AAB with Fastlane
+      env:
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+      run: |
+        cd composeApp
+        bundle exec fastlane android build_aab_for_artifacts
+
+    - name: Upload AAB Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: aab-paid-release
+        path: composeApp-paid-release.aab  # This file is copied to root by fastlane
+        retention-days: 30
