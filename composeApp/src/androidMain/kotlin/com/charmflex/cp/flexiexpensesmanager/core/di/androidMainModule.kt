@@ -15,6 +15,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AndroidDocumentMana
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.AndroidDeviceIdGenerator
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.DeviceIdGenerator
+import com.charmflex.cp.flexiexpensesmanager.features.billing.AndroidBillingManager
+import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.module.dsl.bind
@@ -34,5 +36,6 @@ val androidMainModule = module {
     singleOf(::AndroidDeviceIdGenerator) { bind<DeviceIdGenerator>() }
     singleOf(::AndroidCurrencyFormatterImpl) { bind<CurrencyFormatter>() }
     singleOf(::AndroidRateExchangeManager) { bind<RateExchangeManager>() }
+//    singleOf(::AndroidBillingManager) { bind<BillingManager>() }
     AndroidModule().module
 }

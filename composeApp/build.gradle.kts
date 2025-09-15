@@ -62,6 +62,8 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
             implementation(libs.posthog)
 
+            implementation(libs.google.billing)
+            
             implementation(libs.androidx.security.crypto)
         }
         commonMain.dependencies {

@@ -14,9 +14,15 @@ internal class FlexiExpensesManagerApp : Application(), AppComponentProvider {
         KoinInitializer(this).init()
         appComponent = AppComponent()
         AppComponentProvider.instance = this
+
+        initIAP()
     }
 
     override fun getAppComponent(): AppComponent {
         return appComponent ?: throw RuntimeException("KoinComponent is not yet initialized!")
+    }
+
+    private fun initIAP() {
+
     }
 }

@@ -56,3 +56,4 @@ jobs:
       run: |
         cd composeApp
         bundle exec fastlane android distribute_paid_release
+        bundle exec fastlane android distribute_paid_release_aab

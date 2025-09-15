@@ -49,6 +49,8 @@ poi_version = "5.2.3"
 # Room
 room_version = '2.7.1'
 
+billing_version = "8.0.0"
+
 # sqlite
 sqlite_version = "2.5.1"
 # Google
@@ -167,6 +169,8 @@ androidx-lifecycle-runtime-compose = { group = "org.jetbrains.androidx.lifecycle
 compose-navigation = { group = "org.jetbrains.androidx.navigation", name = "navigation-compose", version.ref = "compose-navigation-ver" }
 compose-navigation-backhandler = { group = "org.jetbrains.compose.ui", name = "ui-backhandler"}
 
+# billing
+google-billing = { module = "com.android.billingclient:billing-ktx", version.ref = 'billing_version'}
 posthog = { module = "com.posthog:posthog-android", version.ref = 'posthog_version'}
 # maxkeppper compose dialog
 compose-dialog-core = { module = 'com.maxkeppeler.sheets-compose-dialogs:core', version.ref = 'compose_dialog_version'}
