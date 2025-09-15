@@ -1,5 +1,8 @@
 package com.charmflex.cp.flexiexpensesmanager.features.category.category.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,24 +29,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
-import androidx.compose.ui.draw.clip
-import com.charmflex.cp.flexiexpensesmanager.features.account.ui.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
-import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.ic_arrow_next
-import org.jetbrains.compose.resources.painterResource
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -90,23 +89,29 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
         },
         screenName = "CategoryEditorScreen"
     ) {
-        if (isEditorOpened) {
-            SGTextField(
-                modifier = Modifier.fillMaxWidth(),
-                label = "New category",
-                value = viewState.editorState.value
+
+        AnimatedVisibility(
+            visible = isEditorOpened,
+            enter = slideInHorizontally(initialOffsetX = { it }),
+            exit = slideOutHorizontally(targetOffsetX = { it })
+        ) {
+            EditorCard(
+                modifier = Modifier.fillMaxSize(),
+                header = "Add New category",
+                buttonText = "Add",
+                onButtonClicked = { viewModel.addNewCategory() }
             ) {
-                viewModel.updateEditorValue(it)
+                SGTextField(
+                    modifier = Modifier.fillMaxWidth(),
+                    label = "New category",
+                    value = viewState.editorState.value
+                ) {
+                    viewModel.updateEditorValue(it)
+                }
             }
-            Spacer(modifier = Modifier.weight(1f))
-            SGLargePrimaryButton(
-                modifier = Modifier.fillMaxWidth(),
-                text = "ADD",
-                enabled = true
-            ) {
-                viewModel.addNewCategory()
-            }
-        } else {
+        }
+
+        if (!isEditorOpened) {
             Column {
                 Box(
                     modifier = Modifier
@@ -122,7 +127,9 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                             SelectionItem(
                                 item = it,
                                 title = { it.categoryName },
-                                onClick = { viewModel.launchDeleteDialog(it.categoryId) },
+                                onClick = { viewModel.onClickItem(it) },
+                                onSubIconClick = { viewModel.launchDeleteDialog(it.categoryId) },
+                                subPrefixIcon = { SGIcons.Delete() },
                                 suffixIcon = { if (it.allowSubCategory) SGIcons.NextArrow() }
                             )
                         }

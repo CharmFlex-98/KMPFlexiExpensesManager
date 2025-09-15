@@ -25,6 +25,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
@@ -55,6 +56,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.ListTable
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
@@ -223,6 +225,8 @@ internal fun ExpensesHistoryItem(
     category: String,
     type: String,
     iconResId: DrawableResource,
+    suffixIcon: @Composable (() -> Unit)? = null,
+    onIconClicked: (() -> Unit)? = null,
     onClick: (Long) -> Unit
 ) {
     val signedAmount = when (type) {
@@ -291,6 +295,13 @@ internal fun ExpensesHistoryItem(
             contentAlignment = Alignment.Center
         ) {
             FEBody1(text = signedAmount, color = signAmountColor)
+        }
+        if (suffixIcon != null) {
+            IconButton(
+                onClick = { onIconClicked?.invoke() },
+            ) {
+                suffixIcon()
+            }
         }
     }
 }

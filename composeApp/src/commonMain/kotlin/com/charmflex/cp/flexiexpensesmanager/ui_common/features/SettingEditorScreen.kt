@@ -20,6 +20,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGImage
@@ -64,28 +65,16 @@ internal fun SettingEditorScreen(
         modifier = Modifier
             .fillMaxSize()
             .padding(grid_x2),
-        topBar = {
-            BasicTopBar(title = appBarTitle)
-        },
         screenName = screenName
     ) {
-        Column(modifier = Modifier.weight(1f), verticalArrangement = Arrangement.Top) {
+        EditorCard(
+            modifier = Modifier.fillMaxWidth(),
+            header = appBarTitle,
+            onButtonClicked = onConfirm,
+            buttonText = stringResource(Res.string.generic_confirm)
+        ) {
             fields.forEach {
                 when (it.type) {
-//                    is FEField.FieldType.Text -> {
-//                        SGTextField(
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .padding(grid_x1),
-//                            label = stringResource(id = it.labelId),
-//                            value = it.valueItem.value
-//                        ) { newValue ->
-//                            onTextFieldChanged(newValue, it)
-//                        }
-//                    }
-//                    is FEField.FieldType.Currency -> {
-//
-//                    }
                     is FEField.FieldType.Callback -> {
                         SGTextField(
                             modifier = Modifier
@@ -130,15 +119,6 @@ internal fun SettingEditorScreen(
                         }
                     }
                 }
-            }
-        }
-
-        SGButtonGroupVertical {
-            SGLargePrimaryButton(modifier = Modifier.fillMaxWidth(), text = stringResource(Res.string.generic_confirm)) {
-                onConfirm()
-            }
-            SGLargeSecondaryButton(modifier = Modifier.fillMaxWidth(), text = stringResource(Res.string.generic_cancel)) {
-                onBack()
             }
         }
     }

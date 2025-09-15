@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.rememberScrollState
@@ -50,6 +51,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputF
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
@@ -58,6 +60,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_25
@@ -143,11 +146,7 @@ internal fun AccountEditorScreen(
             }
         }
 
-        AnimatedVisibility(
-            visible = !isEditorOpened,
-            enter = slideInHorizontally(initialOffsetX = { it }),
-            exit = slideOutHorizontally(targetOffsetX = { it })
-        ) {
+        if (!isEditorOpened) {
             MainContentScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
                 viewState = viewState,
@@ -277,62 +276,6 @@ private fun MainContentScreen(
 }
 
 @Composable
-fun <T> SelectionItem(
-    item: T,
-    title: (T) -> String,
-    subtitle: ((T) -> String)? = null,
-    onClick: ((T) -> Unit)? = null,
-    suffixIcon: (@Composable (T) -> Unit)? = null,
-    showDivider: Boolean = true,
-) {
-    Column {
-        if (showDivider) {
-            HorizontalDivider(
-                color = MaterialTheme.colorScheme.outline.copy(alpha = 0.2f)
-            )
-        }
-
-        Surface(
-            modifier = Modifier.fillMaxWidth().padding(grid_x1),
-            color = MaterialTheme.colorScheme.surface
-        ) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 20.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(
-                        text = title(item),
-                        style = MaterialTheme.typography.bodyLarge,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.onSurface
-                    )
-
-                    subtitle?.let {
-                        Text(
-                            text = subtitle(item),
-                            style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
-                        )
-                    }
-                }
-
-                IconButton(
-                    modifier = Modifier.size(grid_x3),
-                    onClick = { onClick?.let { it(item) } },
-                    content = { suffixIcon?.let{ it(item) } }
-                )
-            }
-        }
-    }
-}
-
-@Composable
 private fun AccountGroupItem(
     accountGroup: AccountGroup,
     onClick: () -> Unit,
@@ -447,71 +390,42 @@ private fun EditorScreen(
 ) {
     val outputCurrencyFormatter = remember { CurrencyTextFieldOutputFormatter() }
 
-    Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.spacedBy(24.dp)
+    EditorCard(
+        modifier = Modifier.fillMaxSize(),
+        header = "Account Details",
+        buttonText = "Create Account",
+        onButtonClicked = addNewItem
     ) {
-        Card(
+        SGTextField(
             modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface
-            )
-        ) {
-            Column(
-                modifier = Modifier.padding(24.dp),
-                verticalArrangement = Arrangement.spacedBy(20.dp)
-            ) {
-                Text(
-                    text = "Account Details",
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.onSurface
-                )
-
-                SGTextField(
-                    modifier = Modifier.fillMaxWidth(),
-                    label = editorLabel,
-                    value = when (val vs = viewState.editorState) {
-                        is AccountEditorViewState.AccountEditorState -> vs.accountName
-                        null -> ""
-                    }
-                ) {
-                    updateAccountName(it)
-                }
-
-                if (viewState.editorState is AccountEditorViewState.AccountEditorState) {
-                    SGTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(Res.string.account_editor_currency_label),
-                        value = viewState.editorState.currency,
-                        readOnly = true,
-                        onClicked = { onFieldTap(TapFieldType.CurrencyField) }
-                    ) {}
-
-                    SGTextField(
-                        modifier = Modifier.fillMaxWidth(),
-                        label = stringResource(Res.string.account_editor_amount_label),
-                        value = viewState.editorState.amount,
-                        keyboardType = KeyboardType.Number,
-                        visualTransformation = visualTransformation,
-                        outputFormatter = { outputCurrencyFormatter.format(it) }
-                    ) {
-                        updateAmount(it)
-                    }
-                }
+            label = editorLabel,
+            value = when (val vs = viewState.editorState) {
+                is AccountEditorViewState.AccountEditorState -> vs.accountName
+                null -> ""
             }
+        ) {
+            updateAccountName(it)
         }
 
-        Spacer(modifier = Modifier.weight(1f))
+        if (viewState.editorState is AccountEditorViewState.AccountEditorState) {
+            SGTextField(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(Res.string.account_editor_currency_label),
+                value = viewState.editorState.currency,
+                readOnly = true,
+                onClicked = { onFieldTap(TapFieldType.CurrencyField) }
+            ) {}
 
-        // Action Button
-        SGLargePrimaryButton(
-            modifier = Modifier.fillMaxWidth(),
-            text = "Create Account",
-        ) {
-            addNewItem()
+            SGTextField(
+                modifier = Modifier.fillMaxWidth(),
+                label = stringResource(Res.string.account_editor_amount_label),
+                value = viewState.editorState.amount,
+                keyboardType = KeyboardType.Number,
+                visualTransformation = visualTransformation,
+                outputFormatter = { outputCurrencyFormatter.format(it) }
+            ) {
+                updateAmount(it)
+            }
         }
     }
 }

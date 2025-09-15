@@ -19,8 +19,10 @@ internal interface ScheduledTransactionDao {
                 "st.scheduled_transaction_name," +
                 "st.scheduled_account_from_id," +
                 "afrom.name as account_from_name," +
+                "afrom.currency as account_from_currency," +
                 "st.scheduled_account_to_id," +
                 "ato.name as account_to_name," +
+                "ato.currency as account_to_currency," +
                 "st.transaction_type_code," +
                 "st.minor_unit_amount," +
                 "st.start_update_date," +

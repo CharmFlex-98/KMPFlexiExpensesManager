@@ -30,6 +30,9 @@ internal class TransactionSchedulerRepositoryImpl constructor(
         tagIds: List<Int>,
         schedulerPeriod: SchedulerPeriod
     ) : Long {
+        // Debug logging
+        println("TransactionSchedulerRepositoryImpl.addScheduler - fromAccountId: $fromAccountId, toAccountId: $toAccountId")
+        
         val scheduledTransaction = ScheduledTransactionEntity(
             transactionName = name,
             accountFromId = fromAccountId,
@@ -44,7 +47,15 @@ internal class TransactionSchedulerRepositoryImpl constructor(
             primaryMinorUnitAmount = primaryMinorUnitAmount,
             schedulerPeriod = schedulerPeriod.name
         )
-        return scheduledTransactionTagDao.insertScheduledTransactionAndTags(scheduledTransaction, tagIds)
+        
+        println("Entity before insert - accountFromId: ${scheduledTransaction.accountFromId}")
+        val insertedId = scheduledTransactionTagDao.insertScheduledTransactionAndTags(scheduledTransaction, tagIds)
+        
+        // Verify what was actually inserted by querying it back
+        val insertedRecord = scheduledTransactionTagDao.getScheduledTransactionById(insertedId)
+        println("Verification after insert - ID: $insertedId, accountFromId: ${insertedRecord?.scheduledAccountFromId}")
+        
+        return insertedId
     }
 
     override suspend fun updateScheduler(
@@ -93,6 +104,7 @@ internal class TransactionSchedulerRepositoryImpl constructor(
 
     override suspend fun getTransactionSchedulerById(id: Long): ScheduledTransaction? {
         return scheduledTransactionTagDao.getScheduledTransactionById(id)?.let {
+            println("mapper in action: " + it.scheduledAccountFromId)
             mapper.map(it)
         }
     }

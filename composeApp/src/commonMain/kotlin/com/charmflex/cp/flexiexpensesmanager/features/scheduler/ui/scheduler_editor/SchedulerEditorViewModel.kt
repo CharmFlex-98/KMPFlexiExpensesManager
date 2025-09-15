@@ -44,7 +44,6 @@ internal class SchedulerEditorViewModelFactory constructor(
     private val contentProvider: TransactionEditorContentProvider
 ) {
     fun create(schedulerId: Long?): SchedulerEditorViewModel {
-        println("the provider is " + contentProvider::class.simpleName)
         return SchedulerEditorViewModel(
             schedulerId,
             transactionSchedulerRepository,

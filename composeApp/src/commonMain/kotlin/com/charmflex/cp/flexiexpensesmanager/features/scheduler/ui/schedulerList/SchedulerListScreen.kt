@@ -12,8 +12,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.ExpensesHistoryItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x6
@@ -38,17 +41,21 @@ internal fun SchedulerListScreen(transactionSchedulerListViewModel: SchedulerLis
         },
         screenName = "SchedulerListScreen"
     ) {
-        viewState.schedulerItems.forEach {
-            ScheduledTransactionItem(
-                id = it.id,
-                name = it.name,
-                amount = it.amount,
-                category = it.category,
-                type = it.type.name,
-                iconResId = it.iconResId,
-                onDelete = { transactionSchedulerListViewModel.removeScheduler(it.toInt()) }
-            ) {
+        if (viewState.schedulerItems.isEmpty()) {
+            NoResultContent(Modifier.weight(1f), "No scheduler is set. Create one?")
+        } else {
+            viewState.schedulerItems.forEach {
+                ScheduledTransactionItem(
+                    id = it.id,
+                    name = it.name,
+                    amount = it.amount,
+                    category = it.category,
+                    type = it.type.name,
+                    iconResId = it.iconResId,
+                    onDelete = { transactionSchedulerListViewModel.removeScheduler(it.toInt()) }
+                ) {
 
+                }
             }
         }
     }
@@ -77,16 +84,10 @@ private fun ScheduledTransactionItem(
             amount,
             category,
             type,
-            iconResId ?: Res.drawable.error_image,
-            onClick
+            suffixIcon = { SGIcons.Delete() },
+            onIconClicked = { onDelete(id) },
+            iconResId = iconResId ?: Res.drawable.error_image,
+            onClick = onClick
         )
-        Box(
-            modifier = Modifier.size(grid_x6),
-            contentAlignment = Alignment.Center
-        ) {
-            IconButton(onClick = { onDelete(id) }) {
-                SGIcons.Delete()
-            }
-        }
     }
 }

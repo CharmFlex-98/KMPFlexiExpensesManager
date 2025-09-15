@@ -16,6 +16,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGModalBottomSheet
@@ -105,17 +106,21 @@ private fun BudgetListScreen(
             )
         }
     ) {
-        BasicColumnContainerItemList(
-            items = viewState.budgetListItem,
-            itemContent = {
-                FEBody2(modifier = Modifier.weight(1f), text = it.categoryName)
-                FEBody2(text = it.budget, modifier = Modifier.padding(end = grid_x4))
-            },
-            actionItems = {
-                IconButton(onClick = { viewModel.onDeleteBudget(it) }) {
-                    SGIcons.Delete()
+        if (viewState.budgetListItem.isEmpty()) {
+            NoResultContent(modifier = Modifier.weight(1f), "No budget is set. Create one?")
+        } else {
+            BasicColumnContainerItemList(
+                items = viewState.budgetListItem,
+                itemContent = {
+                    FEBody2(modifier = Modifier.weight(1f), text = it.categoryName)
+                    FEBody2(text = it.budget, modifier = Modifier.padding(end = grid_x4))
+                },
+                actionItems = {
+                    IconButton(onClick = { viewModel.onDeleteBudget(it) }) {
+                        SGIcons.Delete()
+                    }
                 }
-            }
-        )
+            )
+        }
     }
 }

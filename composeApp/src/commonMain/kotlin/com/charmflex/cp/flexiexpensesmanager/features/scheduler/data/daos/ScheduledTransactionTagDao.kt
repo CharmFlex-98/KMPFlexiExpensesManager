@@ -22,7 +22,11 @@ internal interface ScheduledTransactionTagDao : ScheduledTransactionDao {
         scheduledTransactionEntity: ScheduledTransactionEntity,
         tagIds: List<Int>
     ) : Long {
+        println("ScheduledTransactionTagDao.insertScheduledTransactionAndTags - Entity: accountFromId=${scheduledTransactionEntity.accountFromId}, accountToId=${scheduledTransactionEntity.accountToId}")
+        
         val id = insertScheduledTransaction(scheduledTransactionEntity)
+        println("ScheduledTransactionTagDao.insertScheduledTransactionAndTags - Inserted ID: $id")
+        
         val entities = tagIds.map {
             ScheduledTransactionTagEntity(
                 scheduledTransactionId = id,

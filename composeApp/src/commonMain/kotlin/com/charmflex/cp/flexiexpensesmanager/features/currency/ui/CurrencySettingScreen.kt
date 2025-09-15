@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FeColumnContainer
@@ -51,13 +52,12 @@ internal fun CurrencySettingScreen(
         isLoading = viewState.isLoading,
         screenName = "CurrencySettingScreen"
     ) {
-        FeColumnContainer(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = grid_x1),
-            horizontalAlignment = Alignment.CenterHorizontally
+        EditorCard(
+            modifier = Modifier.fillMaxWidth(),
+            header = title,
+            buttonText = actionButtonText,
+            onButtonClicked = { viewModel.addCurrency() },
         ) {
-            FEHeading2(text = title)
             SGTextField(
                 modifier = Modifier.fillMaxWidth(),
                 label = label,
@@ -81,14 +81,6 @@ internal fun CurrencySettingScreen(
                 ) {
                     viewModel.onCurrencyRateChanged(it)
                 }
-            }
-        }
-        Box(
-            modifier = Modifier.weight(1f),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            SGLargePrimaryButton(modifier = Modifier.fillMaxWidth(), text = actionButtonText) {
-                viewModel.addCurrency()
             }
         }
     }

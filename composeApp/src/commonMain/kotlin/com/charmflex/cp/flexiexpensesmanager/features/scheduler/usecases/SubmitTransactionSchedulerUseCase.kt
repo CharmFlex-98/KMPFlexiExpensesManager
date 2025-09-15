@@ -16,7 +16,7 @@ internal class SubmitTransactionSchedulerUseCase constructor(
     suspend fun submitExpenses(
         id: Long?,
         name: String,
-        fromAccountId: Int,
+        fromAccountId: Int?,  // ← Changed to nullable to match repository
         amount: Long,
         categoryId: Int,
         startUpdateDate: String,
@@ -68,7 +68,7 @@ internal class SubmitTransactionSchedulerUseCase constructor(
     suspend fun submitIncome(
         id: Long?,
         name: String,
-        toAccountId: Int,
+        toAccountId: Int?,  // ← Changed to nullable to match repository
         amount: Long,
         categoryId: Int,
         startUpdateDate: String,
@@ -120,8 +120,8 @@ internal class SubmitTransactionSchedulerUseCase constructor(
     suspend fun submitTransfer(
         id: Long?,
         name: String,
-        fromAccountId: Int,
-        toAccountId: Int,
+        fromAccountId: Int?,  // ← Changed to nullable to match repository
+        toAccountId: Int?,    // ← Changed to nullable to match repository
         amount: Long,
         startUpdateDate: String,
         nextUpdateDate: String,
