@@ -146,6 +146,7 @@ ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "k
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = 'kotlin-datetime_version'}
 koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
+koin-core-coroutine = { module = "io.insert-koin:koin-core-coroutines" }
 koin-android = { module = "io.insert-koin:koin-android"}
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation"}

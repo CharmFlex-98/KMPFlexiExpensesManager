@@ -58,9 +58,6 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     TagInjector, BillingInjector,
     KoinComponent {
 
-    private lateinit var billingManager: BillingManager
-
-
     override fun landingScreenViewModel(): LandingScreenViewModel = get()
     override fun budgetSettingViewModel(): BudgetSettingViewModel = get()
     override fun budgetDetailViewModel(): BudgetDetailViewModel = get()
@@ -86,12 +83,5 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun sessionManager(): SessionManager = get()
     override fun routeNavigator(): RouteNavigator = get()
     override fun tagSettingViewModel(): TagSettingViewModel = get()
-    override fun billingViewModel(): BillingViewModel = get()
-    fun setBillingManager(billingManager: BillingManager) {
-        this.billingManager = billingManager
-    }
-
-    fun getBillingManager(): BillingManager {
-        return this.billingManager
-    }
+    override val billingViewModel: BillingViewModel by inject()
 }

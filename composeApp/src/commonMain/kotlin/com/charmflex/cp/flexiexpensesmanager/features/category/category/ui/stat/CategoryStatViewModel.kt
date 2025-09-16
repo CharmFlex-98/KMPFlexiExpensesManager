@@ -54,12 +54,12 @@ internal class CategoryStatViewModel constructor(
         categoryName: String,
         type: TransactionType
     ) {
-        val args = mapOf(CategoryRoutes.Args.CATEGORY_DATE_FILTER to _dateFilter.value)
         routeNavigator.navigateTo(
             CategoryRoutes.categoryTransactionDetail(
                 categoryId,
                 categoryName,
-                type
+                type,
+                _dateFilter.value
             ))
     }
 

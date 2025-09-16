@@ -30,7 +30,8 @@ internal object CategoryRoutes {
     data class CategoryTransactionDetail(
         val categoryId: Int,
         val categoryName: String,
-        val transactionType: TransactionType
+        val transactionType: TransactionType,
+        val dateFilter: DateFilter
     ) : NavigationRoute
 
     @Serializable
@@ -51,9 +52,9 @@ internal object CategoryRoutes {
         }
     }
 
-    fun categoryTransactionDetail(categoryId: Int, categoryName: String, transactionType: TransactionType): NavigationRoute {
+    fun categoryTransactionDetail(categoryId: Int, categoryName: String, transactionType: TransactionType, dateFilter: DateFilter): NavigationRoute {
         return CategoryTransactionDetail(
-            categoryId, categoryName, transactionType
+            categoryId, categoryName, transactionType, dateFilter
         )
     }
 }

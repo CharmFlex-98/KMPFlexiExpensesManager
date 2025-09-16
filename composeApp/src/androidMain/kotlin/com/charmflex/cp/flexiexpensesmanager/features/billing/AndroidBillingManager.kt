@@ -14,23 +14,33 @@ import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
+import com.charmflex.cp.flexiexpensesmanager.features.billing.model.AndroidBillingInitOptions
+import com.charmflex.cp.flexiexpensesmanager.features.billing.model.InitOptions
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.ref.WeakReference
 
 internal class AndroidBillingManager(
-    context: Activity
+    private val activityProvider: ActivityProvider
 ) : BillingManager, PurchasesUpdatedListener {
     private var billingClient: BillingClient? = null
     private var isConnected = false
     private var clientCallback: ((PurchaseResult) -> Unit)? = null
+    private val scope = CoroutineScope(SupervisorJob())
 
-    private val contextRef: WeakReference<Activity> = WeakReference(context)
+    init {
+        scope.launch {
+            initialize()
+        }
+    }
 
-    override suspend fun initialize(): Boolean {
+    private suspend fun initialize(): Boolean {
         return suspendCancellableCoroutine { continuation ->
-            val context = contextRef.get()
-
+            val context = activityProvider.currentActivity
             if (context == null) {
                 continuation.resume(false) { _, _, _ -> }
                 return@suspendCancellableCoroutine
@@ -133,7 +143,7 @@ internal class AndroidBillingManager(
                         )
                         .build()
 
-                    val activity = contextRef.get()
+                    val activity = activityProvider.currentActivity
                     if (activity == null) {
                         clientCallback?.invoke(PurchaseResult.Error("Activity not found"))
                         return@queryProductDetailsAsync

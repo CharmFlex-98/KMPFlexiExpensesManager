@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting
 
+import BillingRoutes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
@@ -7,11 +8,14 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY
 import kotlinproject.composeapp.generated.resources.Res
@@ -31,15 +35,27 @@ internal class BudgetSettingViewModel (
     private val currencyVisualTransformationBuilder: CurrencyVisualTransformationBuilder,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val categoryBudgetRepository: CategoryBudgetRepository,
-    private val currencyFormatter: CurrencyFormatter
+    private val currencyFormatter: CurrencyFormatter,
+    private val featureFlagService: FeatureFlagService
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(BudgetSettingViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
+        checkFeature()
         observeTransactionCategories()
         initPrimaryCurrency()
         observeBudgetList()
+    }
+
+    private fun checkFeature() {
+        viewModelScope.launch {
+            _viewState.update {
+                it.copy(
+                    isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BUDGET)
+                )
+            }
+        }
     }
 
     private fun initPrimaryCurrency() {
@@ -134,6 +150,10 @@ internal class BudgetSettingViewModel (
         }
     }
 
+    fun navigateToBilling() {
+        routeNavigator.navigateTo(BillingRoutes.Root)
+    }
+
     fun submitBudget() {
         val categoryId = getCategoryField()?.valueItem?.id?.toInt()
         val amount = getAmountField()?.valueItem?.value?.toLong()
@@ -171,6 +191,7 @@ internal class BudgetSettingViewModel (
 }
 
 internal data class BudgetSettingViewState(
+    val isFeatureEnabled: Boolean = false,
     val fields: List<FEField> = listOf(
         FEField(
             id = SETTING_EDITOR_BUDGET_CATEGORY,

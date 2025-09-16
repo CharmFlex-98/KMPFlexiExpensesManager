@@ -89,15 +89,12 @@ internal class CategoryDestinationBuilder(
                 typeOf<DateFilter>() to DateFilterNavType
             )
         ) {
-            val dateFilter = remember {
-                navController.previousBackStackEntry?.savedStateHandle?.remove<DateFilter>(
-                    CategoryRoutes.Args.CATEGORY_DATE_FILTER
-                )
-            }
+            val route = it.toRoute<CategoryRoutes.Stat>()
+            val dateFilter = route.dateFilter
 
             val viewModel = getViewModel {
                 appComponent.categoryStatViewModel()
-                    .apply { dateFilter?.let { onDateFilterChanged(dateFilter) } }
+                    .apply { onDateFilterChanged(dateFilter) }
             }
             CategoryStatScreen(viewModel = viewModel)
         }
@@ -108,17 +105,17 @@ internal class CategoryDestinationBuilder(
             enterTransition = FEHorizontalEnterFromEnd,
             popExitTransition = FEHorizontalExitToEnd,
             popEnterTransition = FEHorizontalEnterFromStart,
+            typeMap = mapOf(
+                typeOf<DateFilter>() to DateFilterNavType
+            )
         ) {
-            val dateFilter = remember {
-                navController.previousBackStackEntry?.savedStateHandle?.remove<DateFilter>(
-                    CategoryRoutes.Args.CATEGORY_DATE_FILTER
-                )
-            }
 
-            val categoryId = it.arguments?.getInt(CategoryRoutes.Args.CATEGORY_ID) ?: -1
-            val categoryName = it.arguments?.getString(CategoryRoutes.Args.CATEGORY_NAME) ?: ""
-            val transactionType =
-                it.arguments?.getString(CategoryRoutes.Args.TRANSACTION_TYPE) ?: ""
+            val route = it.toRoute<CategoryRoutes.CategoryTransactionDetail>()
+
+            val dateFilter = route.dateFilter
+            val categoryId = route.categoryId
+            val categoryName = route.categoryName
+            val transactionType = route.transactionType
             val viewModel = getViewModel {
                 appComponent.categoryDetailViewModelFactory()
                     .create(categoryId, categoryName, transactionType, dateFilter)

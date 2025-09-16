@@ -17,6 +17,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.backup.checker.ImportDataC
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
@@ -37,6 +39,7 @@ internal class ImportDataViewModel constructor(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val accountRepository: AccountRepository,
+    private val featureFlagService: FeatureFlagService
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(ImportDataViewState())
     val viewState = _viewState.asStateFlow()
@@ -52,23 +55,18 @@ internal class ImportDataViewModel constructor(
 
     init {
         viewModelScope.launch {
+            val isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
+            _viewState.update {
+                it.copy(
+                    isFeatureEnabled = isFeatureEnabled
+                )
+            }
+        }
+        viewModelScope.launch {
             backupManager.progress.collectLatest { progress ->
                 _viewState.update {
                     it.copy(
                         progress = progress
-                    )
-                }
-            }
-        }
-    }
-
-    fun init(billingManager: BillingManager) {
-        viewModelScope.launch {
-            val purchases = billingManager.queryPurchases()
-            if (purchases.firstOrNull { it.productId == BillingConstant.PRO_VERSION_1 } != null) {
-                _viewState.update {
-                    it.copy(
-                        isFeatureEnabled = true
                     )
                 }
             }

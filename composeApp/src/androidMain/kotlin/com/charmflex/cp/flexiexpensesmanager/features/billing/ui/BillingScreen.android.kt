@@ -40,16 +40,6 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
     }
 
 
-    val billingManager = remember {
-        AndroidBillingManager(activity)
-    }
-
-    DisposableEffect(billingManager) {
-        onDispose {
-            billingManager.cleanup()
-        }
-    }
-
     SGScaffold(
         modifier = Modifier
             .fillMaxSize()

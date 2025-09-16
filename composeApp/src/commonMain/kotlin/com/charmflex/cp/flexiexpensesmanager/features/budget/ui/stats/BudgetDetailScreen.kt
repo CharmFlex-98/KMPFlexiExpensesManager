@@ -20,6 +20,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
@@ -111,6 +112,8 @@ internal fun BudgetDetailScreen(
                                     .weight(1f),
                                 progress = { it.expensesBudgetRatio },
                                 trackColor = Color.LightGray,
+                                gapSize = (-15).dp,
+                                drawStopIndicator = {},
                                 color = if (it.expensesBudgetRatio > 1) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.primary
                             )
                             Column(

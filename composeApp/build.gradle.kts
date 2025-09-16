@@ -104,6 +104,7 @@ kotlin {
             implementation(libs.kotlinx.datetime)
             implementation(project.dependencies.platform(libs.koin.bom))
             implementation(libs.koin.core)
+            implementation(libs.koin.core.coroutine)
             implementation(compose.runtime)
             implementation(compose.foundation)
             implementation(compose.material)

@@ -2,7 +2,9 @@ package com.charmflex.cp.flexiexpensesmanager.features.budget.ui.setting
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
@@ -16,6 +18,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.LockedFeatureButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
@@ -98,7 +101,9 @@ private fun BudgetListScreen(
         topBar = {
             BasicTopBar(
                 title = stringResource(Res.string.budget_setting_app_bar_title),
-                actions = {
+                actions =  {
+                    if (!viewState.isFeatureEnabled) return@BasicTopBar
+
                     IconButton(onClick = { viewModel.toggleEditor(true) }) {
                         SGIcons.Add()
                     }
@@ -106,6 +111,15 @@ private fun BudgetListScreen(
             )
         }
     ) {
+        if (!viewState.isFeatureEnabled) {
+            NoResultContent(modifier = Modifier.weight(1f), "This feature is only allowed for premium user. Purchase to unlock it!")
+            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), "🔒 Unlock Budget Feature") {
+                viewModel.navigateToBilling()
+            }
+            return@SGScaffold
+        }
+
+
         if (viewState.budgetListItem.isEmpty()) {
             NoResultContent(modifier = Modifier.weight(1f), "No budget is set. Create one?")
         } else {

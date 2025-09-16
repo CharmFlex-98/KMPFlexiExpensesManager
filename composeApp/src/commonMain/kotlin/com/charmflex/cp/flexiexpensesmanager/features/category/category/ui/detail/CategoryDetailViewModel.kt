@@ -39,7 +39,7 @@ internal class CategoryDetailViewModelFactory(
     fun create(
         categoryId: Int,
         categoryName: String,
-        transactionType: String,
+        transactionType: TransactionType,
         dateFilter: DateFilter?
     ): CategoryDetailViewModel {
         return CategoryDetailViewModel(
@@ -49,7 +49,7 @@ internal class CategoryDetailViewModelFactory(
             getTransactionListByCategoryUseCase,
             categoryId,
             categoryName,
-            TransactionType.fromString(transactionType),
+            transactionType,
             dateFilter,
             currencyFormatter,
             userCurrencyRepository

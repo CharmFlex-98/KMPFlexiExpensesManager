@@ -69,41 +69,41 @@ internal fun CategoryDetailScreen(
         },
         screenName = "CategoryDetailScreen"
     ) {
-        val x = viewState.lineChartData.entries.map { it.first }
-        val y = viewState.lineChartData.entries.map { it.second }
-        val modelProducer = remember { CartesianChartModelProducer() }
-        LaunchedEffect(Unit) {
-            modelProducer.runTransaction {
-                // Learn more: https://patrykandpatrick.com/z5ah6v.
-                lineSeries { series(x, y) }
-            }
-        }
-        val lineColor = Color(0xffa485e0)
-        CartesianChartHost(
-            rememberCartesianChart(
-                rememberLineCartesianLayer(
-                    lineProvider =
-                    LineCartesianLayer.LineProvider.series(
-                        LineCartesianLayer.rememberLine(
-                            fill = LineCartesianLayer.LineFill.single(fill(lineColor)),
-                            areaFill =
-                            LineCartesianLayer.AreaFill.single(
-                                fill(
-                                    Brush.verticalGradient(listOf(lineColor.copy(alpha = 0.4f), Color.Transparent))
-                                )
-                            ),
-                        )
-                    ),
-                    rangeProvider = RangeProvider,
-                ),
-                startAxis = VerticalAxis.rememberStart(valueFormatter = StartAxisValueFormatter),
-                bottomAxis = HorizontalAxis.rememberBottom(),
-                marker = rememberMarker(MarkerValueFormatter),
-            ),
-            modelProducer,
-            Modifier.height(216.dp),
-            rememberVicoScrollState(scrollEnabled = false),
-        )
+//        val x = viewState.lineChartData.entries.map { it.first }
+//        val y = viewState.lineChartData.entries.map { it.second }
+//        val modelProducer = remember { CartesianChartModelProducer() }
+//        LaunchedEffect(Unit) {
+//            modelProducer.runTransaction {
+//                // Learn more: https://patrykandpatrick.com/z5ah6v.
+//                lineSeries { series(x, y) }
+//            }
+//        }
+//        val lineColor = Color(0xffa485e0)
+//        CartesianChartHost(
+//            rememberCartesianChart(
+//                rememberLineCartesianLayer(
+//                    lineProvider =
+//                    LineCartesianLayer.LineProvider.series(
+//                        LineCartesianLayer.rememberLine(
+//                            fill = LineCartesianLayer.LineFill.single(fill(lineColor)),
+//                            areaFill =
+//                            LineCartesianLayer.AreaFill.single(
+//                                fill(
+//                                    Brush.verticalGradient(listOf(lineColor.copy(alpha = 0.4f), Color.Transparent))
+//                                )
+//                            ),
+//                        )
+//                    ),
+//                    rangeProvider = RangeProvider,
+//                ),
+//                startAxis = VerticalAxis.rememberStart(valueFormatter = StartAxisValueFormatter),
+//                bottomAxis = HorizontalAxis.rememberBottom(),
+//                marker = rememberMarker(MarkerValueFormatter),
+//            ),
+//            modelProducer,
+//            Modifier.height(216.dp),
+//            rememberVicoScrollState(scrollEnabled = false),
+//        )
         DateFilterBar(
             currentDateFilter = dateFilter,
             onDateFilterChanged = { viewModel.onDateChanged(it) }

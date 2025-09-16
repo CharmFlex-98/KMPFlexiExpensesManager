@@ -11,14 +11,13 @@ import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 
 @Factory
-internal class BillingViewModel : ViewModel() {
-    private lateinit var billingManager: BillingManager
-
+internal class BillingViewModel(
+    private val billingManager: BillingManager
+) : ViewModel() {
     private val _viewState = MutableStateFlow(BillingViewState())
     val viewState = _viewState.asStateFlow()
 
-    fun init(billingManager: BillingManager) {
-        this.billingManager = billingManager
+    fun init() {
         viewModelScope.launch {
             val products = billingManager.queryProducts()
             _viewState.update {
