@@ -48,14 +48,15 @@ jobs:
       run: |
         chmod +x ./gradlew
 
-    - name: Build the app and distribute to firebase
-      env:
-        KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
-        KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
-        FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
-      run: |
-        cd composeApp
-        bundle exec fastlane android distribute_paid_release
+#    - name: Build the app and distribute to firebase
+#      env:
+#        KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
+#        KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
+#        FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
+#      run: |
+#        cd composeApp
+#        bundle exec fastlane android distribute_paid_release
+      
 
     - name: Build AAB with Fastlane
       env:
@@ -64,6 +65,28 @@ jobs:
       run: |
         cd composeApp
         bundle exec fastlane android build_aab_for_artifacts
+
+    - name: Debug - List files with absolute paths
+      run: |
+        echo "🔍 Current directory: $(pwd)"
+        echo "🔍 Absolute current directory: $(realpath .)"
+        echo ""
+        echo "=== Root directory ==="
+        ls -la
+        echo ""
+        echo "=== composeApp directory ==="
+        ls -la composeApp/
+        echo ""
+        echo "=== Looking for AAB files everywhere ==="
+        find . -name "*.aab" -type f 2>/dev/null | while read file; do
+          echo "Found AAB: $file (absolute: $(realpath "$file"))"
+        done
+        echo ""
+        echo "=== Checking specific expected locations ==="
+        test -f "composeApp-paid-release.aab" && echo "✅ Found: composeApp-paid-release.aab" || echo "❌ Missing: composeApp-paid-release.aab"
+        test -f "composeApp/composeApp-paid-release.aab" && echo "✅ Found: composeApp/composeApp-paid-release.aab" || echo "❌ Missing: composeApp/composeApp-paid-release.aab"
+        
+        
 
     - name: Upload AAB Artifact
       uses: actions/upload-artifact@v4
