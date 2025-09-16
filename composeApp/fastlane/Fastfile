@@ -57,7 +57,7 @@ platform :android do
         release = firebase_app_distribution(
             app: ENV['FIREBASE_APP_ID_PAID_RELEASE'],
             android_artifact_type: "APK",
-            apk_path: "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/build/outputs/apk/paid/release/composeApp-paid-release.apk",
+            apk_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
             service_credentials_file: "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/firebase_service_key.json",
             testers: "charmflex1111@gmail.com",
             release_notes: "This app is for testing purposes"

@@ -59,8 +59,8 @@ jobs:
 
     - name: Build AAB with Fastlane
       env:
-        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-        KEYSTORE_ALIAS: ${{ secrets.KEYSTORE_ALIAS }}
+        KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
+        KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
       run: |
         cd composeApp
         bundle exec fastlane android build_aab_for_artifacts
