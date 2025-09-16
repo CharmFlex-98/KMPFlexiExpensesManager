@@ -98,6 +98,7 @@
   <string name="budget_setting_add_new_budget_app_title">Create new budget</string>
   <string name="setting_budget_title">Set budget</string>
   <string name="budget_setting_app_bar_title">Budget Setting</string>
+  <string name="billing_setting_app_bar_title">In-app Purchase</string>
   <string name="budget_detail_home_button">Budget detail</string>
   <string name="budget_detail_app_bar_title">Budget Detail</string>
   <string name="generic_budget">Budget</string>

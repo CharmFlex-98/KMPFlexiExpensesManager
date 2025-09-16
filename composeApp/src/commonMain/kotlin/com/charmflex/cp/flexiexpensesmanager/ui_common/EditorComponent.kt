@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
+import ProductInfo
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -22,14 +23,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import com.charmflex.cp.flexiexpensesmanager.features.account.ui.AccountEditorViewState
-import com.charmflex.cp.flexiexpensesmanager.features.account.ui.TapFieldType
-import kotlinproject.composeapp.generated.resources.Res
-import kotlinproject.composeapp.generated.resources.account_editor_amount_label
-import kotlinproject.composeapp.generated.resources.account_editor_currency_label
-import org.jetbrains.compose.resources.stringResource
+import org.jetbrains.compose.ui.tooling.preview.Preview
 
 @Composable
 fun <T> SelectionItem(
@@ -147,4 +142,15 @@ fun EditorCard(
             onButtonClicked()
         }
     }
+}
+
+@Preview
+@Composable
+fun testSelectionItem() {
+    val productInfo = ProductInfo.empty()
+    SelectionItem(
+        item = productInfo,
+        title = { it.title },
+        subtitle = { it.description }
+    )
 }

@@ -1,6 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.features.backup.ui
 
 import AccountRepository
+import BillingRoutes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
@@ -13,6 +14,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
 import com.charmflex.cp.flexiexpensesmanager.features.backup.checker.ImportDataChecker
+import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
+import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
@@ -57,6 +60,23 @@ internal class ImportDataViewModel constructor(
                 }
             }
         }
+    }
+
+    fun init(billingManager: BillingManager) {
+        viewModelScope.launch {
+            val purchases = billingManager.queryPurchases()
+            if (purchases.firstOrNull { it.productId == BillingConstant.PRO_VERSION_1 } != null) {
+                _viewState.update {
+                    it.copy(
+                        isFeatureEnabled = true
+                    )
+                }
+            }
+        }
+    }
+
+    fun purchaseIAP() {
+        routeNavigator.navigateTo(BillingRoutes.Root)
     }
 
     fun updateTabIndex(tabIndex: Int) {
@@ -206,6 +226,7 @@ internal class ImportDataViewModel constructor(
 }
 
 internal data class ImportDataViewState(
+    val isFeatureEnabled: Boolean = false,
     val isLoading: Boolean = false,
     val importedData: List<ImportedData> = listOf(),
     val missingData: Set<ImportedData.MissingData> = setOf(),

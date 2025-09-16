@@ -22,6 +22,11 @@ internal class BackupDestinationBuilder : DestinationBuilder {
             val viewModel = getViewModel {
                 appComponent.importDataViewModel()
             }
+
+            LaunchedEffect(Unit) {
+                viewModel.init(appComponent.getBillingManager())
+            }
+
             LaunchedEffect(key1 = updateImportedData) {
                 if (updateImportedData) viewModel.updateImportedData()
             }

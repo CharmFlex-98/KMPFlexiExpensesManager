@@ -7,11 +7,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.plusMonths
-import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
-import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
-import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.usecases.SubmitTransactionSchedulerUseCase
@@ -27,7 +24,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transa
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionRecordableType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.datetime.LocalDate
-import org.koin.core.qualifier.named
 
 internal class SchedulerEditorViewModelFactory constructor(
     private val accountRepository: AccountRepository,

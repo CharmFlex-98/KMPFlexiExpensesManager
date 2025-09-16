@@ -4,11 +4,13 @@ import ProductInfo
 import Purchase
 import PurchaseResult
 import android.app.Activity
+import androidx.compose.ui.util.trace
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
+import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
@@ -36,6 +38,10 @@ internal class AndroidBillingManager(
 
             billingClient = BillingClient.newBuilder(context)
                 .setListener(this)
+                .enablePendingPurchases(
+                    PendingPurchasesParams.newBuilder().enableOneTimeProducts().build()
+                )
+                .enableAutoServiceReconnection()
                 .build()
 
             billingClient?.startConnection(object : BillingClientStateListener {
@@ -192,9 +198,11 @@ internal class AndroidBillingManager(
             BillingClient.BillingResponseCode.OK -> {
                 clientCallback?.invoke(PurchaseResult.Success)
             }
+
             BillingClient.BillingResponseCode.USER_CANCELED -> {
                 clientCallback?.invoke(PurchaseResult.UserCanceled)
             }
+
             else -> {
                 clientCallback?.invoke(PurchaseResult.Error("Purchase failed: ${billingResult.debugMessage}"))
             }

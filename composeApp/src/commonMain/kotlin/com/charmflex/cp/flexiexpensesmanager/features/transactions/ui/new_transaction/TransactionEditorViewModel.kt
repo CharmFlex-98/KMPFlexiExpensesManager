@@ -9,8 +9,6 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
-import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
-import com.charmflex.cp.flexiexpensesmanager.features.scheduler.di.modules.TransactionEditorProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
@@ -22,9 +20,6 @@ import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
-import org.koin.core.annotation.Factory
-import org.koin.core.annotation.Named
-import org.koin.core.qualifier.named
 
 internal class TransactionEditorViewModelFactory constructor(
     private val accountRepository: AccountRepository,

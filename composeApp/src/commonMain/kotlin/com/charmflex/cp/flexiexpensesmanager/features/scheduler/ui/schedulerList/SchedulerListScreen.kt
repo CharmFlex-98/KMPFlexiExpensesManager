@@ -16,10 +16,8 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SelectionItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x6
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.error_image
 import org.jetbrains.compose.resources.DrawableResource

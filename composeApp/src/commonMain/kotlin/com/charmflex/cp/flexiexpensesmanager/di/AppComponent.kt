@@ -32,6 +32,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
+import com.charmflex.cp.flexiexpensesmanager.features.billing.di.BillingInjector
+import com.charmflex.cp.flexiexpensesmanager.features.billing.ui.BillingViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.tag.ui.TagSettingViewModel
@@ -52,8 +55,12 @@ class AppModule
 internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeInjector,
     TransactionInjector, SchedulerInjector,
     AccountInjector, BackupInjector, CategoryInjector, CurrencyInjector, SessionInjector,
-    TagInjector,
+    TagInjector, BillingInjector,
     KoinComponent {
+
+    private lateinit var billingManager: BillingManager
+
+
     override fun landingScreenViewModel(): LandingScreenViewModel = get()
     override fun budgetSettingViewModel(): BudgetSettingViewModel = get()
     override fun budgetDetailViewModel(): BudgetDetailViewModel = get()
@@ -79,11 +86,12 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun sessionManager(): SessionManager = get()
     override fun routeNavigator(): RouteNavigator = get()
     override fun tagSettingViewModel(): TagSettingViewModel = get()
+    override fun billingViewModel(): BillingViewModel = get()
+    fun setBillingManager(billingManager: BillingManager) {
+        this.billingManager = billingManager
+    }
 
-    inline fun <reified T: Any> getDep(
-        qualifier: Qualifier? = null,
-        noinline parameters: ParametersDefinition? = null,
-    ): T {
-        return get<T>()
+    fun getBillingManager(): BillingManager {
+        return this.billingManager
     }
 }

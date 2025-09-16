@@ -65,7 +65,7 @@ jobs:
       run: |
         cd composeApp
         bundle exec fastlane android build_aab_for_artifacts
-        
+
 #    - name: Debug - List files with absolute paths
 #      run: |
 #        echo "🔍 Current directory: $(pwd)"

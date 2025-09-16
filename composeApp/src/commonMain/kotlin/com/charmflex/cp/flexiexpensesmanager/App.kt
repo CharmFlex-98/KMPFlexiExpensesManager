@@ -13,6 +13,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AuthRoutes
 import com.charmflex.cp.flexiexpensesmanager.features.account.destinations.AccountDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.auth.destination.AuthDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.backup.destination.BackupDestinationBuilder
+import com.charmflex.cp.flexiexpensesmanager.features.billing.destination.BillingDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.budget.destinations.BudgetDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.destinations.CategoryDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.currency.destinations.CurrencyDestinationBuilder
@@ -58,6 +59,7 @@ private fun createDestinations(navController: NavController): List<DestinationBu
         TagDestinationBuilder(),
         BackupDestinationBuilder(),
         SchedulerDestinationBuilder(),
-        BudgetDestinationBuilder()
+        BudgetDestinationBuilder(),
+        BillingDestinationBuilder()
     )
 }

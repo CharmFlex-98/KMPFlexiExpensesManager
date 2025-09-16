@@ -1,14 +1,21 @@
 package com.charmflex.cp.flexiexpensesmanager.features.backup.ui
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
@@ -27,7 +34,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentPicker
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toPercentageString
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
@@ -37,6 +49,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.ListTable
+import com.charmflex.cp.flexiexpensesmanager.ui_common.LockedFeatureButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
@@ -45,6 +58,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.TransparentBackground
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x7
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
@@ -68,7 +82,6 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
         }
     }
 
-
     SGScaffold(
         modifier = Modifier.padding(grid_x2),
         screenName = "ImportDataScreen",
@@ -77,7 +90,10 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
         }
     ) {
         if (viewState.importedData.isEmpty()) {
-            PreLoadScreen(viewState = viewState) {
+            PreLoadScreen(
+                viewModel = importDataViewModel,
+                isFeatureUnlocked = viewState.isFeatureEnabled
+            ) {
                 importDataViewModel.importData(it)
             }
         } else {
@@ -114,7 +130,6 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
                         text = "${round(viewState.progress * 100)}%", color = Color.White
                     )
                 }
-
             }
         }
     }
@@ -124,7 +139,8 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
 
 @Composable
 private fun ColumnScope.PreLoadScreen(
-    viewState: ImportDataViewState,
+    viewModel: ImportDataViewModel,
+    isFeatureUnlocked: Boolean,
     onPicked: (ByteArray?) -> Unit
 ) {
     var show by remember { mutableStateOf(false) }
@@ -134,16 +150,38 @@ private fun ColumnScope.PreLoadScreen(
         onPicked
     )
 
-    NoResultContent(modifier = Modifier.weight(1f), "Nothing to import yet. Click to load data")
-    SGLargePrimaryButton(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(), text = "Import"
-    ) {
-        show = true
+    NoResultContent(
+        modifier = Modifier.weight(1f), 
+        if (isFeatureUnlocked) {
+            "Nothing to import yet. Click to load data"
+        } else {
+            "Import feature allows you to restore your transaction data from backup files. Unlock this premium feature to get started!"
+        }
+    )
+    
+    if (isFeatureUnlocked) {
+        SGLargePrimaryButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(),
+            text = "Import"
+        ) {
+            show = true
+        }
+    } else {
+        LockedFeatureButton(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(),
+            text = "🔒 Unlock Import Feature",
+            onClick = {
+                viewModel.purchaseIAP()
+            }
+        )
     }
-
 }
+
+
 
 @Composable
 private fun ColumnScope.LoadedScreen(

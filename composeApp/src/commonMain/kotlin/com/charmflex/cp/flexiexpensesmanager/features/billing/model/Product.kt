@@ -6,7 +6,19 @@ internal data class ProductInfo(
     val priceAmountMicros: Long,
     val priceCurrencyCode: String,
     val type: ProductType
-)
+) {
+    companion object {
+        fun empty() = ProductInfo(
+            productId = "",
+            title = "",
+            description = "",
+            price = "",
+            priceAmountMicros = 0,
+            priceCurrencyCode = "",
+            type = ProductType.INAPP
+        )
+    }
+}
 
 internal data class Purchase(
     val orderId: String,

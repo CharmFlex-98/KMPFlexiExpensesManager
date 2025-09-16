@@ -1,9 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.features.backup.checker
 
 import AccountRepository
-import com.charmflex.cp.flexiexpensesmanager.core.di.DispatcherType
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
-import com.charmflex.cp.flexiexpensesmanager.core.utils.di.getDep
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupData
 import com.charmflex.cp.flexiexpensesmanager.features.backup.ui.ImportedData
@@ -14,7 +12,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.r
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.withContext
-import org.koin.core.qualifier.named
 
 internal class ImportDataChecker (
     private val tagRepository: TagRepository,
