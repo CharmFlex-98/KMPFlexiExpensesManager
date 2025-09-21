@@ -84,7 +84,7 @@ platform :android do
         puts "AAB_PATH=#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
         
         # Copy AAB to a known location for easier GitHub Actions pickup
-        sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-paid-release.aab'"
+        sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-paid_release.aab'"
         
         UI.success("AAB built successfully! Ready for GitHub artifact upload.")
     end
@@ -134,7 +134,7 @@ platform :android do
             puts "AAB_PATH=#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
 
             # Copy AAB to a known location for easier GitHub Actions pickup
-            sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-free-release.aab'"
+            sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-free_release.aab'"
 
             UI.success("AAB built successfully! Ready for GitHub artifact upload.")
         end
