@@ -274,7 +274,7 @@ internal class CategoryEditorViewModel  constructor(
         }
     }
 
-    private fun closeEditor() {
+    fun closeEditor() {
         _viewState.update {
             it.copy(
                 editorState = it.editorState.copy(

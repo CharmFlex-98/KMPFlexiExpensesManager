@@ -31,7 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
@@ -77,6 +79,11 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
     }
 
     BackHandler {
+        if (isEditorOpened) {
+            viewModel.closeEditor()
+            return@BackHandler
+        }
+
         viewModel.back()
     }
 
@@ -90,11 +97,7 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
         screenName = "CategoryEditorScreen"
     ) {
 
-        AnimatedVisibility(
-            visible = isEditorOpened,
-            enter = slideInHorizontally(initialOffsetX = { it }),
-            exit = slideOutHorizontally(targetOffsetX = { it })
-        ) {
+        if (isEditorOpened) {
             EditorCard(
                 modifier = Modifier.fillMaxSize(),
                 header = "Add New category",
@@ -109,32 +112,36 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                     viewModel.updateEditorValue(it)
                 }
             }
-        }
-
-        if (!isEditorOpened) {
+        } else {
             Column {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(1f)
-                        .padding(bottom = grid_x2)
-                ) {
-                    Column(
-                        modifier = Modifier.verticalScroll(scrollState),
-                        verticalArrangement = Arrangement.spacedBy(grid_x1)
+                if (items.isEmpty()) {
+                    NoResultContent(modifier = Modifier.weight(1f), "No expenses category added. Create one?")
+                } else {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .padding(bottom = grid_x2)
                     ) {
-                        items.forEach {
-                            SelectionItem(
-                                item = it,
-                                title = { it.categoryName },
-                                onClick = { viewModel.onClickItem(it) },
-                                onSubIconClick = { viewModel.launchDeleteDialog(it.categoryId) },
-                                subPrefixIcon = { SGIcons.Delete() },
-                                suffixIcon = { if (it.allowSubCategory) SGIcons.NextArrow() }
-                            )
+                        Column(
+                            modifier = Modifier.verticalScroll(scrollState),
+                            verticalArrangement = Arrangement.spacedBy(grid_x1)
+                        ) {
+                            items.forEachIndexed { index, it ->
+                                SelectionItem(
+                                    item = it,
+                                    title = { it.categoryName },
+                                    onClick = { viewModel.onClickItem(it) },
+                                    onSubIconClick = { viewModel.launchDeleteDialog(it.categoryId) },
+                                    subPrefixIcon = { SGIcons.Delete() },
+                                    suffixIcon = { if (it.allowSubCategory) SGIcons.NextArrow() },
+                                    showDivider = index != 0
+                                )
+                            }
                         }
                     }
                 }
+
 
                 if (viewState.dialogState != null) SGActionDialog(
                     title = "Warning",
