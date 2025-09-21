@@ -16,6 +16,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.AndroidDeviceIdGenerator
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.device.DeviceIdGenerator
+import com.charmflex.cp.flexiexpensesmanager.features.backup.AndroidAppDataService
+import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
 import com.charmflex.cp.flexiexpensesmanager.features.billing.AndroidBillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
@@ -32,7 +34,7 @@ import org.koin.ksp.generated.module
 class AndroidModule
 
 val androidMainModule = module {
-    factory { ActivityProvider() }
+    single { ActivityProvider() }
     singleOf(::PostHogEventTracker) { bind<EventTracker>() }
     singleOf(::AndroidSharedPrefs) { bind<SharedPrefs>() }
     singleOf(::AndroidFileStorage) { bind<FileStorage>() }
@@ -42,5 +44,6 @@ val androidMainModule = module {
     singleOf(::AndroidRateExchangeManager) { bind<RateExchangeManager>() }
     singleOf(::FeatureFlagServiceImpl) { bind<FeatureFlagService>() }
     singleOf(::AndroidBillingManager) { bind<BillingManager>() }
+    singleOf(::AndroidAppDataService) { bind<AppDataService>()}
     AndroidModule().module
 }

@@ -192,7 +192,7 @@ internal class SettingViewModel  constructor(
                     _onDataClearedEvent.tryEmit(OnDataCleared.Finish)
                 },
                 onFailure = {
-                    // TODO
+                    snackBarState.value = SnackBarState.Error("Failed to clear all data.")
                 }
             )
             toggleLoader(false)

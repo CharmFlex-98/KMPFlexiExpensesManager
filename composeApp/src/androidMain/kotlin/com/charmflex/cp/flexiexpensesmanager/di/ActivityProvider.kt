@@ -5,7 +5,7 @@ import java.lang.ref.WeakReference
 
 internal class ActivityProvider {
     private var _currentActivity: WeakReference<Activity>? = null
-    val currentActivity = _currentActivity?.get()
+    val currentActivity get() = _currentActivity?.get()
 
     fun registerActivity(activity: Activity) {
         _currentActivity = WeakReference(activity)

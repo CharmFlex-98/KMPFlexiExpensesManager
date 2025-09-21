@@ -12,23 +12,3 @@ internal interface AppDataService {
 internal enum class AppDataClearServiceType {
     TRANSACTION_ONLY, ALL
 }
-
-internal class AppDataServiceImpl(
-    private val transactionRepository: TransactionRepository,
-    private val sharedPrefs: SharedPrefs,
-//    private val appContext: Context,
-    private val database: DatabaseBuilder.IDatabase
-) : AppDataService {
-    override suspend fun clearAppData(appDataClearServiceType: AppDataClearServiceType) {
-        when (appDataClearServiceType) {
-            AppDataClearServiceType.ALL -> {
-//                database.close()
-//                appContext.deleteDatabase("FlexiExpensesManagerDB")
-                sharedPrefs.clearAllData()
-            }
-            AppDataClearServiceType.TRANSACTION_ONLY -> {
-                transactionRepository.deleteAllTransactions()
-            }
-        }
-    }
-}
