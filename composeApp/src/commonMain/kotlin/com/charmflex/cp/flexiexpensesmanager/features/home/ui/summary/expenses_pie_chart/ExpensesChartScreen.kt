@@ -20,8 +20,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,7 +42,7 @@ import com.aay.compose.donutChart.PieChart
 import com.aay.compose.donutChart.model.PieChartData
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
-import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGMediumPrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1_5
@@ -53,7 +51,6 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x47
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.HorizontalAxis
 import com.patrykandpatrick.vico.multiplatform.cartesian.axis.VerticalAxis
-import com.patrykandpatrick.vico.multiplatform.cartesian.axis.rememberAxisLabelComponent
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.CartesianChartModelProducer
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.columnSeries
 import com.patrykandpatrick.vico.multiplatform.cartesian.layer.rememberColumnCartesianLayer
@@ -97,15 +94,16 @@ internal fun ColumnScope.ExpensesChartScreen(
             )
         }
 
-        TabRow(selectedTabIndex = chartType.index) {
-            getTabs().forEachIndexed { index, chartType ->
-                Tab(
-                    selected = index == chartType.index,
-                    onClick = { viewModel.toggleChartType(chartType) }) {
-                    FEHeading4(text = chartType.name)
-                }
-            }
-        }
+//        TabRow(selectedTabIndex = chartType.index) {
+//            getTabs().forEachIndexed { index, chartType ->
+//                Tab(
+//                    selected = index == chartType.index,
+//                    onClick = { viewModel.toggleChartType(chartType) }) {
+//                    FEHeading4(text = chartType.name)
+//                }
+//            }
+//        }
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -114,6 +112,11 @@ internal fun ColumnScope.ExpensesChartScreen(
         ) {
             when (chartType) {
                 is ExpensesPieChartViewState.ChartType.Pie -> {
+                    if (chartViewState.pieChartData.isEmpty()) {
+                        NoResultContent(modifier = Modifier.fillMaxSize(), "No available pie chart data. ")
+                        return@Box
+                    }
+
                     PieChart(
                         modifier = Modifier.fillMaxSize(),
                         animation = TweenSpec(durationMillis = 1000),
@@ -132,7 +135,7 @@ internal fun ColumnScope.ExpensesChartScreen(
                 }
 
                 is ExpensesPieChartViewState.ChartType.Bar -> {
-                    ComposeChart6(chartViewState)
+//                    ComposeChart6(chartViewState)
                 }
             }
         }
