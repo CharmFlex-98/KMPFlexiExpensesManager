@@ -69,7 +69,7 @@ jobs:
         FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
       run: |
         cd composeApp
-        bundle exec fastlane android distribute_${{ input.build_type }}
+        bundle exec fastlane android distribute_${{ inputs.build_type }}
       
 
     - name: Build AAB with Fastlane
@@ -79,7 +79,7 @@ jobs:
         KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
       run: |
         cd composeApp
-        bundle exec fastlane android build_${{ input.build_type }}_aab_for_artifacts
+        bundle exec fastlane android build_${{ inputs.build_type }}_aab_for_artifacts
 
 #    - name: Debug - List files with absolute paths
 #      run: |
@@ -104,8 +104,9 @@ jobs:
         
 
     - name: Upload AAB Artifact
+      if: ${{ inputs.build_aab == true }}
       uses: actions/upload-artifact@v4
       with:
-        name: aab-paid-release
+        name: aab-${{ inputs.build_type }}
         path: ./composeApp/composeApp-paid-release.aab  # This file is copied to root by fastlane
         retention-days: 30
