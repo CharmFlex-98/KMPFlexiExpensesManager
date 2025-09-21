@@ -18,6 +18,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.getLocalDateTim
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
@@ -100,29 +101,40 @@ internal class SettingViewModel constructor(
             SettingAction.Export -> {
                 viewModelScope.launch {
                     toggleLoader(true)
-                    if (featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)) {
-                        resultOf {
-                            transactionBackupManager.write("test_export.xlsx")
-                        }.fold(
-                            onSuccess = {
-                                toggleLoader(false)
-                                snackBarState.value = SnackBarState.Success("Done exporting")
-                                onCreatedCompleted("fem_export_${getLocalDateTime()}.xlsx")
-                            },
-                            onFailure = {
-                                toggleLoader(false)
-                                snackBarState.value =
-                                    SnackBarState.Error("Error exporting: ${it.message}")
+                    featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
+                        .onSuccess { enabled ->
+                            if (enabled) {
+                                resultOf {
+                                    transactionBackupManager.write("test_export.xlsx")
+                                }.fold(
+                                    onSuccess = {
+                                        toggleLoader(false)
+                                        snackBarState.value = SnackBarState.Success("Done exporting")
+                                        onCreatedCompleted("fem_export_${getLocalDateTime()}.xlsx")
+                                    },
+                                    onFailure = {
+                                        toggleLoader(false)
+                                        snackBarState.value =
+                                            SnackBarState.Error("Error exporting: ${it.message}")
+                                    }
+                                )
+
+                                return@launch
                             }
-                        )
 
-                        return@launch
-                    }
+                            snackBarState.value =
+                                SnackBarState.Error("This is a premium feature. Unlock it to access the feature.")
+                            toggleLoader(false)
+                        }
+                        .onFailure { err ->
+                            if (err is NetworkError) {
+                                snackBarState.value = SnackBarState.Error(resourcesProvider.getString(Res.string.network_error))
+                            } else {
+                                snackBarState.value = SnackBarState.Error(err.message)
+                            }
 
-                    snackBarState.value =
-                        SnackBarState.Error("This is a premium feature. Unlock it to access the feature.")
-                    toggleLoader(false)
-
+                            toggleLoader(false)
+                        }
                 }
             }
 

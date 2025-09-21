@@ -19,9 +19,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -39,6 +41,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGModalBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
@@ -46,6 +51,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
@@ -226,10 +232,26 @@ private fun BudgetListScreen(
     viewModel: BudgetSettingViewModel
 ) {
     val viewState by viewModel.viewState.collectAsState()
+    val snackBarState by viewModel.snackBarState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val genericError = stringResource(Res.string.generic_error)
+
+    LaunchedEffect(snackBarState) {
+        when (val state = snackBarState) {
+            is SnackBarState.Error -> {
+                snackbarHostState.showSnackBarImmediately(state.message ?: genericError)
+                viewModel.reset()
+            }
+
+            else -> {}
+        }
+    }
+
     SGScaffold(
         modifier = Modifier
             .fillMaxSize()
             .padding(grid_x2),
+        isLoading = viewState.isLoading,
         topBar = {
             BasicTopBar(
                 title = stringResource(Res.string.budget_setting_app_bar_title),
@@ -261,4 +283,6 @@ private fun BudgetListScreen(
             )
         }
     }
+
+    SGSnackBar(snackBarHostState = snackbarHostState, snackBarType = SnackBarType.Error)
 }

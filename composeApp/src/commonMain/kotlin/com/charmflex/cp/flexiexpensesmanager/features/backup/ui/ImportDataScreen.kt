@@ -86,11 +86,13 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
     LaunchedEffect(key1 = errorString) {
         if (errorString.isNotBlank()) {
             snackBarHostState.showSnackBarImmediately(errorString)
+            importDataViewModel.resetSnackbarState()
         }
     }
 
     SGScaffold(
         modifier = Modifier.padding(grid_x2),
+        isLoading = viewState.isLoading,
         screenName = "ImportDataScreen",
         topBar = {
             BasicTopBar(title = "Import Data")
@@ -117,7 +119,7 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
         }
     }
 
-    if (viewState.isLoading) {
+    if (viewState.isImportLoading) {
         BackHandler {
             // Do nothing
         }
@@ -181,7 +183,9 @@ private fun LoadingProgressCard(progress: Float) {
             
             LinearProgressIndicator(
                 progress = { progress },
-                modifier = Modifier.width(200.dp)
+                modifier = Modifier.width(200.dp),
+                gapSize = 0.dp,
+                drawStopIndicator = {}
             )
             
             Text(

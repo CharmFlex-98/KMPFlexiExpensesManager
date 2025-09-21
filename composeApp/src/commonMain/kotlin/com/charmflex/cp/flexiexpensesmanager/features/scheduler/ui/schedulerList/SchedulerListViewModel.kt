@@ -9,10 +9,12 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionR
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -34,6 +36,9 @@ internal class SchedulerListViewModel  constructor(
     private val _viewState = MutableStateFlow(SchedulerListViewState())
     val viewState = _viewState.asStateFlow()
 
+    private val _snackBarState: MutableStateFlow<SnackBarState> = MutableStateFlow(SnackBarState.None)
+    val snackBarState = _snackBarState.asStateFlow()
+
     init {
         observeSchedulerList()
     }
@@ -46,13 +51,35 @@ internal class SchedulerListViewModel  constructor(
         routeNavigator.navigateTo(SchedulerRoutes.SchedulerDetail(id))
     }
 
+    fun resetSnackbarState() {
+        _snackBarState.value = SnackBarState.None
+    }
+
     private fun initFeature() {
         viewModelScope.launch {
-            _viewState.update {
-                it.copy(
-                    isFeatureAllowed = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.SCHEDULER)
-                )
-            }
+            toggleLoader(true)
+            featureFlagService.isPremiumFeatureAllowed(PremiumFeature.SCHEDULER)
+                .onSuccess { enabled ->
+                    _viewState.update {
+                        it.copy(
+                            isFeatureAllowed = enabled,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure { err ->
+                    if (err is NetworkError) {
+                        _snackBarState.update {
+                            SnackBarState.Error(resourcesProvider.getString(Res.string.network_error))
+                        }
+                        toggleLoader(false)
+                        return@launch
+                    }
+                    _snackBarState.update {
+                        SnackBarState.Error(err.message)
+                    }
+                    toggleLoader(false)
+                }
         }
     }
 
@@ -125,9 +152,18 @@ internal class SchedulerListViewModel  constructor(
             schedulerRepository.removeSchedulerById(id)
         }
     }
+
+    private fun toggleLoader(loader: Boolean) {
+        _viewState.update {
+            it.copy(
+                isLoading = loader
+            )
+        }
+    }
 }
 
 internal data class SchedulerListViewState(
+    val isLoading: Boolean = false,
     val isFeatureAllowed: Boolean = false,
     val schedulerItems: List<ScheduledTransactionUIItem> = listOf()
 )

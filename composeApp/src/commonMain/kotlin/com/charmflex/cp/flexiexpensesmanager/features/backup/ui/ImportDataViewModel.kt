@@ -9,6 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
@@ -16,12 +17,17 @@ import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupMa
 import com.charmflex.cp.flexiexpensesmanager.features.backup.checker.ImportDataChecker
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionDomainInput
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.account_amount_hint
+import kotlinproject.composeapp.generated.resources.network_error
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
@@ -39,7 +45,8 @@ internal class ImportDataViewModel constructor(
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository,
     private val accountRepository: AccountRepository,
-    private val featureFlagService: FeatureFlagService
+    private val featureFlagService: FeatureFlagService,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(ImportDataViewState())
     val viewState = _viewState.asStateFlow()
@@ -51,6 +58,10 @@ internal class ImportDataViewModel constructor(
 
     private val _snackbarState = MutableStateFlow("")
     val snackBarState = _snackbarState.asStateFlow()
+
+    fun resetSnackbarState() {
+        _snackbarState.value = ""
+    }
 
 
     init {
@@ -67,12 +78,25 @@ internal class ImportDataViewModel constructor(
 
     fun init() {
         viewModelScope.launch {
-            val isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
-            _viewState.update {
-                it.copy(
-                    isFeatureEnabled = isFeatureEnabled
-                )
-            }
+            toggleLoader(true)
+            featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
+                .onSuccess { enabled ->
+                    _viewState.update {
+                        it.copy(
+                            isFeatureEnabled = enabled,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    if (error is NetworkError) {
+                        _snackbarState.value = resourcesProvider.getString(Res.string.network_error)
+                        toggleLoader(false)
+                        return@launch
+                    }
+                    _snackbarState.value = error.message ?: "Unknown error"
+                    toggleLoader(false)
+                }
         }
     }
 
@@ -105,7 +129,7 @@ internal class ImportDataViewModel constructor(
             return
         }
         viewModelScope.launch {
-            toggleLoader(true)
+            toggleImportLoader(true)
             val currentTime = localDateTimeNow()
             val fileName = "cache_import_file_${currentTime}"
             fileProvider.writeCacheFile(importedDocument, fileName)
@@ -117,11 +141,12 @@ internal class ImportDataViewModel constructor(
                     it.copy(
                         importedData = importedData,
                         missingData = missingData,
-                        isLoading = false,
+                        isImportLoading = false,
                         initialErrorCount = missingData.size
                     )
                 }
             }.onFailure {
+                toggleImportLoader(false)
                 _snackbarState.update {
                     it
                 }
@@ -165,6 +190,14 @@ internal class ImportDataViewModel constructor(
         _viewState.update {
             it.copy(
                 isLoading = isLoading
+            )
+        }
+    }
+
+    private fun toggleImportLoader(isLoading: Boolean) {
+        _viewState.update {
+            it.copy(
+                isImportLoading = isLoading
             )
         }
     }
@@ -229,6 +262,7 @@ internal class ImportDataViewModel constructor(
 internal data class ImportDataViewState(
     val isFeatureEnabled: Boolean = false,
     val isLoading: Boolean = false,
+    val isImportLoading: Boolean = false,
     val importedData: List<ImportedData> = listOf(),
     val missingData: Set<ImportedData.MissingData> = setOf(),
     val progress: Float = 0f,

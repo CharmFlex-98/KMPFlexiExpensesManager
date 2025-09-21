@@ -8,8 +8,10 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.budget.domain.repositories.CategoryBudgetRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
@@ -17,6 +19,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_AMOUNT
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_BUDGET_CATEGORY
 import kotlinproject.composeapp.generated.resources.Res
@@ -37,10 +40,14 @@ internal class BudgetSettingViewModel (
     private val userCurrencyRepository: UserCurrencyRepository,
     private val categoryBudgetRepository: CategoryBudgetRepository,
     private val currencyFormatter: CurrencyFormatter,
-    private val featureFlagService: FeatureFlagService
+    private val featureFlagService: FeatureFlagService,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(BudgetSettingViewState())
     val viewState = _viewState.asStateFlow()
+
+    private val _snackBarState: MutableStateFlow<SnackBarState> = MutableStateFlow(SnackBarState.None)
+    val snackBarState = _snackBarState.asStateFlow()
 
     init {
         observeTransactionCategories()
@@ -52,13 +59,44 @@ internal class BudgetSettingViewModel (
         checkFeature()
     }
 
+    fun reset() {
+        _snackBarState.value = SnackBarState.None
+    }
+
+    private fun toggleLoader(loader: Boolean) {
+        _viewState.update {
+            it.copy(
+                isLoading = loader
+            )
+        }
+    }
+
     private fun checkFeature() {
         viewModelScope.launch {
-            _viewState.update {
-                it.copy(
-                    isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BUDGET)
-                )
-            }
+            toggleLoader(true)
+            featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BUDGET)
+                .onSuccess { enabled ->
+                    _viewState.update {
+                        it.copy(
+                            isFeatureEnabled = enabled,
+                            isLoading = false
+                        )
+                    }
+                }
+                .onFailure { err ->
+                    if (err is NetworkError) {
+                        _snackBarState.update {
+                            SnackBarState.Error(resourcesProvider.getString(Res.string.network_error))
+                        }
+                        toggleLoader(false)
+                        return@launch
+                    }
+                    _snackBarState.update {
+                        SnackBarState.Error(err.message)
+                    }
+                    toggleLoader(false)
+                }
+
         }
     }
 
@@ -204,6 +242,7 @@ internal class BudgetSettingViewModel (
 }
 
 internal data class BudgetSettingViewState(
+    val isLoading: Boolean = false,
     val isFeatureEnabled: Boolean = false,
     val fields: List<FEField> = listOf(
         FEField(

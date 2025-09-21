@@ -6,9 +6,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.IconButton
+import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,18 +23,40 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.error_image
+import kotlinproject.composeapp.generated.resources.generic_error
 import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.stringResource
 
 
 @Composable
 internal fun SchedulerListScreen(transactionSchedulerListViewModel: SchedulerListViewModel) {
     val viewState by transactionSchedulerListViewModel.viewState.collectAsState()
+    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarState by transactionSchedulerListViewModel.snackBarState.collectAsState()
+    val genericError = stringResource(Res.string.generic_error)
+
+    LaunchedEffect(snackBarState) {
+        when (val state = snackBarState) {
+            is SnackBarState.Error -> {
+                snackbarHostState.showSnackBarImmediately(state.message ?: genericError)
+                transactionSchedulerListViewModel.resetSnackbarState()
+            }
+
+            else -> {}
+        }
+    }
+
     SGScaffold(
         modifier = Modifier.padding(grid_x2),
+        isLoading = viewState.isLoading,
         topBar = {
             if (viewState.isFeatureAllowed) BasicTopBar(
                 actions = {
@@ -69,6 +95,8 @@ internal fun SchedulerListScreen(transactionSchedulerListViewModel: SchedulerLis
             }
         }
     }
+
+    SGSnackBar(snackBarHostState = snackbarHostState, snackBarType = SnackBarType.Error)
 }
 
 @Composable

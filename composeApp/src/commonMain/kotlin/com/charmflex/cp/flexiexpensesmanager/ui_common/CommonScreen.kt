@@ -17,6 +17,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.lock
 import org.jetbrains.compose.resources.DrawableResource
@@ -87,6 +88,7 @@ internal fun ColumnScope.LockedScreen(
             } else {
                 "Unlock this premium feature to restore your transaction data from backup files"
             },
+            textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )

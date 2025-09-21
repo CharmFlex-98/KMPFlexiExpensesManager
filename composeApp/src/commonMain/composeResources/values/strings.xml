@@ -132,6 +132,7 @@
   <string name="primary_currency_rate_hint">"Conversion rate to primary currency. "</string>
   <string name="account_amount_label">Account amount</string>
   <string name="account_amount_hint">The amount of the account</string>
+  <string name="network_error">Could not reach the server. Please make sure your internet connection is stable.</string>
   <string name="transfer_amount_label">Transfer amount</string>
   <string name="transfer_amount_hint">Enter transfer amount (source bank)</string>
   <string name="income_amount_label">Income amount</string>

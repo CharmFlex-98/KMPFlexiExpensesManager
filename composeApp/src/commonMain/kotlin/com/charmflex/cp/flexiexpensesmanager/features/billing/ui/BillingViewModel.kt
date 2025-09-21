@@ -3,7 +3,13 @@ package com.charmflex.cp.flexiexpensesmanager.features.billing.ui
 import ProductInfo
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
+import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
+import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
+import com.charmflex.cp.flexiexpensesmanager.features.billing.event.BillingEventName
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -12,7 +18,9 @@ import org.koin.core.annotation.Factory
 
 @Factory
 internal class BillingViewModel(
-    private val billingManager: BillingManager
+    private val billingManager: BillingManager,
+    private val eventTracker: EventTracker,
+    private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(BillingViewState())
     val viewState = _viewState.asStateFlow()
@@ -33,10 +41,11 @@ internal class BillingViewModel(
             val result = billingManager.purchaseProduct(productId)
             when (result) {
                 PurchaseResult.Success -> {
-                    println("Success")
+                    sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + productId, true)
+                    eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_SUCCESS + productId))
                 }
                 else -> {
-                    println("Failed to purhcase")
+                    eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_FAILED + productId))
                 }
             }
         }

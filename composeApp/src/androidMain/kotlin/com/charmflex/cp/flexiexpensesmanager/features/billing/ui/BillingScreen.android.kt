@@ -49,6 +49,7 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
                 title = stringResource(Res.string.billing_setting_app_bar_title),
             )
         },
+        screenName = "BillingScreen"
     ) {
         if (viewState.productInfos.isEmpty()) {
             NoResultContent(

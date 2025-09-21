@@ -18,6 +18,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
 import com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.BillingException
+import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.billing.model.AndroidBillingInitOptions
 import com.charmflex.cp.flexiexpensesmanager.features.billing.model.InitOptions
 import kotlinx.coroutines.CoroutineScope
@@ -25,6 +27,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.ref.WeakReference
+import kotlin.coroutines.resumeWithException
 
 internal class AndroidBillingManager(
     private val activityProvider: ActivityProvider,
@@ -173,20 +176,28 @@ internal class AndroidBillingManager(
                 .build()
 
             billingClient?.queryPurchasesAsync(params) { billingResult, purchases ->
-                if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-                    val purchaseList = purchases.map { purchase ->
-                        Purchase(
-                            orderId = purchase.orderId ?: "",
-                            packageName = purchase.packageName,
-                            productId = purchase.products.firstOrNull() ?: "",
-                            purchaseTime = purchase.purchaseTime,
-                            purchaseToken = purchase.purchaseToken,
-                            isAcknowledged = purchase.isAcknowledged
-                        )
+                when (billingResult.responseCode) {
+                    BillingClient.BillingResponseCode.OK -> {
+                        val purchaseList = purchases.map { purchase ->
+                            Purchase(
+                                orderId = purchase.orderId ?: "",
+                                packageName = purchase.packageName,
+                                productId = purchase.products.firstOrNull() ?: "",
+                                purchaseTime = purchase.purchaseTime,
+                                purchaseToken = purchase.purchaseToken,
+                                isAcknowledged = purchase.isAcknowledged
+                            )
+                        }
+                        continuation.resume(purchaseList) { _, _, _ -> }
                     }
-                    continuation.resume(purchaseList) { _, _, _ -> }
-                } else {
-                    continuation.resume(emptyList()) { _, _, _ -> }
+
+                    BillingClient.BillingResponseCode.NETWORK_ERROR, BillingClient.BillingResponseCode.SERVICE_DISCONNECTED, BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> {
+                        continuation.resumeWithException(NetworkError)
+                    }
+
+                    else -> {
+                        continuation.resume(emptyList()) { _, _, _ -> }
+                    }
                 }
             }
         }
