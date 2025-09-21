@@ -8,4 +8,6 @@ object BillingConstant {
     val ALL_PRODUCTS = listOf(
         PRO_VERSION_1
     )
+
+    val PAID_FLAVOUR_PRODUCTS = listOf<String>()
 }

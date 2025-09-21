@@ -1,4 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.core.di
+import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
+import com.charmflex.cp.flexiexpensesmanager.core.app.AppConfigProvider
 import com.charmflex.cp.flexiexpensesmanager.core.storage.AndroidFileStorage
 import com.charmflex.cp.flexiexpensesmanager.core.storage.AndroidSharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.DocumentManager
@@ -35,6 +37,7 @@ class AndroidModule
 
 val androidMainModule = module {
     single { ActivityProvider() }
+    singleOf(::AndroidAppConfigProvider) { bind<AppConfigProvider>() }
     singleOf(::PostHogEventTracker) { bind<EventTracker>() }
     singleOf(::AndroidSharedPrefs) { bind<SharedPrefs>() }
     singleOf(::AndroidFileStorage) { bind<FileStorage>() }

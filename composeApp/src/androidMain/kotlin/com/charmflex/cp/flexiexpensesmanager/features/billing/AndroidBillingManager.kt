@@ -14,6 +14,8 @@ import com.android.billingclient.api.PendingPurchasesParams
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
+import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
+import com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.model.AndroidBillingInitOptions
@@ -25,7 +27,8 @@ import kotlinx.coroutines.suspendCancellableCoroutine
 import java.lang.ref.WeakReference
 
 internal class AndroidBillingManager(
-    private val activityProvider: ActivityProvider
+    private val activityProvider: ActivityProvider,
+    private val appConfigProvider: AndroidAppConfigProvider
 ) : BillingManager, PurchasesUpdatedListener {
     private var billingClient: BillingClient? = null
     private var isConnected = false
@@ -76,7 +79,13 @@ internal class AndroidBillingManager(
                 return@suspendCancellableCoroutine
             }
 
-            val productList = BillingConstant.ALL_PRODUCTS.map { productId ->
+            val productListCode = when (appConfigProvider.getAppFlavour()) {
+                AppFlavour.FREE -> BillingConstant.ALL_PRODUCTS
+                AppFlavour.PAID -> BillingConstant.PAID_FLAVOUR_PRODUCTS
+                null -> BillingConstant.ALL_PRODUCTS
+            }
+
+            val productList = productListCode.map { productId ->
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(productId)
                     .setProductType(BillingClient.ProductType.INAPP)

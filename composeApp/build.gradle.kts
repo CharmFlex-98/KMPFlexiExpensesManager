@@ -176,7 +176,8 @@ android {
             applicationIdSuffix = ".debug"  // This would add .debug to all debug builds
         }
         getByName("release") {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
 //            isDebuggable = true
 //            signingConfig = signingConfigs.getByName("debug")
         }
