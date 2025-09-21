@@ -97,6 +97,7 @@
   <string name="setting_editor_budget_amount_hint">Budget amount</string>
   <string name="budget_setting_add_new_budget_app_title">Create new budget</string>
   <string name="setting_budget_title">Set budget</string>
+  <string name="setting_billing_title">Purchase</string>
   <string name="budget_setting_app_bar_title">Budget Setting</string>
   <string name="billing_setting_app_bar_title">In-app Purchase</string>
   <string name="budget_detail_home_button">Budget detail</string>

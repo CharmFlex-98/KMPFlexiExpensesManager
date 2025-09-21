@@ -253,6 +253,8 @@ private fun getIconForSettingAction(action: SettingAction): DrawableResource {
         SettingAction.Tag -> Res.drawable.tag_multiple_outline
         SettingAction.SCHEDULER -> Res.drawable.cash_clock
         SettingAction.BUDGET -> Res.drawable.car_speed_limiter
+
+        SettingAction.BILLING -> Res.drawable.add_shopping_cart
     }
 }
 

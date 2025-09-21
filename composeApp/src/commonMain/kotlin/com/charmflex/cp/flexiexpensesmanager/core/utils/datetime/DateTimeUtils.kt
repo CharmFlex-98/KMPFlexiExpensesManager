@@ -21,7 +21,7 @@ internal fun localDateTimeNow(): LocalDateTime {
     return getLocalDateTime()
 }
 
-private fun getLocalDateTime(): LocalDateTime {
+fun getLocalDateTime(): LocalDateTime {
     return Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault())
 }
 

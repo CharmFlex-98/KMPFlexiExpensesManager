@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting
 
+import BillingRoutes
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -13,9 +14,12 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.getLocalDateTime
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
@@ -28,15 +32,18 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.koin.core.annotation.Factory
 
 @Factory
-internal class SettingViewModel  constructor(
+internal class SettingViewModel constructor(
     private val routeNavigator: RouteNavigator,
     private val transactionBackupManager: TransactionBackupManager,
     private val appDataService: AppDataService,
-    private val resourcesProvider: ResourcesProvider
+    private val resourcesProvider: ResourcesProvider,
+    private val featureFlagService: FeatureFlagService
 ) : ViewModel() {
 
     private val _onDataClearedEvent: MutableSharedFlow<OnDataCleared> =
@@ -93,20 +100,29 @@ internal class SettingViewModel  constructor(
             SettingAction.Export -> {
                 viewModelScope.launch {
                     toggleLoader(true)
-                    resultOf {
-                        transactionBackupManager.write("test_export.xlsx")
-                    }.fold(
-                        onSuccess = {
-                            toggleLoader(false)
-                            snackBarState.value = SnackBarState.Success("Done exporting")
-                            onCreatedCompleted("test_export.xlsx")
-                        },
-                        onFailure = {
-                            toggleLoader(false)
-                            snackBarState.value =
-                                SnackBarState.Error("Error exporting: ${it.message}")
-                        }
-                    )
+                    if (featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)) {
+                        resultOf {
+                            transactionBackupManager.write("test_export.xlsx")
+                        }.fold(
+                            onSuccess = {
+                                toggleLoader(false)
+                                snackBarState.value = SnackBarState.Success("Done exporting")
+                                onCreatedCompleted("fem_export_${getLocalDateTime()}.xlsx")
+                            },
+                            onFailure = {
+                                toggleLoader(false)
+                                snackBarState.value =
+                                    SnackBarState.Error("Error exporting: ${it.message}")
+                            }
+                        )
+
+                        return@launch
+                    }
+
+                    snackBarState.value =
+                        SnackBarState.Error("This is a premium feature. Unlock it to access the feature.")
+                    toggleLoader(false)
+
                 }
             }
 
@@ -130,6 +146,10 @@ internal class SettingViewModel  constructor(
 
             SettingAction.BUDGET -> {
                 routeNavigator.navigateTo(BudgetRoutes.BudgetSetting)
+            }
+
+            SettingAction.BILLING -> {
+                routeNavigator.navigateTo(BillingRoutes.Root)
             }
         }
     }
@@ -244,6 +264,10 @@ internal class SettingViewModel  constructor(
             SettingActionable(
                 title = resourcesProvider.getString(Res.string.setting_budget_title),
                 action = SettingAction.BUDGET
+            ),
+            SettingActionable(
+                title = resourcesProvider.getString(Res.string.setting_billing_title),
+                action = SettingAction.BILLING
             )
         )
     }
@@ -282,5 +306,5 @@ internal data class SettingActionable(
 )
 
 internal enum class SettingAction {
-    EXPENSES_CAT, INCOME_CAT, ACCOUNT, PRIMARY_CURRENCY, SECONDARY_CURRENCY, Tag, Export, Import, RESET_DATA, SCHEDULER, BUDGET
+    EXPENSES_CAT, INCOME_CAT, ACCOUNT, PRIMARY_CURRENCY, SECONDARY_CURRENCY, Tag, Export, Import, RESET_DATA, SCHEDULER, BUDGET, BILLING
 }
