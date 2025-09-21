@@ -1,6 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import ProductInfo
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -31,11 +32,12 @@ fun <T> SelectionItem(
     item: T,
     title: (T) -> String,
     subtitle: ((T) -> String)? = null,
-    onClick: ((T) -> Unit)? = null,
-    onSubIconClick: ((T) -> Unit)? = null,
     suffixIcon: (@Composable (T) -> Unit)? = null,
+    onSuffixIconClicked: ((T) -> Unit)? = null,
     subPrefixIcon: (@Composable (T) -> Unit)? = null,
+    onSubIconClick: ((T) -> Unit)? = null,
     showDivider: Boolean = true,
+    onClick: ((T) -> Unit)? = null
 ) {
     Column {
         if (showDivider) {
@@ -45,6 +47,8 @@ fun <T> SelectionItem(
         }
 
         Surface(
+            onClick = { onClick?.let { it(item) }  },
+            enabled = onClick != null,
             modifier = Modifier.fillMaxWidth().padding(grid_x1),
             color = MaterialTheme.colorScheme.surface
         ) {
@@ -74,21 +78,21 @@ fun <T> SelectionItem(
                     }
                 }
 
-                if (onSubIconClick != null) {
+                if (subPrefixIcon != null) {
                     IconButton(
                         modifier = Modifier.size(grid_x3),
-                        onClick = { onSubIconClick(item) },
-                        content = { subPrefixIcon?.let{ it(item) } }
+                        onClick = { onSubIconClick?.invoke(item) },
+                        content = { subPrefixIcon.let { it(item) } }
                     )
                 }
 
                 Spacer(modifier = Modifier.width(grid_x4))
 
-                if (onClick != null) {
+                if (suffixIcon != null) {
                     IconButton(
                         modifier = Modifier.size(grid_x3),
-                        onClick = { onClick(item) },
-                        content = { suffixIcon?.let{ it(item) } }
+                        onClick = { onSuffixIconClicked?.invoke(item) },
+                        content = { suffixIcon.let { it(item) } }
                     )
                 }
             }
@@ -142,15 +146,4 @@ fun EditorCard(
             onButtonClicked()
         }
     }
-}
-
-@Preview
-@Composable
-fun testSelectionItem() {
-    val productInfo = ProductInfo.empty()
-    SelectionItem(
-        item = productInfo,
-        title = { it.title },
-        subtitle = { it.description }
-    )
 }

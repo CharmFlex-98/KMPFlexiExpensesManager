@@ -53,6 +53,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.Accou
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.BottomSheetItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLargePrimaryButton
@@ -67,9 +68,6 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_25
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
-import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x3
-import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
-import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x8
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
@@ -127,11 +125,7 @@ internal fun AccountEditorScreen(
         },
         screenName = "AccountEditorScreen"
     ) {
-        AnimatedVisibility(
-            visible = isEditorOpened,
-            enter = slideInHorizontally(initialOffsetX = { it }),
-            exit = slideOutHorizontally(targetOffsetX = { it })
-        ) {
+        if (isEditorOpened) {
             EditorScreen(
                 modifier = Modifier.padding(vertical = 16.dp),
                 editorLabel = editorLabel,
@@ -145,9 +139,7 @@ internal fun AccountEditorScreen(
             ) {
                 viewModel.addNewItem()
             }
-        }
-
-        if (!isEditorOpened) {
+        } else {
             MainContentScreen(
                 viewState = viewState,
                 onSelectAccountGroup = viewModel::selectAccountGroup,
@@ -222,33 +214,36 @@ private fun MainContentScreen(
                 SelectionItem(
                     item = it,
                     title = { it.accountGroupName },
-                    subtitle = { "${it.accounts.size} accounts"},
+                    subtitle = { "${it.accounts.size} accounts" },
                     onClick = { onSelectAccountGroup(it) },
                     showDivider = index > 0,
                     suffixIcon = { SGIcons.NextArrow() }
                 )
             }
         } else {
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            if (viewState.selectedAccountGroup.accounts.isEmpty()) {
+                NoResultContent(
+                    modifier = Modifier.weight(1f),
+                    "No available accounts. Create one?"
+                )
+            } else {
                 viewState.selectedAccountGroup.accounts.forEachIndexed { index, account ->
                     SelectionItem(
                         item = account,
                         title = { it.accountName },
-                        onClick = { onDeleteAccount(it.accountId.toString()) },
+                        onSuffixIconClicked = { onDeleteAccount(it.accountId.toString()) },
                         showDivider = index > 0,
                         suffixIcon = { SGIcons.Delete() }
                     )
                 }
                 Spacer(modifier = Modifier.weight(1f))
+            }
 
-                SGLargePrimaryButton(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = "Add New Account"
-                ) {
-                    onAddNewAccount()
-                }
+            SGLargePrimaryButton(
+                modifier = Modifier.fillMaxWidth(),
+                text = "Add New Account"
+            ) {
+                onAddNewAccount()
             }
         }
     }

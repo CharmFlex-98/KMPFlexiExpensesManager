@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalContentColor
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -15,7 +16,7 @@ object SGIcons {
     fun Delete(
         modifier: Modifier = Modifier
     ) {
-        Icon(modifier = modifier, painter = painterResource(Res.drawable.ic_delete), contentDescription = "")
+        Icon(modifier = modifier, painter = painterResource(Res.drawable.ic_delete), contentDescription = "", tint = MaterialTheme.colorScheme.error)
     }
 
     @Composable

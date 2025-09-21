@@ -79,11 +79,6 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
     }
 
     BackHandler {
-        if (isEditorOpened) {
-            viewModel.closeEditor()
-            return@BackHandler
-        }
-
         viewModel.back()
     }
 
@@ -132,6 +127,7 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
                                     item = it,
                                     title = { it.categoryName },
                                     onClick = { viewModel.onClickItem(it) },
+                                    onSuffixIconClicked = { viewModel.onClickItem(it) },
                                     onSubIconClick = { viewModel.launchDeleteDialog(it.categoryId) },
                                     subPrefixIcon = { SGIcons.Delete() },
                                     suffixIcon = { if (it.allowSubCategory) SGIcons.NextArrow() },
