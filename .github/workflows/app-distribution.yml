@@ -1,7 +1,21 @@
 name: Release to Firebase App Distribution
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      build_type:
+        description: 'Build type to release'
+        required: true
+        default: 'paid_release'
+        type: choice
+        options:
+          - paid_release
+          - free_release
+      build_aab:
+        description: 'Build AAB artifacts'
+        required: true
+        default: false
+        type: boolean
 
 jobs:
   build-and-distribute-to-firebase:
@@ -55,16 +69,17 @@ jobs:
         FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
       run: |
         cd composeApp
-        bundle exec fastlane android distribute_paid_release
+        bundle exec fastlane android distribute_${{ input.build_type }}
       
 
     - name: Build AAB with Fastlane
+      if: ${{ inputs.build_aab == true }}
       env:
         KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
         KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
       run: |
         cd composeApp
-        bundle exec fastlane android build_aab_for_artifacts
+        bundle exec fastlane android build_${{ input.build_type }}_aab_for_artifacts
 
 #    - name: Debug - List files with absolute paths
 #      run: |

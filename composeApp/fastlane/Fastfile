@@ -65,7 +65,7 @@ platform :android do
     end
 
     desc "Build AAB and upload to GitHub artifacts"
-    lane :build_aab_for_artifacts do
+    lane :build_paid_release_aab_for_artifacts do
         gradle(
             task: "bundle",
             flavor: "paid",
@@ -88,4 +88,54 @@ platform :android do
         
         UI.success("AAB built successfully! Ready for GitHub artifact upload.")
     end
+    desc "Deploy app to firebase"
+        lane :distribute_free_release do
+            gradle(
+                task: "assemble",
+                flavor: "free",
+                build_type: "release",
+                project_dir: "..",
+                print_command: false,
+                properties: {
+                    "android.injected.signing.store.file" => "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/upload-keystore.jks",
+                    "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
+                    "android.injected.signing.key.alias" => ENV['KEYSTORE_ALIAS'],
+                    "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD'],
+                }
+            )
+            # build_android_app is a built-in fastlane action.
+            release = firebase_app_distribution(
+                app: ENV['FIREBASE_APP_ID_FREE_RELEASE'],
+                android_artifact_type: "APK",
+                apk_path: lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH],
+                service_credentials_file: "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/firebase_service_key.json",
+                testers: "charmflex1111@gmail.com",
+                release_notes: "This app is for testing purposes"
+            )
+        end
+
+        desc "Build AAB and upload to GitHub artifacts"
+        lane :build_free_release_aab_for_artifacts do
+            gradle(
+                task: "bundle",
+                flavor: "free",
+                build_type: "release",
+                project_dir: "..",
+                print_command: false,
+                properties: {
+                    "android.injected.signing.store.file" => "/home/runner/work/KMPFlexiExpensesManager/KMPFlexiExpensesManager/composeApp/upload-keystore.jks",
+                    "android.injected.signing.store.password" => ENV['KEYSTORE_PASSWORD'],
+                    "android.injected.signing.key.alias" => ENV['KEYSTORE_ALIAS'],
+                    "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD'],
+                }
+            )
+
+            # Print the AAB path for GitHub Actions to use
+            puts "AAB_PATH=#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}"
+
+            # Copy AAB to a known location for easier GitHub Actions pickup
+            sh "cp '#{lane_context[SharedValues::GRADLE_AAB_OUTPUT_PATH]}' '../composeApp-free-release.aab'"
+
+            UI.success("AAB built successfully! Ready for GitHub artifact upload.")
+        end
 end
