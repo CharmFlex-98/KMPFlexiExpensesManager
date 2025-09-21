@@ -184,8 +184,8 @@ android {
             )
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases
-             isDebuggable = true
-             signingConfig = signingConfigs.getByName("debug")
+//             isDebuggable = true
+//             signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
