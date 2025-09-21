@@ -62,11 +62,27 @@ jobs:
       run: |
         chmod +x ./gradlew
 
+    - name: Pick Firebase App ID
+      id: pick
+      run: |
+        case "${{ inputs.build_type }}" in
+            paid_release)
+              echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}" >> $GITHUB_OUTPUT
+              ;;
+            free_release)
+              echo "FIREBASE_APP_ID=${{ secrets.FIREBASE_APP_ID_FREE_RELEASE }}" >> $GITHUB_OUTPUT
+              ;;
+            *)
+              echo "Unknown build type"
+              exit 1
+              ;;
+          esac
+
     - name: Build the app and distribute to firebase
       env:
         KEYSTORE_PASSWORD: ${{ secrets.UPLOAD_KEYSTORE_JKS_PW }}
         KEYSTORE_ALIAS: ${{ secrets.UPLOAD_KEYSTORE_JKS_ALIAS }}
-        FIREBASE_APP_ID_PAID_RELEASE: ${{ secrets.FIREBASE_APP_ID_PAID_RELEASE }}
+        FIREBASE_APP_ID: ${{ steps.pick.outputs.FIREBASE_APP_ID }}
       run: |
         cd composeApp
         bundle exec fastlane android distribute_${{ inputs.build_type }}
@@ -108,5 +124,5 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: aab-${{ inputs.build_type }}
-        path: ./composeApp/composeApp-paid-release.aab  # This file is copied to root by fastlane
+        path: ./composeApp/composeApp-${{ inputs.build_type }}.aab  # This file is copied to root by fastlane
         retention-days: 30
