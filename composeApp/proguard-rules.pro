@@ -34,6 +34,30 @@
 -keep class com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour { *; }
 -keep class com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature { *; }
 
+
+## Keep Apache POI classes (for Excel file handling)
+-dontwarn org.apache.**
+-dontwarn org.openxmlformats.schemas.**
+-dontwarn org.etsi.**
+-dontwarn org.w3.**
+-dontwarn com.microsoft.schemas.**
+-dontwarn com.graphbuilder.**
+-dontnote org.apache.**
+-dontnote org.openxmlformats.schemas.**
+-dontnote org.etsi.**
+-dontnote org.w3.**
+-dontnote com.microsoft.schemas.**
+-dontnote com.graphbuilder.**
+-keep class org.apache.poi.** { *; }
+-keep class org.** { *; }
+-keep class com.bea.xml.stream.**{*;}
+-keep class org.apache.xmlbeans.** { *; }
+-keep class com.microsoft.** { *; }
+-keep class org.openxmlformats.** {*;}
+-keep class com.apache.poi.** { *; }
+-keep class schemaorg_apache_xmlbeans.** {*;}
+
+#-keep class com.posthog.** { *; }
 # Additional Kotlin-specific rules
 -dontwarn kotlin.**
 -keep class kotlin.Metadata { *; }

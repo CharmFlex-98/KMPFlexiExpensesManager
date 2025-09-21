@@ -27,6 +27,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.reposi
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.account_amount_hint
+import kotlinproject.composeapp.generated.resources.generic_error
 import kotlinproject.composeapp.generated.resources.network_error
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -145,10 +146,10 @@ internal class ImportDataViewModel constructor(
                         initialErrorCount = missingData.size
                     )
                 }
-            }.onFailure {
+            }.onFailure { err ->
                 toggleImportLoader(false)
                 _snackbarState.update {
-                    it
+                    err.message ?: resourcesProvider.getString(Res.string.generic_error)
                 }
             }
 

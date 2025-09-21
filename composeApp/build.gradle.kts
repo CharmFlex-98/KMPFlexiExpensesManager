@@ -182,8 +182,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-//            isDebuggable = true
-//            signingConfig = signingConfigs.getByName("debug")
+            // Remove isDebuggable = true for proper release builds
+            // Remove debug signing for production releases
+             isDebuggable = true
+             signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

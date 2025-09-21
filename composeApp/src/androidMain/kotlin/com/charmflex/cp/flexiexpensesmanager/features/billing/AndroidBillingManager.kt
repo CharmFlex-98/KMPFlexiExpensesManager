@@ -88,6 +88,11 @@ internal class AndroidBillingManager(
                 null -> BillingConstant.ALL_PRODUCTS
             }
 
+            if (productListCode.isEmpty()) {
+                continuation.resume(emptyList()) {_, _, _ -> }
+                return@suspendCancellableCoroutine
+            }
+
             val productList = productListCode.map { productId ->
                 QueryProductDetailsParams.Product.newBuilder()
                     .setProductId(productId)

@@ -172,7 +172,7 @@ private fun LoadingProgressCard(progress: Float) {
                     modifier = Modifier.size(grid_x3)
                 )
             }
-            
+
             Text(
                 text = "Importing Data",
                 style = MaterialTheme.typography.titleMedium.copy(
@@ -180,14 +180,14 @@ private fun LoadingProgressCard(progress: Float) {
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             LinearProgressIndicator(
                 progress = { progress },
                 modifier = Modifier.width(200.dp),
                 gapSize = 0.dp,
                 drawStopIndicator = {}
             )
-            
+
             Text(
                 text = if (progress == 0f) "Initializing..." else "${round(progress * 100).toInt()}%",
                 style = MaterialTheme.typography.bodyMedium,
@@ -207,8 +207,10 @@ private fun ColumnScope.PreLoadScreen(
 
     DocumentPicker(
         show = show,
-        onPicked
-    )
+    ) {
+        show = false
+        onPicked(it)
+    }
 
     LockedScreen(
         isFeatureUnlocked,
@@ -268,16 +270,16 @@ private fun ColumnScope.LoadedScreen(
             }
         }
     }
-    
+
     Spacer(modifier = Modifier.height(grid_x2))
-    
+
     when (tabIndex) {
         0 -> AllDataTab(
             modifier = Modifier.weight(1f),
             viewState = viewState,
             onSave = onSave
         )
-        
+
         1 -> ErrorsTab(
             modifier = Modifier.weight(1f),
             viewState = viewState,
@@ -302,7 +304,7 @@ private fun AllDataTab(
             errorCount = viewState.missingData.size,
             fixPercentage = viewState.importFixPercentage
         )
-        
+
         // Transactions Header
         Text(
             text = "Transaction Data (${viewState.importedData.size})",
@@ -311,7 +313,7 @@ private fun AllDataTab(
             ),
             color = MaterialTheme.colorScheme.onSurface
         )
-        
+
         // Transaction List
         Column(
             modifier = Modifier
@@ -327,7 +329,7 @@ private fun AllDataTab(
                 )
             }
         }
-        
+
         // Save Button
         SGLargePrimaryButton(
             modifier = Modifier.fillMaxWidth(),
@@ -355,7 +357,7 @@ private fun ErrorsTab(
             errorCount = viewState.missingData.size,
             fixPercentage = viewState.importFixPercentage
         )
-        
+
         // Errors Header
         Text(
             text = "Errors to Fix (${viewState.missingData.size})",
@@ -364,7 +366,7 @@ private fun ErrorsTab(
             ),
             color = MaterialTheme.colorScheme.onSurface
         )
-        
+
         // Errors List
         Column(
             modifier = Modifier
@@ -416,7 +418,7 @@ private fun ImportProgressSection(
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             // Stats Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
@@ -428,7 +430,7 @@ private fun ImportProgressSection(
                     iconRes = Res.drawable.database_import_outline,
                     color = MaterialTheme.colorScheme.primary
                 )
-                
+
                 StatItem(
                     label = "Errors",
                     value = errorCount.toString(),
@@ -436,7 +438,7 @@ private fun ImportProgressSection(
                     color = if (errorCount > 0) Color(0xFFF44336) else Color(0xFF4CAF50)
                 )
             }
-            
+
             // Progress Bar (only show if there are errors to fix)
             if (errorCount > 0) {
                 Column(
@@ -452,7 +454,7 @@ private fun ImportProgressSection(
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
-                        
+
                         Text(
                             text = toPercentageString(fixPercentage),
                             style = MaterialTheme.typography.bodyMedium.copy(
@@ -461,7 +463,7 @@ private fun ImportProgressSection(
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
-                    
+
                     LinearProgressIndicator(
                         progress = { fixPercentage },
                         modifier = Modifier.fillMaxWidth(),
@@ -501,7 +503,7 @@ private fun StatItem(
                 modifier = Modifier.size(grid_x2_5)
             )
         }
-        
+
         Column {
             Text(
                 text = value,
@@ -510,7 +512,7 @@ private fun StatItem(
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             Text(
                 text = label,
                 style = MaterialTheme.typography.bodySmall,
@@ -551,7 +553,7 @@ private fun TransactionImportRow(
                 color = MaterialTheme.colorScheme.primary
             )
         }
-        
+
         Column(
             modifier = Modifier.weight(1f),
             verticalArrangement = Arrangement.spacedBy(grid_x1)
@@ -564,7 +566,7 @@ private fun TransactionImportRow(
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             // Status Details - using DetailRow pattern
             Column(
                 verticalArrangement = Arrangement.spacedBy(grid_x0_5)
@@ -579,6 +581,7 @@ private fun TransactionImportRow(
                             iconRes = Res.drawable.tag_multiple_outline
                         )
                     }
+
                     is ImportedData.RequiredDataState.Acquired -> {
                         StatusDetailRow(
                             label = "Category",
@@ -587,9 +590,10 @@ private fun TransactionImportRow(
                             iconRes = Res.drawable.tag_multiple_outline
                         )
                     }
+
                     else -> {}
                 }
-                
+
                 // Account from status
                 item.accountFrom?.let { accountState ->
                     when (accountState) {
@@ -601,6 +605,7 @@ private fun TransactionImportRow(
                                 iconRes = Res.drawable.bank
                             )
                         }
+
                         is ImportedData.RequiredDataState.Acquired -> {
                             StatusDetailRow(
                                 label = "From",
@@ -611,7 +616,7 @@ private fun TransactionImportRow(
                         }
                     }
                 }
-                
+
                 // Account to status
                 item.accountTo?.let { accountState ->
                     when (accountState) {
@@ -623,6 +628,7 @@ private fun TransactionImportRow(
                                 iconRes = Res.drawable.bank
                             )
                         }
+
                         is ImportedData.RequiredDataState.Acquired -> {
                             StatusDetailRow(
                                 label = "To",
@@ -670,7 +676,7 @@ private fun StatusDetailRow(
                 modifier = Modifier.size(grid_x1_5)
             )
         }
-        
+
         // Status text
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -680,7 +686,7 @@ private fun StatusDetailRow(
                 text = "$label:",
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Text(
                 text = value,
                 style = MaterialTheme.typography.bodySmall.copy(
@@ -706,7 +712,7 @@ private fun StatusChip(
     } else {
         Color(0xFF4CAF50).copy(alpha = 0.1f) to Color(0xFF4CAF50)
     }
-    
+
     Box(
         modifier = Modifier
             .background(
@@ -730,22 +736,38 @@ private fun ErrorItemRow(
 ) {
     val (title, subtitle, iconRes) = when (item.dataType) {
         ImportedData.MissingData.DataType.ACCOUNT_FROM -> {
-            Triple("Create Account (From)", "Account for withdrawals: ${item.name}", Res.drawable.bank)
+            Triple(
+                "Create Account (From)",
+                "Account for withdrawals: ${item.name}",
+                Res.drawable.bank
+            )
         }
+
         ImportedData.MissingData.DataType.ACCOUNT_TO -> {
             Triple("Create Account (To)", "Account for deposits: ${item.name}", Res.drawable.bank)
         }
+
         ImportedData.MissingData.DataType.EXPENSES_CATEGORY -> {
-            Triple("Create Expense Category", "Category: ${item.name}", Res.drawable.tag_multiple_outline)
+            Triple(
+                "Create Expense Category",
+                "Category: ${item.name}",
+                Res.drawable.tag_multiple_outline
+            )
         }
+
         ImportedData.MissingData.DataType.INCOME_CATEGORY -> {
-            Triple("Create Income Category", "Category: ${item.name}", Res.drawable.tag_multiple_outline)
+            Triple(
+                "Create Income Category",
+                "Category: ${item.name}",
+                Res.drawable.tag_multiple_outline
+            )
         }
+
         ImportedData.MissingData.DataType.TAG -> {
             Triple("Create Tag", "Tag: ${item.name}", Res.drawable.tag_multiple_outline)
         }
     }
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -775,7 +797,7 @@ private fun ErrorItemRow(
                 modifier = Modifier.size(grid_x2)
             )
         }
-        
+
         Column(
             modifier = Modifier.weight(1f)
         ) {
@@ -786,14 +808,14 @@ private fun ErrorItemRow(
                 ),
                 color = MaterialTheme.colorScheme.onSurface
             )
-            
+
             Text(
                 text = subtitle,
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         // Arrow Icon
         Icon(
             painter = painterResource(Res.drawable.ic_arrow_next),

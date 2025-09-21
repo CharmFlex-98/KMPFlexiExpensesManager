@@ -105,7 +105,7 @@ internal class SettingViewModel constructor(
                         .onSuccess { enabled ->
                             if (enabled) {
                                 resultOf {
-                                    transactionBackupManager.write("test_export.xlsx")
+                                    transactionBackupManager.write("test_export_${getLocalDateTime()}.xlsx")
                                 }.fold(
                                     onSuccess = {
                                         toggleLoader(false)
