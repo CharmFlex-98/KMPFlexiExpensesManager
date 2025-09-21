@@ -18,9 +18,9 @@ internal class PostHogEventTracker(
         val postHogConfig = PostHogAndroidConfig(
             apiKey = POSTHOG_API_KEY,
             host = POSTHOG_HOST,
-            sessionReplayConfig = PostHogSessionReplayConfig(screenshot = true)
+            sessionReplayConfig = PostHogSessionReplayConfig(screenshot = false)
         )
-        postHogConfig.sessionReplay = true
+        postHogConfig.sessionReplay = false
         PostHogAndroid.setup(appContext, postHogConfig)
     }
 

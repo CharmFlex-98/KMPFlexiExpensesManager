@@ -158,8 +158,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 3
-        versionName = "1.0.3"
+        versionCode = 5
+        versionName = "1.0.5"
     }
     packaging {
         resources {
@@ -178,6 +178,10 @@ android {
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
 //            isDebuggable = true
 //            signingConfig = signingConfigs.getByName("debug")
         }

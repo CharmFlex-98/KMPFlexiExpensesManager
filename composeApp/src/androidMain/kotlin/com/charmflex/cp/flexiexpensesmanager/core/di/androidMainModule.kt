@@ -1,4 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.core.di
+import android.media.metrics.Event
 import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
 import com.charmflex.cp.flexiexpensesmanager.core.app.AppConfigProvider
 import com.charmflex.cp.flexiexpensesmanager.core.storage.AndroidFileStorage
@@ -28,6 +29,7 @@ import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
+import org.koin.dsl.bind
 import org.koin.dsl.module
 import org.koin.ksp.generated.module
 
@@ -38,6 +40,7 @@ class AndroidModule
 val androidMainModule = module {
     single { ActivityProvider() }
     singleOf(::AndroidAppConfigProvider) { bind<AppConfigProvider>() }
+    single { PostHogEventTracker(get()) }
     singleOf(::PostHogEventTracker) { bind<EventTracker>() }
     singleOf(::AndroidSharedPrefs) { bind<SharedPrefs>() }
     singleOf(::AndroidFileStorage) { bind<FileStorage>() }

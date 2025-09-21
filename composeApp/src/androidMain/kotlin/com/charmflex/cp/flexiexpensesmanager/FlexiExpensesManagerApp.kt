@@ -4,6 +4,8 @@ import android.app.Activity
 import android.app.Application
 import android.app.Application.ActivityLifecycleCallbacks
 import android.os.Bundle
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.PostHogEventTracker
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponent
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
@@ -21,6 +23,8 @@ internal class FlexiExpensesManagerApp : Application(), AppComponentProvider, Ac
         AppComponentProvider.instance = this
 
         registerActivityLifecycleCallbacks(this)
+        val tracker = getKoin().get<PostHogEventTracker>()
+        tracker.init()
     }
 
     override fun getAppComponent(): AppComponent {
