@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformationBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
@@ -69,6 +70,15 @@ internal class BudgetSettingViewModel (
                 )
             }
         }
+    }
+
+    fun navigateCategoryEditor() {
+        _viewState.update {
+            it.copy(
+                bottomSheetState = null
+            )
+        }
+        routeNavigator.navigateTo(CategoryRoutes.editorDestination(TransactionType.EXPENSES))
     }
 
     private fun observeBudgetList() {

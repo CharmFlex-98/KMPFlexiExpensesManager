@@ -863,6 +863,7 @@ internal abstract class TransactionEditorBaseViewModel(
     }
 
     fun onCurrencySelected(currency: String, targetField: FEField?) {
+        closeBottomSheet()
         onFieldValueChanged(targetField, currency)
         _viewState.update {
             it.copy(
@@ -1068,11 +1069,7 @@ internal abstract class TransactionEditorBaseViewModel(
     }
 
     fun onBottomSheetOptionsEdit(bottomSheetState: TransactionEditorViewState.BottomSheetState) {
-        _viewState.update {
-            it.copy(
-                bottomSheetState = null
-            )
-        }
+        closeBottomSheet()
         when (bottomSheetState) {
             is TransactionEditorViewState.CategorySelectionBottomSheetState -> {
                 currentEditingOptions = EditingOptions.CATEGORY
@@ -1087,6 +1084,14 @@ internal abstract class TransactionEditorBaseViewModel(
                 routeNavigator.navigateTo(TagRoutes.addNewTagDestination())
             }
             else -> {}
+        }
+    }
+
+    private fun closeBottomSheet() {
+        _viewState.update {
+            it.copy(
+                bottomSheetState = null
+            )
         }
     }
 }

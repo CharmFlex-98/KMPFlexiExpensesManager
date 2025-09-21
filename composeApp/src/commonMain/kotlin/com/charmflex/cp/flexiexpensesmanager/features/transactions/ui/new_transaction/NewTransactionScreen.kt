@@ -442,7 +442,8 @@ internal fun TransactionEditorScreen(
                                 viewModel.onCategorySelected(id, name, bs.feField)
                                 viewModel.toggleBottomSheet(null)
                             },
-                            transactionCategories = viewState.transactionCategories
+                            transactionCategories = viewState.transactionCategories,
+                            onEdit = { viewModel.onBottomSheetOptionsEdit(bs) }
                         )
                     }
 
@@ -527,6 +528,7 @@ internal fun TransactionEditorScreen(
 internal fun CategorySelectionBottomSheet(
     onSelected: (String, String) -> Unit,
     transactionCategories: TransactionCategories?,
+    onEdit: () -> Unit,
 ) {
     val list = remember {
         mutableStateListOf(transactionCategories?.items)
@@ -542,7 +544,9 @@ internal fun CategorySelectionBottomSheet(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        FEHeading4(text = "Category")
+        BottomSheetHeaderContent("Category") {
+               onEdit()
+        }
         Row(
             modifier = Modifier
                 .padding(top = grid_x2)

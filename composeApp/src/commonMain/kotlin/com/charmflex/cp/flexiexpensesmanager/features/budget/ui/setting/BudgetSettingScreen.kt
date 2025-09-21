@@ -101,7 +101,8 @@ internal fun BudgetSettingScreen(
                             budgetSettingViewModel.onFieldValueChanged(state.feField, name, id)
                             budgetSettingViewModel.toggleBottomSheet(null)
                         },
-                        transactionCategories = viewState.expensesCategories
+                        transactionCategories = viewState.expensesCategories,
+                        onEdit = { budgetSettingViewModel.navigateCategoryEditor() }
                     )
                 }
             }
