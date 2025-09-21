@@ -31,7 +31,8 @@ internal class AccountHomeUIMapper  constructor(
                             mainCurrencyBalanceChild,
                             mainCurrency
                         ),
-                        isCurrencyPrimary = mainCurrency == it.currency
+                        isCurrencyPrimary = mainCurrency == it.currency,
+                        isDeleted = it.isDeleted
                     )
                 },
                 balance = currencyFormatter.format(mainCurrencyBalance, mainCurrency),

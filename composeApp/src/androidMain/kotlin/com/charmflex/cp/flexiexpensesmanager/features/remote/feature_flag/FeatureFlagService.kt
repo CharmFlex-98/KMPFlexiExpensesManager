@@ -8,6 +8,7 @@ internal class FeatureFlagServiceImpl(
     private val billingManager: BillingManager
 ) : FeatureFlagService {
     override suspend fun isPremiumFeatureAllowed(premiumFeature: PremiumFeature): Boolean {
+        return true
         return when (premiumFeature) {
             PremiumFeature.BUDGET, PremiumFeature.BACKUP, PremiumFeature.SCHEDULER -> {
                 val purchases = billingManager.queryPurchases()

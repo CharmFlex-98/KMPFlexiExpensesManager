@@ -1,8 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LocalContentColor
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.painterResource
@@ -14,6 +16,28 @@ object SGIcons {
         modifier: Modifier = Modifier
     ) {
         Icon(modifier = modifier, painter = painterResource(Res.drawable.ic_delete), contentDescription = "")
+    }
+
+    @Composable
+    fun Bank(
+        modifier: Modifier = Modifier
+    ) {
+        Icon(modifier = modifier, painter = painterResource(Res.drawable.bank), contentDescription = "")
+
+    }
+
+    @Composable
+    fun IsDeleted(
+        modifier: Modifier = Modifier
+    ) {
+        Icon(modifier = modifier, painter = painterResource(Res.drawable.delete_alert_outline), contentDescription = "")
+    }
+
+    @Composable
+    fun Edit(
+        modifier: Modifier = Modifier
+    ) {
+        Icon(modifier = modifier, painter = painterResource(Res.drawable.file_edit_outline), contentDescription = "")
     }
 
     @Composable
@@ -46,9 +70,10 @@ object SGIcons {
 
     @Composable
     fun Add(
-        modifier: Modifier = Modifier
+        modifier: Modifier = Modifier,
+        tint: Color = LocalContentColor.current
     ) {
-        Icon(modifier = modifier, painter = painterResource(Res.drawable.ic_add), contentDescription = "")
+        Icon(modifier = modifier, painter = painterResource(Res.drawable.ic_add), contentDescription = "", tint = tint)
     }
 
     @Composable

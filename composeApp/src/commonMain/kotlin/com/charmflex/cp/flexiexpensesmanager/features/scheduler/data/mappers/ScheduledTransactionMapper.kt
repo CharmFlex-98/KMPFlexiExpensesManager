@@ -15,8 +15,8 @@ internal class ScheduledTransactionMapper :
         return ScheduledTransaction(
             id = from.schedulerId.toInt(),
             transactionName = from.scheduledTransactionName,
-            accountFrom = getAccount(from.scheduledAccountFromId,from.scheduledAccountFromName, from.scheduledAccountFromCurrency),
-            accountTo = getAccount(from.scheduledAccountFromId, from.scheduledAccountToName, from.scheduledAccountToCurrency),
+            accountFrom = getAccount(from.scheduledAccountFromId,from.scheduledAccountFromName, from.scheduledAccountFromCurrency, from.scheduledAccountFromDeleted),
+            accountTo = getAccount(from.scheduledAccountFromId, from.scheduledAccountToName, from.scheduledAccountToCurrency, from.scheduledAccountToDeleted),
             transactionType = TransactionType.fromString(from.transactionTypeCode),
             startUpdateDate = from.startUpdateDate,
             nextUpdateDate = from.nextUpdateDate,
@@ -32,9 +32,9 @@ internal class ScheduledTransactionMapper :
 }
 
 
-private fun getAccount(id: Int?, name: String?, currency: String?): AccountGroup.Account? {
+private fun getAccount(id: Int?, name: String?, currency: String?, isDeleted: Boolean): AccountGroup.Account? {
     if (id == null || name == null || currency == null) return null
-    return AccountGroup.Account(id, name, currency)
+    return AccountGroup.Account(id, name, currency, isDeleted)
 }
 
 private fun getCategory(id: Int?, name: String?): Transaction.TransactionCategory? {

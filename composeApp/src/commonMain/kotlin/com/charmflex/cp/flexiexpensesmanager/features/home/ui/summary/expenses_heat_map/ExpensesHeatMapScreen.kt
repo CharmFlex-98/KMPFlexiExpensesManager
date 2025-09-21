@@ -60,7 +60,8 @@ internal fun ColumnScope.ExpensesHeatMapScreen(
         val startDate = remember { endDate.minusMonths(12) }
         var selection by remember { mutableStateOf<Pair<LocalDate, Color>?>(null) }
         Column(
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.Start
         ) {
             val state = rememberHeatMapCalendarState(
                 startMonth = startDate.yearMonth,
@@ -88,7 +89,6 @@ internal fun ColumnScope.ExpensesHeatMapScreen(
             )
             CalendarInfo(
                 modifier = Modifier
-                    .fillMaxWidth()
                     .padding(horizontal = 44.dp),
             )
         }
@@ -111,7 +111,7 @@ private fun CalendarInfo(modifier: Modifier = Modifier) {
         verticalAlignment = Alignment.Bottom,
     ) {
         Text(text = "Less", fontSize = 10.sp)
-        Level.values().forEach { level ->
+        Level.entries.forEach { level ->
             LevelBox(level.color)
         }
         Text(text = "More", fontSize = 10.sp)

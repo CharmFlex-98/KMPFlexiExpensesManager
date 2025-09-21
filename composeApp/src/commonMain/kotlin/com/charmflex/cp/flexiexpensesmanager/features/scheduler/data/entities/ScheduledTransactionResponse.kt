@@ -13,12 +13,16 @@ internal data class ScheduledTransactionResponse(
     val scheduledAccountFromName: String?,
     @ColumnInfo("account_from_currency")
     val scheduledAccountFromCurrency: String?,
+    @ColumnInfo("account_from_deleted")
+    val scheduledAccountFromDeleted: Boolean,
     @ColumnInfo("scheduled_account_to_id")
     val scheduledAccountToId: Int?,
     @ColumnInfo("account_to_name")
     val scheduledAccountToName: String?,
     @ColumnInfo("account_to_currency")
     val scheduledAccountToCurrency: String?,
+    @ColumnInfo("account_to_deleted")
+    val scheduledAccountToDeleted: Boolean,
     @ColumnInfo("transaction_type_code")
     val transactionTypeCode: String,
     @ColumnInfo("minor_unit_amount")

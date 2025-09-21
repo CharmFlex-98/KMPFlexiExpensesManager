@@ -36,6 +36,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.di.BillingInjector
 import com.charmflex.cp.flexiexpensesmanager.features.billing.ui.BillingViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailViewModelFactory
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_detail.SchedulerDetailViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_editor.SchedulerEditorViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.tag.ui.TagSettingViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.TransactionEditorViewModelFactory
@@ -72,6 +73,7 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun transactionDetailViewModelFactory(): TransactionDetailViewModelFactory = get()
     override fun schedulerListViewModel(): SchedulerListViewModel = get()
     override fun schedulerEditorViewModelFactory(): SchedulerEditorViewModelFactory = get()
+    override fun schedulerDetailViewModelFactory(): SchedulerDetailViewModelFactory = get()
     override fun accountEditorViewModel(): AccountEditorViewModel = get()
     override fun accountDetailViewModelFactory(): AccountDetailViewModelFactory = get()
     override fun importDataViewModel(): ImportDataViewModel = get()

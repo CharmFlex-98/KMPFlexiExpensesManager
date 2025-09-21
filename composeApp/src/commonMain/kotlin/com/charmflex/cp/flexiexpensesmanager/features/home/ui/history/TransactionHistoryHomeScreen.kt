@@ -10,6 +10,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.TransactionHistoryList
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
+import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 
 @Composable
@@ -17,8 +19,12 @@ internal fun TransactionHistoryHomeScreen(
     transactionHomeViewModel: TransactionHomeViewModel
 ) {
     val viewState by transactionHomeViewModel.viewState.collectAsState()
+    if (viewState.items.isEmpty()) {
+        NoResultContent(modifier = Modifier.fillMaxSize(), "No available history found.")
+        return
+    }
+
     TransactionHistoryList(
-        modifier = Modifier.padding(horizontal = grid_x2),
         transactionHistoryViewModel = transactionHomeViewModel
     )
     if (viewState.isLoading) {

@@ -1,10 +1,13 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui
 
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
@@ -33,6 +36,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavigationBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 
@@ -105,6 +109,7 @@ private fun HomeBody(
 ) {
     val bottomNavController = rememberNavController()
     SGScaffold(
+        modifier = Modifier.fillMaxSize().padding(grid_x2),
         bottomBar = { HomeScreenBottomNavigationBar(bottomBarNavController = bottomNavController) },
         floatingActionButton = {
             FloatingActionButton(onClick = homeViewModel::createNewExpenses) {

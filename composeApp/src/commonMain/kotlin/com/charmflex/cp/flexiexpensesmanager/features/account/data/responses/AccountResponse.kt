@@ -19,6 +19,8 @@ internal data class AccountResponse(
         val accountName: String,
         @ColumnInfo("currency")
         val currency: String,
+        @ColumnInfo("is_deleted")
+        val isDeleted: Boolean,
         @ColumnInfo("remarks")
         val remarks: String?
     )

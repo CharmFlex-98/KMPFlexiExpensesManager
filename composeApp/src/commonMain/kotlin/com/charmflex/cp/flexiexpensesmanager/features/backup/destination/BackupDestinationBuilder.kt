@@ -27,6 +27,11 @@ internal class BackupDestinationBuilder : DestinationBuilder {
             LaunchedEffect(key1 = updateImportedData) {
                 if (updateImportedData) viewModel.updateImportedData()
             }
+
+            LaunchedEffect(Unit) {
+                viewModel.init()
+            }
+
             ImportDataScreen(importDataViewModel = viewModel)
         }
     }

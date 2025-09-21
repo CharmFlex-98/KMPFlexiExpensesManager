@@ -42,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
@@ -113,8 +114,7 @@ internal fun TransactionHistoryList(
     Box {
         ListTable(
             modifier = modifier
-                .fillMaxSize()
-                .padding(vertical = grid_x2),
+                .fillMaxSize(),
             items = scrollItems,
             scrollState = scrollState,
             onLoadMore = { transactionHistoryViewModel.getNextTransactions() },
@@ -211,7 +211,6 @@ private fun ExpensesHistorySectionView(
                     onClick(it)
                 }
             )
-            if (index != items.size - 1) HorizontalDivider(color = Color.Gray, thickness = 0.5.dp)
         }
     }
 }
@@ -235,72 +234,135 @@ internal fun ExpensesHistoryItem(
         else -> amount
     }
     val signAmountColor = when (type) {
-        TransactionType.EXPENSES.name -> Color.Red
-        TransactionType.INCOME.name -> MaterialTheme.colorScheme.primary
-        else -> MaterialTheme.colorScheme.tertiary
+        TransactionType.EXPENSES.name -> Color(0xFFD32F2F) // Darker red
+        TransactionType.INCOME.name -> Color(0xFF388E3C)   // Darker green
+        TransactionType.TRANSFER.name -> Color(0xFF1976D2) // Darker blue
+        TransactionType.UPDATE_ACCOUNT.name -> Color(0xFF1976D2) // Darker blue
+        else -> MaterialTheme.colorScheme.onSurface
     }
-    Row(
+    val iconBackgroundColor = signAmountColor.copy(alpha = 0.1f)
+    
+    Box(
         modifier = modifier
             .fillMaxWidth()
-            .clickable {
-                onClick(id)
-            }
+            .padding(horizontal = grid_x1, vertical = grid_x0_5)
+            .shadow(
+                elevation = 1.dp,
+                shape = RoundedCornerShape(grid_x2),
+                spotColor = Color.Black.copy(alpha = 0.4f)
+            )
             .background(
-                MaterialTheme.colorScheme.surfaceContainerHighest
+                color = MaterialTheme.colorScheme.surface,
+                shape = RoundedCornerShape(grid_x2)
             )
-            .padding(vertical = grid_x2, horizontal = grid_x1),
-        verticalAlignment = Alignment.CenterVertically
+            .clickable { onClick(id) }
     ) {
-        Box(
-            modifier = Modifier.padding(grid_x1),
-            contentAlignment = Alignment.Center
-        ) {
-            Icon(
-                modifier = Modifier.size(grid_x4),
-                painter = painterResource(iconResId),
-                contentDescription = null
-            )
-        }
-        Column(
+        Row(
             modifier = Modifier
-                .weight(1f)
-                .padding(horizontal = grid_x0_5),
-            horizontalAlignment = Alignment.Start,
-            verticalArrangement = Arrangement.Center
+                .fillMaxWidth()
+                .padding(grid_x2),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.spacedBy(grid_x2)
         ) {
-            Text(
-                text = name,
-                style = TextStyle(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 20.sp,
-                    lineHeight = 28.sp
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-            Spacer(modifier = Modifier.height(grid_x1))
-            Text(
-                text = category.ifEmpty { if (type == TransactionType.TRANSFER.name) "TRANSFER" else if (type == TransactionType.UPDATE_ACCOUNT.name) "UPDATE ACCOUNT" else "UNKNOWN" },
-                style = TextStyle(
-                    fontWeight = FontWeight.Normal,
-                    fontSize = 14.sp,
-                    lineHeight = 20.sp
-                ),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
-        }
-        Box(
-            modifier = Modifier.padding(grid_x1),
-            contentAlignment = Alignment.Center
-        ) {
-            FEBody1(text = signedAmount, color = signAmountColor)
-        }
-        if (suffixIcon != null) {
-            IconButton(
-                onClick = { onIconClicked?.invoke() },
+            // Icon with subtle background
+            Box(
+                modifier = Modifier
+                    .size(grid_x4)
+                    .background(
+                        color = iconBackgroundColor,
+                        shape = RoundedCornerShape(grid_x1)
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                suffixIcon()
+                Icon(
+                    modifier = Modifier.size(grid_x2),
+                    painter = painterResource(iconResId),
+                    contentDescription = null,
+                    tint = signAmountColor
+                )
+            }
+            
+            Column(
+                modifier = Modifier.weight(1f),
+                verticalArrangement = Arrangement.spacedBy(4.dp)
+            ) {
+                // Transaction Name
+                Text(
+                    text = name,
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        fontWeight = FontWeight.Medium
+                    ),
+                    color = MaterialTheme.colorScheme.onSurface,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+                
+                // Category with type badge if needed
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(grid_x1)
+                ) {
+                    val displayCategory = category.ifEmpty { 
+                        when (type) {
+                            TransactionType.TRANSFER.name -> "Transfer"
+                            TransactionType.UPDATE_ACCOUNT.name -> "Account Update"
+                            else -> "No Category"
+                        }
+                    }
+                    
+                    Text(
+                        text = displayCategory,
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.7f),
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis,
+                        modifier = Modifier.weight(1f, fill = false)
+                    )
+                    
+                    // Show type badge for special transaction types
+                    if (type == TransactionType.TRANSFER.name || type == TransactionType.UPDATE_ACCOUNT.name) {
+                        Box(
+                            modifier = Modifier
+                                .background(
+                                    color = signAmountColor.copy(alpha = 0.1f),
+                                    shape = RoundedCornerShape(8.dp)
+                                )
+                                .padding(horizontal = 6.dp, vertical = 2.dp)
+                        ) {
+                            Text(
+                                text = when (type) {
+                                    TransactionType.TRANSFER.name -> "Transfer"
+                                    TransactionType.UPDATE_ACCOUNT.name -> "Update"
+                                    else -> ""
+                                },
+                                style = MaterialTheme.typography.bodySmall.copy(
+                                    fontSize = 10.sp,
+                                    fontWeight = FontWeight.Medium
+                                ),
+                                color = signAmountColor
+                            )
+                        }
+                    }
+                }
+            }
+            
+            // Amount with better styling
+            Text(
+                text = signedAmount,
+                style = MaterialTheme.typography.bodyLarge.copy(
+                    fontWeight = FontWeight.SemiBold
+                ),
+                color = signAmountColor
+            )
+            
+            // Suffix icon if provided
+            if (suffixIcon != null) {
+                IconButton(
+                    onClick = { onIconClicked?.invoke() },
+                    modifier = Modifier.size(grid_x4)
+                ) {
+                    suffixIcon()
+                }
             }
         }
     }

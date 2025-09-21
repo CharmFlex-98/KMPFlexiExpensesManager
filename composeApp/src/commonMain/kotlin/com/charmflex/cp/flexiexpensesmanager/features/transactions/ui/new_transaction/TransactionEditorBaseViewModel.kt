@@ -53,6 +53,7 @@ import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.stateIn
@@ -134,8 +135,6 @@ internal abstract class TransactionEditorBaseViewModel(
                 expensesFieldsFlow(_viewState.value)
             } else if (_currentTransactionType.value == TransactionType.TRANSFER) {
                 transferFieldsFlow(_viewState.value)
-            } else if (_currentTransactionType.value == TransactionType.INCOME) {
-                incomeFieldsFlow(_viewState.value)
             }
         }
     }
@@ -295,55 +294,56 @@ internal abstract class TransactionEditorBaseViewModel(
     }
 
     private suspend fun FlowCollector<CurrencyExchangeViewState>.incomeFieldsFlow(it: TransactionEditorViewState) {
-        val toAccountField = it.fields.firstOrNull { it.id == TRANSACTION_TO_ACCOUNT }
-        val toAccount = toAccountField?.let {
-            if (it.valueItem.id.isBlank()) return@let null
-            accountRepository.getAccountById(it.valueItem.id.toInt())
-        }
-        val incomeAmount = it.fields.firstOrNull { it.id == TRANSACTION_AMOUNT }?.valueItem?.value
+//        emit(emptyFlow<CurrencyExchangeViewState>())
+//        val toAccountField = it.fields.firstOrNull { it.id == TRANSACTION_TO_ACCOUNT }
+//        val toAccount = toAccountField?.let {
+//            if (it.valueItem.id.isBlank()) return@let null
+//            accountRepository.getAccountById(it.valueItem.id.toInt())
+//        }
+//        val incomeAmount = it.fields.firstOrNull { it.id == TRANSACTION_AMOUNT }?.valueItem?.value
+//
+//        val toAccountCurrency = toAccount?.currency
+//
+//        // Common check
+//        if (incomeAmount.isNullOrBlank() || toAccountCurrency.isNullOrBlank()) {
+//            emit(CurrencyExchangeViewState.empty())
+//            return
+//        }
 
-        val toAccountCurrency = toAccount?.currency
-
-        // Common check
-        if (incomeAmount.isNullOrBlank() || toAccountCurrency.isNullOrBlank()) {
-            emit(CurrencyExchangeViewState.empty())
-            return
-        }
-
-        val rate = currencyService.getCurrencyRate(
-            _primaryCurrency,
-            toAccountCurrency
-        )?.rate
-        if (rate == null) {
-            emit(CurrencyExchangeViewState.empty())
-            return
-        }
-
-        val convertedAmount = rateExchangeManager.convertTo(
-            incomeAmount.toLong(),
-            _primaryCurrency,
-            toAccountCurrency,
-            rate.toFloat()
-        )
-        val convertedAmountFormatted = currencyFormatter.formatTo(
-            incomeAmount.toLong(),
-            _primaryCurrency,
-            toAccountCurrency,
-            rate.toFloat()
-        )
-        emit(
-            CurrencyExchangeViewState(
-                transactionCurrencyViewState = CurrencyViewState(
-                    type = CurrencyViewState.Type.TRANSACTION,
-                    fromCurrency = toAccountCurrency,
-                    toCurrency = _primaryCurrency,
-                    fromCurrencyAmount = incomeAmount,
-                    toCurrencyAmount = convertedAmount,
-                    toCurrencyAmountFormatted = convertedAmountFormatted,
-                    rate = rate.toString()
-                )
-            )
-        )
+//        val rate = currencyService.getCurrencyRate(
+//            _primaryCurrency,
+//            toAccountCurrency
+//        )?.rate
+//        if (rate == null) {
+//            emit(CurrencyExchangeViewState.empty())
+//            return
+//        }
+//
+//        val convertedAmount = rateExchangeManager.convertTo(
+//            incomeAmount.toLong(),
+//            _primaryCurrency,
+//            toAccountCurrency,
+//            rate.toFloat()
+//        )
+//        val convertedAmountFormatted = currencyFormatter.formatTo(
+//            incomeAmount.toLong(),
+//            _primaryCurrency,
+//            toAccountCurrency,
+//            rate.toFloat()
+//        )
+//        emit(
+//            CurrencyExchangeViewState(
+//                transactionCurrencyViewState = CurrencyViewState(
+//                    type = CurrencyViewState.Type.TRANSACTION,
+//                    fromCurrency = toAccountCurrency,
+//                    toCurrency = _primaryCurrency,
+//                    fromCurrencyAmount = incomeAmount,
+//                    toCurrencyAmount = convertedAmount,
+//                    toCurrencyAmountFormatted = convertedAmountFormatted,
+//                    rate = rate.toString()
+//                )
+//            )
+//        )
     }
 
     fun onCurrencyViewTapped(state: CurrencyViewState?) {
@@ -700,6 +700,7 @@ internal abstract class TransactionEditorBaseViewModel(
         return viewModelScope.launch {
             updateFields()
             updateCategories(transactionType)
+            _currencyExchangeViewState.tryEmit(CurrencyExchangeViewState.empty())
         }
     }
 
@@ -959,6 +960,10 @@ internal abstract class TransactionEditorBaseViewModel(
             return
         }
 
+        val toAccount = toAccountId.let {
+            accountRepository.getAccountById(it.toInt())
+        }
+
         submitIncome(
             id = dataId,
             name = name,
@@ -966,7 +971,7 @@ internal abstract class TransactionEditorBaseViewModel(
             amount = amount.toLong(),
             categoryId = categoryId.toInt(),
             transactionDate = date,
-            currency = transactionCurrencyViewState?.fromCurrency ?: "",
+            currency = toAccount.currency,
             primaryMinorUnitAmount = primaryAmount.toLong(),
             tagIds = if (tagIds.isNullOrBlank()) listOf() else tagIds.split(", ")
                 .map { it.toInt() },
@@ -1000,6 +1005,8 @@ internal abstract class TransactionEditorBaseViewModel(
             toggleLoader(false)
             return
         }
+        val fromAccount = accountRepository.getAccountById(fromAccountId.toInt())
+
 
         submitTransfer(
             id = dataId,
@@ -1008,7 +1015,7 @@ internal abstract class TransactionEditorBaseViewModel(
             toAccountId = toAccountId.toInt(),
             amount = amount.toLong(),
             transactionDate = date,
-            currency = transactionCurrencyExchangeViewState?.fromCurrency ?: "",
+            currency = fromAccount.currency,
             accountMinorUnitAmount = accountAmount.toLong(),
             tagIds = if (tagIds.isNullOrBlank()) listOf() else tagIds.split(", ")
                 .map { it.toInt() },
@@ -1163,7 +1170,8 @@ internal data class TransactionEditorViewState(
     }
 
     data class AccountSelectionBottomSheetState(
-        override val feField: FEField
+        override val feField: FEField,
+        val selectedAccountGroup: AccountGroup? = null
     ) : BottomSheetState {
         override val editable: Boolean
             get() = true

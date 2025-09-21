@@ -29,7 +29,8 @@ internal class AccountRepositoryImpl  constructor(
         return AccountGroup.Account(
             accountId = res.id,
             accountName = res.name,
-            currency = res.currency
+            currency = res.currency,
+            isDeleted = res.isDeleted
         )
     }
 
@@ -58,7 +59,8 @@ internal class AccountRepositoryImpl  constructor(
                             AccountGroup.Account(
                                 accountId = acc.account!!.accountId,
                                 accountName = acc.account.accountName,
-                                currency = acc.account.currency
+                                currency = acc.account.currency,
+                                isDeleted = acc.account.isDeleted
                             )
                         }
                     )
@@ -90,7 +92,8 @@ internal class AccountRepositoryImpl  constructor(
                                         balance = balance,
                                         balanceInPrimaryCurrency = rateExchangeManager.convertTo(balance, primaryCurrency, acc.currency, rate ?: 1f).toLong(),
                                         currency = acc.currency,
-                                        hasError = rate == null
+                                        hasError = rate == null,
+                                        isDeleted = acc.isDeleted
                                     )
                                 }
                         )

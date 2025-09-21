@@ -18,7 +18,6 @@ internal fun DashboardScreen(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(grid_x2)
     ) {
         plugins.forEach {
             with(it) { Render() }

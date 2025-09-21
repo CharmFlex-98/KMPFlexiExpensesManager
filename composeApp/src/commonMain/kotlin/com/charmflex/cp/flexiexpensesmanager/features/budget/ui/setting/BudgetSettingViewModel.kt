@@ -42,10 +42,13 @@ internal class BudgetSettingViewModel (
     val viewState = _viewState.asStateFlow()
 
     init {
-        checkFeature()
         observeTransactionCategories()
         initPrimaryCurrency()
         observeBudgetList()
+    }
+
+    fun init() {
+        checkFeature()
     }
 
     private fun checkFeature() {

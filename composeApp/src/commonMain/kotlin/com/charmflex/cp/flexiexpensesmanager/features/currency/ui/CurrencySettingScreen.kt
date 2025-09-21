@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.BottomSheetItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
@@ -94,11 +95,10 @@ internal fun CurrencySettingScreen(
                 get() = it
         } },
     ) { _, item ->
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { viewModel.onCurrencySelected(item.key) }) {
-            Text(text = item.key)
+        BottomSheetItem(
+            name = item.key
+        ) {
+            viewModel.onCurrencySelected(item.key)
         }
     }
 }

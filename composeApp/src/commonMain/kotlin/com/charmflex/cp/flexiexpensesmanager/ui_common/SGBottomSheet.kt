@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.navigationBarsPadding
@@ -181,7 +182,11 @@ internal fun SearchBottomSheet(
             Spacer(modifier = Modifier.height(grid_x1))
             Box(modifier = Modifier.wrapContentSize()) {
                 ListTable(items = filteredItems) { index, item ->
-                    itemLayout(index, item)
+                    Box(
+                        modifier = Modifier.fillMaxSize().padding(vertical = grid_x1)
+                    ) {
+                        itemLayout(index, item)
+                    }
                 }
             }
         }

@@ -8,6 +8,7 @@ internal data class AccountGroupSummary(
     data class AccountSummary(
         val accountId: Int,
         val accountName: String,
+        val isDeleted: Boolean,
         val balance: Long,
         val balanceInPrimaryCurrency: Long,
         val currency: String,

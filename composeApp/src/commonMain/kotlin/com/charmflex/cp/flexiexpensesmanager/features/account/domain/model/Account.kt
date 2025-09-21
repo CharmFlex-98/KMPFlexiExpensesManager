@@ -12,6 +12,7 @@ internal data class AccountGroup(
     data class Account(
         val accountId: Int,
         val accountName: String,
-        val currency: String
+        val currency: String,
+        val isDeleted: Boolean
     )
 }

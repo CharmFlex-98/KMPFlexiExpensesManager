@@ -81,13 +81,6 @@ internal abstract class TransactionEditorContentProvider {
                 labelId = Res.string.generic_category,
                 hintId = Res.string.generic_category_hint,
                 type = FEField.FieldType.Callback
-            ),
-            FEField(
-                id = TRANSACTION_TAG,
-                labelId = Res.string.new_transaction_tag_label,
-                hintId = Res.string.new_transaction_tag_hint,
-                type = FEField.FieldType.Callback,
-                allowClear = true
             )
         )
     }

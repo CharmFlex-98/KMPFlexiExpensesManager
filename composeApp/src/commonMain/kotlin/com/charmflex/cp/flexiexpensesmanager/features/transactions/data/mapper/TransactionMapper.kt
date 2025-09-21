@@ -8,7 +8,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.
 import org.koin.core.annotation.Factory
 
 @Factory
-internal class TransactionMapper constructor() : Mapper<TransactionResponse, Transaction> {
+internal class TransactionMapper : Mapper<TransactionResponse, Transaction> {
     override fun map(from: TransactionResponse): Transaction {
         return Transaction(
             transactionId = from.transactionId,
@@ -20,8 +20,8 @@ internal class TransactionMapper constructor() : Mapper<TransactionResponse, Tra
             primaryMinorUnitAmount = from.primaryMinorUnitAmount,
             currency = from.currency,
             transactionCategory = getCategory(from.categoryId, from.categoryName),
-            transactionAccountFrom = getTransactionAccount(from.accountFromId, from.accountFromName, from.accountFromCurrency),
-            transactionAccountTo = getTransactionAccount(from.accountToId, from.accountToName, from.accountToCurrency),
+            transactionAccountFrom = getTransactionAccount(from.accountFromId, from.accountFromName, from.accountFromCurrency, from.accountFromDeleted),
+            transactionAccountTo = getTransactionAccount(from.accountToId, from.accountToName, from.accountToCurrency, from.accountToDeleted),
             // TODO: Not supported yet
             tags = from.tagIds?.let {
                 it.split(", ").mapIndexed { index, it ->
@@ -34,7 +34,7 @@ internal class TransactionMapper constructor() : Mapper<TransactionResponse, Tra
         )
     }
 
-    private fun getTransactionAccount(accountId: Int?, accountName: String?, currency: String?): AccountGroup.Account? {
+    private fun getTransactionAccount(accountId: Int?, accountName: String?, currency: String?, isDeleted: Boolean): AccountGroup.Account? {
         if (accountId == null) return null
         if (accountName == null) return null
         if (currency == null) return null;
@@ -42,7 +42,8 @@ internal class TransactionMapper constructor() : Mapper<TransactionResponse, Tra
         return AccountGroup.Account(
             accountId = accountId,
             accountName = accountName,
-            currency = currency
+            currency = currency,
+            isDeleted = isDeleted
         )
     }
 

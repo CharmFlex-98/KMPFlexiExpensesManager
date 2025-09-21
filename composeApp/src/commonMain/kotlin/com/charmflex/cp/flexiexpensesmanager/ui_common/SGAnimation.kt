@@ -77,7 +77,7 @@ fun NoResultAnimation(
     SGLottieAnimation(
         modifier = modifier.size(grid_x14),
         composition = composition,
-        iterations = 1
+        iterations = Compottie.IterateForever
     )
 }
 
@@ -163,7 +163,7 @@ fun Loader(
     SGLottieAnimation(
         modifier = modifier.size(grid_x10),
         composition = composition,
-        iterations = LottieConstants.IterateForever
+        iterations = Compottie.IterateForever
     )
 }
 
@@ -230,7 +230,7 @@ fun Money3DAnimation(
     SGLottieAnimation(
         modifier = modifier.size(grid_x10),
         composition = composition,
-        iterations = LottieConstants.IterateForever
+        iterations = Compottie.IterateForever
     )
 }
 

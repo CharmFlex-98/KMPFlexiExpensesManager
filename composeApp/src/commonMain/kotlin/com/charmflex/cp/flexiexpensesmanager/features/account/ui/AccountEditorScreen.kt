@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.dp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyTextFieldOutputFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyVisualTransformation
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction.BottomSheetItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
@@ -120,7 +121,7 @@ internal fun AccountEditorScreen(
     }
 
     SGScaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(grid_x2),
         topBar = {
             BasicTopBar(title = title)
         },
@@ -132,7 +133,7 @@ internal fun AccountEditorScreen(
             exit = slideOutHorizontally(targetOffsetX = { it })
         ) {
             EditorScreen(
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp),
+                modifier = Modifier.padding(vertical = 16.dp),
                 editorLabel = editorLabel,
                 viewState = viewState,
                 updateAccountName = viewModel::updateAccountName,
@@ -148,7 +149,6 @@ internal fun AccountEditorScreen(
 
         if (!isEditorOpened) {
             MainContentScreen(
-                modifier = Modifier.padding(horizontal = 16.dp),
                 viewState = viewState,
                 onSelectAccountGroup = viewModel::selectAccountGroup,
                 onDeleteAccount = { accountId ->
@@ -189,31 +189,10 @@ internal fun AccountEditorScreen(
                         }
                     },
                 ) { _, item ->
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                viewModel.onBottomSheetItemSelected(item.key)
-                            }
-                            .padding(grid_x0_25),
-                        shape = RoundedCornerShape(12.dp),
-                        elevation = CardDefaults.cardElevation(2.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        )
+                    BottomSheetItem(
+                        name = item.key,
                     ) {
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(20.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text(
-                                text = item.key,
-                                style = MaterialTheme.typography.bodyLarge,
-                                fontWeight = FontWeight.Medium
-                            )
-                        }
+                        viewModel.onBottomSheetItemSelected(item.key)
                     }
                 }
             }

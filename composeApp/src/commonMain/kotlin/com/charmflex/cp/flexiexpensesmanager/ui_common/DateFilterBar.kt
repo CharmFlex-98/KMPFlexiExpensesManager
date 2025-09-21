@@ -1,7 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -10,9 +8,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -20,7 +22,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.unit.dp
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.SHORT_MONTH_YEAR_PATTERN
@@ -29,7 +31,6 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusMonths
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.minusYears
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.FilterMenuDropDownItem
-import com.kizitonwose.calendar.compose.rememberCalendarState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.datetime.LocalDate
@@ -133,17 +134,25 @@ fun DateFilterMenuSelection(
     onDismiss: () -> Unit,
     onDateFilterChanged: (DateFilter) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .clickable {
-                onMenuTap()
-            }
-            .border(BorderStroke(grid_x0_25, color = Color.Black))
-            .padding(
-                grid_x1
+    Box {
+        Card(
+            modifier = Modifier
+                .clickable { onMenuTap() },
+            shape = RoundedCornerShape(grid_x1_5),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surfaceVariant
+            ),
+            elevation = CardDefaults.cardElevation(
+                defaultElevation = 1.dp,
+                pressedElevation = 3.dp
             )
-    ) {
-        FECallout3(text = menuName)
+        ) {
+            FECallout3(
+                modifier = Modifier.padding(horizontal = grid_x2, vertical = grid_x1),
+                text = menuName
+            )
+        }
+        
         DropdownMenu(
             expanded = dropDownExpanded,
             onDismissRequest = onDismiss

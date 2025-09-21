@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.budget.destinations
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
@@ -24,6 +25,10 @@ internal class BudgetDestinationBuilder : DestinationBuilder {
             val viewModel: BudgetSettingViewModel = getViewModel {
                 appComponent.budgetSettingViewModel()
             }
+            LaunchedEffect(Unit) {
+                viewModel.init()
+            }
+
             BudgetSettingScreen(budgetSettingViewModel = viewModel)
         }
     }

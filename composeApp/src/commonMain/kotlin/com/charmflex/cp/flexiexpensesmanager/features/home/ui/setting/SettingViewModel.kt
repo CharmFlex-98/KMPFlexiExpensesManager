@@ -226,10 +226,6 @@ internal class SettingViewModel  constructor(
                 action = SettingAction.PRIMARY_CURRENCY
             ),
             SettingActionable(
-                title = "Set tag",
-                action = SettingAction.Tag
-            ),
-            SettingActionable(
                 title = "Export",
                 action = SettingAction.Export
             ),
@@ -269,8 +265,8 @@ internal sealed interface SettingDialogState {
         override val subtitle: StringResource = Res.string.setting_factory_reset_dialog_subtitle,
         val selection: ResetType?
     ) : SettingDialogState {
-        enum class ResetType {
-            TRANSACTION_ONLY, ALL
+        enum class ResetType(val value: String) {
+            TRANSACTION_ONLY("Transaction Only"), ALL("All")
         }
     }
 }

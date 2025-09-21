@@ -13,6 +13,8 @@ internal data class AccountSummaryResponse(
     val accountName: String?,
     @ColumnInfo("currency")
     val currency: String?,
+    @ColumnInfo("is_deleted")
+    val isDeleted: Boolean,
     @ColumnInfo("out_amount")
     val outAmount: Long,
     @ColumnInfo("in_amount")

@@ -49,7 +49,9 @@ internal class TransactionHistoryMapper constructor(
                     items = history.map {
                         val bankTransactionAccount = if (it.transactionTypeCode == TransactionType.EXPENSES.toString()) {
                             it.transactionAccountFrom
-                        } else it.transactionAccountTo
+                        } else if (it.transactionTypeCode == TransactionType.UPDATE_ACCOUNT.toString()) {
+                            it.transactionAccountFrom ?: it.transactionAccountTo
+                        }else it.transactionAccountTo
 
                         TransactionHistorySection.SectionItem(
                             id = it.transactionId,

@@ -55,20 +55,23 @@ internal class ImportDataViewModel constructor(
 
     init {
         viewModelScope.launch {
-            val isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
-            _viewState.update {
-                it.copy(
-                    isFeatureEnabled = isFeatureEnabled
-                )
-            }
-        }
-        viewModelScope.launch {
             backupManager.progress.collectLatest { progress ->
                 _viewState.update {
                     it.copy(
                         progress = progress
                     )
                 }
+            }
+        }
+    }
+
+    fun init() {
+        viewModelScope.launch {
+            val isFeatureEnabled = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
+            _viewState.update {
+                it.copy(
+                    isFeatureEnabled = isFeatureEnabled
+                )
             }
         }
     }

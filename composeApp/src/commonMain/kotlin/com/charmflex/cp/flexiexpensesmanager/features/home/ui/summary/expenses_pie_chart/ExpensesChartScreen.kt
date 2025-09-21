@@ -1,8 +1,8 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart
 
 import androidx.compose.animation.core.TweenSpec
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
@@ -13,14 +13,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -30,6 +32,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
@@ -44,6 +47,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.FECallout3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGMediumPrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x47
 import com.patrykandpatrick.vico.multiplatform.cartesian.CartesianChartHost
@@ -62,7 +66,6 @@ import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
 import kotlin.random.Random
 
-
 @Composable
 internal fun ColumnScope.ExpensesChartScreen(
     viewModel: ExpensesChartViewModel
@@ -72,9 +75,7 @@ internal fun ColumnScope.ExpensesChartScreen(
     val chartType = chartViewState.chartType
     val dateFilter by viewModel.dateFilter.collectAsState()
     Column(
-        modifier = Modifier
-            .padding(horizontal = grid_x1)
-            .weight(1f)
+        modifier = Modifier.weight(1f)
     ) {
         DateFilterBar(
             currentDateFilter = dateFilter,
@@ -83,19 +84,17 @@ internal fun ColumnScope.ExpensesChartScreen(
             }
         )
         Row(modifier = Modifier.padding(vertical = grid_x1)) {
-            TextButton(
+            ChartActionCard(
+                text = stringResource(Res.string.budget_detail_home_button),
                 onClick = { viewModel.onNavigateBudgetDetail() },
-                border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.tertiary)
-            ) {
-                FECallout3(text = stringResource(Res.string.budget_detail_home_button))
-            }
-            Spacer(modifier = Modifier.weight(1f))
-            TextButton(
+                modifier = Modifier.weight(1f)
+            )
+            Spacer(modifier = Modifier.padding(horizontal = grid_x1))
+            ChartActionCard(
+                text = stringResource(Res.string.expenses_chart_detail_button),
                 onClick = { viewModel.onNavigateExpensesDetailPage() },
-                border = BorderStroke(width = 1.dp, MaterialTheme.colorScheme.tertiary)
-            ) {
-                FECallout3(text = stringResource(Res.string.expenses_chart_detail_button))
-            }
+                modifier = Modifier.weight(1f)
+            )
         }
 
         TabRow(selectedTabIndex = chartType.index) {
@@ -201,26 +200,63 @@ private val daysOfWeek = listOf("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")
 private val columnColors = listOf(Color(0xff3e6558), Color(0xff5e836a), Color(0xffa5ba8e))
 
 @Composable
+private fun ChartActionCard(
+    text: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .shadow(
+                elevation = 2.dp,
+                shape = RoundedCornerShape(grid_x1_5),
+                spotColor = Color.Black.copy(alpha = 0.6f)
+            )
+            .clickable { onClick() },
+        shape = RoundedCornerShape(grid_x1_5),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface
+        ),
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = 0.dp,
+            pressedElevation = 4.dp
+        )
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = grid_x1_5, horizontal = grid_x2),
+            contentAlignment = Alignment.Center
+        ) {
+            FECallout3(
+                text = text,
+                color = MaterialTheme.colorScheme.onSurface
+            )
+        }
+    }
+}
+
+@Composable
 private fun ComposeChart6(
     viewState: ExpensesPieChartViewState,
 ) {
     val modelProducer = remember { CartesianChartModelProducer() }
-    
+
     // Extract category names for x-axis labels
     val categoryNames = remember(viewState.barChartData) {
         viewState.barChartData.categoryExpensesAmount.mapIndexed { index, (categoryName, _) ->
             index.toDouble() to categoryName
         }.toMap()
     }
-    
+
     LaunchedEffect(viewState.barChartData) {
         modelProducer.runTransaction {
             // Learn more: https://patrykandpatrick.com/3aqy4o.
             columnSeries {
                 val yValues = viewState.barChartData.categoryExpensesAmount.map { it.second }
                 // Use indices as x values since we'll format them to show category names
-                val xValues = viewState.barChartData.categoryExpensesAmount.mapIndexed { index, _ -> 
-                    index.toFloat() 
+                val xValues = viewState.barChartData.categoryExpensesAmount.mapIndexed { index, _ ->
+                    index.toFloat()
                 }
                 series(x = xValues, y = yValues)
             }
@@ -228,24 +264,24 @@ private fun ComposeChart6(
     }
     CartesianChartHost(
         chart =
-        rememberCartesianChart(
-            rememberColumnCartesianLayer(),
-            startAxis = VerticalAxis.rememberStart(
-                titleComponent = rememberTextComponent(
-                    style = TextStyle(fontSize = 9.sp),
+            rememberCartesianChart(
+                rememberColumnCartesianLayer(),
+                startAxis = VerticalAxis.rememberStart(
+                    titleComponent = rememberTextComponent(
+                        style = TextStyle(fontSize = 9.sp),
+                    ),
+                    title = "${stringResource(Res.string.generic_expenses)} (${viewState.currency})",
                 ),
-                title = "${stringResource(Res.string.generic_expenses)} (${viewState.currency})",
-            ),
-            bottomAxis = HorizontalAxis.rememberBottom(
-                titleComponent = rememberTextComponent(
-                    style = TextStyle(fontSize = 9.sp)
+                bottomAxis = HorizontalAxis.rememberBottom(
+                    titleComponent = rememberTextComponent(
+                        style = TextStyle(fontSize = 9.sp)
+                    ),
+                    title = "Category",
+                    valueFormatter = { _, value, _ ->
+                        categoryNames[value] ?: ""
+                    }
                 ),
-                title = "Category",
-                valueFormatter = { _, value, _->
-                    categoryNames[value] ?: ""
-                }
             ),
-        ),
         modelProducer = modelProducer,
         modifier = Modifier,
     )

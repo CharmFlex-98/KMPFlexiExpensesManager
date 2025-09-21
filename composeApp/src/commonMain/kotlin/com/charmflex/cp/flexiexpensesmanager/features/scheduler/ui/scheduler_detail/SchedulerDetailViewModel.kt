@@ -1,4 +1,4 @@
-package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail
+package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.scheduler_detail
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
@@ -10,42 +10,42 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.ScheduledTransaction
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.Transaction
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.repositories.TransactionRepository
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_detail.TransactionDetailViewState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.onCompletion
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @org.koin.core.annotation.Factory
-internal class TransactionDetailViewModelFactory  constructor(
+internal class SchedulerDetailViewModelFactory  constructor(
     private val routeNavigator: RouteNavigator,
-    private val transactionRepository: TransactionRepository,
+    private val schedulerDetailRepository: TransactionSchedulerRepository,
     private val resourcesProvider: ResourcesProvider,
     private val currencyFormatter: CurrencyFormatter
 ) {
-    fun create(transactionId: Long): TransactionDetailViewModel {
-        return TransactionDetailViewModel(
+    fun create(transactionId: Long): SchedulerDetailViewModel {
+        return SchedulerDetailViewModel(
             transactionId = transactionId,
             routeNavigator = routeNavigator,
-            transactionRepository = transactionRepository,
+            schedulerRepository = schedulerDetailRepository,
             resourcesProvider = resourcesProvider,
             currencyFormatter = currencyFormatter
         )
     }
 }
-internal class TransactionDetailViewModel(
+internal class SchedulerDetailViewModel(
     private val transactionId: Long,
     private val routeNavigator: RouteNavigator,
-    private val transactionRepository: TransactionRepository,
+    private val schedulerRepository: TransactionSchedulerRepository,
     private val resourcesProvider: ResourcesProvider,
     private val currencyFormatter: CurrencyFormatter
 ) : ViewModel() {
@@ -61,41 +61,46 @@ internal class TransactionDetailViewModel(
 
     private fun loadDetail() {
         viewModelScope.launch {
-            val transaction = transactionRepository.getTransactionById(transactionId = transactionId)
-                .onStart { toggleLoader(true) }
-                .onCompletion { toggleLoader(false) }
-                .catch {
-                    snackBarState.value = SnackBarState.Error(
-                        message = resourcesProvider.getString(Res.string.generic_something_went_wron)
+            toggleLoader(true)
+            try {
+                val transaction: ScheduledTransaction = schedulerRepository.getTransactionSchedulerById(id = transactionId)
+                    ?: return@launch
+
+                _viewState.update {
+                    val transactionAccount = if (transaction.transactionType == TransactionType.EXPENSES) {
+                        transaction.accountFrom
+                    } else transaction.accountTo
+
+                    it.copy(
+                        detail = TransactionDetailViewState.Detail(
+                            transactionId = transaction.id.toLong(),
+                            transactionName = transaction.transactionName,
+                            transactionAccountFrom = transaction.accountFrom,
+                            transactionAccountTo = transaction.accountTo,
+                            transactionTypeCode = transaction.transactionType.toString(),
+                            formattedTransactionAmount = currencyFormatter.format(
+                                transaction.minorUnitAmount,
+                                transaction.currency
+                            ),
+                            formattedAccountTransactionAmount = transactionAccount?.let { account ->
+                                currencyFormatter.format(
+                                    transaction.accountMinorUnitAmount,
+                                    account.currency
+                                )
+                            } ?: "",
+                            transactionDate = "start: ${transaction.startUpdateDate} (${
+                                transaction.schedulerPeriod.toString().lowercase()
+                            }) \nnext: ${transaction.nextUpdateDate}",
+                            transactionCategory = transaction.category,
+                        )
                     )
                 }
-                .firstOrNull()
-            if (transaction == null) return@launch
-            
-            _viewState.update {
-                val transactionAccount = if (transaction.transactionTypeCode == TransactionType.EXPENSES.toString()) {
-                    transaction.transactionAccountFrom
-                } else transaction.transactionAccountTo
-
-                it.copy(
-                    detail = TransactionDetailViewState.Detail(
-                        transactionId = transaction.transactionId,
-                        transactionName = transaction.transactionName,
-                        transactionAccountFrom = transaction.transactionAccountFrom,
-                        transactionAccountTo = transaction.transactionAccountTo,
-                        transactionTypeCode = transaction.transactionTypeCode,
-                        formattedTransactionAmount = currencyFormatter.format(
-                            transaction.minorUnitAmount,
-                            transaction.currency
-                        ),
-                        formattedAccountTransactionAmount = transactionAccount?.let { account -> currencyFormatter.format(
-                            transaction.accountMinorUnitAmount,
-                            account.currency
-                        ) } ?: "",
-                        transactionDate = transaction.transactionDate,
-                        transactionCategory = transaction.transactionCategory,
-                    )
+                toggleLoader(false)
+            } catch (e: Exception) {
+                snackBarState.value = SnackBarState.Error(
+                    message = resourcesProvider.getString(Res.string.generic_something_went_wron)
                 )
+                toggleLoader(false)
             }
         }
     }
@@ -115,7 +120,7 @@ internal class TransactionDetailViewModel(
     fun deleteTransaction() {
         viewModelScope.launch {
             resultOf {
-                transactionRepository.deleteTransactionById(transactionId)
+                schedulerRepository.removeSchedulerById(transactionId.toInt())
             }.fold(
                 onSuccess = {
                     _viewState.update {
@@ -157,7 +162,7 @@ internal class TransactionDetailViewModel(
     }
 }
 
-internal data class TransactionDetailViewState(
+internal data class SchedulerDetailViewState(
     val detail: Detail? = null,
     val isLoading: Boolean = false,
     val dialogState: DialogState? = null

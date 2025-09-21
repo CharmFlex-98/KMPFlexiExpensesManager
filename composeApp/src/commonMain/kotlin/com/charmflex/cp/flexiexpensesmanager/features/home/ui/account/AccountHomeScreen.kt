@@ -30,6 +30,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import com.charmflex.cp.flexiexpensesmanager.ui_common.DateFilterBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
@@ -61,7 +62,6 @@ internal fun AccountHomeScreen(viewModel: AccountHomeViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .verticalScroll(rememberScrollState())
-            .padding(horizontal = grid_x2, vertical = grid_x1)
     ) {
         // Date Filter Section
         DateFilterBar(
@@ -244,7 +244,8 @@ private fun AccountItem(
         ) {
             FEBody1(
                 text = account.accountName,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
+                textDecoration = if (account.isDeleted) TextDecoration.LineThrough else null
             )
         }
 

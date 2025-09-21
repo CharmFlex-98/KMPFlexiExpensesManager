@@ -1,12 +1,16 @@
 package com.charmflex.cp.flexiexpensesmanager.features.scheduler.ui.schedulerList
 
+import BillingRoutes
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TransactionRoute
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.repository.TransactionSchedulerRepository
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import kotlinproject.composeapp.generated.resources.Res
@@ -24,13 +28,32 @@ internal class SchedulerListViewModel  constructor(
     private val schedulerRepository: TransactionSchedulerRepository,
     private val routeNavigator: RouteNavigator,
     private val currencyFormatter: CurrencyFormatter,
-    private val resourcesProvider: ResourcesProvider
+    private val resourcesProvider: ResourcesProvider,
+    private val featureFlagService: FeatureFlagService
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(SchedulerListViewState())
     val viewState = _viewState.asStateFlow()
 
     init {
         observeSchedulerList()
+    }
+
+    fun init() {
+        initFeature()
+    }
+
+    fun navigateToDetail(id: Long) {
+        routeNavigator.navigateTo(SchedulerRoutes.SchedulerDetail(id))
+    }
+
+    private fun initFeature() {
+        viewModelScope.launch {
+            _viewState.update {
+                it.copy(
+                    isFeatureAllowed = featureFlagService.isPremiumFeatureAllowed(PremiumFeature.SCHEDULER)
+                )
+            }
+        }
     }
 
     private fun observeSchedulerList() {
@@ -61,6 +84,10 @@ internal class SchedulerListViewModel  constructor(
                 onFailure = {}
             )
         }
+    }
+
+    fun navigateToPurchaseScreen() {
+        routeNavigator.navigateTo(BillingRoutes.Root)
     }
 
     fun addScheduler() {
@@ -101,6 +128,7 @@ internal class SchedulerListViewModel  constructor(
 }
 
 internal data class SchedulerListViewState(
+    val isFeatureAllowed: Boolean = false,
     val schedulerItems: List<ScheduledTransactionUIItem> = listOf()
 )
 

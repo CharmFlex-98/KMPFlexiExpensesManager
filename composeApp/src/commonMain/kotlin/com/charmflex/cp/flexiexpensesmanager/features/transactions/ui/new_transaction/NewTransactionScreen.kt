@@ -1,11 +1,13 @@
 package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.FlowRow
@@ -13,16 +15,26 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberModalBottomSheetState
@@ -55,6 +67,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRAN
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEMetaData1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGActionDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGButtonGroupVertical
@@ -68,13 +82,19 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSmallPrimaryButton
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGTextField
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingText
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SupportingTextType
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_25
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x0_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import com.kizitonwose.calendar.compose.rememberCalendarState
@@ -85,6 +105,8 @@ import com.kizitonwose.calendar.core.plusMonths
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.DrawableResource
+import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
@@ -390,23 +412,29 @@ internal fun TransactionEditorScreen(
     }
 
     if (viewState.showBottomSheet) {
-        SGModalBottomSheet(
-            modifier = Modifier.padding(grid_x2),
-            sheetState = bottomSheetState,
-            onDismiss = { viewModel.toggleBottomSheet(null) }
-        ) {
-            Column {
-                viewState.bottomSheetState?.takeIf { it.editable }?.let {
-                    Box(
-                        modifier = Modifier.fillMaxWidth(),
-                        contentAlignment = Alignment.CenterEnd
-                    ) {
-                        SGSmallPrimaryButton(text = "EDIT") {
-                            viewModel.onBottomSheetOptionsEdit(it)
-                        }
-                    }
+        val state = viewState.bottomSheetState
+        if (state is TransactionEditorViewState.CurrencySelectionBottomSheetState) {
+            SearchBottomSheet(
+                sheetState = bottomSheetState,
+                onDismiss = { viewModel.toggleBottomSheet(null) },
+                searchFieldLabel = "Search currency",
+                items = viewState.currencyList.map { object : SearchItem {
+                    override val key: String
+                        get() = it
+                } },
+            ) { _, item ->
+                BottomSheetItem(
+                    name = item.key,
+                ) {
+                    viewModel.onCurrencySelected(item.key, state.feField)
                 }
-
+            }
+        } else {
+            SGModalBottomSheet(
+                modifier = Modifier.padding(grid_x2),
+                sheetState = bottomSheetState,
+                onDismiss = { viewModel.toggleBottomSheet(null) }
+            ) {
                 when (val bs = viewState.bottomSheetState) {
                     is TransactionEditorViewState.CategorySelectionBottomSheetState -> {
                         CategorySelectionBottomSheet(
@@ -419,56 +447,77 @@ internal fun TransactionEditorScreen(
                     }
 
                     is TransactionEditorViewState.AccountSelectionBottomSheetState -> {
-                        AccountSelectionBottomSheet(accountGroups = viewState.accountGroups) {
-                            viewModel.onSelectAccount(it, bs.feField)
-                            viewModel.toggleBottomSheet(null)
+                        if (bs.selectedAccountGroup == null) {
+                            EnhancedGeneralSelectionContent(
+                                items = viewState.accountGroups,
+                                getName = { it.accountGroupName },
+                                getSubtitle = { "${it.accounts.size} accounts"},
+                                suffixIcon = { Res.drawable.ic_arrow_next },
+                                headerContent = {
+                                    BottomSheetHeaderContent("Account group") {
+                                        viewModel.onBottomSheetOptionsEdit(bs)
+                                    }
+                                }
+                            ) {
+                                val newState = bs.copy(selectedAccountGroup = it)
+                                viewModel.toggleBottomSheet(newState)
+                            }
+                        } else {
+                            EnhancedGeneralSelectionContent(
+                                items = bs.selectedAccountGroup.accounts,
+                                getName = { it.accountName },
+                                headerContent = {
+                                    BottomSheetHeaderContent("Account") {
+                                        viewModel.onBottomSheetOptionsEdit(bs)
+                                    }
+                                }
+                            ) {
+                                viewModel.onSelectAccount(it, bs.feField)
+                                viewModel.toggleBottomSheet(null)
+                            }
                         }
                     }
 
-                    is TransactionEditorViewState.CurrencySelectionBottomSheetState -> {
-                        GeneralSelectionBottomSheet(
-                            title = stringResource(Res.string.currency_selection_bottomsheet_title),
-                            items = viewState.currencyList,
-                            name = { it }) {
-                            viewModel.onCurrencySelected(it, bs.feField)
-                            viewModel.toggleBottomSheet(null)
-                        }
-                    }
-
-                    is TransactionEditorViewState.TagSelectionBottomSheetState -> {
-                        GeneralSelectionBottomSheet(
-                            title = stringResource(Res.string.tag_selection_bottomsheet_title),
-                            items = viewState.tagList,
-                            name = { "#${it.name}" }) {
-                            viewModel.onTagSelected(it, bs.feField)
-                            viewModel.toggleBottomSheet(null)
-                        }
-                    }
+//                is TransactionEditorViewState.TagSelectionBottomSheetState -> {
+//                    GeneralSelectionBottomSheet(
+//                        title = stringResource(Res.string.tag_selection_bottomsheet_title),
+//                        items = viewState.tagList,
+//                        name = { "#${it.name}" }) {
+//                        viewModel.onTagSelected(it, bs.feField)
+//                        viewModel.toggleBottomSheet(null)
+//                    }
+//                }
 
                     is TransactionEditorViewState.PeriodSelectionBottomSheetState -> {
-                        GeneralSelectionBottomSheet(
-                            title = stringResource(Res.string.scheduler_period_selection_bottomsheet_title),
+                        EnhancedGeneralSelectionContent(
                             items = viewModel.scheduledPeriodType,
-                            name = { it.name }) { res ->
-                            viewModel.onPeriodSelected(res, bs.feField)
+                            getName = { it.name },
+                            headerContent = {
+                                FEHeading5(text = "Period")
+                            },
+                        ) {
+                            viewModel.onPeriodSelected(it, bs.feField)
                             viewModel.toggleBottomSheet(null)
                         }
                     }
 
                     is TransactionEditorViewState.UpdateTypeSelectionBottomSheetState -> {
-                        GeneralSelectionBottomSheet(
-                            title = stringResource(Res.string.update_account_type_selection_bottomsheet_title),
+                        EnhancedGeneralSelectionContent(
                             items = viewModel.updateAccountType,
-                            name = { it.name }) { selected ->
-                            viewModel.onFieldValueChanged(bs.feField, selected.name)
+                            getName = { it.name },
+                            headerContent = {
+                                FEHeading5(text = "Type")
+                            },
+                        ) {
+                            viewModel.onFieldValueChanged(bs.feField, it.name)
                             viewModel.toggleBottomSheet(null)
                         }
                     }
 
                     else -> {}
                 }
-            }
 
+            }
         }
     }
     SGSnackBar(snackBarHostState = snackbarHostState, snackBarType = SnackBarType.Error)
@@ -493,7 +542,7 @@ internal fun CategorySelectionBottomSheet(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        FEHeading2(text = "Category")
+        FEHeading4(text = "Category")
         Row(
             modifier = Modifier
                 .padding(top = grid_x2)
@@ -562,53 +611,117 @@ private fun CategoryList(
     }
 }
 
+
 @Composable
-private fun AccountSelectionBottomSheet(
-    accountGroups: List<AccountGroup>,
-    onSelectAccount: (AccountGroup.Account) -> Unit
+private fun <T> EnhancedGeneralSelectionContent(
+    modifier: Modifier = Modifier,
+    items: List<T>,
+    getName: (T) -> String,
+    getSubtitle: ((T) -> String)? = null,
+    getIcon: ((T) -> DrawableResource)? = null,
+    suffixIcon: ((T) -> DrawableResource?) = { null },
+    headerContent: @Composable (BoxScope.() -> Unit)? = null,
+    headerContentAlignment: Alignment = Alignment.TopStart,
+    onSelectItem: (T) -> Unit
 ) {
-    val scrollState = rememberScrollState()
-    var selectedGroup by remember {
-        mutableStateOf<AccountGroup?>(null)
+    Column {
+        Box(modifier = modifier.padding(vertical = grid_x2), headerContentAlignment) {
+            headerContent?.invoke(this)
+        }
+
+        LazyColumn(
+            verticalArrangement = Arrangement.spacedBy(grid_x1),
+            modifier = Modifier.heightIn(max = 400.dp)
+        ) {
+            items(items) { item ->
+                BottomSheetItem(
+                    name = getName(item),
+                    subtitle = getSubtitle?.invoke(item),
+                    icon = getIcon?.invoke(item),
+                    suffixIcon = suffixIcon.invoke(item),
+                    onItemSelected = { onSelectItem(item) }
+                )
+            }
+        }
     }
-    Column(
-        modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+}
+
+@Composable
+fun BottomSheetItem(
+    modifier: Modifier = Modifier,
+    name: String,
+    subtitle: String? = null,
+    icon: DrawableResource? = null,
+    suffixIcon: DrawableResource? = null,
+    onItemSelected: () -> Unit
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .clickable { onItemSelected() }
+            .padding(grid_x0_25),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondaryContainer
+        )
     ) {
-        FEHeading2(text = selectedGroup?.let { it.accountGroupName } ?: "Account")
-        Column(
+        Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .verticalScroll(state = scrollState)
+                .padding(grid_x2),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-
-            val selectedGroupAccounts = selectedGroup?.accounts
-            if (selectedGroupAccounts != null) {
-                selectedGroupAccounts.forEach {
+            if (icon != null) {
+                Surface(
+                    modifier = Modifier.size(grid_x2_5),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.7f)
+                ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                onSelectAccount(it)
-                            }
-                            .padding(grid_x1),
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        FEBody2(text = it.accountName)
+                        Icon(
+                            painter = painterResource(icon),
+                            contentDescription = null,
+                            modifier = Modifier.size(grid_x1_5),
+                            tint = MaterialTheme.colorScheme.primary
+                        )
                     }
                 }
-            } else {
-                accountGroups.forEach {
+
+                Spacer(modifier = Modifier.width(grid_x1_5))
+            }
+
+            Column(
+                modifier = Modifier.weight(1f),
+            ) {
+                FEBody2(
+                    text = name,
+                    color = MaterialTheme.colorScheme.primary
+                )
+
+                if (subtitle != null) {
+                    Spacer(modifier = Modifier.height(grid_x0_5))
+                    FEMetaData1(
+                        text = subtitle,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                    )
+                }
+            }
+
+
+            if (suffixIcon != null) {
+                Surface(
+                    modifier = Modifier.size(grid_x2),
+                    shape = CircleShape,
+                    color = MaterialTheme.colorScheme.outline.copy(alpha = 0.1f)
+                ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable {
-                                selectedGroup = it
-                            }
-                            .padding(grid_x1),
+                        modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        FEBody2(text = it.accountGroupName)
+                        Icon(modifier = modifier, painter = painterResource(suffixIcon), contentDescription = null)
                     }
                 }
             }
@@ -617,35 +730,18 @@ private fun AccountSelectionBottomSheet(
 }
 
 @Composable
-private fun <T> GeneralSelectionBottomSheet(
+private fun BottomSheetHeaderContent(
     title: String,
-    items: List<T>,
-    name: (T) -> String,
-    onSelectItem: (T) -> Unit
+    onClicked: () -> Unit
 ) {
-    Column(
+    Row(
         modifier = Modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.Start
+        verticalAlignment = Alignment.CenterVertically
     ) {
-        FEHeading2(text = title)
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .verticalScroll(state = rememberScrollState())
-        ) {
-            items.forEach {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .clickable {
-                            onSelectItem(it)
-                        }
-                        .padding(grid_x2),
-                    contentAlignment = Alignment.Center
-                ) {
-                    FEBody2(text = name(it))
-                }
-            }
+        FEHeading4(text = title)
+        Spacer(modifier = Modifier.weight(1f))
+        SGSmallPrimaryButton(text = "EDIT") {
+            onClicked()
         }
     }
 }
