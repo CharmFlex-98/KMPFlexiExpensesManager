@@ -168,7 +168,7 @@ internal class AndroidBillingManager(
 
                     billingClient?.launchBillingFlow(activity, purchaseParams)
                 } else {
-                    clientCallback?.invoke(PurchaseResult.Error("Product not found"))
+                    clientCallback?.invoke(PurchaseResult.Error(billingResult.responseCode.toString()))
                 }
             }
         }

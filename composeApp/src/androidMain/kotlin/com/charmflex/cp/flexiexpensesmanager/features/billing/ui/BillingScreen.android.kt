@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
@@ -20,7 +21,10 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.CompactProductCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.billing_setting_app_bar_title
 import kotlinproject.composeapp.generated.resources.budget_setting_app_bar_title
@@ -32,7 +36,16 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
     val activity = context as? Activity
 
     val viewState by viewModel.viewState.collectAsState()
+    val snackbarState by viewModel.snackBarState
+    val snackbarHostState = remember { SnackbarHostState() }
     val scrollState = rememberLazyListState()
+
+    LaunchedEffect(snackbarState) {
+        if (snackbarState.isNotBlank()) {
+            snackbarHostState.showSnackBarImmediately(snackbarState)
+            viewModel.resetState()
+        }
+    }
 
     if (activity == null) {
         NoResultContent(modifier = Modifier.fillMaxSize(), "Something went wrong. Please retry later")
@@ -74,4 +87,5 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
             }
         }
     }
+    SGSnackBar(snackBarHostState = snackbarHostState, snackBarType = SnackBarType.Error)
 }

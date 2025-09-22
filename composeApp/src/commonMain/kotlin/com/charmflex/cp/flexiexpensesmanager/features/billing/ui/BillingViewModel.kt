@@ -1,6 +1,9 @@
 package com.charmflex.cp.flexiexpensesmanager.features.billing.ui
 
 import ProductInfo
+import Purchase
+import PurchaseResult
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
@@ -25,6 +28,9 @@ internal class BillingViewModel(
     private val _viewState = MutableStateFlow(BillingViewState())
     val viewState = _viewState.asStateFlow()
 
+    var snackBarState = mutableStateOf("")
+        private set
+
     fun init() {
         viewModelScope.launch {
             val products = billingManager.queryProducts()
@@ -44,11 +50,23 @@ internal class BillingViewModel(
                     sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + productId, true)
                     eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_SUCCESS + productId))
                 }
-                else -> {
+                is PurchaseResult.Error -> {
+                    snackBarState.value = result.message
                     eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_FAILED + productId))
                 }
+
+                PurchaseResult.UserCanceled -> {
+                    snackBarState.value = "Purchase is cancelled"
+                    eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_FAILED + productId))
+                }
+
+                else -> {}
             }
         }
+    }
+
+    fun resetState() {
+        snackBarState.value = ""
     }
 }
 

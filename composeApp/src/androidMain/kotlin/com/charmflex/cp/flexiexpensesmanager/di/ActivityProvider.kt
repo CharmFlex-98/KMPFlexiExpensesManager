@@ -4,16 +4,21 @@ import android.app.Activity
 import java.lang.ref.WeakReference
 
 internal class ActivityProvider {
-    private var _currentActivity: WeakReference<Activity>? = null
-    val currentActivity get() = _currentActivity?.get()
+
+    val currentActivity: Activity?
+        get() {
+        activityStack.removeIf { it.get() == null }  // Clean dead refs
+        return activityStack.lastOrNull()?.get()
+    }
+
+    private val activityStack = arrayListOf<WeakReference<Activity>>()
 
     fun registerActivity(activity: Activity) {
-        _currentActivity = WeakReference(activity)
+        unregisterActivity(activity)
+        activityStack.add(WeakReference(activity))
     }
 
     fun unregisterActivity(activity: Activity) {
-        if (_currentActivity?.get() == activity) {
-            _currentActivity = null
-        }
+        activityStack.removeIf { it.get() == activity }
     }
 }
