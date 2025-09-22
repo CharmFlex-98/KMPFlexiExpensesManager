@@ -44,8 +44,7 @@ internal class BillingViewModel(
 
     fun purchaseProduct(productId: String) {
         viewModelScope.launch {
-            val result = billingManager.purchaseProduct(productId)
-            when (result) {
+            when (val result = billingManager.purchaseProduct(productId)) {
                 PurchaseResult.Success -> {
                     sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + productId, true)
                     eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_SUCCESS + productId))
