@@ -20,7 +20,7 @@ class BillingDestinationBuilder : DestinationBuilder {
 
     private fun NavGraphBuilder.billing() {
         composable<BillingRoutes.Root> {
-            val viewModel = getViewModel { appComponent.billingViewModel }
+            val viewModel = getViewModel { appComponent.billingViewModel() }
             LaunchedEffect(Unit) {
                 viewModel.init()
             }

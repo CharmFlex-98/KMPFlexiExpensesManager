@@ -1,7 +1,7 @@
 package com.charmflex.cp.flexiexpensesmanager.features.billing.ui
 
 import ProductInfo
-import Purchase
+import FEMPurchase
 import PurchaseResult
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -10,9 +10,9 @@ import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
-import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.event.BillingEventName
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
@@ -45,9 +45,15 @@ internal class BillingViewModel(
     fun purchaseProduct(productId: String) {
         viewModelScope.launch {
             when (val result = billingManager.purchaseProduct(productId)) {
-                PurchaseResult.Success -> {
-                    sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + productId, true)
-                    eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_SUCCESS + productId))
+                is PurchaseResult.Success -> {
+                    if (result.purchaseState == FEMPurchaseState.PURCHASED) {
+                        sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + productId, true)
+                        eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_SUCCESS + productId))
+                        return@launch
+                    }
+
+                    snackBarState.value = "The purchase is pending. The feature will be available once purchase validation is succeeded."
+                    eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_PENDING + productId))
                 }
                 is PurchaseResult.Error -> {
                     snackBarState.value = result.message

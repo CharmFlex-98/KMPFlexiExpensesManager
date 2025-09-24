@@ -20,14 +20,16 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         val appComponent = (application as AppComponentProvider).getAppComponent()
 
+
         val routeNavigator = appComponent.routeNavigator()
         val sessionManager = appComponent.sessionManager()
+        val toastManager = appComponent.toastManager()
 
         sessionManager.updateSessionState(SessionState.Start)
 
 
         setContent {
-            App(routeNavigator) {
+            App(routeNavigator, toastManager) {
                 this.finish()
             }
         }

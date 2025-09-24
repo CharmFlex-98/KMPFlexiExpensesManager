@@ -20,13 +20,14 @@ internal data class ProductInfo(
     }
 }
 
-internal data class Purchase(
+internal data class FEMPurchase(
     val orderId: String,
     val packageName: String,
     val productId: String,
     val purchaseTime: Long,
     val purchaseToken: String,
-    val isAcknowledged: Boolean
+    val isAcknowledged: Boolean,
+    val isPurchased: Boolean
 )
 
 internal enum class ProductType {
@@ -34,7 +35,13 @@ internal enum class ProductType {
 }
 
 sealed class PurchaseResult {
-    object Success : PurchaseResult()
+    data class Success(
+        val purchaseState: FEMPurchaseState
+    ) : PurchaseResult()
     object UserCanceled : PurchaseResult()
     data class Error(val message: String) : PurchaseResult()
+}
+
+enum class FEMPurchaseState {
+    PURCHASED, PENDING, UNKNOWN
 }

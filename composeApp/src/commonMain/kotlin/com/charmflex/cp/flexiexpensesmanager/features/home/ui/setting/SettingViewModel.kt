@@ -14,6 +14,7 @@ import com.charmflex.flexiexpensesmanager.core.navigation.routes.CurrencyRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.SchedulerRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.TagRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.getLocalDateTime
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataClearServiceType
@@ -33,8 +34,6 @@ import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
-import kotlinx.datetime.LocalDate
-import kotlinx.datetime.LocalDateTime
 import org.jetbrains.compose.resources.StringResource
 import org.koin.core.annotation.Factory
 
@@ -44,7 +43,8 @@ internal class SettingViewModel constructor(
     private val transactionBackupManager: TransactionBackupManager,
     private val appDataService: AppDataService,
     private val resourcesProvider: ResourcesProvider,
-    private val featureFlagService: FeatureFlagService
+    private val featureFlagService: FeatureFlagService,
+    private val toastManager: ToastManager
 ) : ViewModel() {
 
     private val _onDataClearedEvent: MutableSharedFlow<OnDataCleared> =
@@ -104,33 +104,32 @@ internal class SettingViewModel constructor(
                     featureFlagService.isPremiumFeatureAllowed(PremiumFeature.BACKUP)
                         .onSuccess { enabled ->
                             if (enabled) {
+                                val fileName = "FEM_export_${getLocalDateTime()}.xlsx"
                                 resultOf {
-                                    transactionBackupManager.write("test_export_${getLocalDateTime()}.xlsx")
+                                    transactionBackupManager.write(fileName)
                                 }.fold(
                                     onSuccess = {
                                         toggleLoader(false)
-                                        snackBarState.value = SnackBarState.Success("Done exporting")
-                                        onCreatedCompleted("fem_export_${getLocalDateTime()}.xlsx")
+                                        toastManager.postSuccess("Done exporting")
+                                        onCreatedCompleted(fileName)
                                     },
                                     onFailure = {
                                         toggleLoader(false)
-                                        snackBarState.value =
-                                            SnackBarState.Error("Error exporting: ${it.message}")
+                                        toastManager.postError("Error exporting: ${it.message}")
                                     }
                                 )
 
                                 return@launch
                             }
 
-                            snackBarState.value =
-                                SnackBarState.Error("This is a premium feature. Unlock it to access the feature.")
+                            toastManager.postError("This is a premium feature. Unlock it to access the feature.")
                             toggleLoader(false)
                         }
                         .onFailure { err ->
                             if (err is NetworkError) {
-                                snackBarState.value = SnackBarState.Error(resourcesProvider.getString(Res.string.network_error))
+                                toastManager.postError(resourcesProvider.getString(Res.string.network_error))
                             } else {
-                                snackBarState.value = SnackBarState.Error(err.message)
+                                toastManager.postError(err.message)
                             }
 
                             toggleLoader(false)
@@ -180,10 +179,6 @@ internal class SettingViewModel constructor(
         }
     }
 
-    fun refreshSnackBarState() {
-        snackBarState.value = SnackBarState.None
-    }
-
     fun closeDialog() {
         _viewState.update {
             it.copy(
@@ -224,7 +219,7 @@ internal class SettingViewModel constructor(
                     _onDataClearedEvent.tryEmit(OnDataCleared.Finish)
                 },
                 onFailure = {
-                    snackBarState.value = SnackBarState.Error("Failed to clear all data.")
+                    toastManager.postError("Failed to clear all data.")
                 }
             )
             toggleLoader(false)

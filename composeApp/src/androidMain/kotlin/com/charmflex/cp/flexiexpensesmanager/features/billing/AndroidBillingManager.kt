@@ -1,16 +1,16 @@
 package com.charmflex.cp.flexiexpensesmanager.features.billing
 
 import ProductInfo
-import Purchase
+import FEMPurchase
+import FEMPurchaseState
 import PurchaseResult
-import android.app.Activity
-import androidx.compose.ui.util.trace
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.ConsumeParams
 import com.android.billingclient.api.PendingPurchasesParams
+import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
@@ -18,15 +18,11 @@ import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
 import com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
-import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.BillingException
 import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
-import com.charmflex.cp.flexiexpensesmanager.features.billing.model.AndroidBillingInitOptions
-import com.charmflex.cp.flexiexpensesmanager.features.billing.model.InitOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.suspendCancellableCoroutine
-import java.lang.ref.WeakReference
 import kotlin.coroutines.resumeWithException
 
 internal class AndroidBillingManager(
@@ -174,7 +170,7 @@ internal class AndroidBillingManager(
         }
     }
 
-    override suspend fun queryPurchases(): List<Purchase> {
+    override suspend fun queryPurchases(): List<FEMPurchase> {
         return suspendCancellableCoroutine { continuation ->
             val params = QueryPurchasesParams.newBuilder()
                 .setProductType(BillingClient.ProductType.INAPP)
@@ -183,17 +179,18 @@ internal class AndroidBillingManager(
             billingClient?.queryPurchasesAsync(params) { billingResult, purchases ->
                 when (billingResult.responseCode) {
                     BillingClient.BillingResponseCode.OK -> {
-                        val purchaseList = purchases.map { purchase ->
-                            Purchase(
+                        val fEMPurchaseList = purchases.map { purchase ->
+                            FEMPurchase(
                                 orderId = purchase.orderId ?: "",
                                 packageName = purchase.packageName,
                                 productId = purchase.products.firstOrNull() ?: "",
                                 purchaseTime = purchase.purchaseTime,
                                 purchaseToken = purchase.purchaseToken,
-                                isAcknowledged = purchase.isAcknowledged
+                                isAcknowledged = purchase.isAcknowledged,
+                                isPurchased = purchase.purchaseState == Purchase.PurchaseState.PURCHASED
                             )
                         }
-                        continuation.resume(purchaseList) { _, _, _ -> }
+                        continuation.resume(fEMPurchaseList) { _, _, _ -> }
                     }
 
                     BillingClient.BillingResponseCode.NETWORK_ERROR, BillingClient.BillingResponseCode.SERVICE_DISCONNECTED, BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE -> {
@@ -227,19 +224,34 @@ internal class AndroidBillingManager(
 
     override fun onPurchasesUpdated(
         billingResult: BillingResult,
-        purchaseList: MutableList<com.android.billingclient.api.Purchase>?
+        purchaseList: MutableList<Purchase>?
     ) {
-        when (billingResult.responseCode) {
-            BillingClient.BillingResponseCode.OK -> {
-                clientCallback?.invoke(PurchaseResult.Success)
-            }
+        clientCallback?.let {
+            when (billingResult.responseCode) {
+                BillingClient.BillingResponseCode.OK -> {
+                    if (purchaseList.isNullOrEmpty()) {
+                        it.invoke(PurchaseResult.Error("No purchase is made."))
+                        clientCallback = null
+                        return
+                    }
+                    val purchaseState = when (purchaseList[0].purchaseState) {
+                        Purchase.PurchaseState.PURCHASED -> FEMPurchaseState.PURCHASED
+                        Purchase.PurchaseState.PENDING -> FEMPurchaseState.PENDING
+                        else -> FEMPurchaseState.UNKNOWN
+                    }
+                    it.invoke(PurchaseResult.Success(purchaseState))
+                    clientCallback = null
+                }
 
-            BillingClient.BillingResponseCode.USER_CANCELED -> {
-                clientCallback?.invoke(PurchaseResult.UserCanceled)
-            }
+                BillingClient.BillingResponseCode.USER_CANCELED -> {
+                    it.invoke(PurchaseResult.UserCanceled)
+                    clientCallback = null
+                }
 
-            else -> {
-                clientCallback?.invoke(PurchaseResult.Error("Purchase failed: ${billingResult.debugMessage}"))
+                else -> {
+                    it.invoke(PurchaseResult.Error("Purchase failed: ${billingResult.debugMessage}"))
+                    clientCallback = null
+                }
             }
         }
     }

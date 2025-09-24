@@ -103,7 +103,7 @@ internal fun CompactProductCard(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = product.productId,
+                    text = product.title,
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.SemiBold,
                     color = MaterialTheme.colorScheme.onSurface,

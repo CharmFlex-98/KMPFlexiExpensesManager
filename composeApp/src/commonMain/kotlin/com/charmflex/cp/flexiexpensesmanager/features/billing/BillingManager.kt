@@ -1,15 +1,14 @@
 package com.charmflex.cp.flexiexpensesmanager.features.billing
 
 import ProductInfo
-import Purchase
+import FEMPurchase
 import PurchaseResult
-import com.charmflex.cp.flexiexpensesmanager.features.billing.model.InitOptions
 
 
 internal interface BillingManager {
     suspend fun queryProducts(): List<ProductInfo>
     suspend fun purchaseProduct(productId: String): PurchaseResult
-    suspend fun queryPurchases(): List<Purchase>
+    suspend fun queryPurchases(): List<FEMPurchase>
     suspend fun consumePurchase(purchaseToken: String): Boolean
     fun cleanup()
 }

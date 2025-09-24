@@ -28,6 +28,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.session.di.SessionInjector
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.di.TransactionInjector
 import com.charmflex.cp.flexiexpensesmanager.core.di.MainInjector
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailViewModelFactory
@@ -84,6 +85,7 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun userCurrencyViewModel(): UserCurrencyViewModel = get()
     override fun sessionManager(): SessionManager = get()
     override fun routeNavigator(): RouteNavigator = get()
+    override fun toastManager(): ToastManager = get()
     override fun tagSettingViewModel(): TagSettingViewModel = get()
-    override val billingViewModel: BillingViewModel by inject()
+    override fun billingViewModel(): BillingViewModel = get()
 }

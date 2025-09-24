@@ -67,15 +67,6 @@ internal fun SettingScreen(
     onRefresh: () -> Unit
 ) {
     val viewState by viewModel.viewState.collectAsState()
-    val snackbarState by viewModel.snackBarState
-    val snackbarHostState = remember { SnackbarHostState() }
-    val snackbarType = remember(snackbarState) {
-        when (snackbarState) {
-            is SnackBarState.Success -> SnackBarType.Success
-            is SnackBarState.Error -> SnackBarType.Error
-            else -> null
-        }
-    }
 
     LaunchedEffect(key1 = Unit) {
         viewModel.onDataClearedEvent.collectLatest {
@@ -86,21 +77,6 @@ internal fun SettingScreen(
         }
     }
 
-    LaunchedEffect(key1 = snackbarState) {
-        when (val state = snackbarState) {
-            is SnackBarState.Error -> {
-                snackbarHostState.showSnackBarImmediately(state.message ?: "Something went wrong")
-                viewModel.refreshSnackBarState()
-            }
-
-            is SnackBarState.Success -> {
-                snackbarHostState.showSnackBarImmediately(state.message)
-                viewModel.refreshSnackBarState()
-            }
-
-            else -> {}
-        }
-    }
 
     Column(
         modifier = Modifier
@@ -147,10 +123,6 @@ internal fun SettingScreen(
             color = MaterialTheme.colorScheme.primary,
             strokeWidth = 3.dp
         )
-    }
-
-    snackbarType?.let {
-        SGSnackBar(snackBarHostState = snackbarHostState, snackBarType = it)
     }
 }
 

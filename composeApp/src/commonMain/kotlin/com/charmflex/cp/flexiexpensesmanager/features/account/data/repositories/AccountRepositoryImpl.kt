@@ -1,7 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.features.account.data.repositories
 
 import AccountRepository
+import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
+import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.core.utils.unwrapResult
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountTransactionDao
@@ -128,7 +131,7 @@ internal class AccountRepositoryImpl  constructor(
                 accountToId = null,
                 transactionTypeCode = "UPDATE_ACCOUNT",
                 minorUnitAmount = accountAmount,
-                transactionDate = "", // TODO, use kotlin lib
+                transactionDate = localDateNow().toStringWithPattern(DATE_ONLY_DEFAULT_PATTERN),
                 categoryId = null,
                 currency = currency,
                 accountMinorUnitAmount = accountAmount,

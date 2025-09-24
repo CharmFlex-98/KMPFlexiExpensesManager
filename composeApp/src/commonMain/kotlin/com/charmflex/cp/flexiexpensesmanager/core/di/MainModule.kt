@@ -3,6 +3,7 @@ package com.charmflex.cp.flexiexpensesmanager.core.di
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigatorImpl
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReaderImpl
 import kotlinx.coroutines.CoroutineDispatcher

@@ -17,7 +17,7 @@ internal class FeatureFlagServiceImpl(
 ) : FeatureFlagService {
     override suspend fun isPremiumFeatureAllowed(premiumFeature: PremiumFeature): Result<Boolean> {
         return resultOf {
-            if (appConfigProvider.getAppFlavour() == AppFlavour.PAID) {
+            if (appConfigProvider.getAppFlavour() == AppFlavour.FREE) {
                 true
             } else {
                 when (premiumFeature) {
@@ -27,7 +27,7 @@ internal class FeatureFlagServiceImpl(
                             true
                         } else {
                             val purchases = billingManager.queryPurchases()
-                            purchases.firstOrNull { it.productId == BillingConstant.PRO_VERSION_1 } != null
+                            purchases.firstOrNull { it.productId == BillingConstant.PRO_VERSION_1 && it.isPurchased} != null
                         }
                     }
                 }

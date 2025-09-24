@@ -51,8 +51,9 @@ internal class HomeViewModel constructor(
             }.onSuccess { purchases ->
                 withContext(Dispatchers.IO) {
                     BillingConstant.ALL_PRODUCTS.forEach {
-                        val purchased = purchases.map { it.productId }.contains(it)
-                        sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + it, purchased)
+                        val product = purchases.firstOrNull { purchase -> purchase.productId == it }
+                        val isPurchased = product?.isPurchased == true
+                        sharedPrefs.setBoolean(SharedPrefConstant.PRODUCT_BOUGHT_PREFIX + it, isPurchased)
                     }
                 }
 
