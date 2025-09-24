@@ -17,7 +17,7 @@ internal class FeatureFlagServiceImpl(
 ) : FeatureFlagService {
     override suspend fun isPremiumFeatureAllowed(premiumFeature: PremiumFeature): Result<Boolean> {
         return resultOf {
-            if (appConfigProvider.getAppFlavour() == AppFlavour.FREE) {
+            if (appConfigProvider.getAppFlavour() == AppFlavour.PAID) {
                 true
             } else {
                 when (premiumFeature) {
