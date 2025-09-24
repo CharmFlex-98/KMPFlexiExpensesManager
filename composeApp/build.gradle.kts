@@ -158,8 +158,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 6
-        versionName = "1.0.6"
+        versionCode = 8
+        versionName = "1.0.8"
     }
     packaging {
         resources {
@@ -184,8 +184,8 @@ android {
             )
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases
-//             isDebuggable = true
-//             signingConfig = signingConfigs.getByName("debug")
+             isDebuggable = true
+             signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

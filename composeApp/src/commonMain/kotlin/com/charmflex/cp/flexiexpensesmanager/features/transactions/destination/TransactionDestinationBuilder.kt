@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.transactions.destination
 
 import androidx.compose.animation.AnimatedContentTransitionScope
 import androidx.compose.animation.core.tween
+import androidx.compose.runtime.LaunchedEffect
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
@@ -125,6 +126,11 @@ internal class TransactionDestinationBuilder : DestinationBuilder {
                 appComponent.transactionDetailViewModelFactory()
                     .create(transactionId = transactionId)
             }
+
+            LaunchedEffect(Unit) {
+                viewModel.init()
+            }
+
             TransactionDetailScreen(viewModel = viewModel)
         }
     }

@@ -1,11 +1,14 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import kotlinx.coroutines.delay
 
@@ -20,7 +23,8 @@ fun SGSnackBar(
             modifier = modifier,
             snackbarData = it,
             containerColor = SnackBarType.containerColor(snackBarType = snackBarType),
-            contentColor = SnackBarType.textColor(snackBarType = snackBarType)
+            contentColor = SnackBarType.textColor(snackBarType = snackBarType),
+            shape = RoundedCornerShape(grid_x1_5)
         )
     }
 }

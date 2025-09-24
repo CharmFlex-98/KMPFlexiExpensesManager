@@ -55,7 +55,7 @@ internal class TransactionDetailViewModel(
     private val _viewState = MutableStateFlow(TransactionDetailViewState())
     val viewState = _viewState.asStateFlow()
 
-    init {
+    fun init() {
         loadDetail()
     }
 
