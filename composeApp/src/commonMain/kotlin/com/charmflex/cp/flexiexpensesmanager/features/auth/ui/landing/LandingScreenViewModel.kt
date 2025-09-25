@@ -27,8 +27,8 @@ import org.koin.core.annotation.Factory
 @Factory
 internal class LandingScreenViewModel(
     private val routeNavigator: RouteNavigator,
-    private val signInService: SignInService,
-    private val authRepository: AuthRepository,
+//    private val signInService: SignInService,
+//    private val authRepository: AuthRepository,
     private val resourcesProvider: ResourcesProvider,
     private val eventTracker: EventTracker,
 ) : ViewModel() {
