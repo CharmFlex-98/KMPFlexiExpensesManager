@@ -42,8 +42,10 @@ import com.kizitonwose.calendar.core.YearMonth
 import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.core.minusMonths
 import com.kizitonwose.calendar.core.yearMonth
+import kotlinproject.composeapp.generated.resources.Res
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ColumnScope.ExpensesHeatMapScreen(
@@ -110,11 +112,11 @@ private fun CalendarInfo(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.End,
         verticalAlignment = Alignment.Bottom,
     ) {
-        Text(text = "Less", fontSize = 10.sp)
+        Text(text = stringResource(Res.string.generic_less), fontSize = 10.sp)
         Level.entries.forEach { level ->
             LevelBox(level.color)
         }
-        Text(text = "More", fontSize = 10.sp)
+        Text(text = stringResource(Res.string.generic_more), fontSize = 10.sp)
     }
 }
 

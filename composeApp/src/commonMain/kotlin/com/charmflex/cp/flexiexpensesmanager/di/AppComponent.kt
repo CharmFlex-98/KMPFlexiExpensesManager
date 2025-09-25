@@ -46,9 +46,6 @@ import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.component.KoinComponent
 import org.koin.core.component.get
-import org.koin.core.component.inject
-import org.koin.core.parameter.ParametersDefinition
-import org.koin.core.qualifier.Qualifier
 
 @Module
 @ComponentScan("com.charmflex.cp.flexiexpensesmanager")
@@ -67,6 +64,8 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun dashBoardViewModel(): DashboardViewModel = get()
     override fun expensesPieChartViewModel(): ExpensesChartViewModel = get()
     override fun expensesHeatMapViewModel(): ExpensesHeatMapViewModel = get()
+
+    // TODO: TBC
     override fun expensesHistoryViewModel(): TransactionHomeViewModel = get()
     override fun accountHomeViewModel(): AccountHomeViewModel = get()
     override fun settingViewModel(): SettingViewModel = get()

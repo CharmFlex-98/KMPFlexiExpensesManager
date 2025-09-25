@@ -149,5 +149,6 @@ jobs:
         username: ${{ secrets.SERVER_USER }}
         passphrase: ${{ secrets.SERVER_SSH_PW }}
         key: ${{ secrets.SERVER_SSH_KEY }}
-        source: ./composeApp/composeApp-${{ inputs.build_type }}.apk
-        target: /var/www/files
+        source: composeApp-${{ inputs.build_type }}.apk
+        target: /var/www/files/
+        working-directory: ./composeApp/

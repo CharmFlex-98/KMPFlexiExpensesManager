@@ -30,12 +30,13 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SuccessStatusDialog
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x30
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import kotlinproject.composeapp.generated.resources.Res
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun LandingScreen(
     landingScreenViewModel: LandingScreenViewModel
 ) {
-    val snackbarHostState = remember { SnackbarHostState() }
     val viewState by landingScreenViewModel.landingViewState.collectAsState()
 
 
@@ -68,21 +69,21 @@ internal fun LandingScreen(
                 textAlign = TextAlign.Center,
                 fontSize = 21.sp,
                 fontWeight = FontWeight.SemiBold,
-                text = "Welcome to Your ONLY Money Manager & Start Managing Your Expenses Like a PRO!"
+                text = stringResource(Res.string.home_page_welcome_title)
             )
         }
 
         SGLargePrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = "Start"
+            text = stringResource(Res.string.generic_start)
         ) {
             landingScreenViewModel.onGuestLogin()
         }
     }
 
-    viewState.loginSuccessViewState?.let {
-        SuccessStatusDialog(title = it.title, subtitle = it.message) {
-            Loader()
-        }
-    }
+//    viewState.loginSuccessViewState?.let {
+//        SuccessStatusDialog(title = it.title, subtitle = it.message) {
+//            Loader()
+//        }
+//    }
 }

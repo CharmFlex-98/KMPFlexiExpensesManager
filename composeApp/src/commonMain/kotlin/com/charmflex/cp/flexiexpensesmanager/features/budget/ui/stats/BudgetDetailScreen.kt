@@ -281,7 +281,7 @@ private fun BudgetItemCard(
                         )
                         Spacer(modifier = Modifier.width(grid_x1))
                         Text(
-                            text = "Over budget",
+                            text = stringResource(Res.string.over_budget_hint),
                             style = MaterialTheme.typography.bodySmall.copy(
                                 fontWeight = FontWeight.Medium
                             ),

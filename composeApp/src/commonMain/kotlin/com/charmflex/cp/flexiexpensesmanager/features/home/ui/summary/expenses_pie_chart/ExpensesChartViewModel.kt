@@ -9,6 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.CurrencyFormatter
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DateFilter
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.usecases.GetEachRootCategoryAmountUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.UserCurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
@@ -30,7 +31,8 @@ internal class ExpensesChartViewModel(
     private val tagRepository: TagRepository,
     private val currencyFormatter: CurrencyFormatter,
     private val userCurrencyRepository: UserCurrencyRepository,
-    private val routeNavigator: RouteNavigator
+    private val routeNavigator: RouteNavigator,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
 
     private var job = SupervisorJob()

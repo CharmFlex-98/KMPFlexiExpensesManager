@@ -266,15 +266,15 @@ private fun BudgetListScreen(
         }
     ) {
         if (!viewState.isFeatureEnabled) {
-            NoResultContent(modifier = Modifier.weight(1f), "This feature is only allowed for premium user. Purchase to unlock it!")
-            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), "🔒 Unlock Budget Feature") {
+            NoResultContent(modifier = Modifier.weight(1f), stringResource(Res.string.feature_lock_hint))
+            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), Res.string.feature_unlock_button) {
                 viewModel.navigateToBilling()
             }
             return@SGScaffold
         }
 
         if (viewState.budgetListItem.isEmpty()) {
-            NoResultContent(modifier = Modifier.weight(1f), "No budget is set. Create one?")
+            NoResultContent(modifier = Modifier.weight(1f), stringResource(Res.string.no_budget_hint))
         } else {
             BudgetItemList(
                 modifier = Modifier.weight(1f),

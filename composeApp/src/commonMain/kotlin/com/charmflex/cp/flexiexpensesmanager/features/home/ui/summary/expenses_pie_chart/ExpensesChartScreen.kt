@@ -55,13 +55,11 @@ import com.patrykandpatrick.vico.multiplatform.cartesian.data.CartesianChartMode
 import com.patrykandpatrick.vico.multiplatform.cartesian.data.columnSeries
 import com.patrykandpatrick.vico.multiplatform.cartesian.layer.rememberColumnCartesianLayer
 import com.patrykandpatrick.vico.multiplatform.cartesian.rememberCartesianChart
-import com.patrykandpatrick.vico.multiplatform.common.component.ShapeComponent
 import com.patrykandpatrick.vico.multiplatform.common.component.rememberTextComponent
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.StringResource
 import org.jetbrains.compose.resources.stringResource
-import kotlin.random.Random
 
 @Composable
 internal fun ColumnScope.ExpensesChartScreen(
@@ -113,7 +111,7 @@ internal fun ColumnScope.ExpensesChartScreen(
             when (chartType) {
                 is ExpensesPieChartViewState.ChartType.Pie -> {
                     if (chartViewState.pieChartData.isEmpty()) {
-                        NoResultContent(modifier = Modifier.fillMaxSize(), "No available pie chart data. ")
+                        NoResultContent(modifier = Modifier.fillMaxSize(), stringResource(Res.string.empty_pie_chart_hint))
                         return@Box
                     }
 
@@ -279,7 +277,7 @@ private fun ComposeChart6(
                     titleComponent = rememberTextComponent(
                         style = TextStyle(fontSize = 9.sp)
                     ),
-                    title = "Category",
+                    title = stringResource(Res.string.generic_category),
                     valueFormatter = { _, value, _ ->
                         categoryNames[value] ?: ""
                     }
@@ -315,54 +313,5 @@ internal sealed class FilterMenuDropDownItem(
     }
 }
 
-private const val COLOR_1_CODE = 0xff3e6558
-private const val COLOR_2_CODE = 0xff5e836a
-private const val COLOR_3_CODE = 0xffa5ba8e
-private const val COLOR_4_CODE = 0xffe9e5af
-private const val THRESHOLD_LINE_VALUE_RANGE_START = 7f
-private const val THRESHOLD_LINE_VALUE_RANGE_END = 14f
-private const val THRESHOLD_LINE_ALPHA = .36f
-private const val COLUMN_CORNER_CUT_SIZE_PERCENT = 50
-
-private val color1 = Color(COLOR_1_CODE)
-private val color2 = Color(COLOR_2_CODE)
-private val color3 = Color(COLOR_3_CODE)
-private val color4 = Color(COLOR_4_CODE)
-private val chartColors = listOf(color1, color2, color3)
-private val thresholdLineValueRange =
-    THRESHOLD_LINE_VALUE_RANGE_START..THRESHOLD_LINE_VALUE_RANGE_END
-private val thresholdLineLabelHorizontalPaddingValue = 8.dp
-private val thresholdLineLabelVerticalPaddingValue = 2.dp
-private val thresholdLineLabelMarginValue = 4.dp
-private val thresholdLineColor = color4.copy(THRESHOLD_LINE_ALPHA)
 
 
-private const val LABEL_BACKGROUND_SHADOW_RADIUS_DP = 4f
-private const val LABEL_BACKGROUND_SHADOW_DY_DP = 2f
-private const val CLIPPING_FREE_SHADOW_RADIUS_MULTIPLIER = 1.4f
-
-
-fun generateRandomColor(): Color {
-    val random = Random.Default
-    val red = random.nextInt(256)
-    val green = random.nextInt(256)
-    val blue = random.nextInt(256)
-    return Color(red, green, blue)
-}
-
-private const val LABEL_BACKGROUND_SHADOW_RADIUS = 4f
-private const val LABEL_BACKGROUND_SHADOW_DY = 2f
-private const val LABEL_LINE_COUNT = 1
-private const val GUIDELINE_ALPHA = .2f
-private const val INDICATOR_SIZE_DP = 36f
-private const val INDICATOR_OUTER_COMPONENT_ALPHA = 32
-private const val INDICATOR_CENTER_COMPONENT_SHADOW_RADIUS = 12f
-private const val GUIDELINE_DASH_LENGTH_DP = 8f
-private const val GUIDELINE_GAP_LENGTH_DP = 4f
-private const val SHADOW_RADIUS_MULTIPLIER = 1.3f
-
-private val labelHorizontalPaddingValue = 8.dp
-private val labelVerticalPaddingValue = 4.dp
-private val indicatorInnerAndCenterComponentPaddingValue = 5.dp
-private val indicatorCenterAndOuterComponentPaddingValue = 10.dp
-private val guidelineThickness = 2.dp
