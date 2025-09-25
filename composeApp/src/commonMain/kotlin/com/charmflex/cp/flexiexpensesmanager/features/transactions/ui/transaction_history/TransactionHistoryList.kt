@@ -27,6 +27,7 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.SecondaryScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
@@ -78,9 +79,9 @@ internal fun TransactionHistoryList(
     val viewState by transactionHistoryViewModel.viewState.collectAsState()
     val scrollItems = viewState.items
     val scrollState = rememberLazyListState()
-    val tabScrollState = rememberScrollState()
     val tabState by transactionHistoryViewModel.tabState.collectAsState()
-    val tabHeight = with(LocalDensity.current) { grid_x7.roundToPx().toFloat() }
+    val tabPx = grid_x7
+    val tabHeight = with(LocalDensity.current) { tabPx.roundToPx().toFloat() }
     val showMonthTab by remember {
         derivedStateOf { scrollState.firstVisibleItemIndex > 2 }
     }
@@ -139,14 +140,14 @@ internal fun TransactionHistoryList(
                 exit = slideOutVertically(targetOffsetY = { -it }) +
                         shrinkVertically(shrinkTowards = Alignment.Top),
             ) {
-                SecondaryScrollableTabRow(
+                ScrollableTabRow(
                     selectedTabIndex = tabState.selectedTabIndex,
-                    scrollState = tabScrollState,
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     tabState.tabs.forEachIndexed { index, item ->
                         Tab(
                             modifier = Modifier
-                                .height(grid_x8)
+                                .height(tabPx)
                                 .padding(grid_x1),
                             selected = index == tabState.selectedTabIndex,
                             onClick = {
