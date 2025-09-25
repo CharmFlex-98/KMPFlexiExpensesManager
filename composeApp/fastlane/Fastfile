@@ -53,6 +53,9 @@ platform :android do
                 "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD'],
             }
         )
+
+        sh "cp '#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}' '../composeApp-paid_release.apk'"
+
         # build_android_app is a built-in fastlane action.
         release = firebase_app_distribution(
             app: ENV['FIREBASE_APP_ID_PAID_RELEASE'],
@@ -103,6 +106,9 @@ platform :android do
                     "android.injected.signing.key.password" => ENV['KEYSTORE_PASSWORD'],
                 }
             )
+
+            sh "cp '#{lane_context[SharedValues::GRADLE_APK_OUTPUT_PATH]}' '../composeApp-free_release.apk'"
+
             # build_android_app is a built-in fastlane action.
             release = firebase_app_distribution(
                 app: ENV['FIREBASE_APP_ID_FREE_RELEASE'],
