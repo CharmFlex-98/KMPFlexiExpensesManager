@@ -147,8 +147,8 @@ android {
 
         create("paid") {
             dimension = "version"
-            applicationIdSuffix = ".paid"
-            versionNameSuffix = "-paid"
+            applicationIdSuffix = ".premium"
+            versionNameSuffix = "-premium"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
             buildConfigField("String", "FLAVOR_NAME", "\"paid\"")
         }
@@ -158,8 +158,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 9
-        versionName = "1.0.9"
+        versionCode = 10
+        versionName = "1.0.10"
     }
     packaging {
         resources {
@@ -182,11 +182,10 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            signingConfig = signingConfigs.getByName("debug")
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases
-             isDebuggable = true
-             signingConfig = signingConfigs.getByName("debug")
+//             isDebuggable = true
+//             signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {
