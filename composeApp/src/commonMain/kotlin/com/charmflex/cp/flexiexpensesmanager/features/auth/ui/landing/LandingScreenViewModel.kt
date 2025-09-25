@@ -9,6 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.UserData
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
 import com.charmflex.cp.flexiexpensesmanager.features.auth.event.AuthEventName
@@ -29,10 +30,8 @@ internal class LandingScreenViewModel(
     private val signInService: SignInService,
     private val authRepository: AuthRepository,
     private val resourcesProvider: ResourcesProvider,
-    private val eventTracker: EventTracker
+    private val eventTracker: EventTracker,
 ) : ViewModel() {
-    val snackBarState: MutableStateFlow<SnackBarState> =
-        MutableStateFlow(SnackBarState.None)
     val landingViewState = MutableStateFlow(LandingViewState.default)
 
 
@@ -55,62 +54,58 @@ internal class LandingScreenViewModel(
         }
     }
 
-    fun onTrySignIn() {
-        showLoading(true)
-        viewModelScope.launch {
-            val state = signInService.trySignIn()
-            when (state) {
-                is SignInState.Success -> {
-                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_TRY_SIGN_IN_SUCCEEDED))
-                    handleGoogleSignInSuccess(state, true)
-                }
-                else -> {
-                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_TRY_SIGN_IN_FAILED))
-                    showLoading(false)
-                }
-            }
-        }
-    }
+//    fun onTrySignIn() {
+//        showLoading(true)
+//        viewModelScope.launch {
+//            val state = signInService.trySignIn()
+//            when (state) {
+//                is SignInState.Success -> {
+//                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_TRY_SIGN_IN_SUCCEEDED))
+//                    handleGoogleSignInSuccess(state, true)
+//                }
+//                else -> {
+//                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_TRY_SIGN_IN_FAILED))
+//                    showLoading(false)
+//                }
+//            }
+//        }
+//    }
 
     fun onGoogleLogin() {
-        showLoading(true)
-        viewModelScope.launch {
-            when (val signInState = signInService.signIn()) {
-                is SignInState.Success -> {
-                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_SIGN_IN_SUCCEEDED))
-                    handleGoogleSignInSuccess(signInState, false)
-                }
-
-                is SignInState.Failure -> {
-                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_SIGN_IN_FAILED))
-                    snackBarState.value =
-                        SnackBarState.Error(signInState.message ?: "Generic login failure!")
-                    showLoading(false)
-                }
-            }
-
-        }
+//        showLoading(true)
+//        viewModelScope.launch {
+//            when (val signInState = signInService.signIn()) {
+//                is SignInState.Success -> {
+//                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_SIGN_IN_SUCCEEDED))
+//                    handleGoogleSignInSuccess(signInState, false)
+//                }
+//
+//                is SignInState.Failure -> {
+//                    eventTracker.track(EventData.simpleEvent(AuthEventName.USER_SIGN_IN_FAILED))
+//
+//                    snackBarState.value =
+//                        SnackBarState.Error(signInState.message ?: "Generic login failure!")
+//                    showLoading(false)
+//                }
+//            }
+//
+//        }
     }
 
-    fun resetState() {
-        snackBarState.value = SnackBarState.None
-
-    }
-
-    private suspend fun handleGoogleSignInSuccess(signInState: SignInState.Success, autoLogin: Boolean) {
-        resultOf {
-            authRepository.upsertUser(
-                signInState.uid,
-                signInState.username,
-                signInState.email
-            )
-        }.onSuccess {
-            onLoginSuccess(autoLogin, signInState)
-        }.onFailure { e ->
-            snackBarState.value = SnackBarState.Error(e.message)
-            showLoading(false)
-        }
-    }
+//    private suspend fun handleGoogleSignInSuccess(signInState: SignInState.Success, autoLogin: Boolean) {
+//        resultOf {
+//            authRepository.upsertUser(
+//                signInState.uid,
+//                signInState.username,
+//                signInState.email
+//            )
+//        }.onSuccess {
+//            onLoginSuccess(autoLogin, signInState)
+//        }.onFailure { e ->
+//            snackBarState.value = SnackBarState.Error(e.message)
+//            showLoading(false)
+//        }
+//    }
 
     private suspend fun onLoginSuccess(autoLogin: Boolean = false, signInState: SignInState.Success) {
         eventTracker.registerUser(UserData(signInState.uid, signInState.username ?: "Unknown", signInState.email ?: "Unknown"))

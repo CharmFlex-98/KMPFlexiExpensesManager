@@ -36,24 +36,8 @@ internal fun LandingScreen(
     landingScreenViewModel: LandingScreenViewModel
 ) {
     val snackbarHostState = remember { SnackbarHostState() }
-    val snackBarState by landingScreenViewModel.snackBarState.collectAsState()
     val viewState by landingScreenViewModel.landingViewState.collectAsState()
 
-
-    LaunchedEffect(key1 = snackBarState) {
-        when (val s = snackBarState) {
-//            is SnackBarState.Success -> {
-//                snackbarHostState.showSnackBarImmediately(s.message)
-//                landingScreenViewModel.onGuestLogin()
-//            }
-
-            is SnackBarState.Error -> {
-                snackbarHostState.showSnackBarImmediately(s.message ?: "Unknown error")
-            }
-
-            else -> {}
-        }
-    }
 
     SGScaffold(
         modifier = Modifier
@@ -101,9 +85,4 @@ internal fun LandingScreen(
             Loader()
         }
     }
-
-    SGSnackBar(
-        snackBarHostState = snackbarHostState,
-        snackBarType = if (snackBarState is SnackBarState.Error) SnackBarType.Error else SnackBarType.Success
-    )
 }
