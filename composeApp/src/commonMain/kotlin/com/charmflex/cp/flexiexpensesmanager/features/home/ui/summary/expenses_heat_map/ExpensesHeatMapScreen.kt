@@ -43,6 +43,8 @@ import com.kizitonwose.calendar.core.firstDayOfWeekFromLocale
 import com.kizitonwose.calendar.core.minusMonths
 import com.kizitonwose.calendar.core.yearMonth
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_less
+import kotlinproject.composeapp.generated.resources.generic_more
 import kotlinx.datetime.DayOfWeek
 import kotlinx.datetime.LocalDate
 import org.jetbrains.compose.resources.stringResource

@@ -267,7 +267,7 @@ private fun BudgetListScreen(
     ) {
         if (!viewState.isFeatureEnabled) {
             NoResultContent(modifier = Modifier.weight(1f), stringResource(Res.string.feature_lock_hint))
-            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), Res.string.feature_unlock_button) {
+            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), stringResource(Res.string.feature_unlock_button)) {
                 viewModel.navigateToBilling()
             }
             return@SGScaffold

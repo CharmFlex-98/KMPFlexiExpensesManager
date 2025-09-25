@@ -65,9 +65,10 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun expensesPieChartViewModel(): ExpensesChartViewModel = get()
     override fun expensesHeatMapViewModel(): ExpensesHeatMapViewModel = get()
 
-    // TODO: TBC
     override fun expensesHistoryViewModel(): TransactionHomeViewModel = get()
     override fun accountHomeViewModel(): AccountHomeViewModel = get()
+
+    // TODO: TBC
     override fun settingViewModel(): SettingViewModel = get()
     override fun transactionEditorViewModelFactory(): TransactionEditorViewModelFactory = get()
     override fun transactionDetailViewModelFactory(): TransactionDetailViewModelFactory = get()

@@ -31,6 +31,8 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x30
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_start
+import kotlinproject.composeapp.generated.resources.home_page_welcome_title
 import org.jetbrains.compose.resources.stringResource
 
 @Composable

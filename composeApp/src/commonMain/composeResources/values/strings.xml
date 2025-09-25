@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="accounts_count">accounts</string>
+  <string name="transaction_no_available_history">No available transactions found.</string>
   <string name="generic_more">More</string>
   <string name="generic_less">Less</string>
   <string name="empty_pie_chart_hint">No available pie chart data.</string>

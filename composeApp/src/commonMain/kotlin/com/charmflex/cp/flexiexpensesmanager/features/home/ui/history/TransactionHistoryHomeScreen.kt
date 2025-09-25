@@ -13,6 +13,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transactio
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.transaction_no_available_history
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun TransactionHistoryHomeScreen(
@@ -20,7 +23,7 @@ internal fun TransactionHistoryHomeScreen(
 ) {
     val viewState by transactionHomeViewModel.viewState.collectAsState()
     if (viewState.items.isEmpty()) {
-        NoResultContent(modifier = Modifier.fillMaxSize(), "No available history found.")
+        NoResultContent(modifier = Modifier.fillMaxSize(), stringResource(Res.string.transaction_no_available_history))
         return
     }
 

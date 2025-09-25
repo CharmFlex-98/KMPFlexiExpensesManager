@@ -217,7 +217,7 @@ private fun AccountGroupHeader(
 
             // Optional: Add account count
             FEMetaData1(
-                text = "${accountGroupSummary.accountsSummary.size} accounts",
+                text = "${accountGroupSummary.accountsSummary.size} ${stringResource(Res.string.accounts_count)}",
                 color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
             )
         }
