@@ -147,8 +147,8 @@ android {
 
         create("paid") {
             dimension = "version"
-            applicationIdSuffix = ".paid"
-            versionNameSuffix = "-paid"
+            applicationIdSuffix = ".premium"
+            versionNameSuffix = "-premium"
             buildConfigField("boolean", "IS_PAID_VERSION", "true")
             buildConfigField("String", "FLAVOR_NAME", "\"paid\"")
         }
@@ -158,8 +158,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 8
-        versionName = "1.0.8"
+        versionCode = 9
+        versionName = "1.0.9"
     }
     packaging {
         resources {

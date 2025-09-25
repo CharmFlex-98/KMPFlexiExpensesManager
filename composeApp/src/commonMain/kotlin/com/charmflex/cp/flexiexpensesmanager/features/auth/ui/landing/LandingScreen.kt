@@ -39,9 +39,6 @@ internal fun LandingScreen(
     val snackBarState by landingScreenViewModel.snackBarState.collectAsState()
     val viewState by landingScreenViewModel.landingViewState.collectAsState()
 
-    LaunchedEffect(key1 = Unit) {
-        landingScreenViewModel.onTrySignIn()
-    }
 
     LaunchedEffect(key1 = snackBarState) {
         when (val s = snackBarState) {

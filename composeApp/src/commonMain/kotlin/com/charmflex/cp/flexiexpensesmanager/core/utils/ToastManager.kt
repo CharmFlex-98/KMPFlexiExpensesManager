@@ -1,11 +1,15 @@
 package com.charmflex.cp.flexiexpensesmanager.core.utils
 
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
+import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import org.koin.core.annotation.Singleton
 
 @Singleton
-internal class ToastManager {
+internal class ToastManager(
+    private val eventTracker: EventTracker
+) {
     private val _state: MutableStateFlow<ToastState?> = MutableStateFlow(null)
     val state = _state.asStateFlow()
 
@@ -14,11 +18,14 @@ internal class ToastManager {
     }
 
     fun postSuccess(message: String) {
+        eventTracker.track(EventData.event(UtilEventName.TOAST_SUCCESS, mapOf("message" to message)))
         post(message, ToastType.SUCCESS)
     }
 
     fun postError(message: String?) {
-        post(message ?: "Unknown error", ToastType.ERROR)
+        val msg = message ?: "Unknown error"
+        eventTracker.track(EventData.event(UtilEventName.TOAST_ERROR, mapOf("message" to msg)))
+        post(msg, ToastType.ERROR)
     }
 
     private fun post(message: String, toastType: ToastType) {
