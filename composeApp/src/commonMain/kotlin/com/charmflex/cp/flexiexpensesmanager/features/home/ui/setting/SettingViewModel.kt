@@ -35,6 +35,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.StringResource
+import org.jetbrains.compose.resources.stringResource
 import org.koin.core.annotation.Factory
 
 @Factory
@@ -110,19 +111,19 @@ internal class SettingViewModel constructor(
                                 }.fold(
                                     onSuccess = {
                                         toggleLoader(false)
-                                        toastManager.postSuccess("Done exporting")
+                                        toastManager.postSuccess(resourcesProvider.getString(Res.string.export_completed))
                                         onCreatedCompleted(fileName)
                                     },
                                     onFailure = {
                                         toggleLoader(false)
-                                        toastManager.postError("Error exporting: ${it.message}")
+                                        toastManager.postError("${resourcesProvider.getString(Res.string.export_error_toast)}${it.message}")
                                     }
                                 )
 
                                 return@launch
                             }
 
-                            toastManager.postError("This is a premium feature. Unlock it to access the feature.")
+                            toastManager.postError(resourcesProvider.getString(Res.string.premium_feature_toast_hint))
                             toggleLoader(false)
                         }
                         .onFailure { err ->
@@ -219,7 +220,7 @@ internal class SettingViewModel constructor(
                     _onDataClearedEvent.tryEmit(OnDataCleared.Finish)
                 },
                 onFailure = {
-                    toastManager.postError("Failed to clear all data.")
+                    toastManager.postError(resourcesProvider.getString(Res.string.clear_all_data_failure_toast))
                 }
             )
             toggleLoader(false)
@@ -237,31 +238,31 @@ internal class SettingViewModel constructor(
     private fun getSettingActionable(): List<SettingActionable> {
         return listOf(
             SettingActionable(
-                title = "Set expenses category",
+                title = resourcesProvider.getString(Res.string.setting_expenses_category),
                 action = SettingAction.EXPENSES_CAT
             ),
             SettingActionable(
-                title = "Set income category",
+                title = resourcesProvider.getString(Res.string.setting_income_category),
                 action = SettingAction.INCOME_CAT
             ),
             SettingActionable(
-                title = "Set account",
+                title = resourcesProvider.getString(Res.string.setting_account),
                 action = SettingAction.ACCOUNT
             ),
             SettingActionable(
-                title = "Set primary currency",
+                title = resourcesProvider.getString(Res.string.setting_primary_currency),
                 action = SettingAction.PRIMARY_CURRENCY
             ),
             SettingActionable(
-                title = "Export",
+                title = resourcesProvider.getString(Res.string.setting_export),
                 action = SettingAction.Export
             ),
             SettingActionable(
-                title = "Import",
+                title = resourcesProvider.getString(Res.string.setting_import),
                 action = SettingAction.Import
             ),
             SettingActionable(
-                title = "Reset Data",
+                title = resourcesProvider.getString(Res.string.setting_reset_data),
                 action = SettingAction.RESET_DATA
             ),
             SettingActionable(
@@ -296,8 +297,8 @@ internal sealed interface SettingDialogState {
         override val subtitle: StringResource = Res.string.setting_factory_reset_dialog_subtitle,
         val selection: ResetType?
     ) : SettingDialogState {
-        enum class ResetType(val value: String) {
-            TRANSACTION_ONLY("Transaction Only"), ALL("All")
+        enum class ResetType {
+            TRANSACTION_ONLY, ALL
         }
     }
 }

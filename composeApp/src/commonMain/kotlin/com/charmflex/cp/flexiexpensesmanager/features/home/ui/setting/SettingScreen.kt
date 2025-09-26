@@ -315,7 +315,16 @@ private fun ResetOptionCard(
     isSelected: Boolean,
     onSelect: () -> Unit
 ) {
-    val (title, description, icon) = getResetTypeInfo(resetType)
+    val iconRes = Res.drawable.cog_refresh_outline
+
+    val title = when (resetType) {
+        SettingDialogState.ResetDataDialogState.ResetType.TRANSACTION_ONLY -> stringResource(Res.string.setting_reset_transaction_only)
+        SettingDialogState.ResetDataDialogState.ResetType.ALL -> stringResource(Res.string.setting_reset_all)
+    }
+    val description = when (resetType) {
+        SettingDialogState.ResetDataDialogState.ResetType.TRANSACTION_ONLY -> stringResource(Res.string.setting_reset_transaction_only)
+        SettingDialogState.ResetDataDialogState.ResetType.ALL -> stringResource(Res.string.setting_reset_all)
+    }
     
     Card(
         modifier = Modifier
@@ -362,7 +371,7 @@ private fun ResetOptionCard(
                 contentAlignment = Alignment.Center
             ) {
                 Icon(
-                    painter = painterResource(icon),
+                    painter = painterResource(iconRes),
                     contentDescription = null,
                     tint = if (isSelected) {
                         MaterialTheme.colorScheme.primary
@@ -407,20 +416,11 @@ private fun ResetOptionCard(
             RadioButton(
                 selected = isSelected,
                 onClick = onSelect,
-                colors = androidx.compose.material3.RadioButtonDefaults.colors(
+                colors = RadioButtonDefaults.colors(
                     selectedColor = MaterialTheme.colorScheme.primary,
                     unselectedColor = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             )
         }
     }
-}
-
-@Composable
-private fun getResetTypeInfo(resetType: SettingDialogState.ResetDataDialogState.ResetType): Triple<String, String, DrawableResource> {
-    return Triple(
-        resetType.value,
-        "Reset ${resetType.value.lowercase()} data",
-        Res.drawable.cog_refresh_outline
-    )
 }

@@ -1,6 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.new_transaction
 
-import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.animateScrollBy
@@ -97,11 +96,6 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2_5
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
-import com.kizitonwose.calendar.compose.rememberCalendarState
-import com.kizitonwose.calendar.core.YearMonth
-import com.kizitonwose.calendar.core.minusMonths
-import com.kizitonwose.calendar.core.minusYears
-import com.kizitonwose.calendar.core.plusMonths
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
@@ -375,7 +369,7 @@ internal fun TransactionEditorScreen(
                 .create(showDialogCurrencyState.toCurrency)
         }
         SGDialog(
-            title = "Exchange Rate",
+            title = stringResource(Res.string.generic_exchange_rate_hint),
             subtitle = "",
             onDismissRequest = {}
         ) {
@@ -387,8 +381,8 @@ internal fun TransactionEditorScreen(
                     modifier = Modifier,
                     keyboardType = KeyboardType.Number,
                     value = showDialogCurrencyState.toCurrencyAmount,
-                    label = "Amount",
-                    hint = "Amount",
+                    label = stringResource(Res.string.generic_amount),
+                    hint = stringResource(Res.string.generic_amount),
                     visualTransformation = currencyVisualTransformation2,
                     outputFormatter = { outputCurrencyFormatter.format(it) },
                     onValueChange = {
@@ -397,14 +391,14 @@ internal fun TransactionEditorScreen(
                 SGTextField(
                     modifier = Modifier,
                     value = showDialogCurrencyState.rate,
-                    label = "Rate",
-                    hint = "Rate",
+                    label = stringResource(Res.string.generic_rate),
+                    hint = stringResource(Res.string.generic_rate),
                     keyboardType = KeyboardType.Number,
                     onValueChange = {
                         viewModel.onCurrencyExchangeRateChanged(it, showDialogCurrencyState)
                     })
                 Spacer(modifier = Modifier.size(grid_x4))
-                SGSmallPrimaryButton(text = "DONE") {
+                SGSmallPrimaryButton(text = stringResource(Res.string.button_done)) {
                     viewModel.onCurrencyViewClosed(showDialogCurrencyState)
                 }
             }
@@ -417,7 +411,7 @@ internal fun TransactionEditorScreen(
             SearchBottomSheet(
                 sheetState = bottomSheetState,
                 onDismiss = { viewModel.toggleBottomSheet(null) },
-                searchFieldLabel = "Search currency",
+                searchFieldLabel = stringResource(Res.string.text_field_search_currency_hint),
                 items = viewState.currencyList.map { object : SearchItem {
                     override val key: String
                         get() = it
@@ -448,14 +442,15 @@ internal fun TransactionEditorScreen(
                     }
 
                     is TransactionEditorViewState.AccountSelectionBottomSheetState -> {
+                        val accountCountText = stringResource(Res.string.accounts_count)
                         if (bs.selectedAccountGroup == null) {
                             EnhancedGeneralSelectionContent(
                                 items = viewState.accountGroups,
                                 getName = { it.accountGroupName },
-                                getSubtitle = { "${it.accounts.size} accounts"},
+                                getSubtitle = { "${it.accounts.size} $accountCountText"},
                                 suffixIcon = { Res.drawable.ic_arrow_next },
                                 headerContent = {
-                                    BottomSheetHeaderContent("Account group") {
+                                    BottomSheetHeaderContent(stringResource(Res.string.generic_account_group)) {
                                         viewModel.onBottomSheetOptionsEdit(bs)
                                     }
                                 }
@@ -468,7 +463,7 @@ internal fun TransactionEditorScreen(
                                 items = bs.selectedAccountGroup.accounts,
                                 getName = { it.accountName },
                                 headerContent = {
-                                    BottomSheetHeaderContent("Account") {
+                                    BottomSheetHeaderContent(stringResource(Res.string.generic_account)) {
                                         viewModel.onBottomSheetOptionsEdit(bs)
                                     }
                                 }
@@ -494,7 +489,7 @@ internal fun TransactionEditorScreen(
                             items = viewModel.scheduledPeriodType,
                             getName = { it.name },
                             headerContent = {
-                                FEHeading5(text = "Period")
+                                FEHeading5(text = stringResource(Res.string.generic_period))
                             },
                         ) {
                             viewModel.onPeriodSelected(it, bs.feField)
@@ -507,7 +502,7 @@ internal fun TransactionEditorScreen(
                             items = viewModel.updateAccountType,
                             getName = { it.name },
                             headerContent = {
-                                FEHeading5(text = "Type")
+                                FEHeading5(text = stringResource(Res.string.generic_type))
                             },
                         ) {
                             viewModel.onFieldValueChanged(bs.feField, it.name)
@@ -544,7 +539,7 @@ internal fun CategorySelectionBottomSheet(
         modifier = Modifier.fillMaxWidth(),
         horizontalAlignment = Alignment.Start
     ) {
-        BottomSheetHeaderContent("Category") {
+        BottomSheetHeaderContent(stringResource(Res.string.generic_category)) {
                onEdit()
         }
         Row(
@@ -744,7 +739,7 @@ private fun BottomSheetHeaderContent(
     ) {
         FEHeading4(text = title)
         Spacer(modifier = Modifier.weight(1f))
-        SGSmallPrimaryButton(text = "EDIT") {
+        SGSmallPrimaryButton(text = stringResource(Res.string.button_edit)) {
             onClicked()
         }
     }

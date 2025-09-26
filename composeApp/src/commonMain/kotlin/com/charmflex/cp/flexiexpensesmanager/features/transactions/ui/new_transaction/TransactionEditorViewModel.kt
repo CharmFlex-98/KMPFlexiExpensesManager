@@ -17,11 +17,13 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.reposi
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TransactionEditorContentProvider
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.usecases.SubmitTransactionUseCase
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_deduction
+import kotlinproject.composeapp.generated.resources.generic_increment
 import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.datetime.LocalDate
 
-internal class TransactionEditorViewModelFactory constructor(
+internal class TransactionEditorViewModelFactory(
     private val accountRepository: AccountRepository,
     private val transactionRepository: TransactionRepository,
     private val routeNavigator: RouteNavigator,
@@ -190,8 +192,8 @@ internal class TransactionEditorViewModel  constructor(
         amount: Long,
         transactionDate: String,
     ): Result<Unit> {
-        val hint =
-            if (isIncrement) UpdateAccountType.INCREMENT.name else UpdateAccountType.DEDUCTION.name
+        val hintRes = if (isIncrement) Res.string.generic_increment else Res.string.generic_deduction
+        val hint =  resourcesProvider.getString(hintRes)
         val name = resourcesProvider.getString(Res.string.generic_update_account)
         return submitTransactionUseCase.submitUpdateAccount(
             id, "$name ($hint)", accountId, isIncrement, amount, transactionDate

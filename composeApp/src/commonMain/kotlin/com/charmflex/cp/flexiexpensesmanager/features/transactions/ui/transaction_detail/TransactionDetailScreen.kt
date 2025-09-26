@@ -165,7 +165,7 @@ internal fun BankDetailCard(detail: TransactionDetailViewState.Detail) {
         ) {
             Row {
                 FEHeading4(
-                    text = "Banks detail",
+                    text = stringResource(Res.string.generic_account_detail),
                     color = MaterialTheme.colorScheme.onSurface,
                 )
             }
@@ -204,21 +204,21 @@ internal fun BankDetailCard(detail: TransactionDetailViewState.Detail) {
 
             fromAccount?.let {
                 DetailRow(
-                    label = "Withdraw from",
+                    label = stringResource(Res.string.generic_withdraw_from),
                     value = it.accountName,
                     iconRes = Res.drawable.bank,
                     suffixIconRes = if (it.isDeleted) Res.drawable.delete_alert_outline else null,
                     suffixIconColor = Color.Red
                 )
                 DetailRow(
-                    label = "Currency",
+                    label = stringResource(Res.string.generic_currency),
                     value = it.currency,
                     iconRes = Res.drawable.currency_sign
                 )
             }
 
             fromAmount?.let {
-                DetailRow("Amount", value = it, Res.drawable.tag_multiple_outline)
+                DetailRow(stringResource(Res.string.generic_account), value = it, Res.drawable.tag_multiple_outline)
             }
 
             if (toAccount == null && toAmount == null) return@DetailCard
@@ -229,21 +229,21 @@ internal fun BankDetailCard(detail: TransactionDetailViewState.Detail) {
 
             toAccount?.let {
                 DetailRow(
-                    label = "Bank-in",
+                    label = stringResource(Res.string.generic_bank_in),
                     value = it.accountName,
                     iconRes = Res.drawable.bank,
                     suffixIconRes = if (it.isDeleted) Res.drawable.delete_alert_outline else null,
                     suffixIconColor = Color.Red
                 )
                 DetailRow(
-                    label = "Currency",
+                    label = stringResource(Res.string.generic_currency),
                     value = it.currency,
                     iconRes = Res.drawable.currency_sign
                 )
             }
 
             toAmount?.let {
-                DetailRow("Amount", value = it, Res.drawable.tag_multiple_outline)
+                DetailRow(stringResource(Res.string.generic_amount), value = it, Res.drawable.tag_multiple_outline)
             }
         }
     }
@@ -257,18 +257,18 @@ internal fun AdditionalDetailCard(detail: TransactionDetailViewState.Detail) {
         ) {
             // Header Section with name and type badge
             FEHeading4(
-                text = "Additional details",
+                text = stringResource(Res.string.generic_additional_detail),
                 color = MaterialTheme.colorScheme.onSurface,
             )
 
             DetailRow(
-                label = "Transaction Type",
+                label = stringResource(Res.string.generic_transaction_type),
                 value = getTransactionTypeDisplayName(detail.transactionTypeCode),
                 iconRes = Res.drawable.ic_transfer_icon
             )
 
             DetailRow(
-                label = "Date",
+                label = stringResource(Res.string.generic_date),
                 value = detail.transactionDate,
                 iconRes = Res.drawable.ic_calendar
             )
@@ -299,7 +299,7 @@ internal fun AdditionalDetailCard(detail: TransactionDetailViewState.Detail) {
                         modifier = Modifier.weight(1f)
                     ) {
                         FEMetaData1(
-                            text = "Category",
+                            text = stringResource(Res.string.generic_category),
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                         FEBody2(
@@ -431,11 +431,12 @@ internal fun TransactionTypeBadge(transactionType: String) {
     )
 }
 
+@Composable
 internal fun getTransactionTypeDisplayName(transactionType: String): String {
     return when (transactionType) {
-        TransactionType.INCOME.toString() -> "Income"
-        TransactionType.EXPENSES.toString() -> "Expense"
-        TransactionType.UPDATE_ACCOUNT.toString() -> "Account Transfer"
+        TransactionType.INCOME.toString() -> stringResource(Res.string.generic_income)
+        TransactionType.EXPENSES.toString() -> stringResource(Res.string.generic_expenses)
+        TransactionType.UPDATE_ACCOUNT.toString() -> stringResource(Res.string.generic_account_transfer)
         else -> transactionType
     }
 }

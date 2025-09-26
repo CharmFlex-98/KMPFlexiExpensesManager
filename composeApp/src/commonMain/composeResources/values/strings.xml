@@ -1,5 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="setting_expenses_category">Set expenses category</string>
+  <string name="setting_income_category">Set income category</string>
+  <string name="setting_account">Set account</string>
+  <string name="setting_export">Export</string>
+  <string name="setting_import">Import</string>
+  <string name="setting_reset_data">Reset Data</string>
+  <string name="setting_reset_transaction_only">Transaction Only</string>
+  <string name="setting_reset_all">Reset All</string>
+  <string name="generic_exchange_rate_hint">Exchange Rate</string>
+  <string name="generic_amount">Amount</string>
+  <string name="generic_rate">Rate</string>
+  <string name="button_done">DONE</string>
+  <string name="text_field_search_currency_hint">Search currency</string>
+  <string name="generic_account_group">Account group</string>
+  <string name="generic_account">Account</string>
+  <string name="generic_period">Period</string>
+  <string name="generic_type">Type</string>
+  <string name="generic_increment">INCREMENT</string>
+  <string name="generic_deduction">DEDUCTION</string>
+  <string name="setting_primary_currency">Set primary currency</string>
+  <string name="clear_all_data_failure_toast">Failed to clear all data.</string>
+  <string name="premium_feature_toast_hint">This is a premium feature. Unlock it to access the feature.</string>
+  <string name="export_error_toast">Error exporting: </string>
+  <string name="export_completed">Done exporting</string>
   <string name="accounts_count">accounts</string>
   <string name="transaction_no_available_history">No available transactions found.</string>
   <string name="generic_more">More</string>
@@ -42,6 +66,15 @@
   <string name="new_transaction_account">Account</string>
   <string name="new_expenses_account_hint">Account you spent from</string>
   <string name="generic_category">Category</string>
+  <string name="generic_currency">Currency</string>
+  <string name="button_edit">EDIT</string>
+  <string name="generic_account_transfer">Account Transfer</string>
+  <string name="generic_additional_detail">Additional Detail</string>
+  <string name="generic_account_detail">Accounts Detail</string>
+  <string name="generic_withdraw_from">Withdraw from</string>
+  <string name="generic_transaction_type">Transaction Type</string>
+  <string name="generic_date">Date</string>
+  <string name="generic_bank_in">Bank in</string>
   <string name="generic_category_hint">Select category</string>
   <string name="new_transaction_from_account">From</string>
   <string name="new_income_account_hint">The account income goes</string>
