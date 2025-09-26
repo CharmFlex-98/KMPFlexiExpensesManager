@@ -151,4 +151,4 @@ jobs:
         key: ${{ secrets.SERVER_SSH_KEY }}
         source: ./composeApp/composeApp-${{ inputs.build_type }}.apk
         target: /var/www/files/
-        strip_components: 1
+        strip_components: 2
