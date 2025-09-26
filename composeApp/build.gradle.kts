@@ -158,8 +158,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 10
-        versionName = "1.0.10"
+        versionCode = 11
+        versionName = "1.0.11"
     }
     packaging {
         resources {
