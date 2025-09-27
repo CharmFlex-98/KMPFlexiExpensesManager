@@ -4,6 +4,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuil
 import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.get
 import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorage
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
+import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.local.CurrencyKeyStorage
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models.CurrencyData
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
@@ -17,7 +18,8 @@ import kotlinx.serialization.json.Json
 internal class CurrencyRepositoryImpl constructor(
     private val fileStorage: FileStorage,
     private val currencyKeyStorage: CurrencyKeyStorage,
-    private val networkClient: NetworkClientBuilder.NetworkClient
+    private val networkClient: NetworkClientBuilder.NetworkClient,
+    private val assetReader: AssetReader
 ) : CurrencyRepository {
 
     override suspend fun fetchLatestCurrencyRates(): CurrencyData {
@@ -46,6 +48,29 @@ internal class CurrencyRepositoryImpl constructor(
         return item
     }
 
+    private fun mapNetworkResponse(res: CurrencyRateResponse): CurrencyData {
+        return CurrencyData(
+            timestamp = res.timestamp,
+            date = res.date,
+            base = res.base,
+            currencyRates = res.rates.mapNotNull { (code, rate) ->
+                if (code.length != 3) return@mapNotNull null
+
+                val currency = try {
+                    Currency.forCode(code)
+                } catch (e: Exception) {
+                    return@mapNotNull null
+                }
+
+                code to CurrencyData.Currency(
+                    code,
+                    currency.defaultFractionDigits,
+                    rate.toFloat()
+                )
+            }.toMap()
+        )
+    }
+
     private suspend fun setLatestCurrencyRates(currencyData: CurrencyData) {
         val json = Json.encodeToString(currencyData)
         fileStorage.write(CURRENCY_FILE_NAME, json.toByteArray())
@@ -57,7 +82,9 @@ internal class CurrencyRepositoryImpl constructor(
             val res = fileStorage.read(CURRENCY_FILE_NAME)
             Json.decodeFromString<CurrencyData>(res)
         } catch (e: Exception) {
-            null
+            // alternative
+            val data = Json.decodeFromString<CurrencyRateResponse>(assetReader.read("currency_rate_fallback.json"))
+            return mapNetworkResponse(data)
         }
     }
 
