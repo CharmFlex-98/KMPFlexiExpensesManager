@@ -28,6 +28,8 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.billing_setting_app_bar_title
 import kotlinproject.composeapp.generated.resources.budget_setting_app_bar_title
+import kotlinproject.composeapp.generated.resources.empty_iap
+import kotlinproject.composeapp.generated.resources.generic_error_toast
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
@@ -48,7 +50,7 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
     }
 
     if (activity == null) {
-        NoResultContent(modifier = Modifier.fillMaxSize(), "Something went wrong. Please retry later")
+        NoResultContent(modifier = Modifier.fillMaxSize(), stringResource(Res.string.generic_error_toast))
         return
     }
 
@@ -67,7 +69,7 @@ internal actual fun BillingScreen(viewModel: BillingViewModel) {
         if (viewState.productInfos.isEmpty()) {
             NoResultContent(
                 modifier = Modifier.fillMaxSize(),
-                "No available in-app purchase items."
+                stringResource(Res.string.empty_iap)
             )
             return@SGScaffold
         }

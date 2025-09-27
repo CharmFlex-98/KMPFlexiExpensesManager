@@ -119,38 +119,6 @@ internal class SchedulerListViewModel  constructor(
 
     fun addScheduler() {
         routeNavigator.navigateTo(TransactionRoute.newScheduleTransactionDestination())
-        // Mocking now only
-//        val currentDate = LocalDate.now()
-//            .toStringWithPattern(DATE_ONLY_DEFAULT_PATTERN)
-//        viewModelScope.launch {
-//            resultOf {
-//                schedulerRepository.addNewExpensesScheduler(
-//                    name = "Testing3 hour",
-//                    fromAccountId = 2,
-//                    amount = 10000,
-//                    categoryId = 3,
-//                    startDate = currentDate,
-//                    currency = "MYR",
-//                    tagIds = listOf(),
-//                    rate = 1f,
-//                    schedulerPeriod = SchedulerPeriod.MONTHLY,
-//                )
-//            }.fold(
-//                onSuccess = {
-//                    getSchedulers()
-//                },
-//                onFailure = {
-//                    Log.d("test", it.toString())
-//                }
-//            )
-//
-//        }
-    }
-
-    fun removeScheduler(id: Int) {
-        viewModelScope.launch {
-            schedulerRepository.removeSchedulerById(id)
-        }
     }
 
     private fun toggleLoader(loader: Boolean) {

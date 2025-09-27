@@ -31,6 +31,14 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchBottomSheet
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SearchItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_add
+import kotlinproject.composeapp.generated.resources.generic_primary_currency
+import kotlinproject.composeapp.generated.resources.generic_set
+import kotlinproject.composeapp.generated.resources.primary_currency_rate_label
+import kotlinproject.composeapp.generated.resources.setting_primary_currency
+import kotlinproject.composeapp.generated.resources.text_field_search_currency_hint
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
 @Composable
@@ -42,9 +50,9 @@ internal fun CurrencySettingScreen(
     val sheetState = rememberModalBottomSheetState()
     val isPrimaryCurrencySetting =
         viewModel.flowType is CurrencySettingViewState.FlowType.PrimaryCurrencySetting
-    val title = if (isPrimaryCurrencySetting) "Primary Currency" else "Secondary Currency"
-    val label = if (isPrimaryCurrencySetting) "Set primary currency" else "Set secondary currency"
-    val actionButtonText = if (isPrimaryCurrencySetting) "Set" else "Add"
+    val title = if (isPrimaryCurrencySetting) stringResource(Res.string.generic_primary_currency) else "Secondary Currency"
+    val label = if (isPrimaryCurrencySetting) stringResource(Res.string.setting_primary_currency) else "Set secondary currency"
+    val actionButtonText = if (isPrimaryCurrencySetting) stringResource(Res.string.generic_set) else stringResource(Res.string.generic_add)
 
     SGScaffold(
         modifier = Modifier
@@ -70,7 +78,7 @@ internal fun CurrencySettingScreen(
             if (viewState.isLoading.not() && viewModel.isMainCurrencyType().not()) {
                 SGTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    label = "Currency rate",
+                    label = stringResource(Res.string.primary_currency_rate_label),
                     value = viewState.currencyRate,
                     trailingIcon = {
                         if (viewState.currencyRate.isEmpty().not()) {
@@ -89,7 +97,7 @@ internal fun CurrencySettingScreen(
     if (bs.isVisible) SearchBottomSheet(
         sheetState = sheetState,
         onDismiss = { viewModel.onCloseCurrencySelectionBottomSheet() },
-        searchFieldLabel = "Search currency",
+        searchFieldLabel = stringResource(Res.string.text_field_search_currency_hint),
         items = bs.items.map { object : SearchItem {
             override val key: String
                 get() = it

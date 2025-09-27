@@ -9,9 +9,13 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.event.BillingEventName
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.purchase_cancelled_toast
+import kotlinproject.composeapp.generated.resources.purchase_pending_toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,7 +27,8 @@ import org.koin.core.annotation.Factory
 internal class BillingViewModel(
     private val billingManager: BillingManager,
     private val eventTracker: EventTracker,
-    private val sharedPrefs: SharedPrefs
+    private val sharedPrefs: SharedPrefs,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
     private val _viewState = MutableStateFlow(BillingViewState())
     val viewState = _viewState.asStateFlow()
@@ -52,7 +57,7 @@ internal class BillingViewModel(
                         return@launch
                     }
 
-                    snackBarState.value = "The purchase is pending. The feature will be available once purchase validation is succeeded."
+                    snackBarState.value = resourcesProvider.getString(Res.string.purchase_pending_toast)
                     eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_PENDING + productId))
                 }
                 is PurchaseResult.Error -> {
@@ -61,7 +66,7 @@ internal class BillingViewModel(
                 }
 
                 PurchaseResult.UserCanceled -> {
-                    snackBarState.value = "Purchase is cancelled"
+                    snackBarState.value = resourcesProvider.getString(Res.string.purchase_cancelled_toast)
                     eventTracker.track(EventData.simpleEvent(BillingEventName.PURCHASE_PRODUCT_FAILED + productId))
                 }
 

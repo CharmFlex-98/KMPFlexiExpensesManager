@@ -95,7 +95,7 @@ internal class ImportDataViewModel constructor(
                         toggleLoader(false)
                         return@launch
                     }
-                    _snackbarState.value = error.message ?: "Unknown error"
+                    _snackbarState.value = error.message ?: resourcesProvider.getString(Res.string.generic_error)
                     toggleLoader(false)
                 }
         }
@@ -215,7 +215,7 @@ internal class ImportDataViewModel constructor(
                 val tags = it.tags.mapNotNull {
                     (it as? ImportedData.RequiredDataState.Acquired)?.id
                 }
-                val accountCurrency = when (TransactionType.fromString(it.transactionType)) {
+                val accountCurrency = when (TransactionType.valueOf(it.transactionType)) {
                     TransactionType.EXPENSES -> {
                         fromAccount?.let { accountRepository.getAccountById(it) }?.currency
                     }
@@ -225,7 +225,7 @@ internal class ImportDataViewModel constructor(
                     else -> it.currency
                 } ?: kotlin.run {
                     toggleLoader(false)
-                    _snackbarState.value = "Something went wrong. Could not obtain account currency when it should able to."
+                    _snackbarState.value = resourcesProvider.getString(Res.string.generic_error)
                     return@launch
                 }
 

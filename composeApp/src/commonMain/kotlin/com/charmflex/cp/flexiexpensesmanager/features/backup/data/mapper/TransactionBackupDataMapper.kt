@@ -26,7 +26,7 @@ internal class TransactionBackupDataMapper(
             }
 
             // This should always have value.
-            val accountCurrency = when (TransactionType.fromString(it.transactionTypeCode)) {
+            val accountCurrency = when (TransactionType.valueOf(it.transactionTypeCode)) {
                 TransactionType.EXPENSES -> it.transactionAccountFrom?.currency
                 TransactionType.INCOME, TransactionType.TRANSFER -> it.transactionAccountTo?.currency
                 else -> it.currency

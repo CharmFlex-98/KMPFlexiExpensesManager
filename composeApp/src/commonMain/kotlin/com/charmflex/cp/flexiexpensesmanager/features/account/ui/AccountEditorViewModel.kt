@@ -83,10 +83,10 @@ internal class AccountEditorViewModel(
                 accountRepository.deleteAccountGroup(id)
             }.fold(
                 onSuccess = {
-                    _snackBarState.emit(SnackBarState.Success("Delete success"))
+                    _snackBarState.emit(SnackBarState.Success(resourcesProvider.getString(Res.string.generic_delete_success)))
                 },
                 onFailure = {
-                    _snackBarState.emit(SnackBarState.Error("Error delete it"))
+                    _snackBarState.emit(SnackBarState.Error(resourcesProvider.getString(Res.string.generic_delete_error)))
                 }
             )
         }
@@ -98,10 +98,10 @@ internal class AccountEditorViewModel(
                 accountRepository.deleteAccount(id)
             }.fold(
                 onSuccess = {
-                    _snackBarState.emit(SnackBarState.Success("Delete success"))
+                    _snackBarState.emit(SnackBarState.Success(resourcesProvider.getString(Res.string.generic_delete_success)))
                 },
                 onFailure = {
-                    _snackBarState.emit(SnackBarState.Error("Error delete it"))
+                    _snackBarState.emit(SnackBarState.Error(resourcesProvider.getString(Res.string.generic_delete_error)))
                 }
             )
         }
@@ -304,9 +304,7 @@ internal class AccountEditorViewModel(
 }
 
 internal interface BottomSheetState {
-    val title: String
     data class CurrencySelectionState(
-        override val title: String = "Select Currency",
         val currencyCodes: Set<String> = setOf()
     ) : BottomSheetState
 }

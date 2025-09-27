@@ -19,6 +19,9 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_currency
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun UserCurrencyScreen(
@@ -38,7 +41,7 @@ internal fun UserCurrencyScreen(
         horizontalAlignment = Alignment.CenterHorizontally,
         topBar = {
             BasicTopBar(
-                "Currency",
+                stringResource(Res.string.generic_currency),
                 actions = {
                     IconButton(onClick = viewModel::onAddButtonTap) {
                         SGIcons.Add()

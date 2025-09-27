@@ -95,7 +95,7 @@ internal fun ImportDataScreen(importDataViewModel: ImportDataViewModel) {
         isLoading = viewState.isLoading,
         screenName = "ImportDataScreen",
         topBar = {
-            BasicTopBar(title = "Import Data")
+            BasicTopBar(title = stringResource(Res.string.generic_import_data))
         }
     ) {
         if (viewState.importedData.isEmpty()) {
@@ -174,7 +174,7 @@ private fun LoadingProgressCard(progress: Float) {
             }
 
             Text(
-                text = "Importing Data",
+                text = stringResource(Res.string.generic_importing_data),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold
                 ),
@@ -189,7 +189,7 @@ private fun LoadingProgressCard(progress: Float) {
             )
 
             Text(
-                text = if (progress == 0f) "Initializing..." else "${round(progress * 100).toInt()}%",
+                text = if (progress == 0f) stringResource(Res.string.generic_initializing_description) else "${round(progress * 100).toInt()}%",
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -214,22 +214,22 @@ private fun ColumnScope.PreLoadScreen(
 
     LockedScreen(
         isFeatureUnlocked,
-        unlockedTitle = "Ready to import file",
-        unlockedSubtitle = "Select a backup file to restore your transaction",
+        unlockedTitle = stringResource(Res.string.import_unlock_title),
+        unlockedSubtitle = stringResource(Res.string.import_unlock_subtitle),
         unlockedDrawableRes = Res.drawable.database_import_outline
     )
 
     if (isFeatureUnlocked) {
         SGLargePrimaryButton(
             modifier = Modifier.fillMaxWidth(),
-            text = "Select Backup File"
+            text = stringResource(Res.string.button_select_backup_file)
         ) {
             show = true
         }
     } else {
         LockedFeatureButton(
             modifier = Modifier.fillMaxWidth(),
-            text = "🔒 Unlock Import Feature",
+            text = stringResource(Res.string.button_unlock_import),
             onClick = {
                 viewModel.purchaseIAP()
             }
@@ -307,7 +307,7 @@ private fun AllDataTab(
 
         // Transactions Header
         Text(
-            text = "Transaction Data (${viewState.importedData.size})",
+            text = "${stringResource(Res.string.generic_transaction_item)} (${viewState.importedData.size})",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.SemiBold
             ),
@@ -360,7 +360,7 @@ private fun ErrorsTab(
 
         // Errors Header
         Text(
-            text = "Errors to Fix (${viewState.missingData.size})",
+            text = "${stringResource(Res.string.import_error_to_fix_hint)} (${viewState.missingData.size})",
             style = MaterialTheme.typography.titleMedium.copy(
                 fontWeight = FontWeight.SemiBold
             ),
@@ -412,7 +412,7 @@ private fun ImportProgressSection(
         ) {
             // Header
             Text(
-                text = "Import Summary",
+                text = stringResource(Res.string.generic_import_summary),
                 style = MaterialTheme.typography.titleMedium.copy(
                     fontWeight = FontWeight.SemiBold
                 ),
@@ -425,14 +425,14 @@ private fun ImportProgressSection(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 StatItem(
-                    label = "Total Items",
+                    label = stringResource(Res.string.generic_total_item),
                     value = totalItems.toString(),
                     iconRes = Res.drawable.database_import_outline,
                     color = MaterialTheme.colorScheme.primary
                 )
 
                 StatItem(
-                    label = "Errors",
+                    label = stringResource(Res.string.generic_errors),
                     value = errorCount.toString(),
                     iconRes = Res.drawable.delete_alert_outline,
                     color = if (errorCount > 0) Color(0xFFF44336) else Color(0xFF4CAF50)
@@ -450,7 +450,7 @@ private fun ImportProgressSection(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "Fix Progress",
+                            text = stringResource(Res.string.generic_fix_progress),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -575,7 +575,7 @@ private fun TransactionImportRow(
                 when (val categoryState = item.categoryColumns) {
                     is ImportedData.RequiredDataState.Missing -> {
                         StatusDetailRow(
-                            label = "Category",
+                            label = stringResource(Res.string.generic_category),
                             value = categoryState.name,
                             isError = true,
                             iconRes = Res.drawable.tag_multiple_outline
@@ -584,7 +584,7 @@ private fun TransactionImportRow(
 
                     is ImportedData.RequiredDataState.Acquired -> {
                         StatusDetailRow(
-                            label = "Category",
+                            label = stringResource(Res.string.generic_category),
                             value = categoryState.name,
                             isError = false,
                             iconRes = Res.drawable.tag_multiple_outline
@@ -599,7 +599,7 @@ private fun TransactionImportRow(
                     when (accountState) {
                         is ImportedData.RequiredDataState.Missing -> {
                             StatusDetailRow(
-                                label = "From",
+                                label = stringResource(Res.string.generic_withdrawal),
                                 value = accountState.name,
                                 isError = true,
                                 iconRes = Res.drawable.bank
@@ -608,7 +608,7 @@ private fun TransactionImportRow(
 
                         is ImportedData.RequiredDataState.Acquired -> {
                             StatusDetailRow(
-                                label = "From",
+                                label = stringResource(Res.string.generic_withdrawal),
                                 value = accountState.name,
                                 isError = false,
                                 iconRes = Res.drawable.bank
@@ -622,7 +622,7 @@ private fun TransactionImportRow(
                     when (accountState) {
                         is ImportedData.RequiredDataState.Missing -> {
                             StatusDetailRow(
-                                label = "To",
+                                label = stringResource(Res.string.generic_deposit),
                                 value = accountState.name,
                                 isError = true,
                                 iconRes = Res.drawable.bank
@@ -631,7 +631,7 @@ private fun TransactionImportRow(
 
                         is ImportedData.RequiredDataState.Acquired -> {
                             StatusDetailRow(
-                                label = "To",
+                                label = stringResource(Res.string.generic_deposit),
                                 value = accountState.name,
                                 isError = false,
                                 iconRes = Res.drawable.bank
@@ -737,34 +737,34 @@ private fun ErrorItemRow(
     val (title, subtitle, iconRes) = when (item.dataType) {
         ImportedData.MissingData.DataType.ACCOUNT_FROM -> {
             Triple(
-                "Create Account (From)",
-                "Account for withdrawals: ${item.name}",
+                "${stringResource(Res.string.button_create_account)} (${stringResource(Res.string.generic_withdrawal)})",
+                "${stringResource(Res.string.import_account_for_withdrawal)}${item.name}",
                 Res.drawable.bank
             )
         }
 
         ImportedData.MissingData.DataType.ACCOUNT_TO -> {
-            Triple("Create Account (To)", "Account for deposits: ${item.name}", Res.drawable.bank)
+            Triple("${stringResource(Res.string.button_create_account)} (${stringResource(Res.string.generic_deposit)})", "${stringResource(Res.string.import_account_for_deposit)}${item.name}", Res.drawable.bank)
         }
 
         ImportedData.MissingData.DataType.EXPENSES_CATEGORY -> {
             Triple(
-                "Create Expense Category",
-                "Category: ${item.name}",
+                stringResource(Res.string.generic_create_expenses_category),
+                "${stringResource(Res.string.generic_category)}: ${item.name}",
                 Res.drawable.tag_multiple_outline
             )
         }
 
         ImportedData.MissingData.DataType.INCOME_CATEGORY -> {
             Triple(
-                "Create Income Category",
-                "Category: ${item.name}",
+                stringResource(Res.string.generic_create_income_category),
+                "${stringResource(Res.string.generic_account)}: ${item.name}",
                 Res.drawable.tag_multiple_outline
             )
         }
 
         ImportedData.MissingData.DataType.TAG -> {
-            Triple("Create Tag", "Tag: ${item.name}", Res.drawable.tag_multiple_outline)
+            Triple(stringResource(Res.string.generic_create_tag), "${stringResource(Res.string.import_tag_label)}${item.name}", Res.drawable.tag_multiple_outline)
         }
     }
 

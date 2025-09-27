@@ -81,11 +81,11 @@ internal fun AccountEditorScreen(
 ) {
     val viewState by viewModel.viewState.collectAsState()
     val title = when (val selectedAccountGroup = viewState.selectedAccountGroup) {
-        null -> "Account Groups"
+        null -> stringResource(Res.string.generic_account_group)
         else -> selectedAccountGroup.accountGroupName
     }
     val editorLabel = when (viewState.editorState) {
-        is AccountEditorViewState.AccountEditorState -> "Account Name"
+        is AccountEditorViewState.AccountEditorState -> stringResource(Res.string.generic_account_name)
         else -> ""
     }
     val isEditorOpened = viewState.editorState != null
@@ -101,12 +101,13 @@ internal fun AccountEditorScreen(
         }
     val bottomSheetState = viewState.bottomSheetState
     val modalBottomSheetState = rememberModalBottomSheetState()
+    val genericError = stringResource(Res.string.generic_error)
 
     LaunchedEffect(key1 = snackBarState) {
         when (val state = snackBarState) {
             is SnackBarState.Success -> snackBarHostState.showSnackBarImmediately(state.message)
             is SnackBarState.Error -> snackBarHostState.showSnackBarImmediately(
-                state.message ?: "Something went wrong"
+                state.message ?: genericError
             )
 
             else -> {}
@@ -156,11 +157,11 @@ internal fun AccountEditorScreen(
 
     viewState.deleteDialogState?.let {
         SGActionDialog(
-            title = "Delete Item",
-            text = "Are you sure you want to delete this item? This action cannot be undone.",
+            title = stringResource(Res.string.dialog_delete_item_title),
+            text = stringResource(Res.string.dialog_delete_item_subtitle),
             onDismissRequest = viewModel::closeDialog,
-            primaryButtonText = "Delete",
-            secondaryButtonText = "Cancel"
+            primaryButtonText = stringResource(Res.string.generic_delete),
+            secondaryButtonText = stringResource(Res.string.generic_cancel)
         ) {
             viewModel.deleteItem(it.id, it.type)
             viewModel.closeDialog()
@@ -173,7 +174,7 @@ internal fun AccountEditorScreen(
                 SearchBottomSheet(
                     sheetState = modalBottomSheetState,
                     onDismiss = { viewModel.resetBottomSheetState() },
-                    searchFieldLabel = "Select currency",
+                    searchFieldLabel = stringResource(Res.string.text_field_search_currency_hint),
                     items = it.currencyCodes.map { currencyCode ->
                         object : SearchItem {
                             override val key: String
@@ -205,6 +206,7 @@ private fun MainContentScreen(
     onDeleteAccount: (String) -> Unit,
     onAddNewAccount: () -> Unit
 ) {
+    val accountCount = stringResource(Res.string.text_field_search_currency_hint)
     Column(
         modifier = modifier.fillMaxSize().verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(grid_x1)
@@ -214,7 +216,7 @@ private fun MainContentScreen(
                 SelectionItem(
                     item = it,
                     title = { it.accountGroupName },
-                    subtitle = { "${it.accounts.size} accounts" },
+                    subtitle = { "${it.accounts.size} $accountCount" },
                     onClick = { onSelectAccountGroup(it) },
                     showDivider = index > 0,
                     suffixIcon = { SGIcons.NextArrow() }
@@ -224,7 +226,7 @@ private fun MainContentScreen(
             if (viewState.selectedAccountGroup.accounts.isEmpty()) {
                 NoResultContent(
                     modifier = Modifier.weight(1f),
-                    "No available accounts. Create one?"
+                    stringResource(Res.string.no_available_account_hint)
                 )
             } else {
                 viewState.selectedAccountGroup.accounts.forEachIndexed { index, account ->
@@ -241,7 +243,7 @@ private fun MainContentScreen(
 
             SGLargePrimaryButton(
                 modifier = Modifier.fillMaxWidth(),
-                text = "Add New Account"
+                text = stringResource(Res.string.button_add_new_account)
             ) {
                 onAddNewAccount()
             }
@@ -255,6 +257,7 @@ private fun AccountGroupItem(
     onClick: () -> Unit,
     showDivider: Boolean
 ) {
+    val accountCount = stringResource(Res.string.accounts_count)
     Column {
         Surface(
             modifier = Modifier
@@ -279,7 +282,7 @@ private fun AccountGroupItem(
                         color = MaterialTheme.colorScheme.onSurface
                     )
                     Text(
-                        text = "${accountGroup.accounts.size} accounts",
+                        text = "${accountGroup.accounts.size} $accountCount",
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -366,8 +369,8 @@ private fun EditorScreen(
 
     EditorCard(
         modifier = Modifier.fillMaxSize(),
-        header = "Account Details",
-        buttonText = "Create Account",
+        header = stringResource(Res.string.generic_account_details),
+        buttonText = stringResource(Res.string.button_create_account),
         onButtonClicked = addNewItem
     ) {
         SGTextField(

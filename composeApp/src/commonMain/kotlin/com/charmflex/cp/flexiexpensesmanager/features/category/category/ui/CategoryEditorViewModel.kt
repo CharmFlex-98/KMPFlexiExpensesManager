@@ -4,26 +4,34 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BackupRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.repositories.TransactionCategoryRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.error_find_category_path_failed
+import kotlinproject.composeapp.generated.resources.generic_delete_success
+import kotlinproject.composeapp.generated.resources.generic_error
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import org.jetbrains.compose.resources.stringResource
 import org.koin.core.annotation.Factory
 
 
 @Factory
 internal class CategoryEditorViewModel  constructor(
     private val categoryRepository: TransactionCategoryRepository,
-    private val routeNavigator: RouteNavigator
+    private val routeNavigator: RouteNavigator,
+    private val resourcesProvider: ResourcesProvider
 ) : ViewModel() {
-    private var editorTypeCode: TransactionType = TransactionType.EXPENSES
+    var editorTypeCode: TransactionType = TransactionType.EXPENSES
+    private set
     private var isImportFixFlow: Boolean = false
 
     private val _snackBarState: MutableStateFlow<SnackBarState> =
@@ -159,7 +167,7 @@ internal class CategoryEditorViewModel  constructor(
         if (index >= chain.size - 1) {
             return ImportCategoryState(
                 historyStack = listOf(),
-                errorMessage = "Cannot find the category path..."
+                errorMessage = resourcesProvider.getString(Res.string.error_find_category_path_failed)
             )
         }
 
@@ -206,10 +214,10 @@ internal class CategoryEditorViewModel  constructor(
             }
         }.fold(
             onSuccess = {
-                _snackBarState.update { SnackBarState.Success("Delete success") }
+                _snackBarState.update { SnackBarState.Success(resourcesProvider.getString(Res.string.generic_delete_success)) }
             },
             onFailure = {
-                _snackBarState.update { SnackBarState.Success("Something went wrong") }
+                _snackBarState.update { SnackBarState.Success(resourcesProvider.getString(Res.string.generic_error)) }
             }
         )
     }

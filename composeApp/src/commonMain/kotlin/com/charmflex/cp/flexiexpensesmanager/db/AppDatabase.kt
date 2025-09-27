@@ -9,7 +9,6 @@ import androidx.sqlite.driver.bundled.BundledSQLiteDriver
 import androidx.sqlite.execSQL
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
 import com.charmflex.cp.flexiexpensesmanager.db.core.DatabaseBuilder
-import com.charmflex.flexiexpensesmanager.db.AccountGroupName
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountTransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.AccountEntity
@@ -100,13 +99,9 @@ private fun migrationList(): List<Migration> {
     )
 }
 
-const val INIT_ACCOUNT_GROUP_SCRIPT =
-    "INSERT INTO AccountGroupEntity (id, name) VALUES (0, '${AccountGroupName.BANK_ACCOUNT}'), (1, '${AccountGroupName.CASH}'), (2, '${AccountGroupName.CREDIT_CARD}'), (3, '${AccountGroupName.DEBIT_CARD}'), (4, '${AccountGroupName.INSURANCE}'), (5, '${AccountGroupName.INVESTMENT}'), (6, '${AccountGroupName.LOAN}'), (7, '${AccountGroupName.PREPAID}'), (8, '${AccountGroupName.SAVING}'), (9, '${AccountGroupName.OTHERS}')"
-const val INIT_ACCOUNT_SCRIPT =
-    "INSERT INTO AccountEntity (name, account_group_id, currency) VALUES ('Cash', 1, 'MYR')"
+val INIT_ACCOUNT_GROUP_SCRIPT =
+    "INSERT INTO AccountGroupEntity (id, name) VALUES (0, '${AccountGroupEnum.BANK_ACCOUNT.value}'), (1, '${AccountGroupEnum.CASH.value}'), (2, '${AccountGroupEnum.CREDIT_CARD.value}'), (3, '${AccountGroupEnum.DEBIT_CARD.value}'), (4, '${AccountGroupEnum.INSURANCE.value}'), (5, '${AccountGroupEnum.INVESTMENT.value}'), (6, '${AccountGroupEnum.LOAN.value}'), (7, '${AccountGroupEnum.PREPAID.value}'), (8, '${AccountGroupEnum.SAVING.value}'), (9, '${AccountGroupEnum.OTHERS.value}')"
 const val INIT_TRANSACTION_TYPE_SCRIPT =
     "INSERT INTO TransactionTypeEntity (code) VALUES ('INCOME'), ('EXPENSES'), ('TRANSFER'), ('UPDATE_ACCOUNT')"
-const val INIT_TRANSACTION_CATEGORY_SCRIPT =
-    "INSERT INTO TransactionCategoryEntity (id, transaction_type_code, name, parent_id) VALUES (1, 'EXPENSES', 'Food', 0), (2, 'INCOME', 'Salary', 0), (3, 'EXPENSES', 'Rental', 0), (4, 'EXPENSES', 'Lunch', 1)"
 const val INIT_CURRENCY_METADATA_SCRIPT =
     "INSERT INTO CurrencyMetaDataEntity (currencyCode, name, defaultFractionDigit) VALUES"

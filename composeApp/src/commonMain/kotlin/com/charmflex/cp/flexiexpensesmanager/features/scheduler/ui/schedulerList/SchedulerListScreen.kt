@@ -15,11 +15,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.ui.transaction_history.ExpensesHistoryItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.LockedFeatureButton
-import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
@@ -30,8 +28,11 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.button_unlock_scheduler
+import kotlinproject.composeapp.generated.resources.empty_scheduler_hint
 import kotlinproject.composeapp.generated.resources.error_image
 import kotlinproject.composeapp.generated.resources.generic_error
+import kotlinproject.composeapp.generated.resources.premium_feature_toast_hint
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -70,8 +71,8 @@ internal fun SchedulerListScreen(transactionSchedulerListViewModel: SchedulerLis
     ) {
 
         if (!viewState.isFeatureAllowed) {
-            NoResultContent(modifier = Modifier.weight(1f), "This feature is only for premium user. Let's purchase it!")
-            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), "🔒 Unlock Scheduler") {
+            NoResultContent(modifier = Modifier.weight(1f), stringResource(Res.string.premium_feature_toast_hint))
+            LockedFeatureButton(modifier = Modifier.fillMaxWidth(), stringResource(Res.string.button_unlock_scheduler)) {
                 transactionSchedulerListViewModel.navigateToPurchaseScreen()
             }
             return@SGScaffold
@@ -79,7 +80,7 @@ internal fun SchedulerListScreen(transactionSchedulerListViewModel: SchedulerLis
 
 
         if (viewState.schedulerItems.isEmpty()) {
-            NoResultContent(Modifier.weight(1f), "No scheduler is set. Create one?")
+            NoResultContent(Modifier.weight(1f), stringResource(Res.string.empty_scheduler_hint))
         } else {
             viewState.schedulerItems.forEach {
                 ScheduledTransactionItem(

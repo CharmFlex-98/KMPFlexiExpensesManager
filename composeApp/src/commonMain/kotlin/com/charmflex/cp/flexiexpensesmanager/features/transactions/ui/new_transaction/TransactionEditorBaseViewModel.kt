@@ -42,6 +42,9 @@ import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRAN
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_UPDATE_ACCOUNT_TYPE
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.kizitonwose.calendar.core.now
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_deduction
+import kotlinproject.composeapp.generated.resources.generic_increment
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -61,6 +64,7 @@ import kotlinx.coroutines.flow.transformLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.datetime.LocalDate
+import org.jetbrains.compose.resources.StringResource
 
 internal abstract class TransactionEditorBaseViewModel(
     private val contentProvider: TransactionEditorContentProvider,
@@ -83,7 +87,7 @@ internal abstract class TransactionEditorBaseViewModel(
     val currentTransactionType = _currentTransactionType.asStateFlow()
     val snackBarState = mutableStateOf<SnackBarState>(SnackBarState.None)
 
-    val scheduledPeriodType = SchedulerPeriod.entries.filter { it != SchedulerPeriod.UNKNOWN }
+    val scheduledPeriodType = SchedulerPeriod.entries
     val updateAccountType = UpdateAccountType.entries
 
     private val _resetMonetary: MutableSharedFlow<Unit> = MutableSharedFlow(extraBufferCapacity = 1)
@@ -550,7 +554,7 @@ internal abstract class TransactionEditorBaseViewModel(
         viewModelScope.launch {
             toggleLoader(true)
             val transaction = loadTransaction(id) ?: return@launch
-            val type = TransactionType.fromString(transaction.transactionTypeCode) ?: return@launch
+            val type = TransactionType.valueOf(transaction.transactionTypeCode) ?: return@launch
 
             val job =
                 onTransactionTypeChanged(type)
@@ -1034,7 +1038,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val fields = _viewState.value.fields
         val updateType =
             fields.firstOrNull { it.id == TRANSACTION_UPDATE_ACCOUNT_TYPE }?.valueItem?.value?.let {
-                UpdateAccountType.fromString(it)
+                UpdateAccountType.valueOf(it)
             }
         val amount = fields.firstOrNull { it.id == TRANSACTION_AMOUNT }?.valueItem?.value
         val accountId =
@@ -1216,11 +1220,10 @@ internal enum class UpdateAccountType {
     INCREMENT, DEDUCTION;
 
     companion object {
-        fun fromString(type: String): UpdateAccountType? {
-            return when (type) {
-                INCREMENT.name -> INCREMENT
-                DEDUCTION.name -> DEDUCTION
-                else -> null
+        fun getStringRes(updateAccountType: UpdateAccountType): StringResource {
+            return when (updateAccountType) {
+                INCREMENT -> Res.string.generic_increment
+                DEDUCTION -> Res.string.generic_deduction
             }
         }
     }

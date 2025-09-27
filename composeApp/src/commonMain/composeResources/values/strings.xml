@@ -13,6 +13,12 @@
   <string name="generic_rate">Rate</string>
   <string name="button_done">DONE</string>
   <string name="text_field_search_currency_hint">Search currency</string>
+  <string name="button_add_new_account">Add New Account</string>
+  <string name="generic_add_new_category">Add New Category</string>
+  <string name="generic_new_category">New Category</string>
+  <string name="empty_expenses_category">No expenses category added. Create one?</string>
+  <string name="empty_income_category">No income category added. Create one?</string>
+  <string name="no_available_account_hint">No available accounts. Create one?</string>
   <string name="generic_account_group">Account group</string>
   <string name="generic_account">Account</string>
   <string name="generic_period">Period</string>
@@ -39,11 +45,17 @@
   <string name="app_name">FlexiExpensesManager</string>
   <string name="title_activity_theme">ThemeActivity</string>
   <string name="icon_back">Back</string>
+  <string name="empty_scheduler_hint">No scheduler is set. Create one?</string>
   <string name="calendar_confirm_button_text">Select</string>
   <string name="calendar_dismiss_button_text">Dismiss</string>
+  <string name="button_unlock_scheduler">🔒 Unlock Scheduler</string>
+  <string name="generic_account_name">Account Name</string>
   <string name="generic_error_bottomsheet_title">Something went wrong</string>
   <string name="generic_error_bottomsheet_subtitle">Oops, something is breaking up. Please try again later.</string>
+  <string name="generic_error_toast">Something went wrong. Please try again later.</string>
   <string name="generic_ok">OK</string>
+  <string name="generic_delete_success">Delete success</string>
+  <string name="generic_delete_error">Delete failed</string>
   <string name="generic_search">Search</string>
   <string name="home_bar_item_summary">Summary</string>
   <string name="home_bar_item_details">Detail</string>
@@ -55,8 +67,16 @@
   <string name="new_expenses_type_hint">Type of the record</string>
   <string name="new_expenses_date">Date</string>
   <string name="new_expenses_date_hint">Date of this record</string>
+  <string name="button_create_account">Create Account</string>
+  <string name="generic_create_account">Create Account</string>
+  <string name="import_account_for_withdrawal">Account for withdrawal: </string>
+  <string name="import_account_for_deposit">Account for deposit: </string>
   <string name="new_expenses_confirm_button">Confirm</string>
   <string name="new_expenses_cancel_button">Cancel</string>
+  <string name="generic_create_expenses_category">Create Expenses Category</string>
+  <string name="generic_create_income_category">Create Income Category</string>
+  <string name="generic_create_tag">Create Tag</string>
+  <string name="import_tag_label">Tag: </string>
   <string name="new_expenses_create_success_dialog_title">Congrats!</string>
   <string name="new_expenses_create_success_dialog_subtitle">You have create a new record!</string>
   <string name="generic_back_to_home">Back to Home</string>
@@ -64,6 +84,25 @@
   <string name="lower_summary_title">HeatMap</string>
   <string name="home_bar_item_accounts">Accounts</string>
   <string name="new_transaction_account">Account</string>
+  <string name="generic_account_details">Account Details</string>
+  <string name="generic_withdrawal">Withdrawal</string>
+  <string name="generic_deposit">Deposit</string>
+  <string name="import_unlock_title">Ready to import file</string>
+  <string name="generic_import_data">Import Data</string>
+  <string name="generic_importing_data">Importing data...</string>
+  <string name="generic_initializing_description">Initializing...</string>
+  <string name="error_find_category_path_failed">Cannot find the category path</string>
+  <string name="category_add_subcategory_title">Add Subcategory for</string>
+  <string name="generic_add">Add</string>
+  <string name="generic_errors">Errors</string>
+  <string name="generic_fix_progress">Fix Progress</string>
+  <string name="button_select_backup_file">Select Backup File</string>
+  <string name="button_unlock_import">🔒 Unlock Import Feature</string>
+  <string name="generic_transaction_item">Transaction Item</string>
+  <string name="generic_import_summary">Import Summary</string>
+  <string name="generic_total_item">Total Items</string>
+  <string name="import_error_to_fix_hint">Error Count</string>
+  <string name="import_unlock_subtitle">Select a backup file to restore your transaction</string>
   <string name="new_expenses_account_hint">Account you spent from</string>
   <string name="generic_category">Category</string>
   <string name="generic_currency">Currency</string>
@@ -82,6 +121,8 @@
   <string name="new_transaction_to_account">To</string>
   <string name="new_transaction_to_account_hint">Transfer to</string>
   <string name="generic_error">Something went wrong.</string>
+  <string name="dialog_delete_item_title">Delete Item</string>
+  <string name="dialog_delete_item_subtitle">Are you sure you want to delete this item? This action cannot be undone.</string>
   <string name="home_bar_item_setting">Setting</string>
   <string name="generic_success">Success!</string>
   <string name="delete_transaction_success_subtitle">You have deleted the transaction.</string>
@@ -150,6 +191,7 @@
   <string name="generic_budget">Budget</string>
   <string name="generic_spend">Spent</string>
   <string name="generic_expenses">Expenses</string>
+  <string name="generic_update">Update</string>
   <string name="generic_income">Income</string>
   <string name="generic_transfer">Transfer</string>
   <string name="generic_update_account">Update Account</string>
@@ -165,6 +207,7 @@
   <string name="error_fix_progress_bar_label">Error fixed</string>
   <string name="error_fix_tab_label_all_data">All Data</string>
   <string name="error_fix_tab_label_errors">Errors</string>
+  <string name="generic_primary_currency">Primary Currency</string>
   <string name="account_editor_currency_label">Currency</string>
   <string name="snackbar_login_succesful_text">Login successful!</string>
   <string name="switching_profile">Switching to your profile...</string>
@@ -174,6 +217,10 @@
   <string name="primary_transaction_amount">Amount in primary currency</string>
   <string name="primary_transaction_amount_hint">The amount in primary currency to calculate total spending/income</string>
   <string name="primary_currency_rate_label">Primary currency rate</string>
+  <string name="generic_set">Set</string>
+  <string name="empty_iap">No available in-app purchase items.</string>
+  <string name="purchase_pending_toast">The purchase is pending. The feature will be available once purchase validation is succeeded.</string>
+  <string name="purchase_cancelled_toast">The purchase is cancelled</string>
   <string name="primary_currency_rate_hint">"Conversion rate to primary currency. "</string>
   <string name="account_amount_label">Account amount</string>
   <string name="account_amount_hint">The amount of the account</string>
@@ -182,4 +229,23 @@
   <string name="transfer_amount_hint">Enter transfer amount (source bank)</string>
   <string name="income_amount_label">Income amount</string>
   <string name="income_amount_hint">Income amount</string>
+
+
+  <string name="account_group_bank_account">Bank Account</string>
+  <string name="account_group_cash">Cash</string>
+  <string name="account_group_credit_card">Credit Card</string>
+  <string name="account_group_debit_card">Debit Card</string>
+  <string name="account_group_insurance">Insurance</string>
+  <string name="account_group_investment">Investment</string>
+  <string name="account_group_loan">Loan</string>
+  <string name="account_group_prepaid">Prepaid</string>
+  <string name="account_group_saving">Saving</string>
+  <string name="account_group_others">Others</string>
+
+  <string name="generic_daily">Daily</string>
+  <string name="generic_monthly">Monthly</string>
+  <string name="generic_yearly">yearly</string>
+
+
+
 </resources>

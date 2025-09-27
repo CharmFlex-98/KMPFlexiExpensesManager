@@ -55,10 +55,6 @@ internal fun CategoryDetailScreen(
     val viewState by viewModel.categoryDetailViewState.collectAsState()
     val dateFilter by viewModel.dateFilter.collectAsState()
 
-    val RangeProvider = CartesianLayerRangeProvider.fixed(maxY = 100.0)
-    val StartAxisValueFormatter = CartesianValueFormatter.decimal(suffix = "%")
-    val MarkerValueFormatter = DefaultCartesianMarker.ValueFormatter.default(suffix = "%")
-
     SGScaffold(
         modifier = Modifier
             .fillMaxSize().padding(grid_x2),

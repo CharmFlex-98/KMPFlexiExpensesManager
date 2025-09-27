@@ -3,9 +3,12 @@ package com.charmflex.cp.flexiexpensesmanager.features.account.data.repositories
 import AccountRepository
 import com.charmflex.cp.flexiexpensesmanager.core.utils.DATE_ONLY_DEFAULT_PATTERN
 import com.charmflex.cp.flexiexpensesmanager.core.utils.RateExchangeManager
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.core.utils.unwrapResult
+import com.charmflex.cp.flexiexpensesmanager.db.AccountGroupEnum
+import com.charmflex.cp.flexiexpensesmanager.db.getAccountGroupNameRes
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.daos.AccountTransactionDao
 import com.charmflex.cp.flexiexpensesmanager.features.account.data.entities.AccountEntity
@@ -17,6 +20,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.currency.constants.Currenc
 import com.charmflex.cp.flexiexpensesmanager.features.currency.service.CurrencyService
 import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.GetCurrencyUseCase
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.data.entities.TransactionEntity
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.account_group_bank_account
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -25,7 +30,8 @@ internal class AccountRepositoryImpl  constructor(
     private val accountTransactionDao: AccountTransactionDao,
     private val currencyService: CurrencyService,
     private val rateExchangeManager: RateExchangeManager,
-    private val getCurrencyUseCase: GetCurrencyUseCase
+    private val getCurrencyUseCase: GetCurrencyUseCase,
+    private val resourcesProvider: ResourcesProvider
 ) : AccountRepository {
     override suspend fun getAccountById(id: Int): AccountGroup.Account {
         val res = accountDao.getAccountById(id)
@@ -53,7 +59,7 @@ internal class AccountRepositoryImpl  constructor(
                 }
                 map.entries.map { entryMap ->
                     val accountGroupId = entryMap.key.first
-                    val accountGroupName = entryMap.key.second
+                    val accountGroupName = resourcesProvider.getString(getAccountGroupNameRes(entryMap.key.second))
                     val data = entryMap.value
                     AccountGroup(
                         accountGroupId = accountGroupId,
@@ -71,6 +77,7 @@ internal class AccountRepositoryImpl  constructor(
             }
     }
 
+
     override fun getAccountsSummary(
         startDate: String?,
         endDate: String?
@@ -80,7 +87,7 @@ internal class AccountRepositoryImpl  constructor(
                 val primaryCurrency = unwrapResult(getCurrencyUseCase.primary())?.name ?: CurrencyDefaults.DEFAULT_CURRENCY
                 it.groupBy { res -> res.accountGroupId to res.accountGroupName }
                     .map {
-                        val groupName = it.key.second
+                        val groupName = resourcesProvider.getString(getAccountGroupNameRes(it.key.second))
                         val groupId = it.key.first
                         AccountGroupSummary(
                             accountGroupId = groupId,

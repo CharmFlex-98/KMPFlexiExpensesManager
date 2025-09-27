@@ -29,6 +29,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.backhandler.BackHandler
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EditorCard
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultContent
@@ -45,6 +46,20 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.category_add_subcategory_title
+import kotlinproject.composeapp.generated.resources.empty_expenses_category
+import kotlinproject.composeapp.generated.resources.empty_income_category
+import kotlinproject.composeapp.generated.resources.error_find_category_path_failed
+import kotlinproject.composeapp.generated.resources.generic_add
+import kotlinproject.composeapp.generated.resources.generic_add_new_category
+import kotlinproject.composeapp.generated.resources.generic_cancel
+import kotlinproject.composeapp.generated.resources.generic_category
+import kotlinproject.composeapp.generated.resources.generic_confirm
+import kotlinproject.composeapp.generated.resources.generic_delete_warning_subtitle
+import kotlinproject.composeapp.generated.resources.generic_new_category
+import kotlinproject.composeapp.generated.resources.generic_warning
+import org.jetbrains.compose.resources.stringResource
 
 
 @OptIn(ExperimentalComposeUiApi::class)
@@ -53,8 +68,8 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
     val viewState by viewModel.viewState.collectAsState()
     val currentNode = viewState.currentNode
     val title = when (val n = currentNode) {
-        null -> "Category"
-        else -> "Add Subcategory for ${n.categoryName}"
+        null -> stringResource(Res.string.generic_category)
+        else -> "${stringResource(Res.string.category_add_subcategory_title)}${n.categoryName}"
     }
     val items = when (val n = currentNode) {
         null -> viewState.categoryChain.categoryTree.items
@@ -66,12 +81,13 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
     val snackBarHostState = remember {
         SnackbarHostState()
     }
+    val genericError = stringResource(Res.string.error_find_category_path_failed)
 
     LaunchedEffect(key1 = snackBarState) {
         when (val state = snackBarState) {
             is SnackBarState.Success -> snackBarHostState.showSnackBarImmediately(state.message)
             is SnackBarState.Error -> snackBarHostState.showSnackBarImmediately(
-                state.message ?: "Something went wrong"
+                state.message ?: genericError
             )
 
             else -> {}
@@ -95,13 +111,13 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
         if (isEditorOpened) {
             EditorCard(
                 modifier = Modifier.fillMaxSize(),
-                header = "Add New category",
-                buttonText = "Add",
+                header = stringResource(Res.string.generic_add_new_category),
+                buttonText = stringResource(Res.string.generic_add),
                 onButtonClicked = { viewModel.addNewCategory() }
             ) {
                 SGTextField(
                     modifier = Modifier.fillMaxWidth(),
-                    label = "New category",
+                    label = stringResource(Res.string.generic_new_category),
                     value = viewState.editorState.value
                 ) {
                     viewModel.updateEditorValue(it)
@@ -110,7 +126,12 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
         } else {
             Column {
                 if (items.isEmpty()) {
-                    NoResultContent(modifier = Modifier.weight(1f), "No expenses category added. Create one?")
+                    val msg = if (viewModel.editorTypeCode == TransactionType.EXPENSES) {
+                        stringResource(Res.string.empty_expenses_category)
+                    } else {
+                        stringResource(Res.string.empty_income_category)
+                    }
+                    NoResultContent(modifier = Modifier.weight(1f), msg)
                 } else {
                     Box(
                         modifier = Modifier
@@ -140,11 +161,11 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
 
 
                 if (viewState.dialogState != null) SGActionDialog(
-                    title = "Warning",
-                    text = "Are you sure you want to DELETE?",
+                    title = stringResource(Res.string.generic_warning),
+                    text = stringResource(Res.string.generic_delete_warning_subtitle),
                     onDismissRequest = viewModel::closeDeleteDialog,
-                    primaryButtonText = "Confirm",
-                    secondaryButtonText = "Cancel"
+                    primaryButtonText = stringResource(Res.string.generic_confirm),
+                    secondaryButtonText = stringResource(Res.string.generic_cancel)
                 ) {
                     viewModel.deleteCategory()
                     viewModel.closeDeleteDialog()
@@ -152,7 +173,7 @@ internal fun CategoryEditorScreen(viewModel: CategoryEditorViewModel) {
 
                 SGLargePrimaryButton(
                     modifier = Modifier.fillMaxWidth(),
-                    text = "ADD"
+                    text = stringResource(Res.string.generic_add)
                 ) {
                     viewModel.openEditor()
                 }

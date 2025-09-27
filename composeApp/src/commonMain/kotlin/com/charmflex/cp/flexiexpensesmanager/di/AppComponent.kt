@@ -71,13 +71,14 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun settingViewModel(): SettingViewModel = get()
     override fun transactionEditorViewModelFactory(): TransactionEditorViewModelFactory = get()
     override fun transactionDetailViewModelFactory(): TransactionDetailViewModelFactory = get()
-    // TODO: TBC
     override fun schedulerListViewModel(): SchedulerListViewModel = get()
     override fun schedulerEditorViewModelFactory(): SchedulerEditorViewModelFactory = get()
     override fun schedulerDetailViewModelFactory(): SchedulerDetailViewModelFactory = get()
     override fun accountEditorViewModel(): AccountEditorViewModel = get()
     override fun accountDetailViewModelFactory(): AccountDetailViewModelFactory = get()
     override fun importDataViewModel(): ImportDataViewModel = get()
+    // TODO: TBC
+
     override fun categoryEditorViewModel(): CategoryEditorViewModel = get()
     override fun categoryStatViewModel(): CategoryStatViewModel = get()
     override fun categoryDetailViewModelFactory(): CategoryDetailViewModelFactory = get()

@@ -61,6 +61,8 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.toLocalDate
 import com.charmflex.cp.flexiexpensesmanager.core.utils.toStringWithPattern
 import com.charmflex.cp.flexiexpensesmanager.features.account.domain.model.AccountGroup
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.domain.models.TransactionCategories
+import com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_AMOUNT
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_FROM_ACCOUNT
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
@@ -201,7 +203,7 @@ internal fun TransactionEditorScreen(
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                FEBody3(text = it.name)
+                                FEBody3(text = stringResource(TransactionType.getStringRes(TransactionType.valueOf(it.name))))
                                 RadioButton(
                                     selected = currentTransactionType == it,
                                     onClick = {
@@ -487,7 +489,7 @@ internal fun TransactionEditorScreen(
                     is TransactionEditorViewState.PeriodSelectionBottomSheetState -> {
                         EnhancedGeneralSelectionContent(
                             items = viewModel.scheduledPeriodType,
-                            getName = { it.name },
+                            getName = { stringResource(SchedulerPeriod.getStringRes(SchedulerPeriod.valueOf(it.name))) },
                             headerContent = {
                                 FEHeading5(text = stringResource(Res.string.generic_period))
                             },
@@ -500,7 +502,7 @@ internal fun TransactionEditorScreen(
                     is TransactionEditorViewState.UpdateTypeSelectionBottomSheetState -> {
                         EnhancedGeneralSelectionContent(
                             items = viewModel.updateAccountType,
-                            getName = { it.name },
+                            getName = { stringResource(UpdateAccountType.getStringRes(UpdateAccountType.valueOf(it.name))) },
                             headerContent = {
                                 FEHeading5(text = stringResource(Res.string.generic_type))
                             },
@@ -615,7 +617,7 @@ private fun CategoryList(
 private fun <T> EnhancedGeneralSelectionContent(
     modifier: Modifier = Modifier,
     items: List<T>,
-    getName: (T) -> String,
+    getName: @Composable (T) -> String,
     getSubtitle: ((T) -> String)? = null,
     getIcon: ((T) -> DrawableResource)? = null,
     suffixIcon: ((T) -> DrawableResource?) = { null },
