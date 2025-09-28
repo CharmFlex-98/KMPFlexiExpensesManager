@@ -17,6 +17,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.sp
 
 @Composable
@@ -57,11 +58,13 @@ fun FEHeading2(
 fun FEHeading3(
     modifier: Modifier = Modifier,
     text: String,
+    textAlign: TextAlign? = null,
     color: Color = Color.Unspecified
 ) {
     Text(
         modifier = modifier,
         text = text,
+        textAlign = textAlign,
         style = TextStyle(
             fontWeight = FontWeight.SemiBold,
             fontSize = 24.sp,
@@ -110,6 +113,7 @@ fun FEHeading5(
 @Composable
 fun FEBody1(
     modifier: Modifier = Modifier,
+    textAlign: TextAlign? = null,
     text: String,
     color: Color = Color.Unspecified,
     textDecoration: TextDecoration? = null
@@ -117,6 +121,7 @@ fun FEBody1(
     Text(
         modifier = modifier,
         text = text,
+        textAlign = textAlign,
         style = TextStyle(
             fontWeight = FontWeight.Normal,
             fontSize = 18.sp,
@@ -134,6 +139,7 @@ fun FEBody2(
     textAlign: TextAlign? = null,
     color: Color = Color.Unspecified,
     maxLines: Int = Int.MAX_VALUE,
+    lineHeight: TextUnit = TextUnit.Unspecified,
     overflow: TextOverflow = TextOverflow.Clip
 ) {
     Text(

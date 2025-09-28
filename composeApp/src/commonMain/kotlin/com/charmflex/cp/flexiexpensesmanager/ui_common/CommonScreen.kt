@@ -1,27 +1,46 @@
 package com.charmflex.cp.flexiexpensesmanager.ui_common
 
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberUpdatedState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_ok
 import kotlinproject.composeapp.generated.resources.lock
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun ColumnScope.LockedScreen(
@@ -92,5 +111,114 @@ internal fun ColumnScope.LockedScreen(
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant
         )
+    }
+}
+
+
+@Composable
+fun AnnouncementPanel(
+    show: Boolean,
+    chipText: String,
+    title: String,
+    subtitle: String,
+    onClicked: () -> Unit
+) {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        SGAnimatedTransition(
+            isVisible = show,
+            enter = fadeIn(animationSpec = tween(durationMillis = 500)) + expandIn(
+                expandFrom = Alignment.Center,
+                animationSpec = tween(durationMillis = 500)
+            ),
+            exit = fadeOut(animationSpec = tween(durationMillis = 500)) +
+                    shrinkOut(
+                        shrinkTowards = Alignment.Center,
+                        animationSpec = tween(durationMillis = 500)
+                    )
+        ) {
+            BoxWithConstraints(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center
+            ) {
+                Card(
+                    modifier = Modifier
+                        .width(maxWidth * 0.85f)
+                        .height(maxHeight * 0.55f),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
+                    shape = RoundedCornerShape(24.dp),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.surface
+                    )
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .padding(grid_x2)
+                            .fillMaxSize(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                    ) {
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Box(modifier = Modifier.weight(1f)) {
+                                Surface(
+                                    shape = RoundedCornerShape(20.dp),
+                                    color = MaterialTheme.colorScheme.primaryContainer
+                                ) {
+                                    Text(
+                                        text = chipText,
+                                        modifier = Modifier.padding(
+                                            horizontal = 12.dp,
+                                            vertical = 6.dp
+                                        ),
+                                        style = MaterialTheme.typography.labelSmall,
+                                        color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+
+
+                            IconButton(onClick = onClicked) {
+                                SGIcons.Close()
+                            }
+                        }
+
+
+                        FEHeading3(
+                            modifier = Modifier.fillMaxWidth().padding(vertical = grid_x1),
+                            textAlign = TextAlign.Center,
+                            text = title,
+                            color = MaterialTheme.colorScheme.onSurface
+                        )
+
+                        // Animation section with background
+                        AnnouncementAnimation()
+
+                        // Content section
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            FEBody1(
+                                text = subtitle,
+                                textAlign = TextAlign.Center,
+                                color = MaterialTheme.colorScheme.onSurfaceVariant,
+                            )
+
+                            Spacer(modifier = Modifier.weight(1f))
+                            SGSmallPrimaryButton(
+                                text = stringResource(Res.string.generic_ok),
+                            ) {
+                                // Handle update action
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }

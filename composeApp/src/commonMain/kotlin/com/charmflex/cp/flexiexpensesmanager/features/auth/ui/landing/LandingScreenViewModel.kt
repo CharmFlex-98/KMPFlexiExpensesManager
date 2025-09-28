@@ -14,6 +14,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.auth.domain.repository.AuthRepository
 import com.charmflex.cp.flexiexpensesmanager.features.auth.event.AuthEventName
 import com.charmflex.cp.flexiexpensesmanager.features.auth.service.sign_in.SignInService
+import com.charmflex.cp.flexiexpensesmanager.features.session.SessionManager
 import com.charmflex.flexiexpensesmanager.features.auth.service.sign_in.SignInState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res

@@ -70,6 +70,18 @@ internal fun SGLottieAnimation(
 }
 
 @Composable
+fun AnnouncementAnimation(
+    modifier: Modifier = Modifier
+) {
+    val composition by getComposition("announcement.json")
+    SGLottieAnimation(
+        modifier = modifier.size(grid_x16),
+        composition = composition,
+        iterations = Compottie.IterateForever
+    )
+}
+
+@Composable
 fun NoResultAnimation(
     modifier: Modifier = Modifier
 ) {

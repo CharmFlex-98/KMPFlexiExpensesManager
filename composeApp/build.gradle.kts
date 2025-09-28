@@ -65,8 +65,13 @@ kotlin {
             implementation(libs.google.billing)
             
             implementation(libs.androidx.security.crypto)
+            implementation(libs.compose.cloudy)
         }
         commonMain.dependencies {
+//            // crypto
+//            implementation("dev.whyoleg.cryptography:cryptography-core:0.5.0")
+//            implementation("dev.whyoleg.cryptography:cryptography-provider-optimal:0.5.0")
+
             // ktor
             implementation(libs.ktor.client.core)
             implementation(libs.ktor.client.content.nego)
@@ -112,7 +117,6 @@ kotlin {
             implementation(compose.components.resources)
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
-//            implementation(libs.androidx.lifecycle.runtime.compose)
         }
     }
 
@@ -161,6 +165,8 @@ android {
         versionCode = 11
         versionName = "1.0.11"
     }
+
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -174,14 +180,21 @@ android {
     buildTypes {
         getByName("debug") {
             applicationIdSuffix = ".debug"  // This would add .debug to all debug builds
+            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:8080\"")
+            buildConfigField("String", "PUB_SIGN_PEM_PATH", "\"crypto/pub_sign_debug.pem\"")
         }
         getByName("release") {
             isMinifyEnabled = true
             isShrinkResources = true
+
+            buildConfigField("String", "SERVER_URL", "\"https://fem.charmflex.com\"")
+            buildConfigField("String", "PUB_SIGN_PEM_PATH", "\"crypto/pub_sign_debug.pem\"")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases
 //             isDebuggable = true

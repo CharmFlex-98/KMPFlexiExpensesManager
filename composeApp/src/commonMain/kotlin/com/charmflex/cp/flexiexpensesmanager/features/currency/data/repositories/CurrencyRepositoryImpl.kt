@@ -1,7 +1,5 @@
 package com.charmflex.cp.flexiexpensesmanager.features.currency.data.repositories
 
-import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClientBuilder
-import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.get
 import com.charmflex.cp.flexiexpensesmanager.core.storage.FileStorage
 import com.charmflex.cp.flexiexpensesmanager.core.utils.datetime.localDateTimeNow
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
@@ -9,43 +7,49 @@ import com.charmflex.cp.flexiexpensesmanager.features.currency.data.local.Curren
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.models.CurrencyData
 import com.charmflex.cp.flexiexpensesmanager.features.currency.domain.repositories.CurrencyRepository
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
+import com.charmflex.cp.flexiexpensesmanager.features.currency.data.remote.api.CurrencyApi
 import io.fluidsonic.currency.Currency
-import io.ktor.util.logging.Logger
 import io.ktor.utils.io.core.toByteArray
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
+import kotlinx.coroutines.withContext
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.json.Json
 
 internal class CurrencyRepositoryImpl constructor(
     private val fileStorage: FileStorage,
     private val currencyKeyStorage: CurrencyKeyStorage,
-    private val networkClient: NetworkClientBuilder.NetworkClient,
-    private val assetReader: AssetReader
+    private val assetReader: AssetReader,
+    private val currencyApi: CurrencyApi
 ) : CurrencyRepository {
 
     override suspend fun fetchLatestCurrencyRates(): CurrencyData {
-        val res: CurrencyRateResponse = networkClient.get("https://api.fxratesapi.com/latest")
-        val item = CurrencyData(
-            timestamp = res.timestamp,
-            date = res.date,
-            base = res.base,
-            currencyRates = res.rates.mapNotNull { (code, rate) ->
-                if (code.length != 3) return@mapNotNull null
+        return withContext(Dispatchers.Default) {
+            val res: CurrencyRateResponse = currencyApi.getLatestCurrencyRate()
+            val item = CurrencyData(
+                timestamp = res.timestamp,
+                date = res.date,
+                base = res.base,
+                currencyRates = res.rates.mapNotNull { (code, rate) ->
+                    if (code.length != 3) return@mapNotNull null
 
-                val currency = try {
-                    Currency.forCode(code)
-                } catch (e: Exception) {
-                    return@mapNotNull null
-                }
+                    val currency = try {
+                        Currency.forCode(code)
+                    } catch (e: Exception) {
+                        return@mapNotNull null
+                    }
 
-                code to CurrencyData.Currency(
-                    code,
-                    currency.defaultFractionDigits,
-                    rate.toFloat()
-                )
-            }.toMap()
-        )
-        setLatestCurrencyRates(item)
-        return item
+                    code to CurrencyData.Currency(
+                        code,
+                        currency.defaultFractionDigits,
+                        rate.toFloat()
+                    )
+                }.toMap()
+            )
+            setLatestCurrencyRates(item)
+            item
+        }
+
     }
 
     private fun mapNetworkResponse(res: CurrencyRateResponse): CurrencyData {
@@ -78,13 +82,15 @@ internal class CurrencyRepositoryImpl constructor(
     }
 
     override suspend fun getCacheCurrencyRates(): CurrencyData? {
-        return try {
-            val res = fileStorage.read(CURRENCY_FILE_NAME)
-            Json.decodeFromString<CurrencyData>(res)
-        } catch (e: Exception) {
-            // alternative
-            val data = Json.decodeFromString<CurrencyRateResponse>(assetReader.read("currency_rate_fallback.json"))
-            return mapNetworkResponse(data)
+        return withContext(Dispatchers.IO) {
+            try {
+                val res = fileStorage.read(CURRENCY_FILE_NAME)
+                Json.decodeFromString<CurrencyData>(res)
+            } catch (e: Exception) {
+                // alternative
+                val data = Json.decodeFromString<CurrencyRateResponse>(assetReader.read("currency_rate_fallback.json"))
+                mapNetworkResponse(data)
+            }
         }
     }
 

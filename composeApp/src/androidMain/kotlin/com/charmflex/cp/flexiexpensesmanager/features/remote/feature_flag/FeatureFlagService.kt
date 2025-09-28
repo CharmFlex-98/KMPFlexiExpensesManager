@@ -1,12 +1,11 @@
 package com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag
 import com.charmflex.cp.flexiexpensesmanager.core.app.AppConfigProvider
-import com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour
+import com.charmflex.cp.flexiexpensesmanager.core.app.model.AppFlavor
 import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
-import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
 
 
@@ -17,7 +16,7 @@ internal class FeatureFlagServiceImpl(
 ) : FeatureFlagService {
     override suspend fun isPremiumFeatureAllowed(premiumFeature: PremiumFeature): Result<Boolean> {
         return resultOf {
-            if (appConfigProvider.getAppFlavour() == AppFlavour.PAID) {
+            if (appConfigProvider.getAppFlavour() == AppFlavor.PAID) {
                 true
             } else {
                 when (premiumFeature) {

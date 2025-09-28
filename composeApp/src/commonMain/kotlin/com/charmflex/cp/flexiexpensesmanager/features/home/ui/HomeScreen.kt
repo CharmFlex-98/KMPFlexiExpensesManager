@@ -1,14 +1,50 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui
 
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkOut
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxWithConstraints
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.FabPosition
 import androidx.compose.material3.FloatingActionButton
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.blur
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination.Companion.hasRoute
 import androidx.navigation.NavDestination.Companion.hierarchy
@@ -36,9 +72,24 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavigationBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
+import com.charmflex.cp.flexiexpensesmanager.ui_common.AnnouncementAnimation
+import com.charmflex.cp.flexiexpensesmanager.ui_common.AnnouncementPanel
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BlurredBackgroundBox
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.FEHeading3
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGAnimatedTransition
+import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSmallPrimaryButton
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x1
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x16
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
+import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
+import kotlinx.coroutines.delay
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun HomeScreen(
@@ -108,36 +159,52 @@ private fun HomeBody(
     settingViewModel: SettingViewModel
 ) {
     val bottomNavController = rememberNavController()
-    SGScaffold(
-        modifier = Modifier.fillMaxSize().padding(grid_x2),
-        bottomBar = { HomeScreenBottomNavigationBar(bottomBarNavController = bottomNavController) },
-        floatingActionButton = {
-            FloatingActionButton(onClick = homeViewModel::createNewExpenses) {
-                SGIcons.Add()
-            }
-        },
-        floatingActionButtonPosition = FabPosition.End,
-        screenName = "HomeScreen"
+    var showAnnouncement by remember { mutableStateOf(false) }
+
+
+    BlurredBackgroundBox(
+        blur = showAnnouncement
     ) {
-        NavHost(
-            navController = bottomNavController,
-            startDestination = HomeRoutes.SummaryHomeRoute
+        SGScaffold(
+            modifier = Modifier.fillMaxSize().padding(grid_x2),
+            bottomBar = { HomeScreenBottomNavigationBar(bottomBarNavController = bottomNavController) },
+            floatingActionButton = {
+                FloatingActionButton(onClick = homeViewModel::createNewExpenses) {
+                    SGIcons.Add()
+                }
+            },
+            floatingActionButtonPosition = FabPosition.End,
+            screenName = "HomeScreen"
         ) {
-            composable<HomeRoutes.SummaryHomeRoute> {
-                DashboardScreen(dashboardViewModel)
-            }
-            composable<HomeRoutes.DetailHomeRoute> {
-                TransactionHistoryHomeScreen(transactionHomeViewModel = transactionHomeViewModel)
-            }
-            composable<HomeRoutes.AccountsHomeRoute> {
-                AccountHomeScreen(viewModel = accountHomeViewModel)
-            }
-            composable<HomeRoutes.SettingHomeRoute> {
-                SettingScreen(viewModel = settingViewModel) {
-                    homeViewModel.notifyRefresh()
+            NavHost(
+                navController = bottomNavController,
+                startDestination = HomeRoutes.SummaryHomeRoute
+            ) {
+                composable<HomeRoutes.SummaryHomeRoute> {
+                    DashboardScreen(dashboardViewModel)
+                }
+                composable<HomeRoutes.DetailHomeRoute> {
+                    TransactionHistoryHomeScreen(transactionHomeViewModel = transactionHomeViewModel)
+                }
+                composable<HomeRoutes.AccountsHomeRoute> {
+                    AccountHomeScreen(viewModel = accountHomeViewModel)
+                }
+                composable<HomeRoutes.SettingHomeRoute> {
+                    SettingScreen(viewModel = settingViewModel) {
+                        homeViewModel.notifyRefresh()
+                    }
                 }
             }
         }
+    }
+
+    AnnouncementPanel(
+        show = showAnnouncement,
+        chipText = "NEW FEATURE",
+        title = "Exciting Update Available!",
+        subtitle = "We've added amazing new features to enhance your experience. Update now to get the latest improvements!"
+    ) {
+        showAnnouncement = false
     }
 }
 

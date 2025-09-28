@@ -27,7 +27,7 @@ internal class HomeViewModel constructor(
     private val scheduledTransactionHandler: ScheduledTransactionHandler,
     private val billingManager: BillingManager,
     private val eventTracker: EventTracker,
-    private val sharedPrefs: SharedPrefs
+    private val sharedPrefs: SharedPrefs,
 ) : ViewModel() {
     private val _homeItemsRefreshable: MutableList<HomeItemRefreshable> = mutableListOf()
 

@@ -1,5 +1,11 @@
 package com.charmflex.cp.flexiexpensesmanager.core.app
 
+import com.charmflex.cp.flexiexpensesmanager.core.app.model.AppBuildType
+import com.charmflex.cp.flexiexpensesmanager.core.app.model.AppFlavor
+
 internal interface AppConfigProvider {
-    fun getAppFlavour(): AppFlavour?
+    fun getAppFlavour(): AppFlavor?
+    fun getAppBuildType(): AppBuildType
+    fun baseUrl(): String
+    fun signaturePemFilePath(): String
 }

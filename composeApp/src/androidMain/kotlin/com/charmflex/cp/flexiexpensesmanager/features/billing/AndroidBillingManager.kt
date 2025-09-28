@@ -15,7 +15,7 @@ import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.QueryProductDetailsParams
 import com.android.billingclient.api.QueryPurchasesParams
 import com.charmflex.cp.flexiexpensesmanager.core.app.AndroidAppConfigProvider
-import com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour
+import com.charmflex.cp.flexiexpensesmanager.core.app.model.AppFlavor
 import com.charmflex.cp.flexiexpensesmanager.di.ActivityProvider
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
@@ -79,8 +79,8 @@ internal class AndroidBillingManager(
             }
 
             val productListCode = when (appConfigProvider.getAppFlavour()) {
-                AppFlavour.FREE -> BillingConstant.ALL_PRODUCTS
-                AppFlavour.PAID -> BillingConstant.PAID_FLAVOUR_PRODUCTS
+                AppFlavor.FREE -> BillingConstant.ALL_PRODUCTS
+                AppFlavor.PAID -> BillingConstant.PAID_FLAVOUR_PRODUCTS
                 null -> BillingConstant.ALL_PRODUCTS
             }
 

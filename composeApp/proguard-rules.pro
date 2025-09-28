@@ -31,7 +31,7 @@
 # For your specific enum classes, you can also add explicit rules:
 -keep class com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType { *; }
 -keep class com.charmflex.cp.flexiexpensesmanager.features.scheduler.domain.models.SchedulerPeriod { *; }
--keep class com.charmflex.cp.flexiexpensesmanager.core.app.AppFlavour { *; }
+-keep class com.charmflex.cp.flexiexpensesmanager.core.app.model.AppFlavour { *; }
 -keep class com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature { *; }
 
 
