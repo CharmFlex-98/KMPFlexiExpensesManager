@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.mode
 
 import kotlinx.serialization.Serializable
 
+@Serializable
 enum class RemoteConfigScene {
     HOME, TAG, REFERRAL
 }

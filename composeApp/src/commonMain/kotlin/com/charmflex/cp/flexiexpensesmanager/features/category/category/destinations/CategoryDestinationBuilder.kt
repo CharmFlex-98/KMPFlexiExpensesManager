@@ -28,7 +28,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.stat.
 import kotlin.reflect.typeOf
 
 internal class CategoryDestinationBuilder(
-    private val navController: NavController
 ) : DestinationBuilder {
     private val appComponent by lazy { AppComponentProvider.instance.getAppComponent() }
 

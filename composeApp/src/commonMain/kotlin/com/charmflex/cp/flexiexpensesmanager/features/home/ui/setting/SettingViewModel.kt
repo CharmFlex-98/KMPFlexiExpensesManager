@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.features.backup.TransactionBackupManager
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AccountRoutes
+import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.AnnouncementRoute
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BudgetRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.CategoryRoutes
@@ -22,6 +23,7 @@ import com.charmflex.cp.flexiexpensesmanager.features.backup.AppDataService
 import com.charmflex.cp.flexiexpensesmanager.features.billing.exceptions.NetworkError
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.model.PremiumFeature
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import kotlinproject.composeapp.generated.resources.Res
@@ -163,6 +165,11 @@ internal class SettingViewModel constructor(
             SettingAction.BILLING -> {
                 routeNavigator.navigateTo(BillingRoutes.Root)
             }
+
+            SettingAction.REFERRAL -> {
+                // Under development
+                routeNavigator.navigateTo(AnnouncementRoute.Root(RemoteConfigScene.REFERRAL))
+            }
         }
     }
 
@@ -276,6 +283,10 @@ internal class SettingViewModel constructor(
             SettingActionable(
                 title = resourcesProvider.getString(Res.string.setting_billing_title),
                 action = SettingAction.BILLING
+            ),
+            SettingActionable(
+                title = resourcesProvider.getString(Res.string.setting_referral),
+                action = SettingAction.REFERRAL
             )
         )
     }
@@ -314,5 +325,5 @@ internal data class SettingActionable(
 )
 
 internal enum class SettingAction {
-    EXPENSES_CAT, INCOME_CAT, ACCOUNT, PRIMARY_CURRENCY, SECONDARY_CURRENCY, Tag, Export, Import, RESET_DATA, SCHEDULER, BUDGET, BILLING
+    EXPENSES_CAT, INCOME_CAT, ACCOUNT, PRIMARY_CURRENCY, SECONDARY_CURRENCY, Tag, Export, Import, RESET_DATA, SCHEDULER, BUDGET, BILLING, REFERRAL
 }

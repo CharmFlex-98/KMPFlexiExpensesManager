@@ -246,6 +246,6 @@
   <string name="generic_monthly">Monthly</string>
   <string name="generic_yearly">yearly</string>
 
-
-
+  <string name="setting_referral">Referral</string>
+  <string name="generic_referral">Referral</string>
 </resources>

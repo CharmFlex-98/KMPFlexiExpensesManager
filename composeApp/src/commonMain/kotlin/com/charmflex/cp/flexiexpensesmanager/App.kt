@@ -15,6 +15,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastState
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastType
 import com.charmflex.cp.flexiexpensesmanager.features.account.destinations.AccountDestinationBuilder
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.destination.AnnouncementDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.auth.destination.AuthDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.backup.destination.BackupDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.features.billing.destination.BillingDestinationBuilder
@@ -27,7 +28,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.tag.destination.TagDestina
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.destination.TransactionDestinationBuilder
 import com.charmflex.cp.flexiexpensesmanager.theme.FlexiExpensesManagerTheme
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGSnackBar
-import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.showSnackBarImmediately
 
@@ -85,13 +85,14 @@ private fun createDestinations(navController: NavController): List<DestinationBu
         AuthDestinationBuilder(),
         HomeDestinationBuilder(),
         TransactionDestinationBuilder(),
-        CategoryDestinationBuilder(navController),
+        CategoryDestinationBuilder(),
         AccountDestinationBuilder(navController),
         CurrencyDestinationBuilder(),
         TagDestinationBuilder(),
         BackupDestinationBuilder(),
         SchedulerDestinationBuilder(),
         BudgetDestinationBuilder(),
-        BillingDestinationBuilder()
+        BillingDestinationBuilder(),
+        AnnouncementDestinationBuilder()
     )
 }

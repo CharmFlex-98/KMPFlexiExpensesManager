@@ -25,6 +25,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +38,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
 import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_import_data
 import kotlinproject.composeapp.generated.resources.generic_ok
 import kotlinproject.composeapp.generated.resources.lock
 import org.jetbrains.compose.resources.DrawableResource

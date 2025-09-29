@@ -32,8 +32,10 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.features.auth.di.AuthInjector
 import com.charmflex.cp.flexiexpensesmanager.features.tag.di.TagInjector
 import com.charmflex.cp.flexiexpensesmanager.features.account.ui.account_detail.AccountDetailViewModelFactory
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.di.AnnouncementInjector
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.ui.AnnouncementViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.ui.AnnouncementViewModelFactory
 import com.charmflex.cp.flexiexpensesmanager.features.auth.ui.landing.LandingScreenViewModel
-import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.di.BillingInjector
 import com.charmflex.cp.flexiexpensesmanager.features.billing.ui.BillingViewModel
 import com.charmflex.cp.flexiexpensesmanager.features.category.category.ui.detail.CategoryDetailViewModelFactory
@@ -54,7 +56,7 @@ class AppModule
 internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeInjector,
     TransactionInjector, SchedulerInjector,
     AccountInjector, BackupInjector, CategoryInjector, CurrencyInjector, SessionInjector,
-    TagInjector, BillingInjector,
+    TagInjector, BillingInjector, AnnouncementInjector,
     KoinComponent {
 
     override fun landingScreenViewModel(): LandingScreenViewModel = get()
@@ -89,4 +91,5 @@ internal class AppComponent : MainInjector, AuthInjector, BudgetInjector, HomeIn
     override fun toastManager(): ToastManager = get()
     override fun tagSettingViewModel(): TagSettingViewModel = get()
     override fun billingViewModel(): BillingViewModel = get()
+    override fun announcementViewModelFactory(): AnnouncementViewModelFactory = get()
 }

@@ -227,6 +227,7 @@ private fun getIconForSettingAction(action: SettingAction): DrawableResource {
         SettingAction.BUDGET -> Res.drawable.car_speed_limiter
 
         SettingAction.BILLING -> Res.drawable.add_shopping_cart
+        SettingAction.REFERRAL -> Res.drawable.ic_share_referral
     }
 }
 
