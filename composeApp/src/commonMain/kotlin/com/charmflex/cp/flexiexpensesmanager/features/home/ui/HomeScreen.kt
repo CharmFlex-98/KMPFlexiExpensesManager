@@ -34,6 +34,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,6 +68,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_h
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.summary.expenses_pie_chart.ExpensesChartDashboardPlugin
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting.SettingScreen
 import com.charmflex.cp.flexiexpensesmanager.features.home.ui.setting.SettingViewModel
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavItem
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGBottomNavigationBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGIcons
@@ -158,9 +161,10 @@ private fun HomeBody(
     accountHomeViewModel: AccountHomeViewModel,
     settingViewModel: SettingViewModel
 ) {
+    val homeViewState by homeViewModel.viewState.collectAsState()
+    val announcement = homeViewState.homeRCAnnouncementRequest
     val bottomNavController = rememberNavController()
-    var showAnnouncement by remember { mutableStateOf(false) }
-
+    val showAnnouncement = homeViewState.homeRCAnnouncementRequest?.show == true
 
     BlurredBackgroundBox(
         blur = showAnnouncement
@@ -200,11 +204,16 @@ private fun HomeBody(
 
     AnnouncementPanel(
         show = showAnnouncement,
-        chipText = "NEW FEATURE",
-        title = "Exciting Update Available!",
-        subtitle = "We've added amazing new features to enhance your experience. Update now to get the latest improvements!"
+        chipText = announcement?.label ?: "",
+        iconType = announcement?.iconType ?: IconType.ANNOUNCEMENT,
+        title = announcement?.title ?: "",
+        subtitle = announcement?.subtitle ?: "",
+        closable = announcement?.closable ?: true,
+        onClosed = {
+            homeViewModel.closeAnnouncement()
+        }
     ) {
-        showAnnouncement = false
+        homeViewModel.onAnnouncementAction()
     }
 }
 

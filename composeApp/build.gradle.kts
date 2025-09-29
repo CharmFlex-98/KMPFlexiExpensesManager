@@ -188,7 +188,7 @@ android {
             isShrinkResources = true
 
             buildConfigField("String", "SERVER_URL", "\"https://fem.charmflex.com\"")
-            buildConfigField("String", "PUB_SIGN_PEM_PATH", "\"crypto/pub_sign_debug.pem\"")
+            buildConfigField("String", "PUB_SIGN_PEM_PATH", "\"crypto/pub_sign_prod.pem\"")
 
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

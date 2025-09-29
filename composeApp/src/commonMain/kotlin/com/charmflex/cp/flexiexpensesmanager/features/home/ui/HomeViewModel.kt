@@ -1,5 +1,6 @@
 package com.charmflex.cp.flexiexpensesmanager.features.home.ui
 
+import androidx.compose.runtime.MutableState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
@@ -13,9 +14,18 @@ import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingCo
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.event.BillingEventName
 import com.charmflex.cp.flexiexpensesmanager.features.currency.usecases.UpdateCurrencyRateUseCase
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.RemoteConfigApi
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementRequest
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.repository.RemoteConfigRepository
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.koin.core.annotation.Factory
@@ -28,8 +38,11 @@ internal class HomeViewModel constructor(
     private val billingManager: BillingManager,
     private val eventTracker: EventTracker,
     private val sharedPrefs: SharedPrefs,
+    private val remoteConfigRepository: RemoteConfigRepository
 ) : ViewModel() {
     private val _homeItemsRefreshable: MutableList<HomeItemRefreshable> = mutableListOf()
+    private val _viewState = MutableStateFlow(HomeViewState())
+    val viewState = _viewState.asStateFlow()
 
     init {
         viewModelScope.launch {
@@ -62,6 +75,40 @@ internal class HomeViewModel constructor(
                 eventTracker.track(EventData.simpleEvent(BillingEventName.HOME_QUERY_PURCHASE_FAILED))
             }
         }
+
+        viewModelScope.launch {
+            resultOf {
+                remoteConfigRepository.getSceneAnnouncement(
+                    RCAnnouncementRequest(scene = RemoteConfigScene.HOME)
+                )
+            }.onSuccess { res ->
+                _viewState.update {
+                    it.copy(
+                        homeRCAnnouncementRequest = res
+                    )
+                }
+            }.onFailure {
+                println(it.message)
+            }
+        }
+    }
+
+    fun onAnnouncementAction() {
+        when (_viewState.value.homeRCAnnouncementRequest?.actionType) {
+            ActionType.BACK -> routeNavigator.pop()
+            ActionType.CLOSE, null -> closeAnnouncement()
+            ActionType.UPDATE_AT_STORE -> {
+                // TODO
+            }
+        }
+    }
+
+    fun closeAnnouncement() {
+        _viewState.update {
+            it.copy(
+                homeRCAnnouncementRequest = it.homeRCAnnouncementRequest?.copy(show = false)
+            )
+        }
     }
 
     fun initHomeRefreshable(vararg items: HomeItemRefreshable) {
@@ -83,3 +130,7 @@ internal class HomeViewModel constructor(
 internal interface HomeItemRefreshable {
     fun refreshHome()
 }
+
+internal data class HomeViewState(
+    val homeRCAnnouncementRequest: RCAnnouncementResponse? = null
+)

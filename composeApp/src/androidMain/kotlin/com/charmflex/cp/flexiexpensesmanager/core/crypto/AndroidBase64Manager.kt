@@ -13,11 +13,11 @@ class AndroidBase64Manager : Base64Manager {
         return encode(from).toString()
     }
 
-    override fun decode(from: ByteArray): ByteArray {
+    override fun decode(from: String): ByteArray {
         return Base64.decode(from, Base64.NO_WRAP)
     }
 
-    override fun decodeToString(from: ByteArray): String {
+    override fun decodeToString(from: String): String {
         return decode(from).toString()
     }
 }

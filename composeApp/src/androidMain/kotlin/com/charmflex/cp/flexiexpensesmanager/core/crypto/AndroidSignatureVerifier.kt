@@ -38,7 +38,7 @@ internal class AndroidSignatureVerifier(
             .replace("-----BEGIN PUBLIC KEY-----", "")
             .replace("-----END PUBLIC KEY-----", "")
             .replace("\\s".toRegex(), "")
-        val decoded = base64Manager.decode(clean.toByteArray())
+        val decoded = base64Manager.decode(clean)
         val spec = X509EncodedKeySpec(decoded)
         val publicKey = KeyFactory.getInstance("RSA").generatePublic(spec)
         return publicKey
@@ -49,7 +49,7 @@ internal class AndroidSignatureVerifier(
         val sig = Signature.getInstance("SHA256withRSA")
         sig.initVerify(publicKey)
         sig.update(payload.toByteArray(Charsets.UTF_8))
-        val signatureBytes = base64Manager.decode(signature.toByteArray())
+        val signatureBytes = base64Manager.decode(signature)
         return sig.verify(signatureBytes)
     }
 }

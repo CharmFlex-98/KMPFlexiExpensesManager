@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.generic_ok
 import kotlinproject.composeapp.generated.resources.lock
@@ -121,7 +122,10 @@ fun AnnouncementPanel(
     chipText: String,
     title: String,
     subtitle: String,
-    onClicked: () -> Unit
+    closable: Boolean,
+    iconType: IconType,
+    onClosed: () -> Unit,
+    onAction: () -> Unit,
 ) {
     Box(
         modifier = Modifier.fillMaxSize(),
@@ -182,9 +186,10 @@ fun AnnouncementPanel(
                                 }
                             }
 
-
-                            IconButton(onClick = onClicked) {
-                                SGIcons.Close()
+                            if (closable) {
+                                IconButton(onClick = onClosed) {
+                                    SGIcons.Close()
+                                }
                             }
                         }
 
@@ -197,7 +202,10 @@ fun AnnouncementPanel(
                         )
 
                         // Animation section with background
-                        AnnouncementAnimation()
+                        when (iconType) {
+                            IconType.ANNOUNCEMENT -> AnnouncementAnimation()
+                            else -> AnnouncementAnimation()
+                        }
 
                         // Content section
                         Column(
@@ -213,7 +221,7 @@ fun AnnouncementPanel(
                             SGSmallPrimaryButton(
                                 text = stringResource(Res.string.generic_ok),
                             ) {
-                                // Handle update action
+                                onAction()
                             }
                         }
                     }
