@@ -52,13 +52,6 @@ internal abstract class TransactionEditorContentProvider {
     private fun expensesFields(): List<FEField> {
         return listOf(
             FEField(
-                id = TRANSACTION_NAME,
-                labelId = Res.string.new_expenses_name,
-                hintId = Res.string.new_expenses_name_hint,
-                valueItem = FEField.Value(),
-                type = FEField.FieldType.Text
-            ),
-            FEField(
                 id = TRANSACTION_CURRENCY,
                 labelId = Res.string.new_transaction_currency_label,
                 hintId = Res.string.new_transaction_currency_hint,
@@ -81,12 +74,7 @@ internal abstract class TransactionEditorContentProvider {
                 labelId = Res.string.generic_category,
                 hintId = Res.string.generic_category_hint,
                 type = FEField.FieldType.Callback
-            )
-        )
-    }
-
-    private fun incomeFields(): List<FEField> {
-        return listOf(
+            ),
             FEField(
                 id = TRANSACTION_NAME,
                 labelId = Res.string.new_expenses_name,
@@ -94,6 +82,17 @@ internal abstract class TransactionEditorContentProvider {
                 valueItem = FEField.Value(),
                 type = FEField.FieldType.Text
             ),
+            FEField(
+                id = TRANSACTION_TAG,
+                labelId = Res.string.text_field_tag_desc,
+                hintId = Res.string.setting_tag,
+                type = FEField.FieldType.Callback
+            )
+        )
+    }
+
+    private fun incomeFields(): List<FEField> {
+        return listOf(
             FEField(
                 id = TRANSACTION_TO_ACCOUNT,
                 labelId = Res.string.new_transaction_account,
@@ -112,11 +111,6 @@ internal abstract class TransactionEditorContentProvider {
                 hintId = Res.string.generic_category_hint,
                 type = FEField.FieldType.Callback
             ),
-        )
-    }
-
-    private fun transferFields(): List<FEField> {
-        return listOf(
             FEField(
                 id = TRANSACTION_NAME,
                 labelId = Res.string.new_expenses_name,
@@ -124,6 +118,11 @@ internal abstract class TransactionEditorContentProvider {
                 valueItem = FEField.Value(),
                 type = FEField.FieldType.Text
             ),
+        )
+    }
+
+    private fun transferFields(): List<FEField> {
+        return listOf(
             FEField(
                 id = TRANSACTION_FROM_ACCOUNT,
                 labelId = Res.string.new_transaction_from_account,
@@ -141,7 +140,14 @@ internal abstract class TransactionEditorContentProvider {
                 labelId = Res.string.transfer_amount_label,
                 hintId = Res.string.transfer_amount_hint,
                 type = FEField.FieldType.Currency
-            )
+            ),
+            FEField(
+                id = TRANSACTION_NAME,
+                labelId = Res.string.new_expenses_name,
+                hintId = Res.string.new_expenses_name_hint,
+                valueItem = FEField.Value(),
+                type = FEField.FieldType.Text
+            ),
         )
     }
 

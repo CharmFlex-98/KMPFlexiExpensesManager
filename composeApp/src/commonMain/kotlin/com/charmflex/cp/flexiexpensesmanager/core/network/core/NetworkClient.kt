@@ -2,7 +2,9 @@ package com.charmflex.cp.flexiexpensesmanager.core.network.core
 
 import kotlin.reflect.KClass
 
-interface NetworkClient {
+internal interface NetworkClient <REQ, RES> {
+    val interceptor: List<NetworkInterceptor<REQ, RES>>
+
     suspend fun <T: Any> get(endpoint: String, responseClass: KClass<T>, networkAttributes: List<NetworkAttribute<Any>>? = null): T
 
     suspend fun <T : Any, R: Any> post(endpoint: String, body: T, requestClass: KClass<T>, responseClass: KClass<R>, networkAttributes: List<NetworkAttribute<Any>>? = null): R

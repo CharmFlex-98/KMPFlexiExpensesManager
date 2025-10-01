@@ -59,8 +59,6 @@
   <string name="generic_search">Search</string>
   <string name="home_bar_item_summary">Summary</string>
   <string name="home_bar_item_details">Detail</string>
-  <string name="new_expenses_name">Name</string>
-  <string name="new_expenses_name_hint">Give the record a name!</string>
   <string name="new_expenses_amount">Amount</string>
   <string name="new_expenses_name_amount_hint">Insert the amount spent / earned</string>
   <string name="new_expenses_type">Record Type</string>
@@ -248,4 +246,11 @@
 
   <string name="setting_referral">Referral</string>
   <string name="generic_referral">Referral</string>
+  <string name="setting_tag">Tag</string>
+  <string name="text_field_tag_desc">Tag (optional)</string>
+  <string name="new_expenses_name_hint">Give record a name</string>
+  <string name="toast_connection_lost_unable_fetch_config">Unable to connect to server. You might miss some important announcement.</string>
+  <string name="new_expenses_name">Name (optional)</string>
+  <string name="generic_unknown">Unknown</string>
+
 </resources>

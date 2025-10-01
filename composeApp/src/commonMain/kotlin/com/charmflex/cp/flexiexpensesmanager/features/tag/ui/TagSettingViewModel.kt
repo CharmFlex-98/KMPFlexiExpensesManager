@@ -6,7 +6,12 @@ import com.charmflex.cp.flexiexpensesmanager.core.domain.FEField
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.routes.BackupRoutes
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
+import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementRequest
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.repository.RemoteConfigRepository
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
@@ -25,7 +30,9 @@ import org.koin.core.annotation.Factory
 internal class TagSettingViewModel constructor(
     private val tagRepository: TagRepository,
     private val routeNavigator: RouteNavigator,
-    private val resourcesProvider: ResourcesProvider
+    private val resourcesProvider: ResourcesProvider,
+    private val remoteConfigRepository: RemoteConfigRepository,
+    private val toastManager: ToastManager,
 ) : ViewModel() {
     private var flowType: TagSettingFlow = TagSettingFlow.Default
 
@@ -40,6 +47,31 @@ internal class TagSettingViewModel constructor(
 
     init {
         observeTags()
+        observeAnnouncement()
+    }
+
+    private fun observeAnnouncement() {
+        viewModelScope.launch {
+            resultOf {
+                remoteConfigRepository.getSceneAnnouncement(RCAnnouncementRequest(RemoteConfigScene.TAG))
+            }.onSuccess { res ->
+                _viewState.update {
+                    it.copy(
+                        announcement = res
+                    )
+                }
+            }.onFailure {
+                toastManager.postError(resourcesProvider.getString(Res.string.toast_connection_lost_unable_fetch_config))
+            }
+        }
+    }
+
+    fun hideAnnouncement() {
+        _viewState.update {
+            it.copy(
+                announcement = _viewState.value.announcement?.copy(show = false)
+            )
+        }
     }
 
     fun initFlow(fixImportTagName: String?) {
@@ -168,7 +200,8 @@ internal data class TagSettingViewState(
     val selectedTag: Tag? = null,
     val tags: List<Tag> = emptyList(),
     val tagEditorState: TagEditorState? = null,
-    val dialogState: TagSettingDialogState? = null
+    val dialogState: TagSettingDialogState? = null,
+    val announcement: RCAnnouncementResponse? = null
 ) {
     val isEditorMode: Boolean get() = tagEditorState != null
 

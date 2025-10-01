@@ -6,22 +6,26 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
 import com.charmflex.cp.flexiexpensesmanager.ui_common.AnnouncementPanel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.rememberAnnouncementState
 
 
 @Composable
 internal fun AnnouncementScreen(
     appBarTitle: String,
     isLoading: Boolean,
-    onClosed: () -> Unit,
     announcement: RCAnnouncementResponse? = null,
-    onAction: () -> Unit,
+    onClosed: () -> Unit,
+    onAction: (ActionType) -> Unit,
 ) {
+    val state = rememberAnnouncementState(announcement)
     SGScaffold(
         modifier = Modifier.fillMaxSize().padding(grid_x2),
         isLoading = isLoading,
@@ -30,17 +34,14 @@ internal fun AnnouncementScreen(
             BasicTopBar(title = appBarTitle)
         }
     ) {
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            AnnouncementPanel(
-                show = announcement != null,
-                chipText = announcement?.label ?: "",
-                iconType = announcement?.iconType ?: IconType.ANNOUNCEMENT,
-                title = announcement?.title ?: "",
-                subtitle = announcement?.subtitle ?: "",
-                closable = announcement?.closable ?: true,
-                onClosed = onClosed
-            ) {
-                onAction()
+        announcement?.let {
+            Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                AnnouncementPanel(
+                    state,
+                    onClosed = onClosed
+                ) {
+                    onAction(it)
+                }
             }
         }
     }

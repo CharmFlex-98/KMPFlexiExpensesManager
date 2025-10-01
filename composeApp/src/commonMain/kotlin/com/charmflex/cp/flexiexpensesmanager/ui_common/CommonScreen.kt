@@ -29,14 +29,19 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberUpdatedState
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.generic_import_data
 import kotlinproject.composeapp.generated.resources.generic_ok
@@ -119,22 +124,23 @@ internal fun ColumnScope.LockedScreen(
 
 
 @Composable
-fun AnnouncementPanel(
-    show: Boolean,
-    chipText: String,
-    title: String,
-    subtitle: String,
-    closable: Boolean,
-    iconType: IconType,
+internal fun AnnouncementPanel(
+    announcementState: AnnouncementState,
     onClosed: () -> Unit,
-    onAction: () -> Unit,
+    onAction: (ActionType) -> Unit,
 ) {
+    val announcement = announcementState.value ?: return
+    val onClosedAction = {
+        announcementState.toggleShow(false)
+        onClosed()
+    }
+
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         SGAnimatedTransition(
-            isVisible = show,
+            isVisible = announcementState.isShowing(),
             enter = fadeIn(animationSpec = tween(durationMillis = 500)) + expandIn(
                 expandFrom = Alignment.Center,
                 animationSpec = tween(durationMillis = 500)
@@ -176,7 +182,7 @@ fun AnnouncementPanel(
                                     color = MaterialTheme.colorScheme.primaryContainer
                                 ) {
                                     Text(
-                                        text = chipText,
+                                        text = announcement.label,
                                         modifier = Modifier.padding(
                                             horizontal = 12.dp,
                                             vertical = 6.dp
@@ -188,8 +194,8 @@ fun AnnouncementPanel(
                                 }
                             }
 
-                            if (closable) {
-                                IconButton(onClick = onClosed) {
+                            if (announcement.closable) {
+                                IconButton(onClick = onClosedAction) {
                                     SGIcons.Close()
                                 }
                             }
@@ -199,12 +205,12 @@ fun AnnouncementPanel(
                         FEHeading3(
                             modifier = Modifier.fillMaxWidth().padding(vertical = grid_x1),
                             textAlign = TextAlign.Center,
-                            text = title,
+                            text = announcement.title,
                             color = MaterialTheme.colorScheme.onSurface
                         )
 
                         // Animation section with background
-                        when (iconType) {
+                        when (announcement.iconType) {
                             IconType.ANNOUNCEMENT -> AnnouncementAnimation()
                             else -> AnnouncementAnimation()
                         }
@@ -214,7 +220,7 @@ fun AnnouncementPanel(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             FEBody1(
-                                text = subtitle,
+                                text = announcement.subtitle,
                                 textAlign = TextAlign.Center,
                                 color = MaterialTheme.colorScheme.onSurfaceVariant,
                             )
@@ -223,7 +229,10 @@ fun AnnouncementPanel(
                             SGSmallPrimaryButton(
                                 text = stringResource(Res.string.generic_ok),
                             ) {
-                                onAction()
+                                if (announcement.actionType == ActionType.CLOSE) {
+                                    onClosedAction()
+                                }
+                                onAction(announcement.actionType)
                             }
                         }
                     }
@@ -231,4 +240,24 @@ fun AnnouncementPanel(
             }
         }
     }
+}
+
+internal class AnnouncementState(
+    announcementResponse: RCAnnouncementResponse? = null
+) {
+    var value by mutableStateOf(announcementResponse)
+        private set
+
+    fun toggleShow(show: Boolean) {
+        value = value?.copy(show = show )
+    }
+
+    fun isShowing(): Boolean {
+        return value?.show == true
+    }
+}
+
+@Composable
+internal fun rememberAnnouncementState(value: RCAnnouncementResponse?): AnnouncementState {
+    return remember(value) { AnnouncementState(value) }
 }

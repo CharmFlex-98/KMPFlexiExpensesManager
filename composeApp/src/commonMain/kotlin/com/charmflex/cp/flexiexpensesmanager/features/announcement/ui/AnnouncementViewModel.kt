@@ -73,18 +73,17 @@ internal class AnnouncementViewModel(
         }
     }
 
-
     fun onClosed() {
         closeAnnouncement()
     }
 
-    fun onAction() {
-        when (_viewState.value.announcement?.actionType) {
+    fun onAction(actionType: ActionType) {
+        when (actionType) {
             ActionType.BACK -> routeNavigator.pop()
-            ActionType.CLOSE, null -> closeAnnouncement()
             ActionType.UPDATE_AT_STORE -> {
                 // TODO
             }
+            else -> {}
         }
     }
 

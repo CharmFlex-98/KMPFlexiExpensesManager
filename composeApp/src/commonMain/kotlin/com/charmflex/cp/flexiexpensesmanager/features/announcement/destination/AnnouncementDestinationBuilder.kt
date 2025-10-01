@@ -41,11 +41,9 @@ internal class AnnouncementDestinationBuilder(
                 appBarTitle = appBarTitle,
                 isLoading = viewState.isLoading,
                 announcement = viewState.announcement,
-                onClosed = {
-                    viewModel.onClosed()
-                },
+                onClosed = { viewModel.onClosed() }
             ) {
-                viewModel.onAction()
+                viewModel.onAction(it)
             }
         }
     }

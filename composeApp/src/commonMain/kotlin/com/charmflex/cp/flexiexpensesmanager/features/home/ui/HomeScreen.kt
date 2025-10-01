@@ -89,6 +89,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x16
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x20
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
+import com.charmflex.cp.flexiexpensesmanager.ui_common.rememberAnnouncementState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import kotlinx.coroutines.delay
@@ -162,12 +163,11 @@ private fun HomeBody(
     settingViewModel: SettingViewModel
 ) {
     val homeViewState by homeViewModel.viewState.collectAsState()
-    val announcement = homeViewState.homeRCAnnouncementRequest
+    val announcementState = rememberAnnouncementState(homeViewState.homeRCAnnouncementRequest)
     val bottomNavController = rememberNavController()
-    val showAnnouncement = homeViewState.homeRCAnnouncementRequest?.show == true
 
     BlurredBackgroundBox(
-        blur = showAnnouncement
+        blur = announcementState.isShowing()
     ) {
         SGScaffold(
             modifier = Modifier.fillMaxSize().padding(grid_x2),
@@ -203,17 +203,11 @@ private fun HomeBody(
     }
 
     AnnouncementPanel(
-        show = showAnnouncement,
-        chipText = announcement?.label ?: "",
-        iconType = announcement?.iconType ?: IconType.ANNOUNCEMENT,
-        title = announcement?.title ?: "",
-        subtitle = announcement?.subtitle ?: "",
-        closable = announcement?.closable ?: true,
+        announcementState,
         onClosed = {
             homeViewModel.closeAnnouncement()
         }
     ) {
-        homeViewModel.onAnnouncementAction()
     }
 }
 

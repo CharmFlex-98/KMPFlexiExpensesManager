@@ -2,6 +2,7 @@ package com.charmflex.cp.flexiexpensesmanager.features.tag.ui
 
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -11,8 +12,10 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
+import com.charmflex.cp.flexiexpensesmanager.ui_common.AnnouncementPanel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicColumnContainerItemList
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
+import com.charmflex.cp.flexiexpensesmanager.ui_common.BlurredBackgroundBox
 import com.charmflex.cp.flexiexpensesmanager.ui_common.EmptyState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.NoResultAnimation
@@ -24,6 +27,7 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.SGLottieAnimation
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SGScaffold
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SettingEditorScreen
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
+import com.charmflex.cp.flexiexpensesmanager.ui_common.rememberAnnouncementState
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.*
 import org.jetbrains.compose.resources.stringResource
@@ -34,29 +38,40 @@ internal fun TagSettingScreen(
 ) {
 
     val viewState by viewModel.viewState.collectAsState()
+    val announcementState = rememberAnnouncementState(viewState.announcement)
 
-
-    TagListScreen(viewModel, viewState.tags, viewState.dialogState)
-
-    SGAnimatedTransition(
-        isVisible = viewState.isEditorMode,
-        enter = slideInHorizontally(initialOffsetX = { it }),
-        exit = slideOutHorizontally(targetOffsetX = { it })
+    BlurredBackgroundBox(
+        blur = announcementState.isShowing()
     ) {
-        SettingEditorScreen(
-            fields = viewState.tagEditorState?.fields ?: emptyList(),
-            appBarTitle = stringResource(Res.string.tag_setting_editor_app_bar_title_add_new),
-            screenName = "TagSettingScreen",
-            onTextFieldChanged = { newValue, field ->
-                viewModel.onUpdateFields(
-                    field,
-                    newValue
-                )
-            },
-            onBack = viewModel::onBack
+        TagListScreen(viewModel, viewState.tags, viewState.dialogState)
+
+        SGAnimatedTransition(
+            isVisible = viewState.isEditorMode,
+            enter = slideInHorizontally(initialOffsetX = { it }),
+            exit = slideOutHorizontally(targetOffsetX = { it })
         ) {
-            viewModel.addNewTag()
+            SettingEditorScreen(
+                fields = viewState.tagEditorState?.fields ?: emptyList(),
+                appBarTitle = stringResource(Res.string.tag_setting_editor_app_bar_title_add_new),
+                screenName = "TagSettingScreen",
+                onTextFieldChanged = { newValue, field ->
+                    viewModel.onUpdateFields(
+                        field,
+                        newValue
+                    )
+                },
+                onBack = viewModel::onBack
+            ) {
+                viewModel.addNewTag()
+            }
         }
+    }
+
+    AnnouncementPanel(
+        announcementState,
+        onClosed = { viewModel.hideAnnouncement() }
+    ) {
+
     }
 }
 

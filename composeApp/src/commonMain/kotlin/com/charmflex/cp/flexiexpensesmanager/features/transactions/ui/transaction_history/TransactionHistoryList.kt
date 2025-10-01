@@ -52,6 +52,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.domain.model.TransactionType
+import com.charmflex.cp.flexiexpensesmanager.features.transactions.provider.TRANSACTION_TAG
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody1
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.FEBody3
@@ -65,10 +66,19 @@ import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x2
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x4
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x7
 import com.charmflex.cp.flexiexpensesmanager.ui_common.grid_x8
+import kotlinproject.composeapp.generated.resources.Res
+import kotlinproject.composeapp.generated.resources.generic_error
+import kotlinproject.composeapp.generated.resources.generic_expenses
+import kotlinproject.composeapp.generated.resources.generic_income
+import kotlinproject.composeapp.generated.resources.generic_transfer
+import kotlinproject.composeapp.generated.resources.generic_unknown_capital
+import kotlinproject.composeapp.generated.resources.generic_update
+import kotlinproject.composeapp.generated.resources.generic_update_account
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource
 import org.jetbrains.compose.resources.painterResource
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -201,9 +211,15 @@ private fun ExpensesHistorySectionView(
             .padding(vertical = grid_x1)
     ) {
         items.forEachIndexed { index, it ->
+            val typeName = when (TransactionType.valueOf(it.type)) {
+                TransactionType.EXPENSES -> stringResource(Res.string.generic_expenses)
+                TransactionType.INCOME -> stringResource(Res.string.generic_income)
+                TransactionType.TRANSFER -> stringResource(Res.string.generic_transfer)
+                TransactionType.UPDATE_ACCOUNT -> stringResource(Res.string.generic_update_account)
+            }
             ExpensesHistoryItem(
                 id = it.id,
-                name = it.name,
+                name = it.name.ifEmpty { typeName },
                 amount = it.bankTransactionAmount,
                 category = it.category,
                 type = it.type,
@@ -332,8 +348,8 @@ internal fun ExpensesHistoryItem(
                         ) {
                             Text(
                                 text = when (type) {
-                                    TransactionType.TRANSFER.name -> "Transfer"
-                                    TransactionType.UPDATE_ACCOUNT.name -> "Update"
+                                    TransactionType.TRANSFER.name -> stringResource(Res.string.generic_transfer)
+                                    TransactionType.UPDATE_ACCOUNT.name -> stringResource(Res.string.generic_update)
                                     else -> ""
                                 },
                                 style = MaterialTheme.typography.bodySmall.copy(

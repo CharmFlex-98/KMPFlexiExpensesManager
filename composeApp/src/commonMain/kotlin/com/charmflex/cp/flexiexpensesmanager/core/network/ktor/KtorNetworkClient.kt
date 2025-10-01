@@ -5,8 +5,12 @@ import com.charmflex.cp.flexiexpensesmanager.core.crypto.SignatureVerifier
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkAttribute
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkAttributes
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClient
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkInterceptor
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.interceptors.CommonHeaderInjector
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.interceptors.SignatureCheckerInterceptor
 import com.charmflex.cp.flexiexpensesmanager.core.network.exception.ApiException
 import io.ktor.client.HttpClient
+import io.ktor.client.call.HttpClientCall
 import io.ktor.client.plugins.HttpSend
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
 import io.ktor.client.plugins.logging.LogLevel
@@ -34,9 +38,6 @@ import io.ktor.http.isSuccess
 import io.ktor.serialization.kotlinx.json.json
 import io.ktor.util.AttributeKey
 import io.ktor.util.reflect.TypeInfo
-import io.ktor.utils.io.ByteReadChannel
-import io.ktor.utils.io.charsets.Charsets
-import io.ktor.utils.io.core.toByteArray
 import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.serializer
@@ -49,9 +50,14 @@ internal object InvalidSignature : Exception()
 internal class KtorNetworkClient(
     appConfigProvider: AppConfigProvider,
     private val signatureVerifier: SignatureVerifier,
-) : NetworkClient {
+) : NetworkClient<HttpRequestBuilder, HttpClientCall> {
     private val baseUrl = appConfigProvider.baseUrl()
     private var httpClient: HttpClient
+
+
+    private val _interceptors: MutableList<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>> = mutableListOf()
+    override val interceptor: List<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>>
+        get() = _interceptors.toList()
 
     init {
         httpClient = getClient()
@@ -59,29 +65,8 @@ internal class KtorNetworkClient(
     }
 
     private fun initInterceptors() {
-//        httpClient.receivePipeline.intercept(HttpReceivePipeline.After) {
-//            val response: HttpResponse = subject
-//            val signature = response.headers["X-Signature"]
-//            val verifySignature = response.call.request.attributes.getOrNull(AttributeKey("verifySignature")) == true
-//
-//            if (!verifySignature) {
-//                proceedWith(response)
-//                return@intercept
-//            }
-//
-//            if (signature.isNullOrBlank()) {
-//                throw InvalidSignature
-//            }
-//
-//            val payload = response.bodyAsText(Charsets.UTF_8)
-//            val isPayloadValid = signatureVerifier.verify(payload, signature)
-//
-//            if (!isPayloadValid) {
-//                throw InvalidSignature
-//            }
-//
-//            proceedWith(response)
-//        }
+        addInterceptor(CommonHeaderInjector())
+        addInterceptor(SignatureCheckerInterceptor())
     }
 
     private fun getClient(): HttpClient {
@@ -105,11 +90,13 @@ internal class KtorNetworkClient(
                 })
             }
         }
-//        client.plugin(HttpSend).intercept { request ->
-//            val response = execute(request)
-//
-//            response
-//        }
+        client.plugin(HttpSend).intercept { request ->
+            val chain = NetworkInterceptor.InterceptorChain(_interceptors) {
+                execute(request)
+            }
+
+            chain.proceed(request)
+        }
 
         return client
     }
@@ -182,6 +169,10 @@ internal class KtorNetworkClient(
         return decodeResponse(response, responseClass)
     }
 
+    private fun addInterceptor(interceptor: NetworkInterceptor<HttpRequestBuilder, HttpClientCall>) {
+        _interceptors.add(interceptor)
+    }
+
     private fun HttpRequestBuilder.append(url: String) {
         if (url.contains("https")) {
             url(url.trimStart('/'))
@@ -231,7 +222,7 @@ internal class KtorNetworkClient(
     }
 }
 
-internal suspend inline fun <reified T : Any> NetworkClient.get(endPoint: String, attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit): T {
+internal suspend inline fun <reified T : Any> NetworkClient<*, *>.get(endPoint: String, attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit): T {
     val attrs = mutableListOf<NetworkAttribute<Any>>()
         .apply {
             attributesBuilder()
@@ -239,7 +230,7 @@ internal suspend inline fun <reified T : Any> NetworkClient.get(endPoint: String
     return this.get(endPoint, T::class, attrs.toList())
 }
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.post(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.post(
     endPoint: String,
     body: T,
     attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit
@@ -251,17 +242,17 @@ internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.pos
     return this.post(endPoint, body, T::class, U::class, attrs)
 }
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.patch(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.patch(
     endPoint: String,
     body: T
 ) = this.patch(endPoint, body, T::class, U::class)
 
-internal suspend inline fun <T, reified U : Any> NetworkClient.delete(
+internal suspend inline fun <T, reified U : Any> NetworkClient<*, *>.delete(
     endPoint: String,
     body: T
 ) = this.delete(endPoint, body, U::class)
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.put(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.put(
     endPoint: String,
     body: T
 ) = this.put(endPoint, body, T::class, U::class)

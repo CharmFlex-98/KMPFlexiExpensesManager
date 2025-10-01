@@ -93,13 +93,13 @@ internal class HomeViewModel constructor(
         }
     }
 
-    fun onAnnouncementAction() {
-        when (_viewState.value.homeRCAnnouncementRequest?.actionType) {
+    fun onAnnouncementAction(actionType: ActionType) {
+        when (actionType) {
             ActionType.BACK -> routeNavigator.pop()
-            ActionType.CLOSE, null -> closeAnnouncement()
             ActionType.UPDATE_AT_STORE -> {
                 // TODO
             }
+            else -> {}
         }
     }
 

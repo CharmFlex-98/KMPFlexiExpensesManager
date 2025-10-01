@@ -203,7 +203,13 @@ internal fun TransactionEditorScreen(
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
                             ) {
-                                FEBody3(text = stringResource(TransactionType.getStringRes(TransactionType.valueOf(it.name))))
+                                FEBody3(
+                                    text = stringResource(
+                                        TransactionType.getStringRes(
+                                            TransactionType.valueOf(it.name)
+                                        )
+                                    )
+                                )
                                 RadioButton(
                                     selected = currentTransactionType == it,
                                     onClick = {
@@ -259,6 +265,7 @@ internal fun TransactionEditorScreen(
                                     .padding(vertical = grid_x1)
                                     .fillMaxWidth(),
                                 label = stringResource(feField.labelId),
+                                hint = stringResource(feField.hintId),
                                 value = feField.valueItem.value,
                                 readOnly = true,
                                 onValueChange = {},
@@ -414,10 +421,12 @@ internal fun TransactionEditorScreen(
                 sheetState = bottomSheetState,
                 onDismiss = { viewModel.toggleBottomSheet(null) },
                 searchFieldLabel = stringResource(Res.string.text_field_search_currency_hint),
-                items = viewState.currencyList.map { object : SearchItem {
-                    override val key: String
-                        get() = it
-                } },
+                items = viewState.currencyList.map {
+                    object : SearchItem {
+                        override val key: String
+                            get() = it
+                    }
+                },
             ) { _, item ->
                 BottomSheetItem(
                     name = item.key,
@@ -449,7 +458,7 @@ internal fun TransactionEditorScreen(
                             EnhancedGeneralSelectionContent(
                                 items = viewState.accountGroups,
                                 getName = { it.accountGroupName },
-                                getSubtitle = { "${it.accounts.size} $accountCountText"},
+                                getSubtitle = { "${it.accounts.size} $accountCountText" },
                                 suffixIcon = { Res.drawable.ic_arrow_next },
                                 headerContent = {
                                     BottomSheetHeaderContent(stringResource(Res.string.generic_account_group)) {
@@ -476,20 +485,33 @@ internal fun TransactionEditorScreen(
                         }
                     }
 
-//                is TransactionEditorViewState.TagSelectionBottomSheetState -> {
-//                    GeneralSelectionBottomSheet(
-//                        title = stringResource(Res.string.tag_selection_bottomsheet_title),
-//                        items = viewState.tagList,
-//                        name = { "#${it.name}" }) {
-//                        viewModel.onTagSelected(it, bs.feField)
-//                        viewModel.toggleBottomSheet(null)
-//                    }
-//                }
+                    is TransactionEditorViewState.TagSelectionBottomSheetState -> {
+                        EnhancedGeneralSelectionContent(
+                            items = viewState.tagList,
+                            getName = { it.name },
+                            headerContent = {
+                                BottomSheetHeaderContent(stringResource(Res.string.setting_tag)) {
+                                    viewModel.onBottomSheetOptionsEdit(bs)
+                                }
+                            },
+                        ) {
+                            viewModel.onTagSelected(it, bs.feField)
+                            viewModel.toggleBottomSheet(null)
+                        }
+                    }
 
                     is TransactionEditorViewState.PeriodSelectionBottomSheetState -> {
                         EnhancedGeneralSelectionContent(
                             items = viewModel.scheduledPeriodType,
-                            getName = { stringResource(SchedulerPeriod.getStringRes(SchedulerPeriod.valueOf(it.name))) },
+                            getName = {
+                                stringResource(
+                                    SchedulerPeriod.getStringRes(
+                                        SchedulerPeriod.valueOf(
+                                            it.name
+                                        )
+                                    )
+                                )
+                            },
                             headerContent = {
                                 FEHeading5(text = stringResource(Res.string.generic_period))
                             },
@@ -502,7 +524,13 @@ internal fun TransactionEditorScreen(
                     is TransactionEditorViewState.UpdateTypeSelectionBottomSheetState -> {
                         EnhancedGeneralSelectionContent(
                             items = viewModel.updateAccountType,
-                            getName = { stringResource(UpdateAccountType.getStringRes(UpdateAccountType.valueOf(it.name))) },
+                            getName = {
+                                stringResource(
+                                    UpdateAccountType.getStringRes(
+                                        UpdateAccountType.valueOf(it.name)
+                                    )
+                                )
+                            },
                             headerContent = {
                                 FEHeading5(text = stringResource(Res.string.generic_type))
                             },
@@ -542,7 +570,7 @@ internal fun CategorySelectionBottomSheet(
         horizontalAlignment = Alignment.Start
     ) {
         BottomSheetHeaderContent(stringResource(Res.string.generic_category)) {
-               onEdit()
+            onEdit()
         }
         Row(
             modifier = Modifier
@@ -722,7 +750,11 @@ fun BottomSheetItem(
                         modifier = Modifier.fillMaxSize(),
                         contentAlignment = Alignment.Center
                     ) {
-                        Icon(modifier = modifier, painter = painterResource(suffixIcon), contentDescription = null)
+                        Icon(
+                            modifier = modifier,
+                            painter = painterResource(suffixIcon),
+                            contentDescription = null
+                        )
                     }
                 }
             }

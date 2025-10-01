@@ -269,8 +269,8 @@ internal class SettingViewModel constructor(
                 action = SettingAction.Import
             ),
             SettingActionable(
-                title = resourcesProvider.getString(Res.string.setting_reset_data),
-                action = SettingAction.RESET_DATA
+                title = resourcesProvider.getString(Res.string.setting_tag),
+                action = SettingAction.Tag
             ),
             SettingActionable(
                 title = resourcesProvider.getString(Res.string.setting_scheduler_title),
@@ -287,7 +287,11 @@ internal class SettingViewModel constructor(
             SettingActionable(
                 title = resourcesProvider.getString(Res.string.setting_referral),
                 action = SettingAction.REFERRAL
-            )
+            ),
+            SettingActionable(
+                title = resourcesProvider.getString(Res.string.setting_reset_data),
+                action = SettingAction.RESET_DATA
+            ),
         )
     }
 }

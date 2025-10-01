@@ -905,7 +905,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val transactionCurrencyViewState =
             combinedCurrencyExchangeViewState.value.transactionCurrencyViewState
 
-        val name = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value
+        val name: String = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value ?: ""
         val fromAccountId =
             fields.firstOrNull { it.id == TRANSACTION_FROM_ACCOUNT }?.valueItem?.id
         val amount = fields.firstOrNull { it.id == TRANSACTION_AMOUNT }?.valueItem?.value
@@ -917,7 +917,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val accountAmount = accountCurrencyViewState?.toCurrencyAmount ?: amount ?: "0"
 
         val tagIds = fields.firstOrNull { it.id == TRANSACTION_TAG }?.valueItem?.id
-        if (name == null || amount == null || categoryId == null || date == null || fromAccountId == null || currency == null) {
+        if (amount == null || categoryId == null || date == null || fromAccountId == null || currency == null) {
             handleFailure(Exception("Something wrong"))
             toggleLoader(false)
             return
@@ -950,7 +950,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val transactionCurrencyViewState =
             combinedCurrencyExchangeViewState.value.transactionCurrencyViewState
 
-        val name = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value
+        val name: String = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value ?: ""
         val toAccountId =
             fields.firstOrNull { it.id == TRANSACTION_TO_ACCOUNT }?.valueItem?.id
         val amount = fields.firstOrNull { it.id == TRANSACTION_AMOUNT }?.valueItem?.value
@@ -959,7 +959,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val date = fields.firstOrNull { it.id == TRANSACTION_DATE }?.valueItem?.value
         val primaryAmount = transactionCurrencyViewState?.toCurrencyAmount ?: amount ?: "0"
         val tagIds = fields.firstOrNull { it.id == TRANSACTION_TAG }?.valueItem?.id
-        if (name == null || amount == null || categoryId == null || date == null || toAccountId == null) {
+        if (amount == null || categoryId == null || date == null || toAccountId == null) {
             handleFailure(Exception("Something wrong"))
             toggleLoader(false)
             return
@@ -995,7 +995,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val transactionCurrencyExchangeViewState =
             combinedCurrencyExchangeViewState.value.transactionCurrencyViewState
 
-        val name = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value
+        val name: String = fields.firstOrNull { it.id == TRANSACTION_NAME }?.valueItem?.value ?: ""
         val fromAccountId =
             fields.firstOrNull { it.id == TRANSACTION_FROM_ACCOUNT }?.valueItem?.id
         val toAccountId =
@@ -1005,7 +1005,7 @@ internal abstract class TransactionEditorBaseViewModel(
         val accountAmount = transactionCurrencyExchangeViewState?.toCurrencyAmount ?: amount ?: "0"
 
         val tagIds = fields.firstOrNull { it.id == TRANSACTION_TAG }?.valueItem?.id
-        if (name == null || amount == null || fromAccountId == null || date == null || toAccountId == null) {
+        if (amount == null || fromAccountId == null || date == null || toAccountId == null) {
             handleFailure(Exception("Something wrong"))
             toggleLoader(false)
             return
@@ -1068,7 +1068,7 @@ internal abstract class TransactionEditorBaseViewModel(
 
     open fun allowProceed(): Boolean {
         return _viewState.value.fields
-            .filter { it.id != TRANSACTION_TAG }
+            .filter { it.id != TRANSACTION_TAG && it.id != TRANSACTION_NAME }
             .firstOrNull { it.valueItem.value.isEmpty() } == null && _viewState.value.errors == null
     }
 
