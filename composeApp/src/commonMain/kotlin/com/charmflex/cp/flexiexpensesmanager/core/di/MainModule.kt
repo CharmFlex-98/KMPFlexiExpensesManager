@@ -2,6 +2,10 @@ package com.charmflex.cp.flexiexpensesmanager.core.di
 
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigatorImpl
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.interceptors.CommonHeaderInjector
+import com.charmflex.cp.flexiexpensesmanager.core.network.core.interceptors.SignatureCheckerInterceptor
+import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.KtorNetworkClient
+import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.KtorNetworkClientBuilder
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.file.AssetReader
@@ -12,6 +16,7 @@ import kotlinx.coroutines.IO
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.core.qualifier.named
+import org.koin.dsl.bind
 import org.koin.dsl.module
 
 //import com.charmflex.cp.flexiexpensesmanager.core.network.DefaultNetworkClientBuilder
@@ -72,6 +77,13 @@ enum class DispatcherType {
 val mainModule = module {
     singleOf(::ResourcesProvider)
     singleOf(::RouteNavigatorImpl) { bind<RouteNavigator>() }
+    single {
+        val builder = KtorNetworkClientBuilder(get())
+        builder
+            .interceptor(get<CommonHeaderInjector>())
+            .interceptor(get<SignatureCheckerInterceptor>())
+            .build()
+    }
     singleOf(::AssetReaderImpl) { bind<AssetReader>() }
     factory<CoroutineDispatcher>(named(DispatcherType.IO)) { Dispatchers.IO }
 //    singleOf(::FileStorageImpl) {  }

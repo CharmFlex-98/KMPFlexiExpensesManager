@@ -11,11 +11,11 @@ internal interface NetworkInterceptor<REQ, RES> {
         private var currentIndex = 0
 
         suspend fun proceed(request: REQ): RES {
-            if (currentIndex == _interceptors.size - 1) {
+            if (currentIndex == _interceptors.size) {
                 return onRequest(request)
             }
 
-            return _interceptors[++currentIndex].intercept(request, this)
+            return _interceptors[currentIndex++].intercept(request, this)
         }
     }
 }

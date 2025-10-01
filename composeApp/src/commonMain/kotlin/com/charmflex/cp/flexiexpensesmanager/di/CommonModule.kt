@@ -10,7 +10,6 @@ import com.charmflex.cp.flexiexpensesmanager.features.backup.di.backupModule
 import com.charmflex.cp.flexiexpensesmanager.features.budget.di.modules.budgetModule
 import com.charmflex.cp.flexiexpensesmanager.features.session.di.module.sessionModule
 import com.charmflex.cp.flexiexpensesmanager.features.transactions.di.modules.transactionModule
-import org.koin.core.annotation.ComponentScan
 import org.koin.core.module.Module
 import org.koin.ksp.generated.module
 

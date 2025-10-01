@@ -1,9 +1,10 @@
 package com.charmflex.cp.flexiexpensesmanager.core.network.ktor
 
+import coil3.intercept.Interceptor
 import com.charmflex.cp.flexiexpensesmanager.core.app.AppConfigProvider
+import com.charmflex.cp.flexiexpensesmanager.core.app.DeviceInfoProvider
 import com.charmflex.cp.flexiexpensesmanager.core.crypto.SignatureVerifier
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkAttribute
-import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkAttributes
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClient
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkInterceptor
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.interceptors.CommonHeaderInjector
@@ -24,13 +25,9 @@ import io.ktor.client.request.get
 import io.ktor.client.request.patch
 import io.ktor.client.request.post
 import io.ktor.client.request.put
-import io.ktor.client.request.request
 import io.ktor.client.request.setBody
 import io.ktor.client.request.url
-import io.ktor.client.statement.HttpReceivePipeline
 import io.ktor.client.statement.HttpResponse
-import io.ktor.client.statement.HttpResponseContainer
-import io.ktor.client.statement.HttpResponsePipeline
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.contentType
@@ -46,18 +43,34 @@ import kotlin.reflect.KClass
 
 internal object InvalidSignature : Exception()
 
-@Singleton
+internal class KtorNetworkClientBuilder(
+    private val appConfigProvider: AppConfigProvider
+) : NetworkClient.Builder<HttpRequestBuilder, HttpClientCall> {
+    private var baseUrl: String? = ""
+    private val interceptors: MutableList<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>> = mutableListOf()
+
+
+    override fun interceptor(interceptor: NetworkInterceptor<HttpRequestBuilder, HttpClientCall>): NetworkClient.Builder<HttpRequestBuilder, HttpClientCall> {
+        this.interceptors.add(interceptor)
+        return this
+    }
+
+    override fun build(): NetworkClient {
+        return KtorNetworkClient(
+            appConfigProvider,
+            this.interceptors
+        )
+    }
+}
+
 internal class KtorNetworkClient(
     appConfigProvider: AppConfigProvider,
-    private val signatureVerifier: SignatureVerifier,
-) : NetworkClient<HttpRequestBuilder, HttpClientCall> {
+    private val interceptors: List<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>>
+) : NetworkClient {
     private val baseUrl = appConfigProvider.baseUrl()
     private var httpClient: HttpClient
 
-
     private val _interceptors: MutableList<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>> = mutableListOf()
-    override val interceptor: List<NetworkInterceptor<HttpRequestBuilder, HttpClientCall>>
-        get() = _interceptors.toList()
 
     init {
         httpClient = getClient()
@@ -65,8 +78,7 @@ internal class KtorNetworkClient(
     }
 
     private fun initInterceptors() {
-        addInterceptor(CommonHeaderInjector())
-        addInterceptor(SignatureCheckerInterceptor())
+        interceptors.forEach { addInterceptor(it) }
     }
 
     private fun getClient(): HttpClient {
@@ -193,36 +205,11 @@ internal class KtorNetworkClient(
         }
         val text = response.bodyAsText()
 
-        if (!validatePayload(response, text)) {
-            throw InvalidSignature
-        }
-
         return Json.decodeFromString(responseClass.serializer(), text)
-    }
-
-    private fun validatePayload(response: HttpResponse, payload: String): Boolean {
-        val signature = response.headers["X-Signature"]
-        val verifySignature = response.call.request.attributes.getOrNull(AttributeKey("verifySignature")) == true
-
-        if (!verifySignature) {
-            return false
-        }
-
-        if (signature.isNullOrBlank()) {
-            throw InvalidSignature
-        }
-
-        val isPayloadValid = signatureVerifier.verify(payload, signature)
-
-        if (!isPayloadValid) {
-            throw InvalidSignature
-        }
-
-        return true
     }
 }
 
-internal suspend inline fun <reified T : Any> NetworkClient<*, *>.get(endPoint: String, attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit): T {
+internal suspend inline fun <reified T : Any> NetworkClient.get(endPoint: String, attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit): T {
     val attrs = mutableListOf<NetworkAttribute<Any>>()
         .apply {
             attributesBuilder()
@@ -230,7 +217,7 @@ internal suspend inline fun <reified T : Any> NetworkClient<*, *>.get(endPoint: 
     return this.get(endPoint, T::class, attrs.toList())
 }
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.post(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.post(
     endPoint: String,
     body: T,
     attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit
@@ -242,17 +229,17 @@ internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, 
     return this.post(endPoint, body, T::class, U::class, attrs)
 }
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.patch(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.patch(
     endPoint: String,
     body: T
 ) = this.patch(endPoint, body, T::class, U::class)
 
-internal suspend inline fun <T, reified U : Any> NetworkClient<*, *>.delete(
+internal suspend inline fun <T, reified U : Any> NetworkClient.delete(
     endPoint: String,
     body: T
 ) = this.delete(endPoint, body, U::class)
 
-internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient<*, *>.put(
+internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.put(
     endPoint: String,
     body: T
 ) = this.put(endPoint, body, T::class, U::class)

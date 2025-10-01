@@ -180,7 +180,7 @@ android {
     buildTypes {
         getByName("debug") {
             applicationIdSuffix = ".debug"  // This would add .debug to all debug builds
-            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:8080\"")
+            buildConfigField("String", "SERVER_URL", "\"http://10.0.2.2:3000\"")
             buildConfigField("String", "PUB_SIGN_PEM_PATH", "\"crypto/pub_sign_debug.pem\"")
         }
         getByName("release") {
@@ -194,6 +194,7 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("debug")
 
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases

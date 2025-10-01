@@ -1,5 +1,4 @@
 package com.charmflex.cp.flexiexpensesmanager.features.currency.data.remote.api
-import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkAttributes
 import com.charmflex.cp.flexiexpensesmanager.core.network.core.NetworkClient
 import com.charmflex.cp.flexiexpensesmanager.core.network.ktor.get
 import com.charmflex.cp.flexiexpensesmanager.features.currency.data.models.CurrencyRateResponse
