@@ -32,4 +32,8 @@ internal class AndroidAppConfigProvider : AppConfigProvider {
     override fun signaturePemFilePath(): String {
         return BuildConfig.PUB_SIGN_PEM_PATH
     }
+
+    override fun packageName(): String {
+        return BuildConfig.APPLICATION_ID
+    }
 }

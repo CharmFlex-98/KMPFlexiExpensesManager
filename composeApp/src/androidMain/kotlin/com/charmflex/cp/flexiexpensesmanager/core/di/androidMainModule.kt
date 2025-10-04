@@ -29,6 +29,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.billing.AndroidBillingMana
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.feature_flag.FeatureFlagServiceImpl
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.Redirector
+import com.charmflex.cp.flexiexpensesmanager.utils.redirect.AndroidRedirector
 import org.koin.core.annotation.ComponentScan
 import org.koin.core.annotation.Module
 import org.koin.core.module.dsl.bind
@@ -40,6 +42,7 @@ import org.koin.dsl.module
 class AndroidModule
 
 val androidMainModule = module {
+    singleOf(::AndroidRedirector) { bind<Redirector>() }
     single { ActivityProvider() }
     singleOf(::AndroidAppConfigProvider) { bind<AppConfigProvider>() }
     single { PostHogEventTracker(get()) }

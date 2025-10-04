@@ -22,6 +22,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.model
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.repository.RemoteConfigRepository
 import com.charmflex.cp.flexiexpensesmanager.features.scheduler.ScheduledTransactionHandler
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.RedirectPath
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.Redirector
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -39,7 +41,8 @@ internal class HomeViewModel constructor(
     private val billingManager: BillingManager,
     private val eventTracker: EventTracker,
     private val sharedPrefs: SharedPrefs,
-    private val announcementService: AnnouncementService
+    private val announcementService: AnnouncementService,
+    private val redirector: Redirector
 ) : ViewModel() {
     private val _homeItemsRefreshable: MutableList<HomeItemRefreshable> = mutableListOf()
     private val _viewState = MutableStateFlow(HomeViewState())
@@ -98,7 +101,7 @@ internal class HomeViewModel constructor(
         when (actionType) {
             ActionType.BACK -> routeNavigator.pop()
             ActionType.UPDATE_AT_STORE -> {
-                // TODO
+                redirector.redirectTo(RedirectPath.OFFICIAL_STORE)
             }
             else -> {}
         }

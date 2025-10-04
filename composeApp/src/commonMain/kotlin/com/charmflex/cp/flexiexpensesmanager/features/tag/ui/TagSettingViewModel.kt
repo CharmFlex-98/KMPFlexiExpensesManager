@@ -9,12 +9,15 @@ import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
 import com.charmflex.cp.flexiexpensesmanager.features.announcement.service.AnnouncementService
+import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementRequest
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.repository.RemoteConfigRepository
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.model.Tag
 import com.charmflex.cp.flexiexpensesmanager.features.tag.domain.repositories.TagRepository
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.RedirectPath
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.Redirector
 import com.charmflex.cp.flexiexpensesmanager.ui_common.SnackBarState
 import com.charmflex.cp.flexiexpensesmanager.ui_common.features.SETTING_EDITOR_TAG
 import kotlinproject.composeapp.generated.resources.Res
@@ -34,6 +37,7 @@ internal class TagSettingViewModel constructor(
     private val resourcesProvider: ResourcesProvider,
     private val announcementService: AnnouncementService,
     private val toastManager: ToastManager,
+    private val redirector: Redirector
 ) : ViewModel() {
     private var flowType: TagSettingFlow = TagSettingFlow.Default
 
@@ -108,6 +112,15 @@ internal class TagSettingViewModel constructor(
                     tagEditorState = it.copy(fields = updatedFields)
                 )
             }
+        }
+    }
+
+    fun onAnnouncementAction(actionType: ActionType) {
+        when (actionType) {
+            ActionType.UPDATE_AT_STORE -> {
+                redirector.redirectTo(RedirectPath.OFFICIAL_STORE)
+            }
+            else -> {}
         }
     }
 

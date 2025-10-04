@@ -13,6 +13,8 @@ import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.model
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RemoteConfigScene
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.repository.RemoteConfigRepository
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.RedirectPath
+import com.charmflex.cp.flexiexpensesmanager.features.utils.redirect.Redirector
 import kotlinproject.composeapp.generated.resources.Res
 import kotlinproject.composeapp.generated.resources.generic_error
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -29,7 +31,7 @@ internal class AnnouncementViewModelFactory(
     private val toastManager: ToastManager,
     private val resourcesProvider: ResourcesProvider,
     private val routeNavigator: RouteNavigator,
-    private val sharedPrefs: SharedPrefs
+    private val redirector: Redirector
 ) {
     fun create(scene: RemoteConfigScene): AnnouncementViewModel {
         return AnnouncementViewModel(
@@ -38,7 +40,7 @@ internal class AnnouncementViewModelFactory(
             toastManager,
             resourcesProvider,
             routeNavigator,
-            sharedPrefs
+            redirector
         )
     }
 }
@@ -50,7 +52,7 @@ internal class AnnouncementViewModel(
     private val toastManager: ToastManager,
     private val resourcesProvider: ResourcesProvider,
     private val routeNavigator: RouteNavigator,
-    private val sharedPrefs: SharedPrefs
+    private val redirector: Redirector
 ) : ViewModel() {
 
 
@@ -92,7 +94,7 @@ internal class AnnouncementViewModel(
         when (actionType) {
             ActionType.BACK -> routeNavigator.pop()
             ActionType.UPDATE_AT_STORE -> {
-                // TODO
+                redirector.redirectTo(RedirectPath.OFFICIAL_STORE)
             }
             else -> {}
         }

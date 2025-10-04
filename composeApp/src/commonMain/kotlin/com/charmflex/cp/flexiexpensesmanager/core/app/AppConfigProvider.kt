@@ -9,4 +9,5 @@ internal interface AppConfigProvider {
     fun getAppVersion(): String
     fun baseUrl(): String
     fun signaturePemFilePath(): String
+    fun packageName(): String
 }

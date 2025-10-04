@@ -153,6 +153,7 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-core-coroutine = { module = "io.insert-koin:koin-core-coroutines" }
 koin-android = { module = "io.insert-koin:koin-android"}
+koin-startup = { module = "io.insert-koin:koin-androidx-startup"}
 koin-annotation = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotation" }
 koin-ksp-compiler = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotation"}
 androidx-savedState = { module = "androidx.savedstate:savedstate-ktx", version.ref = "saved_state_version"}

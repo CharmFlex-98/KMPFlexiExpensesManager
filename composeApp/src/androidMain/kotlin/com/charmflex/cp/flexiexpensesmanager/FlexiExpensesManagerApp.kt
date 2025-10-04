@@ -11,14 +11,18 @@ import com.charmflex.cp.flexiexpensesmanager.di.AppComponent
 import com.charmflex.cp.flexiexpensesmanager.di.AppComponentProvider
 import com.charmflex.cp.flexiexpensesmanager.di.KoinInitializer
 import org.koin.android.ext.android.getKoin
+import org.koin.androix.startup.KoinStartup
+import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.component.KoinComponent
+import org.koin.dsl.KoinConfiguration
 
-internal class FlexiExpensesManagerApp : Application(), AppComponentProvider, ActivityLifecycleCallbacks {
+@OptIn(KoinExperimentalAPI::class)
+internal class FlexiExpensesManagerApp : Application(), AppComponentProvider, ActivityLifecycleCallbacks, KoinStartup {
     private var appComponent: AppComponent? = null
 
     override fun onCreate() {
         super.onCreate()
-        KoinInitializer(this).init()
+//        KoinInitializer(this).init()
         appComponent = AppComponent()
         AppComponentProvider.instance = this
 
@@ -60,5 +64,9 @@ internal class FlexiExpensesManagerApp : Application(), AppComponentProvider, Ac
     override fun onActivityDestroyed(p0: Activity) {
         val provider = getKoin().get<ActivityProvider>()
         provider.unregisterActivity(p0)
+    }
+
+    override fun onKoinStartup(): KoinConfiguration {
+        return KoinInitializer(this).initAsync()
     }
 }

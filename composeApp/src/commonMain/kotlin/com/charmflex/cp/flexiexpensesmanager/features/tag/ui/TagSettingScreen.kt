@@ -74,7 +74,7 @@ internal fun TagSettingScreen(
         },
         onClosed = { viewModel.hideAnnouncement() }
     ) {
-
+        viewModel.onAnnouncementAction(it)
     }
 }
 

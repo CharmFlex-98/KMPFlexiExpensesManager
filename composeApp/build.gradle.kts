@@ -66,6 +66,8 @@ kotlin {
             
             implementation(libs.androidx.security.crypto)
             implementation(libs.compose.cloudy)
+
+            implementation(libs.koin.startup)
         }
         commonMain.dependencies {
 //            // crypto
@@ -162,8 +164,8 @@ android {
         applicationId = "com.charmflex.cp.flexiexpensesmanager"
         minSdk = libs.versions.android.minSdk.get().toInt()
         targetSdk = libs.versions.android.targetSdk.get().toInt()
-        versionCode = 13
-        versionName = "1.0.13"
+        versionCode = 14
+        versionName = "1.0.14"
     }
 
 
@@ -198,8 +200,8 @@ android {
 
             // Remove isDebuggable = true for proper release builds
             // Remove debug signing for production releases
-//             isDebuggable = true
-//             signingConfig = signingConfigs.getByName("debug")
+             isDebuggable = true
+             signingConfig = signingConfigs.getByName("debug")
         }
     }
     compileOptions {

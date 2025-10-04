@@ -144,7 +144,7 @@ internal abstract class TransactionHistoryViewModel(
                         val toMergeItems = (removeAt(0) as TransactionHistorySection).items
 
                         // Modifier previous section items
-                        val lastSection = this@ori.removeLast() as TransactionHistorySection
+                        val lastSection = this@ori.removeAt(this@ori.lastIndex) as TransactionHistorySection
                         val lastSectionMergedItems = lastSection.items.toMutableList().apply {
                             if (toMergeItems.isNotEmpty()) {
                                 addAll(toMergeItems)

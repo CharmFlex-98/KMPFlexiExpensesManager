@@ -214,8 +214,9 @@ private fun HomeBody(
         },
         onClosed = {
             homeViewModel.closeAnnouncement()
-        }
+        },
     ) {
+        homeViewModel.onAnnouncementAction(it)
     }
 }
 
