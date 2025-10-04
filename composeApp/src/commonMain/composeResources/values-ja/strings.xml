@@ -243,4 +243,14 @@
   <string name="generic_daily">日次</string>
   <string name="generic_monthly">月次</string>
   <string name="generic_yearly">年次</string>
+
+  <string name="setting_referral">紹介</string>
+  <string name="generic_referral">紹介</string>
+  <string name="setting_tag">タグ</string>
+  <string name="text_field_tag_desc">タグ（任意）</string>
+  <string name="new_expenses_name_hint">記録に名前を付けてください</string>
+  <string name="toast_connection_lost_unable_fetch_config">サーバーに接続できません。重要なお知らせを見逃す可能性があります。</string>
+  <string name="new_expenses_name">名前（任意）</string>
+  <string name="generic_unknown">不明</string>
+  <string name="generic_do_not_show_again">今後表示しない</string>
 </resources>
