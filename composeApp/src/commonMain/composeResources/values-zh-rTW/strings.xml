@@ -59,8 +59,6 @@
   <string name="generic_search">搜尋</string>
   <string name="home_bar_item_summary">摘要</string>
   <string name="home_bar_item_details">詳細</string>
-  <string name="new_expenses_name">名稱</string>
-  <string name="new_expenses_name_hint">為記錄命名！</string>
   <string name="new_expenses_amount">金額</string>
   <string name="new_expenses_name_amount_hint">輸入花費/收入金額</string>
   <string name="new_expenses_type">記錄類型</string>

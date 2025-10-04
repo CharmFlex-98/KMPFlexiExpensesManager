@@ -59,8 +59,6 @@
   <string name="generic_search">検索</string>
   <string name="home_bar_item_summary">概要</string>
   <string name="home_bar_item_details">詳細</string>
-  <string name="new_expenses_name">名前</string>
-  <string name="new_expenses_name_hint">記録に名前を付けてください！</string>
   <string name="new_expenses_amount">金額</string>
   <string name="new_expenses_name_amount_hint">支出/収入金額を入力</string>
   <string name="new_expenses_type">記録タイプ</string>
