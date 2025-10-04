@@ -61,8 +61,8 @@ fun SGScaffold(
                 ) {
                     this.content()
                 }
-                if (isLoading) CircularProgressIndicatorFullScreen()
             }
         }
+        if (isLoading) CircularProgressIndicatorFullScreen()
     }
 }

@@ -9,6 +9,7 @@ import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventData
 import com.charmflex.cp.flexiexpensesmanager.core.tracker.EventTracker
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.service.AnnouncementService
 import com.charmflex.cp.flexiexpensesmanager.features.billing.BillingManager
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.BillingConstant
 import com.charmflex.cp.flexiexpensesmanager.features.billing.constant.SharedPrefConstant
@@ -38,7 +39,7 @@ internal class HomeViewModel constructor(
     private val billingManager: BillingManager,
     private val eventTracker: EventTracker,
     private val sharedPrefs: SharedPrefs,
-    private val remoteConfigRepository: RemoteConfigRepository
+    private val announcementService: AnnouncementService
 ) : ViewModel() {
     private val _homeItemsRefreshable: MutableList<HomeItemRefreshable> = mutableListOf()
     private val _viewState = MutableStateFlow(HomeViewState())
@@ -78,7 +79,7 @@ internal class HomeViewModel constructor(
 
         viewModelScope.launch {
             resultOf {
-                remoteConfigRepository.getSceneAnnouncement(
+                announcementService.getSceneAnnouncement(
                     RCAnnouncementRequest(scene = RemoteConfigScene.HOME)
                 )
             }.onSuccess { res ->
@@ -101,6 +102,10 @@ internal class HomeViewModel constructor(
             }
             else -> {}
         }
+    }
+
+    fun doNotShowAgain(version: Int) {
+        announcementService.doNotShowAgainScene(scene = RemoteConfigScene.HOME, version)
     }
 
     fun closeAnnouncement() {

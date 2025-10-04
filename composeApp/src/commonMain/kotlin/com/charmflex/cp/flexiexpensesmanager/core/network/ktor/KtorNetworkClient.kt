@@ -221,7 +221,7 @@ internal suspend inline fun <reified T : Any, reified U : Any> NetworkClient.pos
     endPoint: String,
     body: T,
     attributesBuilder: MutableList<NetworkAttribute<Any>>.() -> Unit
-): U {
+): U? {
     val attrs = mutableListOf<NetworkAttribute<Any>>()
         .apply {
             attributesBuilder()

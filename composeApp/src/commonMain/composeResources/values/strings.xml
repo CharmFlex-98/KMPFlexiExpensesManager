@@ -252,5 +252,6 @@
   <string name="toast_connection_lost_unable_fetch_config">Unable to connect to server. You might miss some important announcement.</string>
   <string name="new_expenses_name">Name (optional)</string>
   <string name="generic_unknown">Unknown</string>
+  <string name="generic_do_not_show_again">Do not show again</string>
 
 </resources>

@@ -20,5 +20,7 @@ data class RCAnnouncementResponse(
     val closable: Boolean,
     val iconType: IconType,
     val actionType: ActionType,
-    val show: Boolean
+    val show: Boolean,
+    val allowNotShowAgain: Boolean,
+    val version: Int
 )

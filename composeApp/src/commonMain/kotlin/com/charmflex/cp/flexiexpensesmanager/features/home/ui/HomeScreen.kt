@@ -165,6 +165,8 @@ private fun HomeBody(
     val homeViewState by homeViewModel.viewState.collectAsState()
     val announcementState = rememberAnnouncementState(homeViewState.homeRCAnnouncementRequest)
     val bottomNavController = rememberNavController()
+    val settingState = settingViewModel.viewState.collectAsState()
+    val isLoading = settingState.value.isLoading
 
     BlurredBackgroundBox(
         blur = announcementState.isShowing()
@@ -177,6 +179,7 @@ private fun HomeBody(
                     SGIcons.Add()
                 }
             },
+            isLoading = isLoading,
             floatingActionButtonPosition = FabPosition.End,
             screenName = "HomeScreen"
         ) {
@@ -204,6 +207,11 @@ private fun HomeBody(
 
     AnnouncementPanel(
         announcementState,
+        onNotShowAgainChecked = {
+            announcementState.value?.let {
+                homeViewModel.doNotShowAgain(it.version)
+            }
+        },
         onClosed = {
             homeViewModel.closeAnnouncement()
         }

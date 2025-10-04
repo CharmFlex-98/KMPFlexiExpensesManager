@@ -14,7 +14,7 @@ import org.koin.core.annotation.Singleton
 internal class RemoteConfigApi(
     private val networkClient: NetworkClient,
 ) {
-    suspend fun getRemoteConfigAnnouncement(remoteConfigRequest: RCAnnouncementRequest): RCAnnouncementResponse {
+    suspend fun getRemoteConfigAnnouncement(remoteConfigRequest: RCAnnouncementRequest): RCAnnouncementResponse? {
         return withContext(Dispatchers.IO) {
             networkClient.post("/api/v1/remote-config/announcement", remoteConfigRequest) {
                 add(NetworkAttributes.verifySignature)

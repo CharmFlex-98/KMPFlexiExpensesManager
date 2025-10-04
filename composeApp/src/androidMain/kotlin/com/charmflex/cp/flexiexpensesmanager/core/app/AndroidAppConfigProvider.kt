@@ -21,6 +21,10 @@ internal class AndroidAppConfigProvider : AppConfigProvider {
         }
     }
 
+    override fun getAppVersion(): String {
+        return BuildConfig.VERSION_NAME
+    }
+
     override fun baseUrl(): String {
         return BuildConfig.SERVER_URL
     }

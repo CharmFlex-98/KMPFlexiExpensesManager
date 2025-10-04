@@ -3,9 +3,11 @@ package com.charmflex.cp.flexiexpensesmanager.features.announcement.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.charmflex.cp.flexiexpensesmanager.core.navigation.RouteNavigator
+import com.charmflex.cp.flexiexpensesmanager.core.storage.SharedPrefs
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ResourcesProvider
 import com.charmflex.cp.flexiexpensesmanager.core.utils.ToastManager
 import com.charmflex.cp.flexiexpensesmanager.core.utils.resultOf
+import com.charmflex.cp.flexiexpensesmanager.features.announcement.service.AnnouncementService
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementRequest
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
@@ -19,20 +21,24 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import org.koin.core.annotation.Factory
 
+const val ANNOUNCEMENT_DO_NOT_SHOW_AGAIN_PREFIX = "announcement_do_not_show_again_"
+
 @Factory
 internal class AnnouncementViewModelFactory(
-    private val remoteConfigRepository: RemoteConfigRepository,
+    private val announcementService: AnnouncementService,
     private val toastManager: ToastManager,
     private val resourcesProvider: ResourcesProvider,
-    private val routeNavigator: RouteNavigator
+    private val routeNavigator: RouteNavigator,
+    private val sharedPrefs: SharedPrefs
 ) {
     fun create(scene: RemoteConfigScene): AnnouncementViewModel {
         return AnnouncementViewModel(
             scene,
-            remoteConfigRepository,
+            announcementService,
             toastManager,
             resourcesProvider,
-            routeNavigator
+            routeNavigator,
+            sharedPrefs
         )
     }
 }
@@ -40,10 +46,11 @@ internal class AnnouncementViewModelFactory(
 
 internal class AnnouncementViewModel(
     private val scene: RemoteConfigScene,
-    private val remoteConfigRepository: RemoteConfigRepository,
+    private val announcementService: AnnouncementService,
     private val toastManager: ToastManager,
     private val resourcesProvider: ResourcesProvider,
-    private val routeNavigator: RouteNavigator
+    private val routeNavigator: RouteNavigator,
+    private val sharedPrefs: SharedPrefs
 ) : ViewModel() {
 
 
@@ -56,7 +63,7 @@ internal class AnnouncementViewModel(
         }
         viewModelScope.launch {
             resultOf {
-                remoteConfigRepository.getSceneAnnouncement(RCAnnouncementRequest(scene))
+                announcementService.getSceneAnnouncement(RCAnnouncementRequest(scene))
             }.onSuccess { res ->
                 _viewState.update {
                     it.copy(
@@ -71,6 +78,10 @@ internal class AnnouncementViewModel(
                 }
             }
         }
+    }
+
+    fun doNotShowAgainTriggered(scene: RemoteConfigScene, version: Int) {
+        announcementService.doNotShowAgainScene(scene, version)
     }
 
     fun onClosed() {

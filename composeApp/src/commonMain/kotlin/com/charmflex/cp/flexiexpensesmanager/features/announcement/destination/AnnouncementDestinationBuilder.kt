@@ -25,7 +25,7 @@ internal class AnnouncementDestinationBuilder(
     }
 
     private fun NavGraphBuilder.root() {
-        composable<AnnouncementRoute.Root>{
+        composable<AnnouncementRoute.Root> {
             val route = it.toRoute<AnnouncementRoute.Root>()
             val viewModel = getViewModel {
                 appComponent.announcementViewModelFactory().create(route.remoteConfigScene)
@@ -41,6 +41,14 @@ internal class AnnouncementDestinationBuilder(
                 appBarTitle = appBarTitle,
                 isLoading = viewState.isLoading,
                 announcement = viewState.announcement,
+                onNotShowAgainChecked = {
+                    viewState.announcement?.let {
+                        viewModel.doNotShowAgainTriggered(
+                            route.remoteConfigScene, it.version
+                        )
+                    }
+
+                },
                 onClosed = { viewModel.onClosed() }
             ) {
                 viewModel.onAction(it)

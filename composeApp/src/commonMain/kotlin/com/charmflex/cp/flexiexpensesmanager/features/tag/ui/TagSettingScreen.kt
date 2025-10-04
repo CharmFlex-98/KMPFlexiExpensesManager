@@ -69,6 +69,9 @@ internal fun TagSettingScreen(
 
     AnnouncementPanel(
         announcementState,
+        onNotShowAgainChecked = {
+            viewModel.doNotShowAgain()
+        },
         onClosed = { viewModel.hideAnnouncement() }
     ) {
 
@@ -87,9 +90,10 @@ private fun TagListScreen(
             .fillMaxWidth()
             .padding(grid_x2),
         topBar = {
-            BasicTopBar(title = stringResource(Res.string.tag_setting_app_bar_title),
+            BasicTopBar(
+                title = stringResource(Res.string.tag_setting_app_bar_title),
                 actions = {
-                    IconButton(onClick =  { viewModel.onToggleEditor(null) }) {
+                    IconButton(onClick = { viewModel.onToggleEditor(null) }) {
                         SGIcons.Add()
                     }
                 }
@@ -119,13 +123,17 @@ private fun TagListScreen(
             is TagSettingViewState.TagSettingDialogState.DeleteWarning -> {
                 SGActionDialog(
                     title = stringResource(Res.string.generic_warning),
-                    text = stringResource(Res.string.generic_delete_tag_warning_subtitle, it.tag.name),
+                    text = stringResource(
+                        Res.string.generic_delete_tag_warning_subtitle,
+                        it.tag.name
+                    ),
                     onDismissRequest = { viewModel.onCloseDialog() },
                     primaryButtonText = stringResource(Res.string.generic_delete)
                 ) {
                     viewModel.onConfirmDelete(tag = it.tag)
                 }
             }
+
             else -> {}
         }
     }

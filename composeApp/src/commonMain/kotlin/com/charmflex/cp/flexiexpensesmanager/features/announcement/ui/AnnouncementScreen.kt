@@ -6,9 +6,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.ActionType
-import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.IconType
 import com.charmflex.cp.flexiexpensesmanager.features.remote.remote_config.models.RCAnnouncementResponse
 import com.charmflex.cp.flexiexpensesmanager.ui_common.AnnouncementPanel
 import com.charmflex.cp.flexiexpensesmanager.ui_common.BasicTopBar
@@ -22,6 +20,7 @@ internal fun AnnouncementScreen(
     appBarTitle: String,
     isLoading: Boolean,
     announcement: RCAnnouncementResponse? = null,
+    onNotShowAgainChecked: (() -> Unit)? = null,
     onClosed: () -> Unit,
     onAction: (ActionType) -> Unit,
 ) {
@@ -38,6 +37,7 @@ internal fun AnnouncementScreen(
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
                 AnnouncementPanel(
                     state,
+                    onNotShowAgainChecked = onNotShowAgainChecked,
                     onClosed = onClosed
                 ) {
                     onAction(it)

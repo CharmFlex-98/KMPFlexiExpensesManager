@@ -115,15 +115,15 @@ internal fun SettingScreen(
         }
     }
 
-    if (viewState.isLoading) Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        CircularProgressIndicator(
-            color = MaterialTheme.colorScheme.primary,
-            strokeWidth = 3.dp
-        )
-    }
+//    if (viewState.isLoading) Box(
+//        modifier = Modifier.fillMaxSize(),
+//        contentAlignment = Alignment.Center
+//    ) {
+//        CircularProgressIndicator(
+//            color = MaterialTheme.colorScheme.primary,
+//            strokeWidth = 3.dp
+//        )
+//    }
 }
 
 @Composable

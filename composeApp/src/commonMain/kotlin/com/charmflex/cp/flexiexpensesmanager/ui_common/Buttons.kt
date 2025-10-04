@@ -44,7 +44,7 @@ private fun ButtonSize.getButtonHeight(): Dp {
 
 private fun ButtonSize.getFontSize(): TextUnit {
     return when (this) {
-        ButtonSize.SMALL -> 14.sp
+        ButtonSize.SMALL -> 13.sp
         ButtonSize.MEDIUM -> 16.sp
         ButtonSize.LARGE -> 18.sp
     }
