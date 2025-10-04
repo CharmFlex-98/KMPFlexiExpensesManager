@@ -8,6 +8,7 @@ plugins {
     alias(libs.plugins.composeMultiplatform)
     alias(libs.plugins.composeCompiler)
 
+    alias(libs.plugins.google.services)
     alias(libs.plugins.google.firebase.crashlytics.plugin)
     alias(libs.plugins.kotlin.serialization.plugin)
     alias(libs.plugins.room.gradle.plugin)
